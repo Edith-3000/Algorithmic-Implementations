@@ -1,0 +1,57 @@
+/*  Game Description- 
+ "A game is played between two players and there are N piles 
+ of stones such that each pile has certain number of stones. 
+ On his/her turn, a player selects a pile and can take any 
+ non-zero number of stones upto 3 (i.e- 1,2,3) 
+ The player who cannot move is considered to lose the game 
+ (i.e., one who take the last stone is the winner). 
+ Can you find which player wins the game if both players play 
+ optimally (they don't make any mistake)? " 
+ */
+
+int calculate_mex(unordered_set<int> s)
+{
+	int mex=0;
+	while(s.find(mex) != s.end()) mex++;
+	return mex;
+}
+
+ int calculate_grundy_no(int n, vector<int> &grundy)
+ {
+    //base conditions
+    grundy[0]=0;
+    grundy[1]=1;
+    grundy[2]=2;
+    grundy[3]=3;
+
+    if(grundy[n]!=-1) return grundy[n];
+    
+    unordered_set<int>s; //hash table
+    for(int i=1; i<=3; i++)
+       s.insert(calculate_grundy_no(n-i, grundy));
+
+    grundy[n]=calculate_mex(s); //storing the result
+    return grundy[n];
+ }
+
+ int declare_winner(int whose_turn, vector<int> &grundy, vector<int> &piles)
+ {
+    int ans=grundy[piles[0]];
+
+    for(int i=1; i<piles.size(); i++) ans^=grundy[piles[i]];
+
+    if(ans!=0)
+    {
+       if(whose_turn==1) return 1;
+       else return 2;
+    }
+
+    else
+    {
+       if(whose_turn==1) return 2;
+       else return 1;
+    }
+ }
+
+ //grundy vector stores grundy values of numbers from 0 to max(piles) i.e. it's size=max(piles)+1
+ //piles vector stores the initial #stones give in eaxh pile

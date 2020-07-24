@@ -1,0 +1,13 @@
+int game_of_nim(const vector<int> v, int whose_turn)
+{
+	//whose_turn stores the player who plays first
+    int nim_sum=v[0];
+    for(int i=1; i<v.size(); i++) nim_sum^=v[i];
+
+    if(nim_sum!=0) return whose_turn;
+    else // when xor=0
+    {
+       if(whose_turn==1) return 2;
+       else return 1;
+    }
+}
