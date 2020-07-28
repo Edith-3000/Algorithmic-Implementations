@@ -1,0 +1,43 @@
+//PRIMALITY TEST: to check whether an input no. is prime or not.
+
+//NAIVE APPROACH
+
+bool is_prime(long long n)
+{
+	if(n==1)
+	  return false; //1 is neither prime nor composite
+
+	for(long long i=2; i<n; i++)
+	{
+	   if(n%i == 0)
+	     return false;
+	}
+
+	return true;
+}
+
+//Time complexity: O(n)
+
+*********************************************************************************************************************************************************
+
+//BETTER APPROACH
+/*All divisors of a number occur in pairs.
+ *For a divisor pair (a, b) of a no. n, one of them lies below sqrt(n) & the other lies above sqrt(n)
+*/
+
+bool is_prime(long long n)
+{
+	if(n==1)
+	  return false; //1 is neither prime nor composite
+
+	for(long long i=2; i*i<=n; i++)
+	{
+	   if(n%i == 0)
+	     return false;
+	}
+
+	return true;
+}
+
+//Time complexity: O(sqrt(n))
+
