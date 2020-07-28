@@ -1,0 +1,87 @@
+/*Segmented sieve is a way to generate all the prime nos. in a given range.
+  #Sieve also does the same thing, then what is the requirement of segmented sieve ?
+     Reasons: 1) To generate primes upto n, we need an array of size n in sieve algorithm, but will it work if n can be as large as 10^12 ?
+              2) The simple Sieve is not cache friendly even for slightly bigger n. The algorithm traverses the array without locality of reference.
+
+  #Where is segmented sieve applicable ?
+      When we have to find prime numbers in the range L TO R, where L & R can be really large (like of the order of 10^12) but still (R - L + 1) <= 10^6 or 10^7.
+
+  #Segmented sieve algorithm:
+     Step 1: Generate all prime nos. upto sqrt(R) [To be accomplished using simple sieve].
+     Step 2: Create an array of the size (R-L+1) & initialise it to 1 (1: prime, 0: composite). [initially assuming all nos. are primes].
+             Significance of this array - if number x is prime in the range L to R, then we will mark arr[x-L]=1
+                                          else if number x is composite in the range L to R, then we will mark arr[x-L]=0
+                                          (these both things will be done in the step 3)
+     Step 3: For each prime p in the range 2 to sqrt(R):
+                  For every multiple x of p in the range L to R, mark index (x-L) as 0 (i.e. multiple of a prime is not a prime).
+*/
+
+vector<long long>primes; //to store all prime nos. from 1 to n
+                        //in contiguous form
+
+vector<long long>primes_l_to _r; //to store all prime nos. from l to r
+                                //in contiguous form
+
+void sieve_of_eratosthenes(long long n)
+{
+	//n is the max no. for which we have to check primality
+   //in this case n passed is floor(sqrt(r))
+
+	vector<bool>v(n+1, true); //v is the sieve of size (n+1)
+	
+	v[0]=false; v[1]=false; //0 & 1 are not primes
+
+	for(long long i=2; i*i<=n; i++)
+	{
+	   if(v[i]) //i.e. if the current element i is prime
+	   {
+	      for(long long j=i*i; j<=n; j+=i) 
+	      {
+	         //marking all the proper multiples of 
+	        //the current prime i as non primes
+	         v[j]=false;
+	      }
+	   }
+	} 
+
+	for(long long i=2; i<=n; i++)
+	{
+	   if(v[i])
+	     primes.push_back(i);
+	}
+}
+
+void segmented_sieve(long long l, long long r)
+{
+	if(l==1) l++; //as 1 is not a prime no.
+	vector<bool> seg_sieve(r-l+1, true);
+
+	for(long long i=0; i<primes.size(); p++)
+	{
+       long long p=primes[i]; //the prime no. stored at primes[i]
+       if(p*p <= r) //done so as to pass questions involving multiple queries
+       {
+          long long m=(l/p)*p; //finding the smallest multiple of p which is >=l
+                              //for long long int values in C++, (L/p)=floor(L/p)
+          if(m<l) m+=p;
+
+          for(long long x=m; x<=r; x+=p)
+          {
+             if(x != p) //mark all the multiples of p in range l to r
+                       //as not primes, other than p itself
+                seg_sieve[x-l]=false;
+          }
+        }
+	}
+
+    for(long long i=0; i<seg_sieve.size(); i++)
+    {
+       if(seg_sieve[i])
+         primes_l_to_r.push_back(i+l);
+    }
+}
+
+/*Note that time complexity (or number of operations) by Segmented Sieve is same as Simple Sieve i.e. O(n*log(log n)), where n=(R-L+1).
+  It has advantages for large ‘n’ as it has better locality of reference thus allowing better caching by the CPU and also requires less memory 
+  space.
+*/
