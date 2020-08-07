@@ -1,0 +1,78 @@
+void rotate_matrix_elements(vector<vector<long long>> &v)
+{
+	long long r=v.size(); //#rows in v
+	long long c=v[0].size(); //#cols in v
+	long long k=0, m=r-1, l=0, n=c-1;
+	long long i;
+	long long prev, curr;
+	
+	/*k - starting row index  
+      m - ending row index  
+      l - starting column index  
+      n - ending column index  
+      i - iterator*/
+	
+    while(k<=m && l<=n)
+	{
+	   if(k==m || l==n) break;
+       
+       // Store the first element of next row, this 
+      // element will replace first element of current row
+        prev=v[k+1][l];
+
+	   /* Move elements of first row from the remaining rows */
+       for(i=l; i<=n; i++) 
+       {
+          curr=v[k][i];
+          v[k][i]=prev;
+          prev=curr;
+       }
+	   k++;
+
+       /* Move elements of last column from the remaining columns */
+       for(i=k; i<=m; i++) 
+       {
+          curr=v[i][n];
+          v[i][n]=prev;
+          prev=curr;
+       }
+	   n--;
+
+       /* Move elements of last row from the remaining rows */
+	   if(k<=m)
+	   {
+	      for(i=n; i>=l; i--) 
+	      {
+	         curr=v[m][i];
+             v[m][i]=prev;
+             prev=curr;
+	      }
+	      m--;
+	   }
+
+       /* Move elements of first column from the remaining rows */
+	   if(l<=n)
+	   {
+	      for(i=m; i>=k; i--) 
+	      {
+	         curr=v[i][l];
+             v[i][l]=prev;
+             prev=curr;
+	      }
+	      l++;
+	   }
+	}
+    
+    //print the matrix
+	for(i=0; i<r; i++)
+	{
+	   for(long long j=0; j<c; j++)
+	      cout<<v[i][j]<<" ";
+
+	   cout<<"\n";
+	}
+}
+
+/*Time Complexity: O(r*c) (To traverse the matrix O(r*c) time is required.)
+  Space Comepxlity:O(1) (No extra space is required (inplace rotation of matrix elements))*/
+
