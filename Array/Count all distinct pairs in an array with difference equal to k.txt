@@ -1,0 +1,22 @@
+long long pairs_with_given_diff(vector<long long> &v, long long k)
+{
+	sort(v.begin(), v.end());
+	long long count=0, l=0, r=0;
+
+	while(r<v.size() && l<v.size())
+	{
+	   if(v[r]-v[l] == k)
+	   {
+	      r++;
+	      l++;
+	      count++;
+	   }
+
+	   else if(v[r]-v[l] > k) l++;
+	   else r++;
+	}
+
+	return count;
+}
+
+//Time Complexity: O(nlogn)
