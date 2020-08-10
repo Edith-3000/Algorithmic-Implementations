@@ -1,0 +1,33 @@
+void rotate_matrix(vector<vector<long long>> &v)
+{
+	long long n=v.size(); //size of the square matrix
+    
+    //consider all squares one by one
+	for(long long i=0; i<n/2; i++)
+	{
+	   //consider elements in group 
+       //of 4 in current square 
+	   for(long long j=i; j<(n-i-1); j++)
+	   {
+	      //store current cell in 
+         //temp variable 
+	      long long temp=v[i][j];
+          
+          //move values from right to top 
+	      v[i][j]=v[j][n-i-1];
+         
+          //move values from bottom to right 
+	      v[j][n-i-1]=v[n-i-1][n-j-1];
+
+	      //move values from left to bottom 
+	      v[n-i-1][n-j-1]=v[n-j-1][i];
+         
+         //assign temp to left 
+	      v[n-j-1][i]=temp;
+	   }
+	}
+}
+
+/*Time Complexity: O(n*n), where n is side of array.
+  Space Complexity: O(1).*/
+  
