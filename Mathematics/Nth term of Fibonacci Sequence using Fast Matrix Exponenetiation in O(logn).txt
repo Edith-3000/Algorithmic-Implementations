@@ -1,0 +1,67 @@
+//USING ITERATIVE FAST MATRIX EXPONENTIATION METHOD
+
+void matrix_multiply(vector<vector<long long>> &a, const vector<vector<long long>> &b)
+{
+	vector<vector<long long>> c(2, vector<long long>(2)); //for storing the result
+	for(long long i=0; i<2; i++)
+	{
+	   for(long long j=0; j<2; j++)
+	   {
+	      c[i][j]=0;
+	      for(long long k=0; k<2; k++)
+	        c[i][j]+=a[i][k]*b[k][j];
+	   }
+	}
+
+	for(long long i=0; i<2; i++) //copying result back to a
+	{
+	   for(long long j=0; j<2; j++)
+	     a[i][j]=c[i][j];
+	}
+}
+
+void fast_matrix_exponentiation(vector<vector<long long>> &v, long long n)
+{
+	vector<vector<long long>> res(2, vector<long long>(2)); //very much similar to fast_exponentiation for nos.
+	for(long long i=0; i<2; i++) //initializing res as an identity matrix 
+	{
+	    for(long long j=0; j<2; j++)
+	    {
+	        if(i==j) res[i][j]=1;
+	        else res[i][j]=0;
+	    }
+	}
+
+	while(n)
+	{
+	   if(n&1) matrix_multiply(res, v);
+	   matrix_multiply(v, v);
+	   n/=2;
+	}
+
+	for(long long i=0; i<2; i++) //copying the res back to v, as v was original matrix
+	{
+	   for(long long j=0; j<2; j++)
+	     v[i][j]=res[i][j];
+	}
+}
+
+long long find_nth_term_of_fibonacci(long long n)
+{
+	//base cases
+    if(n==0) return 0;
+    if(n==1) return 1;       
+
+	vector<vector<long long>> v{{1, 1}, {1, 0}}; 
+	vector<long long> constants{1, 0}; //constants[0]=fib[1], constants[1]=fib[0]
+	                                  //constants vector stores the base cases values.
+
+    fast_matrix_exponentiation(v, n-1); //computes (Matrix v)^(n-1) in O(logn) time
+    long long res=0; //initialize final result
+    for(long long k=0; k<2; k++) //1st row of matrix v is multiplied with the column vector constants
+      res+=(v[0][k]*constants[k]);
+
+    return res; 
+}
+
+//Time Complexity: O(k^3 * logn) //where k is the size of matrix v, here k=2

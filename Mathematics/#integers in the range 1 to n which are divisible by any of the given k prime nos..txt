@@ -1,0 +1,41 @@
+bool check_bit(long long i, long long n)
+{
+	if(n & (1<<i)) return true;
+	else return false;
+}
+
+long long solve(vector<long long> &primes, long long n)
+{
+	//inclusion exclusion principle is used here
+
+	long long total=1<<(primes.size()); //to stores the total possible unique subsets
+	                                   //in the power set of primes i.e. (2^(primes_size))
+	long long ans=0; //to store the final answer
+
+	for(long long i=1; i<total; i++) //run counter i from 000....0 to 111....1 
+	{
+	   long long denom=1; //denominator = lcm of the nos. which are 
+	                     //included in the current subset
+
+	   for(long long j=0; j<primes.size(); j++)
+	   {
+	      /*Check if jth bit in the counter i is setor not.If set 
+            then include jth element from primes in the denominator
+          */   
+
+	      if(check_bit(j, i)) denom*=primes[j]; 
+	   }
+
+	   if(__builtin_popcountll(i) & 1) //if #set bits in i are odd
+	      ans+=(n/denom); //use principle of inclusion & exclusion
+
+	   else ans-=(n/denom); //if #set bits in i are odd 
+	}  
+
+	return ans;
+}
+
+//Time Complexity: O(n*(2^n))
+/*How many numbers in the interval [l;r] are divisible by p? 
+  The answer to this question is: floor(#nos. in the given range/p) = floor((r-l+1)/p)
+*/  

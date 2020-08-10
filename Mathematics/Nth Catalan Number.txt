@@ -1,0 +1,69 @@
+/*In combinatorial mathematics, the Catalan numbers form a sequence of natural 
+  numbers that occur in various counting problems, often involving recursively-defined objects.
+  nth Catalan Number = (2nCn)/(n+1)
+*/
+
+//RECURSIVE IMPLEMENTATION
+
+long long nth_catalan_recursive(long long n)
+{
+	//base condition
+	if(n==0) return 1;
+	if(n<0) return -1; //catalan no. for -ve nos. isn't defined
+    
+    long long res=0; //initialize result
+	for(long long i=0; i<n; i++)
+	  res+=nth_catalan_recursive(i) * nth_catalan_recursive(n-(i+1));
+
+	return res;  
+}  
+//Time Complexity Of RECURSIVE APPROACH: O(2^n)
+
+//DYNAMIC PROGRAMMING IMPLEMENTATION(by BOTTOM UP APPROACH)
+
+long long nth_catalan_dp(long long n, vector<long long> &dp)
+{
+	//base condition
+	if(n<0) return -1; //catalan no. for -ve nos. isn't defined
+
+	for(long long i=1; i<=n; i++)
+	{
+	   dp[i]=0; //initializing result for each ith catalan no.
+	   for(long long j=0; j<i; j++)
+	     dp[i]+=dp[j] * dp[i-(j+1)];
+	}
+
+	return dp[n];  
+}
+
+/*here dp is a vector of size (n+1) to store the the nth catalan no.
+  dp is initialized with dp[0]=1 and dp[1]=dp[2]=....dp[n]=-1
+*/  
+//Time Complexity of DP APPROACH: O(n^2)
+
+
+//USING BINOMIAL COEFFICIENT IMPLEMENTATION
+
+long long binomial_coeff(long long n, long long r)
+{
+	if(r>(n-r)) r=n-r; //since C(n, r) = C(n, n-r) 
+	                  //it is done so as to reduce the #iterations
+
+	long long res=1; //initialize result
+
+	for(long long i=0; i<r; i++)
+	{
+	   res*=(n-i);
+	   res/=(r-i);
+	}
+
+	return res;
+}
+
+long long nth_catalan_by_binomial_coeff(long long n)
+{
+	long long c=binomial_coeff(2*n, n); //since nth Catalan No.=2nCn/(n+1)
+	return c/(n+1);
+}
+
+//Time Complexity of BINOMIAL COEFFICIENT APPROACH: O(n)

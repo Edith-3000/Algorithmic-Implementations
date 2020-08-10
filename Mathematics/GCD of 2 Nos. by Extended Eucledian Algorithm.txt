@@ -1,0 +1,20 @@
+long long gcd_by_extended_euclid(long long a, long long b, long long &x, long long &y)
+{
+	//this algorithm find the gcd(a,b) as a linear combination of a & b
+   //i.e. gcd(a,b) = ax + by
+   
+	//base condition
+	if(a==0)
+	{
+       x=0; y=1;
+       return b;
+	}
+
+	long long x1, y1; //to store results of recursive call  
+	long long g=gcd_by_extended_euclid(b%a, a, x1, y1);
+	x=y1 - floor(b/a)*x1; //update x and y using results of recursive call
+	y=x1;
+	return g;
+}
+
+//Time Complexity: O(log(max(a,b) to the base 2))

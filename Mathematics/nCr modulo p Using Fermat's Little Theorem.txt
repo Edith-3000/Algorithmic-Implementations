@@ -1,0 +1,40 @@
+/*Prerequisite to use this Algorithm - 1) p must be a prime no.
+                                       2) p>n
+  nCr % p= [(n! % p) * ((((n-r)!*r!)^(-1))%p)]%p by using modular arithmetic
+*/  
+
+long long fast_exponent(long long a, long long b, long long p)
+{
+	a=a%p; //update a if a>=p
+	if(a==0) return 0; //in case a is divisible by p
+
+    long long result=1; //initialize result
+    while(b>0)
+    {
+       if(b&1) result=(result*a)%p;
+       a=(a*a)%p;
+       b/=2; //or b=b>>1
+    }
+
+    return result;
+}
+
+long long modulo_mul_inv(long long n, long long p)
+{
+    return fast_exponent(n, p-2, p); //a^-1 ≡ a^(m-2) (mod m)
+}
+
+long long nCr_mod_p_by_fermat(long long n, long r, long long p)
+{
+	if(r==0 || r==n) return 1;
+
+	vector<long long>fact_mod_p(n+1); //fill factorial vector so that we can find
+	                                 //factorials of n, r & (n-r) under modulo p
+	fact_mod_p[0]=1;
+	
+	for(long long i=1; i<=n; i++)
+      fact_mod_p[i]=(fact_mod_p[i-1] * i)%p; //fact_mod_p[i] is (i! % p)
+
+    long long x=(fact_mod_p[n-r] * fact_mod_p[r])%p; 
+    return (fact_mod_p[n] * modulo_mul_inv(x, p))%p;
+}
