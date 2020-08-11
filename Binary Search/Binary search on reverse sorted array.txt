@@ -1,0 +1,21 @@
+//ITERATIVE IMPLEMENTATION
+//k is the element to be found
+
+long long bin_search_iterative(vector<long long> &v, long long k)
+{
+	//the vector v is sorted in descending order
+
+   long long start=0, end=v.size()-1;
+
+   while(start<=end)
+   {
+      long long mid=start+(end-start)/2; //to avoid overflow
+
+      if(v[mid]==k) return mid;
+      else if(k>v[mid]) end=mid-1;
+      else start=mid+1;
+   }
+   return -1; //if element not found
+}
+
+/*Time Complexity: O(log n), n is the element to be found*/

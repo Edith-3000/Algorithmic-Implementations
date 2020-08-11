@@ -1,0 +1,27 @@
+/*Below code is for Array sorted in ASCENDING ORDER.
+  For DESCENDING ORDER just modify it slightly.
+  k is the element to be searched*/
+
+long long first_occur(vector<long long> &v, long long k)
+{
+   long long start=0, end=v.size()-1;
+   long long res=-1; //for storing the result
+
+   while(start<=end)
+   {
+      long long mid=start+(end-start)/2; //to avoid overflow
+
+      if(v[mid]==k) 
+      {
+         res=mid;
+         end=mid-1;
+      }
+
+      else if(k>v[mid]) start=mid+1;
+      else end=mid-1;
+   }
+   
+   return res; 
+}
+
+/*Time Complexity: O(log n), n is the element to be found*/

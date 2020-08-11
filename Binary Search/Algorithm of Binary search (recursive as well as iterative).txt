@@ -1,0 +1,59 @@
+//ITERATIVE IMPLEMENTATION
+//k is the element to be found
+
+long long bin_search_iterative(vector<long long> &v, long long k)
+{
+	//the vector v must be sorted in order
+   //to perform binary search
+
+   long long start=0, end=v.size()-1;
+
+   while(start<=end)
+   {
+      long long mid=start+(end-start)/2; //to avoid overflow
+
+      if(v[mid]==k) return mid;
+      else if(k>v[mid]) start=mid+1;
+      else end=mid-1;
+   }
+   return -1; //if element not found
+}
+
+/*Time Complexity: O(log n), n is the element to be found*/
+
+*********************************************************************************************************************************************
+
+//RECURSIVE IMPLEMENTATION
+//Iterative implementations are always better than recursive ones
+
+long long bin_search_recur(vector<long long> &v, long long k, long long start, long long end)
+{
+	//base condition
+	if(start>end) return -1; //if element not found
+
+	long long mid=start+(end-start)/2; //to avoid overflow
+
+	//if the element is present at the middle 
+    // itself 
+	if(v[mid]==k) return mid;
+
+   //if element is greater than mid, then 
+   // it can only be present in right subarray 
+	else if(k>v[mid]) 
+	   return bin_search_recur(v, k, mid+1, end);
+    
+    //else the element can only be present 
+    //in left subarray 
+    else 
+       return bin_search_recur(v, k, start, mid-1); 
+}
+
+//start & end are initialized to 0 & v.size()-1 in the main function
+/*Time Complexity: O(log n), n is the element to be found*/
+
+**************************************************************************************************************************************
+
+/*Use C++ STL function.
+  It returns a bool value*/
+
+binary_search(v.begin(), v.end(), k);
