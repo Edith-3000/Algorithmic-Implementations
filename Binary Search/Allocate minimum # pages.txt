@@ -1,0 +1,68 @@
+/*Problem: Given number of pages in n different books and m students. The books are arranged in any order
+           (not necessarily in asc or desc. order). Every student is assigned to read some consecutive books. 
+           The task is to assign books in such a way that the maximum number of pages assigned to a student is minimum.
+           Restrictions: 1). One book can be read by one student only.
+                         2). Every student is to be assigned atleast one book.
+                         3). No book can be left unassigned.
+                         4). A student is to be assigned only those books which are consecutive.
+*/
+
+/*This problem is very famous & in it's variants you just have to modify the isValid function.
+  Here k are the # students among whom books are to be assigned.
+*/
+
+bool isValid(vector<long long> &v, long long k, long long mid)
+{
+	long long students=1; //for storing # students
+	long long sum=0; //for storing # pages which can be read by
+	                //each student under given circumstances that
+	               //every student can be assigned at most mid # pages
+
+	for(long long i=0; i<v.size(); i++)
+	{
+	   sum+=v[i];
+	   if(sum>mid) //no student can be assigned pages > mid
+	   {
+	      students++; //start assigning pages to next student
+	      sum=v[i]; 1st book assigned to the new student
+	   }
+
+	   if(students>k) return false; //scheme of assigning pages to a
+	                               //student not more than mid fails
+	                              //bcoz under given scheme we require more # students
+	}
+
+	return true; //when students == k
+}
+
+long long allocateMaxPages(vector<long long> &v, long long k)
+{
+	long long n=v.size(); //# books
+
+	if(n<k) return -1; //since every student is to be assigned at least 
+	                  //1 book
+    
+    long long sum=0; 
+	for(long long i=0; i<n; i++) sum+=v[i];
+
+	long long start=max(v.begin(), v.end());
+    long long end=sum;
+	long long res=-1; //for storing the result   
+
+	while(start<=end)
+	{
+	   long long mid=start+(end-start)/2;
+
+	   if(isValid(v, k, mid)) 
+	   {
+	      res=mid; //i.e. mid can be a possible answer
+	      end=mid-1; //to search for a more minimum value, if possible
+	   }
+
+	   else start=mid+1; //i.e. the mid found was much lower than 
+	                    //required & burden on each student needs
+	                   //to be increased
+	}
+
+	return res; //-1 is returned if scheme not possible
+}

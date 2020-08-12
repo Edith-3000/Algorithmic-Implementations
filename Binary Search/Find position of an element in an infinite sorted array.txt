@@ -1,0 +1,35 @@
+/*The main crux of the problem lies in the fact that -
+    IN BINARY SEARCH THE KEY WHICH IS TO BE FOUND ALWAYS LIES
+    BETWEEN start AND end.
+*/
+
+/*v is an infinite sorted vector & k is the key to be found
+  This question is possible to ask only in a Face 2 Face interview,
+  as giving infinte sorted vector isn't possible in a coding round.
+*/
+
+long long bin_search_iterative(vector<long long> &v, long long k, long long start, long long end)
+{
+   while(start<=end)
+   {
+      long long mid=start+(end-start)/2; //to avoid overflow
+
+      if(v[mid]==k) return mid;
+      else if(k>v[mid]) start=mid+1;
+      else end=mid-1;
+   }
+   return -1; //if element not found
+}
+
+long long pos_in_infinite_sorted(vector<long long> &v, long long k)
+{
+	long long start=0, end=1;
+
+	while(v[end]<k)  //in binary search the key which is to be found always lies
+    {                //between start and end.
+	   start=end;
+	   end*=2;
+	}
+
+	return bin_search_iterative(v, k, start, end); 
+}

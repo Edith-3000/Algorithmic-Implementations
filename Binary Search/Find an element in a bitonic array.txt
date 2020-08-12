@@ -1,0 +1,67 @@
+/*The main concept behind the algorithm is in a bitonic array -
+     * The subarray from start to (peak_index-1) is sorted.
+     * The subarray from (peak_index) to end is sorted.
+
+ Therefore - 1. Find the index of peak element in the bitonic array.
+             2. Find the element either in start to (peak_index-1) or (peak_index) to end.
+*/
+
+long long bin_search_iterative(vector<long long> &v, long long k, long long start, long long end)
+{
+	//the vector v must be sorted in order 
+   //to perform binary search
+
+   while(start<=end)
+   {
+      long long mid=start+(end-start)/2; //to avoid overflow
+
+      if(v[mid]==k) return mid;
+      else if(k>v[mid]) start=mid+1;
+      else end=mid-1;
+   }
+   return -1; //if element not found
+}
+
+long long peak_element(vector<long long> &v)
+{
+	long long start=0, end=v.size()-1;
+
+	while(start<=end)
+	{
+	   long long mid=start+(end-start)/2;
+
+	   if(mid>0 && mid<(v.size()-1))
+	   {
+	      if(v[mid]>v[mid-1] && v[mid]>v[mid+1]) return v[mid];
+	      else if(v[mid]<v[mid+1]) start=mid+1;
+	      else end=mid-1;
+	   }
+
+	   else if(mid==0) //to handle corner cases
+	   {
+	      if(v[mid]>v[1]) return v[mid];
+	      else return v[1];
+	   }
+
+	   else  //if(mid==v.size()-1) (to handle corner cases)
+	   {
+           if(v[mid]>v[v.size()-2]) return v[mid];
+           else return v[v.size()-2];
+	   }
+	}
+
+	return -1; //if no peak element is present in the array
+}
+
+long long find_in_bitonic(vector<long long> &v, long long k)
+{
+	long long peak_index=peak_element(v); //to find the index of the peak
+	                                      //element in the bitonic array
+
+	long long left=bin_search_iterative(v, long long k, 0, peak_index-1);
+	long long right=bin_search_iterative(v, long long k, peak_index, v.size()-1);
+
+	if(left!=-1) return left;
+	else if(right!=-1) return right;
+	else return -1; //if element not found
+}

@@ -1,0 +1,30 @@
+/*Below code is for Array which is first sorted in ASCENDING ORDER, then rotated.
+  For DESCENDING ORDER just modify it slightly.
+
+  * Number of times a sorted array is rotated = Index of the minimum element in the array
+*/
+
+long long count_rotations(vector<long long> &v)
+{
+	long long start=0, end=v.size()-1, n=v.size();
+
+	if(v[start]<v[end]) //if the array is not rotated at all
+	   return 0;
+
+	while(start<=end)
+	{
+	   long long mid=start+(end-start)/2; //to avoid overflow
+       long long next=(mid+1)%n; //modulo is done to avoid segmentation fault
+       long long prev=(mid-1+n)%n;
+
+	   if((v[mid]<=v[prev]) && (v[mid]<=v[next]))
+	      return mid;
+
+	   else if(v[start]<=v[mid]) //i.e. if the left subarray is sorted 
+	       start=mid+1;         //then move to the unsorted right subarray
+	     
+       else                 //for v[mid]<=v[end]
+          end=mid-1;       //i.e. if the right subarray is sorted 
+	                      //then move to the unsorted right subarray
+	}
+}
