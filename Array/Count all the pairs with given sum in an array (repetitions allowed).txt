@@ -19,7 +19,11 @@ long long pairs_with_given_sum(vector<long long> &v, long long k)
 	      count--;
 	}
 
+<<<<<<< HEAD
     // return the half of twice_count 
+=======
+        //return the half of twice_count 
+>>>>>>> 20e9fc2093846dc2884c993e73ffab74034675d0
 	return count/2;
 }
 
