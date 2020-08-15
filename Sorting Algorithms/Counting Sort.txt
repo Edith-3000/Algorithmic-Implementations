@@ -1,0 +1,54 @@
+/*Important points -
+  * It is a sorting technique based on keys between a specific range. It works by counting the number of objects having 
+    distinct key values (kind of hashing). Then doing some arithmetic to calculate the position of each object in the output sequence.
+  * Counting sort is efficient if the range of input data is not significantly greater than the number of objects 
+    to be sorted. Consider the situation where the input sequence is between range 1 to 10K and the data is 10, 5, 10K, 5K.
+  * It is not a comparison based sorting algorithm.
+  * Count sort cannot be used for -ve inputs or floating point inputs.
+  * It is often used as a sub-routine to another sorting algorithm like radix sort.
+*/
+
+/*Following is the counting sort algorithm which works well for -ve input nos. as well*/
+
+void countSort(long long a[], long long n)
+{
+	//a is the array to be sorted
+	//n is it's size
+
+	long long min=INT_MAX; //to store min of a
+	long long max=INT_MIN; //to store max of a
+
+	for(long long i=0; i<n; i++)
+	{
+	   if(a[i]<min) min=a[i];
+	   if(a[i]>max) max=a[i];
+	}
+
+	long long k=max-min+1; //range of the array
+	long long count[k+1]; to store the frequency of unique elements of a
+    memset(count, 0, sizeof(count));
+
+	for(long long i=0; i<n; i++)
+	   count[a[i]-min]++;
+
+	//change count[i] so that count[i] now contains actual  
+    //position of this element in output array  
+    for(long long i=1; i<=k; i++)
+       count[i]+=count[i-1];
+
+    long long b[n]; //to store the sorted array
+
+    //looping from (n-1) to 0, so as to make countSort
+    //a stable sorting algorithm
+    for(long long i=(n-1); i>=0; i--) 
+       b[--count[a[i]-min]]=a[i];
+
+    //copying the result back to original array a
+    for(long long i=0; i<n; i++)
+       a[i]=b[i];
+}
+
+/*Time Complexity: O(n+k) (for best, avg & worst cases)
+  Auxiliary Space: O(k), where n is the number of elements in input array and k is the range of input.
+  NOTE: If alphabets are to be sorted then take range k=256, as the ASCII values range from 0 to 255.
+*/

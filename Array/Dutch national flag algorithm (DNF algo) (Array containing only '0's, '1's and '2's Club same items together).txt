@@ -1,0 +1,49 @@
+/*PROBLEM: Given an array of red, green and blue colors arrange them in groups of all red together, greens together and blue 
+           together (Dutch National Flag Algorithm or 3-way Partitioning). NOTE - Do in a single scan of the array.
+           OR
+           Array containing only '0's, '1's and '2's. Club same items together in single scan.
+*/
+
+/*don't use XOR swap here, as through that method when a no. is swapped with itself
+  it will always give 0 as the answer, which may give wrong results.
+  So, either use the below swap function or in built swap function of C++ STL.
+*/
+
+void swap(int *a, int *b)
+{
+	int temp=*a;
+	*a=*b;
+	*b=temp;
+}
+
+void dutchNatFlagAlgo(int a[], int n)
+{
+	int low=0, mid=0, high=(n-1);
+
+	//Iterate till all the elements 
+    //are sorted 
+	while(mid<=high)
+	{
+	   switch(a[mid])
+	   {
+	      //If the element is 0 
+	      case 0: swap(&a[mid], &a[low]);
+	              low++; mid++;
+	              break;
+          
+          //If the element is 1 
+	      case 1: mid++;
+	              break;
+          
+          //If the element is 2
+	      case 2: swap(&a[mid], &a[high]);
+	              high--;
+	              break;
+	   }
+	}
+}
+
+/* Time Complexity: O(n), Only one traversal of the array is needed.
+   Space Complexity: O(1), No extra space is required.
+*/
+//Fore more info visit: http://users.monash.edu/~lloyd/tildeAlgDS/Sort/Flag/ 
