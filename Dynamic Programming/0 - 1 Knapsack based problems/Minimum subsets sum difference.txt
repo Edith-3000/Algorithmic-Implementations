@@ -1,0 +1,64 @@
+/*PROBLEM: Given a set of integers, the task is to divide it into two sets S1 and S2 such that
+           the absolute difference between their sums is minimum.
+           NOTE: # The intersection of both the subsets must be Ø.
+                 # The union of both the subsets must be the original set.
+                 # All the elements of the set are non -ve.
+
+           If there is a set S with n elements, then if we assume Subset1 has m elements, Subset2 must have n-m elements and the value of abs(sum(Subset1) – sum(Subset2)) should be minimum.
+*/
+
+vector<long long> SubsetSum(vector<long long> &v, long long sum)
+{
+	//this function is very much similar to isSubsetSum()
+    
+    long long n=v.size();
+    vector<vector<long long>> dp(n+1, vector<long long>(sum+1));
+
+    //initialisation of dp matrix/vector of vectors
+	for(long long i=0; i<(n+1); i++) dp[i][0]=true; //if sum is 0, then Ø is the required subset 
+	for(long long j=1; j<(sum+1); j++) dp[0][j]=false;
+
+	//choice diagram code iterative version
+	for(long long i=1; i<(n+1); i++)
+	{
+	   for(long long j=1; j<(sum+1); j++)
+	   {
+	      if(v[i-1]<=j)
+	         dp[i][j]=dp[i-1][j-v[i-1]] || dp[i-1][j];
+
+	      else //when v[i-1]>sum
+	         dp[i][j]=dp[i-1][j];
+	   }
+	}
+
+    //s stores the possible subset sums <= range/2 or sum/2
+    vector<long long> s; 	
+    for(long long i=(sum/2); i>=0; i--) 
+    {
+       if(dp[n][i]==true)
+          s.push_back(i);
+
+       if(s.size()==1) //to find min of (range-2*S1) maximize S1 
+          break;
+    }
+
+    return s;
+}
+
+long long minSubsetSumsDiff(vector<long long> &v)
+{
+	long long range=0; //to store sum of all elements
+	for(long long i=0; i<v.size(); i++) range+=v[i];
+
+	vector<long long> s=SubsetSum(v, range);
+
+	return range-2*s[s.size()-1];
+}
+
+/*Time Complexity = O(n*sum) where n is the number of elements and sum is sum of all elements.
+
+  Note that the above solution is in Pseudo Polynomial Time (time complexity is dependent on the
+  numeric value of input).
+
+  An algorithm whose worst case time complexity depends on numeric value of input (not number of inputs) is called Pseudo-polynomial algorithm.
+*/
