@@ -38,4 +38,5 @@ bool isEqualSumPartition(vector<long long> &v)
 	                                                      //sum=sum/2 is present or not
 }
 
-//dp[][] is a 2 D global matrix/vector of vectors, with size (n+1)*(sum/2 + 1), where n is the size of v vector.
+//dp[][] is a 2 D global matrix/vector of vectors, with size (n+1)*(sum/2 + 1), where n is
+//the size of v vector.

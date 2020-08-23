@@ -30,4 +30,5 @@ bool isSubsetSum(vector<long long> &v, long long sum, long long n)
 	return dp[n][sum];
 }
 
-//dp[][] is a 2 D global matrix/vector of vectors, with size (n+1)*(sum+1), where n is the size of v vector.
+//dp[][] is a 2 D global matrix/vector of vectors, with size (n+1)*(sum+1), where n is the 
+//size of v vector.

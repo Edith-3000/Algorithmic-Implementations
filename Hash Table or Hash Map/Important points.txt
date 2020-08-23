@@ -1,0 +1,88 @@
+* A hash table (or hash map) is a data structure that maps keys to values for highly 
+  efficient lookup.
+
+* A hash table is typically an array of linked lists. Remember, Values are not stored
+  in a sorted order in hash table.
+
+* [Algorithm]  Average Case	 Worst case
+    Space		   O(n)	        O(n)
+    Search		   O(1)	        O(n)
+    Insert		   O(1)	        O(n)
+    Delete		   O(1)	        O(n)
+
+* A hash table uses a hash function to compute an index, also called a hash code, into an
+  array of buckets or slots, from which the desired value can be found. During lookup, the 
+  key is hashed and the resulting hash indicates where the corresponding value is stored.
+
+* Ideally, the hash function will assign each key to a unique bucket, but most hash table
+  designs employ an imperfect hash function, which might cause hash collisions where the 
+  hash function generates the same index for more than one key. Such collisions are always accommodated in some way.
+
+* In many situations, hash tables turn out to be on average more efficient than search
+  trees or any other table lookup structure. For this reason, they are widely used in many 
+  kinds of computer software, particularly for associative arrays, database indexing, caches,
+  and sets.
+
+* Hashing: The idea of hashing is to distribute the entries (key/value pairs) across an
+           array of buckets. Given a key, the algorithm computes an index that suggests 
+           where the entry can be found:
+
+           index = f(key, array_size)
+           Often this is done in two steps: hash = hashfunc(key)
+                                            index = hash % array_size
+
+* In the above method, the hash is independent of the array size, and it is then reduced 
+  to an index (a number between 0 and array_size − 1) using the modulo operator (%).
+
+* Choosing a hash function ->
+  A basic requirement is that the function should provide a uniform distribution of hash
+  values. A non-uniform distribution increases the number of collisions and the cost of 
+  resolving them. 
+
+* Perfect hash function ->
+  A perfect hash function for a set S is a hash function that maps distinct elements in S
+  to a set of integers, with no collisions. In mathematical terms, it is an injective function.
+  It has the advantage that no collision resolution has to be implemented for it.
+  But ofcourse it is not practical always.
+
+* If all keys are known ahead of time, a perfect hash function can be used to create a perfect
+  hash table that has no collisions.
+
+* Perfect hashing allows for constant time lookups in all cases.
+
+* A good hash function should have the following properties:
+  1). Efficiently computable.
+  2). Should uniformly distribute the keys (Each table position equally likely for each key)
+
+* A critical statistic for a hash table is the load factor, defined as
+  Load factor(ƛ) = (n/k), where ● n is the number of entries occupied in the hash table.
+                                ● k is the number of buckets(size of hash table).
+                                 
+* As the load factor grows larger, the hash table becomes slower, and it may even fail to 
+  work (depending on the method used). 
+
+* THE EXPECTED CONSTANT TIME PROPERTY OF A HASH TABLE ASSUMES THAT THE LOAD FACTOR BE KEPT
+  BELOW SOME BOUND. 
+
+* A low load factor is not especially beneficial. As the load factor approaches 0, the 
+  proportion of unused areas in the hash table increases, but there is not necessarily any 
+  reduction in search cost. This results in wasted memory.
+
+* Collusion Resolution: Hash collisions are practically unavoidable when hashing a random 
+  subset of a large set of possible keys. For example, if 2,450 keys are hashed into a 
+  million buckets, even with a perfectly uniform random distribution, according to the 
+  birthday paradox there is approximately a 95% chance of at least two of the keys being 
+  hashed to the same slot.
+
+  Therefore, almost all hash table implementations have some collision resolution strategy 
+  to handle such events. Some common strategies are described below. All these methods 
+  require that the keys (or pointers to them) be stored in the table, together with the
+  associated values.
+
+* In practice, we can often employ heuristic techniques to create a hash function that 
+  performs well.
+
+* The two heuristic methods are hashing by modulo and hashing by multiplication which 
+  are as follows: 
+  1). 
+  2).

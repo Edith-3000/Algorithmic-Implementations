@@ -1,0 +1,43 @@
+*PROBLEM: Given an array arr[] of length n and an integer diff, the task is to find the 
+           number of unique subset pairs with the difference of sum of their elements 
+           equal to diff.
+           NOTE: # The intersection of both the subsets must be Ø.
+                 # The union of both the subsets must be the original set.
+                 # All the elements of the set are non -ve.
+*/
+
+long long countSubsets(vector<long long> &v, long long sum, long long n)
+{
+	//initialisation of dp matrix
+	for(long long i=0; i<(n+1); i++) dp[i][0]=1; //if sum is 0, then only 1 subset is possible(i.e. Ø) 
+	for(long long j=1; j<(sum+1); j++) dp[0][j]=0;
+
+	//choice diagram code iterative version
+	for(long long i=1; i<(n+1); i++)
+	{
+	   for(long long j=1; j<(sum+1); j++)
+	   {
+	      if(v[i-1]<=j)
+	         dp[i][j]=dp[i-1][j-v[i-1]] + dp[i-1][j];
+
+	      else //when v[i-1]>sum
+	         dp[i][j]=dp[i-1][j];
+	   }
+	}
+
+	return dp[n][sum];
+}
+
+long long countSubsetPairs(vector<long long> &v, long long diff, long long n)
+{
+	long long sum=0; //to store sum of all elements of v
+	for(long long i=0; i<n; i++) sum+=v[i];
+
+	long long s=diff+(sum-diff)/2; //to avoid overflow
+	                              //S1-S2=diff, S1+S2=sum -> S1=(diff+sum)/2
+
+    return countSubsets(v, s, v.size());
+}
+
+//dp[][] is a 2 D global matrix/vector of vectors, with size (n+1)*(sum+1), where n is 
+//the size of v vector.

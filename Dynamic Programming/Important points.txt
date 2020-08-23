@@ -1,1 +1,7 @@
 * THOSE WHO CAN'T REMEMBER THE PAST ARE CONDEMNED TO REPEAT IT - Dynamic Programming.
+
+* Dynamic programming is all about breaking down an optimization problem into simpler
+  sub-problems, and storing the solution to each sub-problem so that each sub-problem 
+  is solved only once.
+
+* This method was developed by Richard Bellman in the 1950s.

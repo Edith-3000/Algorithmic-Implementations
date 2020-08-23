@@ -1,0 +1,46 @@
+/*PROBLEM: You are given a list of non-negative integers, a1, a2, ..., an, and a target, S.
+           Now you have 2 symbols + and -. For each integer, you should choose one from + 
+           and - as its new symbol.
+           Find out how many ways to assign symbols to make sum of integers equal to 
+           target S.
+*/
+
+/*By keen observation it can be deduced that this problem is just a slight variation of "Count
+  of subset pairs with given difference"
+*/
+
+long long countSubsets(vector<long long> &v, long long sum, long long n)
+{
+	//initialisation of dp matrix
+	for(long long i=0; i<(n+1); i++) dp[i][0]=1; //if sum is 0, then only 1 subset is possible(i.e. Ø) 
+	for(long long j=1; j<(sum+1); j++) dp[0][j]=0;
+
+	//choice diagram code iterative version
+	for(long long i=1; i<(n+1); i++)
+	{
+	   for(long long j=1; j<(sum+1); j++)
+	   {
+	      if(v[i-1]<=j)
+	         dp[i][j]=dp[i-1][j-v[i-1]] + dp[i-1][j];
+
+	      else //when v[i-1]>sum
+	         dp[i][j]=dp[i-1][j];
+	   }
+	}
+
+	return dp[n][sum];
+}
+
+long long TargetSum(vector<long long> &v, long long sum, long long n)
+{
+	long long range=0; //to store sum of all elements of v
+	for(long long i=0; i<n; i++) range+=v[i];
+
+	long long s=sum+(range-sum)/2; //to avoid overflow
+	                                //S1-S2=sum, S1+S2=range -> S1=(sum+range)/2
+
+    return countSubsets(v, s, v.size());
+}
+
+//dp[][] is a 2 D global matrix/vector of vectors, with size (n+1)*(sum+1), where n is the 
+//size of v vector & sum is the arguement passed to the countSubsets() function.
