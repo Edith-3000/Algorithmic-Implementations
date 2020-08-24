@@ -1,0 +1,30 @@
+/*PROBLEM: Given two strings ‘X’ and ‘Y’, find the length of the longest common 
+           substring.
+*/
+
+long long lcSubstrLength(string s1, string s2, long long n, long long m)
+{
+	//initialisation of dp matrix
+	/*if length of any of the i/p string=0,
+	  then lcs length=0*/
+	for(long long i=0; i<(n+1); i++) dp[i][0]=0;
+	for(long long j=0; j<(m+1); j++) dp[0][j]=0;
+
+	//choice diagram code iterative version
+	for(long long i=1; i<(n+1); i++)
+	{
+	   for(long long j=1; j<(m+1); j++)
+	   {
+	      if(s1[i-1]==s2[j-1])
+	         dp[i][j]= 1 + dp[i-1][j-1];
+
+	      else
+	         dp[i][j]= 0;
+	   }
+	}
+
+	return dp[n][m];
+}
+
+//n is s1.length() & m is s2.length()
+//dp[][] is a 2 D global matrix/vector of vectors, with size (n+1)*(m+1)

@@ -1,0 +1,48 @@
+/*PROBLEM: Given a string of size ‘n’. The task is to remove or delete minimum 
+           number of characters from the string so that the resultant string 
+           is palindrome.
+           Note: The order of characters should be maintained.
+*/
+
+/* Underlying concept: (Length of Palindromic Subsequence) ∝ (1/deletions required)
+   ∴ for min #deletions length of palindromic subsequence must be maximum i.e. 
+      it must be length of LPS(Longest Palindromic Subsequence)
+*/
+
+long long lcsLength(string s1, string s2, long long n, long long m)
+{
+	//initialisation of dp matrix
+	/*if length of any of the i/p string=0,
+	  then lcs length=0*/
+	for(long long i=0; i<(n+1); i++) dp[i][0]=0;
+	for(long long j=0; j<(m+1); j++) dp[0][j]=0;
+
+	//choice diagram code iterative version
+	for(long long i=1; i<(n+1); i++)
+	{
+	   for(long long j=1; j<(m+1); j++)
+	   {
+	      if(s1[i-1]==s2[j-1])
+	         dp[i][j]= 1 + dp[i-1][j-1];
+
+	      else
+	         dp[i][j]= max(dp[i][j-1], dp[i-1][j]);
+	   }
+	}
+
+	return dp[n][m];
+}
+
+long long lpsLength(string s)
+{
+	return lcsLength(s, reverse(s.begin(), s.end()), s.length(), s.length()); 
+}
+
+
+long long minNumberOfDel(string s)
+{
+	return s.length() - lpsLength(s);
+}
+
+//dp[][] is a 2 D global matrix/vector of vectors, with size (n+1)*(n+1),
+//where n is the s.length()

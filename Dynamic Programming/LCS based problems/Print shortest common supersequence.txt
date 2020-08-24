@@ -1,0 +1,96 @@
+/*PROBLEM: Given two strings X and Y, print the shortest string that has both 
+           X and Y as subsequences. If multiple shortest supersequence exists, 
+           print any one of them.
+*/
+
+//Concept of this algorithm is very much similar to "Print LCS", with minor
+//changes
+
+void lcs(string s1, string s2, long long n, long long m)
+{
+	//initialisation of dp matrix
+	/*if length of any of the i/p string=0,
+	  then lcs length=0*/
+	for(long long i=0; i<(n+1); i++) dp[i][0]=0;
+	for(long long j=0; j<(m+1); j++) dp[0][j]=0;
+
+	//choice diagram code iterative version
+	for(long long i=1; i<(n+1); i++)
+	{
+	   for(long long j=1; j<(m+1); j++)
+	   {
+	      if(s1[i-1]==s2[j-1])
+	         dp[i][j]= 1 + dp[i-1][j-1];
+
+	      else
+	         dp[i][j]= max(dp[i][j-1], dp[i-1][j]);
+	   }
+	}
+}
+
+string printSCS(string s1, string s2)
+{
+	//function to create the complete dp[][] matrix
+	lcs(s1, s2, s1.length(), s2.length());
+    
+    long long i=s1.length(), j=s2.length(); //starting from right
+                                           //bottom cell of dp[][]
+    string res=""; //empty string to store the result
+
+    while(i>0 && j>0)
+    {
+       //If current character in s1 and s2 are same, then 
+       //current character is part of shortest supersequence 
+       if(s1[i-1]==s2[j-1])
+       {
+          //Put current character in result 
+          res.push_back(s1[i-1]);
+          //moving to the diagonally above cell to the
+          //current cell
+          i--; j--;
+       }
+       
+       //If current character in s1 and s2 are different 
+       else
+       {
+          if(dp[i][j-1]>dp[i-1][j]) 
+          {
+             //Put current character of s2 in result 
+             res.push_back(s2[j-1]);
+             j--;
+          }
+          else  //dp[i][j-1]<=dp[i-1][j]
+          {
+             //Put current character of s1 in result 
+             res.push_back(s1[i-1]);
+             i--;
+          }
+       }
+    }
+
+    //If s2 reaches its end, put remaining characters 
+    //of s1 in the result string 
+    while(i>0) 
+    {
+       res.push_back(s1[i-1]);
+       i--;
+    }
+    
+    //If s1 reaches its end, put remaining characters 
+    //of s2 in the result string 
+    while(j>0) 
+    {
+       res.push_back(s2[j-1]);
+       j--;
+    }
+    
+    //reverse the string and return it 
+    reverse(res.begin(), res.end());
+    return res;
+}
+
+//SCS or scs = Shortest Common Supersequence
+//dp[][] is a 2 D global matrix/vector of vectors, with size (n+1)*(m+1)
+
+//Time complexity of above solution is O(n*m).
+//Auxiliary space used by the program is O(n*m). 
