@@ -100,26 +100,27 @@ long long mcmMemoized(vector<long long> &v, long long i, long long j)
 
 /* eg dp[][] matrix of dimensions 4 × 4 ---->
                        
-                          i →
+                          j →
                      0    1    2    3
                    ---------------------
-                 0 |    |    |    |    |  
+                 0 |Inv |Inv |Inv |Inv |  
                    |----|----|----|----|
-               j 1 |    |  0 |	  | Res|
+               i 1 |Inv |  0 |	  | Res|
                ↓   |----|----|----|----|⏎(L=3)(diagonal)  
-                 2 |  	|    | 0  |    |
+                 2 |Inv |Inv | 0  |    |
                    |----|----|----|----|⏎(L=2)(diagonal)  
-                 3 |	|    |    | 0  |
+                 3 |Inv |Inv |Inv | 0  |
                    |----|----|----|----|
-                                        ⏎(L=1)(diagonal)                 
+                                        ⏎(L=1)(diagonal)   
+        *Inv = Invalid              
 */
 
 long long mcmTabulation(vector<long long> &v, long long n)
 {
 	//initialisation of dp matrix
 	/*The lower Δˡʳ matrix is not initialised as in that part (i>j),
-      which is an invalid case.
-      Similarly dp[0][0.....(n-1)] is also not initialised as it's invalid*/
+    which is an invalid case.
+    Similarly dp[0][0.....(n-1)] is also not initialised as it's invalid*/
       
     //cost is zero when multiplying one matrix(i.e. L=1),
     //where L=chain length
@@ -135,7 +136,7 @@ long long mcmTabulation(vector<long long> &v, long long n)
        for(long long i=1; i<(n-L+1); i++)
        {
           long long j=i+L-1;
-          dp[i][j]=INT_MAX;
+          dp[i][j]=LLONG_MAX;
           
           //"k loop scheme" for corresponding i and j
           for(long long k=i; k<=(j-1); k++)
