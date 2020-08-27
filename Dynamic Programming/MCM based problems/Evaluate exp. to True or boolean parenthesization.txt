@@ -143,8 +143,8 @@ long long countParenthesizationRecur(string s, long long i, long long j, bool is
     ∴ dp[n][n][2] ≡ 3D matrix, (as maximum value taken by i and j can be s.length()-1,
       for isTrue 2 values are possible).
       Here n=s.length().
-  # As imagination of a 3D matrix is slightly difficult, we wiil implement the same thing
-    using a global map.
+  # As imagination of a 3D matrix is slightly difficult, we will we use an unordered_map
+    for cache to avoid duplicated processing.
   # The key of the map will be a string composed of "val(i)+val(j)+val(isTrue)"
 */
 
@@ -221,8 +221,9 @@ long long countParenthesizationMemo(string s, long long i, long long j, bool isT
      which s from 0 to s.length()-1 evaluates to be "true"
    # Here in the above algorithm i and j always points to the operands i.e. either 'T'
      or 'F', k always points to an operator i.e. s[k] ε {'&', '|', '^'}
-   # mp is a map declared globally-> unordered_map<string, long long> mp;
-                                     mp.clear(); 
+   # mp is a map declared globally, whose key is of type "string" & value is of 
+     type "long long" -> unordered_map<string, long long> mp;
+                         mp.clear(); 
 */
 
 *********************************************************************************************************
