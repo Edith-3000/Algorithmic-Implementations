@@ -1,0 +1,90 @@
+/*PROBLEM: Given an array of n integers. Write a program to print/construct the maximum sum 
+           subsequence of the given array such that the integers in the subsequence are sorted in 
+           increasing order. For example, if input is {1, 101, 2, 3, 100, 4, 5}, then output should 
+           be (1 + 2 + 3 + 100), if the input array is {3, 4, 5, 10}, then output should be 
+           (3 + 4 + 5 + 10) and if the input array is {10, 5, 4, 3}, then output should be 10.
+*/
+
+/*Underlying concept:
+  # To print the MSIS, we actually have to store the maximum sum increasing subsequence in 
+    lookup table along with storing maximum sum
+  # For example, consider v = [ 8, 4, 12, 2, 10, 6, 14, 1, 9, 5, 13, 3, 11 ]
+    The Maximum sum Increasing Subsequence MSIS[i] of subarray v[0...i] that ends with v[i] 
+    are ------>
+
+    MSIS[0] – 8
+    MSIS[1] – 4
+    MSIS[2] – 8 12
+    MSIS[3] – 2
+    MSIS[4] – 8 10
+    MSIS[5] – 4 6
+    MSIS[7] – 1
+    MSIS[8] – 4 6 9
+    MSIS[9] – 4 5
+    MSIS[10] – 8 12 13
+    MSIS[11] – 2 3
+    MSIS[12] – 4 6 9 11
+*/
+
+vector<long long> printMSIS(vector<long long> &v, long long n)
+{
+	//msis[i] stores the increasing subsequence of subarray
+	//v[0...i] having maximim sum & 𝙩𝙝𝙖𝙩 𝙚𝙣𝙙𝙨 𝙬𝙞𝙩𝙝 𝙫[𝙞]
+	vector<int> msis[n]; //array of vectors
+
+	//msis[0] denotes increasing subsequence with max sum & 
+	//ending with v[0]
+	msis[0].push_back(v[0]);
+
+	//sum of increasing subsequence 𝙚𝙣𝙙𝙞𝙣𝙜 𝙬𝙞𝙩𝙝 𝙫[0] is v[0] only
+	sum[0]=v[0];
+
+	//start from second element in the vector v[]
+	for(long long i=1; i<n; i++)
+	{
+		//do for each element in subarray/subvector v[0...(i-1)]
+		for(long long j=0; j<i; j++)
+		{
+			//find increasing subsequence having max sum & ends with
+			//v[j] where v[j] is less than the current element v[i]
+            if(v[i]>v[j] && sum[i]<sum[j])
+			{   
+			   msis[i]=msis[j]; //copying the subsequence
+               sum[i]=sum[j]; //update max sum 
+			}
+		}
+
+		//include v[i] in LIS[i]
+		msis[i].push_back(v[i]);
+        
+        //include current element in sum
+		sum[i]+=v[i];
+	}
+
+	//j will contain index of increasing subsequence having maximum sum
+	long long j=0;
+	for (long long i=1; i<n; i++)
+	   if(sum[i]>sum[j])
+	      j=i;
+
+	return msis[j];
+}
+
+/* # sum[] is a 1 D global matrix or vector of size (n).
+     sum[i] for each 0<=i<=(n-1) stores the maximum sum of increasing subsequence 
+     of subarray/subvector v[0...i] 𝙬𝙝𝙞𝙘𝙝 𝙚𝙣𝙙𝙨 𝙬𝙞𝙩𝙝 𝙫[𝙞].
+   # n is v.size() 
+   # Time Complexity: O(n²)
+   # Auxiliary Space: O(n²).
+*/ 
+
+/*Extra Information ---->
+  𝙨𝙩𝙙::𝙖𝙘𝙘𝙪𝙢𝙪𝙡𝙖𝙩𝙚() 𝙞𝙣 𝘾++ 𝙎𝙏𝙇
+  This function returns the sum of all the values lying in a range between [first, last) with the 
+  variable sum.
+  Syntax:
+        accumulate(first, last, sum);
+        first, last : iterators to the first and last elements of range 
+                      whose elements are to be added
+        sum :  initial value of the sum
+*/

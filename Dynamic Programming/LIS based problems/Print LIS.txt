@@ -1,0 +1,204 @@
+/*PROBLEM: Print the Longest Increasing Subsequence (LIS) for a given array.
+           The Longest Increasing Subsequence (LIS) subsequence of a given sequence is such that all 
+           elements of the subsequence are sorted in increasing order(i.e. monotically increasing
+           subsequence). 
+           For example --->
+           the LIS for {10, 22, 9, 33, 21, 50, 41, 60, 80} is {10, 22, 33, 50, 60, 80}.
+*/
+
+/*Underlyring concept:
+  Let v[0...(n-1)] be the input array/vector. We define an array of vectors L that stores LIS of v 
+  that ends with v[i] for each 0<=i<=(n-1). For example, for vector [3, 2, 6, 4, 5, 1],
+
+  L[0]: 3
+  L[1]: 2
+  L[2]: 2 6 (or) 3 6
+  L[3]: 2 4 (or) 3 4
+  L[4]: 2 4 5
+  L[5]: 1
+*/
+
+/*Some Extra Points ---->
+  Ques. What is the difference between vector<int>v1[] and vector<vector<int>>v2 ?
+  Ans. ● v1 is an array of vectors while v2 is a vector of vectors.
+       ● v1 can't grow. You cannot make v1.push_back(...) as its not a vector object. Its just an array. 
+         While v2 is dynamic. You can grow it as you please.
+       ● When you want to work with a fixed number of std::vector elements, you can use vector<int>v1[].
+         When you want to work with a dynamic array of std::vector, you can use vector<vector<int>>v2.
+
+       ● Although both can be initialized in the same way, e.g.
+         vector<int>v1[]        {{1,2,3}, {4,5,6}};
+         vector<vector<int>>v2  {{1,2,3}, {4,5,6}};
+         
+         Can also be initialized in the same way, e.g.
+         cout << v1[0].back() << endl;
+         cout << v2[0].back() << endl;
+*/
+
+vector<long long> printLIS(vector<long long> &v, long long n)
+{
+	//LIS[i] stores the longest increasing subsequence of subarray
+	//v[0...i] 𝙩𝙝𝙖𝙩 𝙚𝙣𝙙𝙨 𝙬𝙞𝙩𝙝 𝙫[𝙞]
+	vector<int> LIS[n]; //array of vectors
+
+	//LIS[0] denotes longest increasing subsequence ending with v[0]
+	LIS[0].push_back(v[0]);
+
+	//start from second element in the vector v[]
+	for(long long i=1; i<n; i++)
+	{
+		//do for each element in subarray/subvector v[0...(i-1)]
+		for(long long j=0; j<i; j++)
+		{
+			//find longest increasing subsequence that ends with v[j]
+			//where v[j] is less than the current element v[i]
+            if(v[i]>v[j] && LIS[i].size()<LIS[j].size())
+			   LIS[i]=LIS[j]; //copying the subsequence
+		}
+
+		//include v[i] in LIS[i]
+		LIS[i].push_back(v[i]);
+	}
+
+	//j will contain index of increasing subsequence of maximum length
+	long long j=0;
+	for (long long i=1; i<n; i++)
+	   if(LIS[i].size()>LIS[j].size())
+	      j=i;
+
+	return LIS[j];
+}
+
+/* # n is v.size() 
+   # Time Complexity: O(n²)
+   # Auxiliary Space: O(n²).
+*/ 
+
+****************************************************************************************************************
+
+//NON DP IMPLEMENTATION (in O(n*log₂(n)))
+
+/*# Let s[] be a vector & s[i] be defined as the smallest integer that ends an increasing sequence of 
+    length (i+1). Now iterate through every integer of the input set v[] and do the following: --->
+    ● If x is more than the last element in s, then append x to the end of s. This essentially means we 
+      have found a new largest LIS.
+    ● Otherwise find the smallest element in s, which is more than or equal to x, and replace it with x.
+      Because s is sorted at any time, the element can be found using binary search in log₂(n)time.
+  # Let’s illustrate this with the help of an example. Consider below array of integers –>
+    {2, 6, 3, 4, 1, 2, 9, 5, 8}
+    Below are the steps followed by the algorithm –
+    Initialize to an empty set S = {}
+    Inserting 2 —- S = {2} – New largest LIS
+    Inserting 6 —- S = {2, 6} – New largest LIS
+    Inserting 3 —- S = {2, 3} – Replaced 6 with 3
+    Inserting 4 —- S = {2, 3, 4} – New largest LIS
+    Inserting 1 —- S = {1, 3, 4} – Replaced 2 with 1
+    Inserting 2 —- S = {1, 2, 4} – Replaced 3 with 2
+    Inserting 9 —- S = {1, 2, 4, 9} – New largest LIS
+    Inserting 5 —- S = {1, 2, 4, 5} – Replaced 9 with 5
+    Inserting 8 —- S = {1, 2, 4, 5, 8} – New largest LIS
+
+  # To reconstruct the actual LIS we will again use a parent array. Let parent[i] be the predecessor of 
+    element with index i in the LIS ending at element with index i.
+  # To make things simpler, we can keep in the array s, not the actual integers, but their indices(positions) 
+    in the set. We do not keep {1, 2, 4, 5, 8}, but keep {4, 5, 3, 7, 8}.
+  # That is v[4] = 1, v[5] = 2, v[3] = 4, v[7] = 5, v[8] = 8.
+  
+  # If we update properly the parent array, the actual LIS is just reverse of the following:
+    v[S[lastElementOfS]], 
+    v[parent[S[lastElementOfS]]],
+    v[parent[parent[S[lastElementOfS]]]],
+   ........................................
+  # Now to the important thing - how do we update the parent array? There are two options:
+    ● If x > last element in s, then parent[index(x)] = indexOfLastElement. This means the parent of the 
+      newest element is the last element. We just prepend x to the end of s.
+    ● Otherwise find the index of the smallest element in s, which is >= than x, and change it to x. 
+      Here parent[index(x)] = s[index - 1].
+*/
+
+//Data structure to store an element and its index in the i/p array 
+struct node
+{
+	long long ele;
+	long long index;
+};
+
+//overload compare operator for inserting into set
+inline bool operator < (const node &l, const node &r)
+{
+	return l.ele<r.ele;
+}
+
+vector<long long> printLISUtil(vector<long long> &v, auto parent, set<node> s)
+{
+    //container to store LIS in reverse order
+	stack<long long> stk;
+
+	//start from the last element of s
+	long long index=s.rbegin()->index;
+
+	//get length of LIS
+	long long n=s.size();
+
+	//retrieve LIS from parent array
+	while(n--)
+	{
+	   stk.push(v[index]);
+	   index=parent[index];
+	}
+    
+    //to store LIS
+	vector<long long> res(s.size());
+    long long i=0;
+
+	while(!stk.empty())
+	{
+       res[i++]=stk.top();
+       stk.pop();
+	}
+
+	return res;
+}
+
+void printLIS(vector<long long> &v)
+{
+	long long n=v.size();
+
+	//create an empty ordered set S (ith element in S is defined as the
+	//smallest integer that ends an increasing sequence of length i+1)
+	set<node> s;
+
+	//parent[i] will store the predecessor of element with index i in the
+	//LIS ending at element with index i
+    map<long long, long long> parent;
+   
+    //process every element one by one
+	for(long long i=0; i<n; i++)
+	{
+	   //construct node from current element and its index
+	   node curr={v[i], i};
+       
+       //ignore the current element if already present in the set
+	   if(s.find(curr)!=s.end())
+	      continue;
+       
+       //insert current node into the set and get iterator to the
+		//inserted node
+	   auto it=s.insert(curr).first;
+       
+       //if the node is not inserted at the end, then delete the next node
+	   if(++it != s.end())
+	      s.erase(it);
+       
+       //get iterator to the current node and update it's parent
+	   it=s.find(curr);
+	   parent[i]=(--it)->index;
+	}
+
+	printLISUtil(v, parent, s);
+}
+
+/*
+   # Time Complexity: O(n*log₂(n))
+   # Auxiliary Space: O(n).
+*/ 

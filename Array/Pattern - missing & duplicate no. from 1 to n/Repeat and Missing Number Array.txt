@@ -1,0 +1,62 @@
+/*PROBLEM: You are given a read only array of n integers from 1 to n.
+           Each integer appears exactly once except A which appears twice and B which is missing.
+           Array need not be sorted.
+           Return A and B.
+           NOTE: Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+*/
+
+/*SIDE TIPS ----->
+  # There are certain problems which are asked in the interview to also check how you take care of overflows 
+    in your problem.
+  # This is one of those problems.
+    Take extra care to make sure that you are type-casting your ints to long properly and at all places. Try 
+    to verify if your solution works if number of elements is as large as 10⁵.
+
+  # Food for thought :
+    Even though it might not be required in this problem, in some cases, you might be required to order the operations cleverly so that the numbers do not overflow.
+    For example, if you need to calculate n! / k! where n! is factorial(n), one approach is to calculate factorial(n), factorial(k) and then divide them.
+    Another approach is to only multiple numbers from (k+1)....n to calculate the result.
+    Obviously approach 1 is more susceptible to overflows.
+*/
+
+//NAIVE IMPLEMENTATION
+
+/*The basic brute force implementation can be to create a map and count the occurrence of each number.
+  But Time Complexity will be O(n).
+      Space Complexity: O(n) (for map).
+*/
+
+*****************************************************************************************************************
+
+//OPTIMIZED IMPLEMENTATION USINIG BASIC MATHS
+
+/*UNDERLYING CONCEPT:
+  ● Let the i/p array be of size=4 be vᵢ={a, a, c, d}
+  ● Ideally v[4] must be vₒ={a, b, c, d} (ofcourse not necessarily in sorted order).
+    * vᵢ = v(input)
+      vₒ = v(original)
+    Note: a, b, c, d are integral values.
+
+  ● Now, ∑(vₒ) - ∑(vᵢ) = (a+b+c+d) - (a+a+c+d)
+                    c1 = b - a --------------------- eqⁿ(1)
+        
+         Squaring each term of vₒ & adding them = a²+b²+c²+d²
+         Squaring each term of vᵢ & adding them = a²+a²+c²+d²
+
+         Now, a²+b²+c²+d² - a²+a²+c²+d² = b²-a²
+                                     c2 = (b+a)(b-a)
+                               c2/(b-a) = b + a
+                                     c3 = b + a ----------------------------- eqⁿ(2)
+         * c1, c2 and c3 are constants.
+
+         Using eqⁿ(1) & eqⁿ(1),
+         b = (c1+c3)/2
+         a = b-c1
+*/
+
+long long repeatAndMissing(vector<long long> &v)
+{
+	long long n=v.size();
+	//taking care of overflow
+	long long sum = (n&1) ? ((n+1)/2)*n : (n/2)*(n+1); 
+}

@@ -1,0 +1,96 @@
+/*PROBLEM: Given an array of n integers. Find the minimum number of elements from the array to 
+           remove or delete so that when the remaining elements are placed in the same sequence 
+           order form a sorted sequence(either increasing or decreasing).
+*/
+
+/*Underlying Concept: 
+  # For the sequence to be sorted we need to check for both the longest increasing and decreasing 
+    subsequence.
+  # Let, Longest increasing subsequence be known as LIS and Longest decreasing subsequence as LDS.
+  # So minimum elements to be deleted = array length - max(LIS, LDS).
+*/
+
+long long lisLength(vector<long long> &v, long long n)
+{
+	//initialisation of lis[] dp matrix 
+	//longest increasing subsequence 𝙚𝙣𝙙𝙞𝙣𝙜 𝙬𝙞𝙩𝙝 𝙫[0] has length 1
+	lis[0]=1;
+    
+    //choice diagram iterative code 
+	//start from second element in the vector v[]
+	for (long long i=1; i<n; i++)
+	{
+		//do for each element in subarray/subvector v[0...(i-1)]
+		for(long long j = 0; j<i; j++)
+		{
+			//find longest increasing subsequence that ends with v[j]
+			//where v[j] is less than the current element v[i]
+			if (v[i]>v[j] && lis[i]<lis[j])
+			   lis[i]=lis[j];
+		}
+
+		//include v[i] in LIS, ∵ for each i we are finding lisLength
+		//𝙬𝙝𝙞𝙘𝙝 𝙚𝙣𝙙𝙨 𝙬𝙞𝙩𝙝 𝙫[𝙞]
+		lis[i]++;
+	}
+
+	/*find longest increasing subsequence length among all the lengths 
+	  of lis {that ends with v[i], for each 0<=i<=(n-1)} calculated & 
+	  stored in lis[]*/
+	long long mx = LLONG_MIN;
+	for(long long i=0; i<n; i++)
+		mx=max(mx, lis[i]);
+
+    //return the final answer calculated
+	return mx;
+}
+
+long long ldsLength(vector<long long> &v, long long n)
+{
+	//initialisation of lds[] dp matrix 
+	//longest decreasing subsequence 𝙚𝙣𝙙𝙞𝙣𝙜 𝙬𝙞𝙩𝙝 𝙫[0] has length 1
+	lds[0]=1;
+    
+    //choice diagram iterative code 
+	//start from second element in the vector v[]
+	for (long long i=1; i<n; i++)
+	{
+		//do for each element in subarray/subvector v[0...(i-1)]
+		for(long long j = 0; j<i; j++)
+		{
+			//find longest decreasing subsequence that ends with v[j]
+			//where v[j] is more than the current element v[i]
+			if (v[i]<v[j] && lds[i]<lds[j])
+			   lds[i]=lds[j];
+		}
+
+		//include v[i] in LDS, ∵ for each i we are finding ldsLength
+		//𝙬𝙝𝙞𝙘𝙝 𝙚𝙣𝙙𝙨 𝙬𝙞𝙩𝙝 𝙫[𝙞]
+		lds[i]++;
+	}
+
+	/*find longest decreasing subsequence length among all the lengths 
+	  of lds {that ends with v[i], for each 0<=i<=(n-1)} calculated & 
+	  stored in lds[]*/
+	long long mx = LLONG_MIN;
+	for(long long i=0; i<n; i++)
+		mx=max(mx, lds[i]);
+
+    //return the final answer calculated
+	return mx;
+}
+
+long long minNumOfDel(vector<long long> &v)
+{
+	return v.size() - max(lisLength(v, v.size()), ldsLength(v, v.size()));
+}
+
+/* # lis[] & lds[] are 1-D dp[] global matrices or vectors of size (n) to store sub-problem solution.
+     lis[i] for each 0<=i<=(n-1) stores the length of the longest increasing subsequence 
+     of subarray/subvector v[0...i] 𝙬𝙝𝙞𝙘𝙝 𝙚𝙣𝙙𝙨 𝙬𝙞𝙩𝙝 𝙫[𝙞], while
+     lds[i] for each 0<=i<=(n-1) stores the length of the longest decreasing subsequence 
+     of subarray/subvector v[0...i] 𝙬𝙝𝙞𝙘𝙝 𝙚𝙣𝙙𝙨 𝙬𝙞𝙩𝙝 𝙫[𝙞].
+   # n is v.size() 
+   # Time Complexity: O(n²)
+   # Auxiliary Space: O(n).
+*/ 

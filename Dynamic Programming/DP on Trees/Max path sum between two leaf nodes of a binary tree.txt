@@ -1,9 +1,6 @@
-/*PROBLEM: The diameter of a tree (sometimes called the width) is the number of nodes on the 
-           longest path between two end nodes OR the number of edges on the longest path between 
-           two end nodes (depends on what the question is asking).
-           This path may or may not pass through the root.
-           # NOTE: in the below algorithm we are considering the 1ˢᵗ definition for diameter
-                   of a binary tree.
+/*PROBLEM: Given a binary tree in which each node element contains an integer. Find the maximum 
+           possible sum from one leaf node to another.
+           The maximum sum path may or may not go through root.
 */
 
 /* Definition for a binary tree node ⟶
@@ -17,22 +14,22 @@
    };
 */
 
-long long diaOfBinaryTree(node *root, long long &res)
+long long maxPathSumBwAnyTwoLeafNodes(node *root, long long &res)
 {
 	//base condition
 	if(root==nullptr)
 	   return 0;
 
 	//hypothesis
-	long long l= diaOfBinaryTree(root->left, res);
-	long long r= diaOfBinaryTree(root->right, res);
+	long long l= maxPathSumBwAnyTwoLeafNodes(root->left, res);
+	long long r= maxPathSumBwAnyTwoLeafNodes(root->right, res);
 
 	//induction
-	long long temp=1 + max(l, r);
-	long long ans=max(temp, 1+l+r);
-	res=max(res, ans);
+	long long temp=max(l, r)+root->val;
+	long long ans=max(temp, l+r+root->val);
+    res=max(res, ans);
 
-	return temp;
+    return temp;
 }
 
 /* # The final answer is stored in res variable, which is passed by reference in every fⁿ call.
