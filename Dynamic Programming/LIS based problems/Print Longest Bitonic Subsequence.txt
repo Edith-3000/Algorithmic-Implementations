@@ -1,0 +1,238 @@
+/*PROBLEM: Given an array arr[0...(n-1)] containing n integers, a subsequence of arr[] is called 
+           Bitonic if it is first increasing, then decreasing. Write a function that takes an array 
+           as argument and returns longest bitonic subsequence in the form of a vector.
+           NOTE(s):
+           # A sequence, sorted in increasing order is considered Bitonic with the decreasing part 
+             as empty. Similarly, decreasing order sequence is considered Bitonic with the increasing 
+             part as empty.
+           # If more than one solution exit then return any one solution.
+*/
+
+/*UNDERLYING CONCEPT ------>
+  # We define an array of vectors lis such that lis[i] stores Longest Increasing Subsequence 
+    of v[0..i] that 𝒆𝒏𝒅𝒔 𝒘𝒊𝒕𝒉 𝒗[𝒊].
+  # Similarly we define an array of vectors lds such that lds[i] stores Longest Decreasing 
+    Subsequence of v[i...(n-1)] that 𝒔𝒕𝒂𝒓𝒕𝒔 𝒘𝒊𝒕𝒉 𝒗[𝒊].
+  # For example, for array [1 11 2 10 4 5 2 1] ----->
+
+    LIS[0]: 1
+    LIS[1]: 1 11
+    LIS[2]: 1 2
+    LIS[3]: 1 2 10
+    LIS[4]: 1 2 4
+    LIS[5]: 1 2 4 5
+    LIS[6]: 1 2
+    LIS[7]: 1
+
+    LDS[0]: 1
+    LDS[1]: 11 10 5 2 1
+    LDS[2]: 2 1
+    LDS[3]: 10 5 2 1
+    LDS[4]: 4 2 1
+    LDS[5]: 5 2 1
+    LDS[6]: 2 1
+    LDS[7]: 1
+   
+   Therefore, Longest Bitonic Subsequence can be
+   LIS[1] + LDS[1] = [1 11 10 5 2 1]  or
+   LIS[3] + LDS[3] = [1 2 10 5 2 1]   or
+   LIS[5] + LDS[5] = [1 2 4 5 2 1]
+*/
+
+vector<long long> printLBS(vector<long long> &v, long long n)
+{
+	//LIS[i] stores the longest increasing subsequence of subarray
+	//v[0...i] 𝙩𝙝𝙖𝙩 𝙚𝙣𝙙𝙨 𝙬𝙞𝙩𝙝 𝙫[𝙞]
+	vector<int> LIS[n]; //array of vectors
+    
+    //LDS[i] stores the longest decreasing subsequence of subarray
+	//v[i...(n-1)] 𝙩𝙝𝙖𝙩 𝒔𝒕𝒂𝒓𝒕𝒔 𝙬𝙞𝙩𝙝 𝙫[𝙞]
+	vector<int> LDS[n]; //array of vectors
+
+	//initialisation
+	//LIS[0] denotes longest increasing subsequence ending with v[0]
+	LIS[0].push_back(v[0]);
+
+	//LDS[n-1] denotes longest decreasing subsequence starting with v[n-1]
+	LDS[n-1].push_back(v[n-1]);
+
+	//for LIS[]
+	//start from second element in the vector v[]
+	for(long long i=1; i<n; i++)
+	{
+		//do for each element in subarray/subvector v[0...(i-1)]
+		for(long long j=0; j<i; j++)
+		{
+			//find longest increasing subsequence that ends with v[j]
+			//where v[j] is less than the current element v[i]
+            if(v[i]>v[j] && LIS[i].size()<LIS[j].size())
+			   LIS[i]=LIS[j]; //copying the subsequence
+		}
+
+		//include v[i] in LIS[i]
+		LIS[i].push_back(v[i]);
+	}
+
+	//for LDS[]
+	//start from second last element in the vector v[]
+	for(long long i=(n-2); i>=0; i--)
+	{
+		//do for each element in subarray/subvector v[(i+1)...(n-1)]
+		for(long long j=(n-1); j>i; j--)
+		{
+			//find longest decreasing subsequence that starts with v[j]
+			//where v[j] is less than the current element v[i]
+            if(v[i]>v[j] && LDS[i].size()<LDS[j].size())
+			   LDS[i]=LDS[j]; //copying the subsequence
+		}
+
+		//include v[i] in LDS[i]
+		LDS[i].push_back(v[i]);
+	}
+
+	//reverse each vector LDS[i]  
+    for (long long i = 0; i < n; i++) 
+       reverse(LDS[i].begin(), LDS[i].end()); 
+
+    //find the maximum value of LIS[i].size() + LDS[i].size() - 1
+    long long mx = LIS[0].size()+LDS[0].size()-1; 
+    long long index=0; //index having max value of mx
+
+    for (long long i=1; i<n; i++) 
+    {
+       if((LIS[i].size()+LDS[i].size()-1) > mx)
+       {
+          mx = LIS[i].size()+LDS[i].size()-1; 
+          index=i;
+       }
+    }   
+
+    vector<long long> res; //to store final LBS
+    
+    //assigning all elements of LIS[index] to res except last one
+    res.assign(LIS[index].begin(), LIS[index].end()-1); 
+
+    //appending LDS[index] to res
+    res.insert(res.end(), LDS[index].begin(), LDS[index].end());
+
+    //return final result
+    return res;
+}
+
+/* # n is v.size() 
+   # Time Complexity: O(n²)
+   # Auxiliary Space: O(n²).
+*/ 
+
+***************************************************************************************************************
+
+//SPACE OPTIMIZED APPROACH [Auxiliary Space: O(n)]
+
+/*ALGORITHM: ------>
+  1). Create two dp vectors lis[] and lds[] to store, at every ith index, the length of the longest 
+      increasing and decreasing subsequences 𝑬𝑵𝑫𝑰𝑵𝑮 & 𝑺𝑻𝑨𝑹𝑻𝑰𝑵𝑮 with the element v[i] respectively.
+  2). Once computed, find the ith index which contains the maximum value of lis[i] + lds[i] – 1
+  3). Create res[] to store all the elements of the longest bitonic subsequence in increasing order of 
+      elements followed by decreasing order of elements.
+  4). Return the res[] vector.
+*/
+
+vector<long long> printLBS(vector<long long> &v, long long n)
+{
+	//initialisation of dp matrices lis[] and lds[]
+	//longest increasing subsequence length 𝙚𝙣𝙙𝙞𝙣𝙜 𝙬𝙞𝙩𝙝 𝙫[0] has length 1
+	lis[0]=1;
+    
+    //longest decreasing subsequence length 𝒔𝒕𝒂𝒓𝒕𝒊𝒏𝒈 𝙬𝙞𝙩𝙝 𝙫[n-1] has length 1
+	lds[n-1]=1;
+
+    //choice diagram iterative code
+    //for lis[] 
+	//start from second element in the vector v[]
+	for (long long i=1; i<n; i++)
+	{
+		//do for each element in subarray/subvector v[0...(i-1)]
+		for(long long j = 0; j<i; j++)
+		{
+			//find longest increasing subsequence that ends with v[j]
+			//where v[j] is less than the current element v[i]
+			if(v[i]>v[j] && lis[i]<lis[j])
+			   lis[i]=lis[j];
+		}
+
+		//include v[i] in LIS, ∵ for each i we are finding lisLength
+		//𝙬𝙝𝙞𝙘𝙝 𝙚𝙣𝙙𝙨 𝙬𝙞𝙩𝙝 𝙫[𝙞]
+		lis[i]++;
+	}
+
+	//for lds[] 
+	//start from second last element in the vector v[]
+	for (long long i=(n-2); i>=0; i--)
+	{
+		//do for each element in subarray/subvector v[(i+1)....(n-1)]
+		for(long long j=(n-1); j>i; j--)
+		{
+			//find longest decreasing subsequence that starts with v[j]
+			//where v[j] is less than the current element v[i]
+			if(v[i]>v[j] && lds[i]<lds[j])
+			   lds[i]=lds[j];
+		}
+
+		//include v[i] in LDS, ∵ for each i we are finding ldsLength
+		//𝙬𝙝𝙞𝙘𝙝 𝒔𝒕𝒂𝒓𝒕𝒔 𝙬𝙞𝙩𝙝 𝙫[𝙞]
+		lds[i]++;
+	}
+    
+   //find the maximum value of lis[i] + lds[i] - 1
+   long long mx = lis[0]+lds[0]-1; 
+   long long index=0; //index having max value of mx
+   for (long long i=1; i<n; i++) 
+   {
+      if((lis[i] + lds[i] - 1) > mx)
+       {
+          mx = lis[i] + lds[i] - 1;
+          index=i;
+       }
+    }   
+   
+   //to store final res
+   vector<long long> res;
+   
+   //stores the count of elements in increasing 
+   //order in Bitonic subsequence 
+   long long count=lis[index];
+
+   //store the increasing subsequence in res
+   for(long long i=index; i>=0 && count>0; i--)
+   {
+      if(lis[i]==count)
+      {
+         res.push_back(v[i]);
+         count--;
+      }
+   }
+   
+   //reversing res holding increasing part(in decreasing order) 
+   //of Bitonic subsequence
+   reverse(res.begin(), res.end());
+   
+   //stores the count of elements in 
+   //decreasing order in Bitonic subsequence 
+   //-1 is done to not to repeat the common element
+   count=lds[index]-1; 
+   for(long long i=index; i<n && count>0; i++)
+   {
+      if(lds[i]==count)
+      {
+         res.push_back(v[i]);
+         count--;
+      }
+   }
+
+   return res;
+}
+
+/* # n is v.size() 
+   # Time Complexity: O(n²)
+   # Auxiliary Space: O(n).
+*/ 

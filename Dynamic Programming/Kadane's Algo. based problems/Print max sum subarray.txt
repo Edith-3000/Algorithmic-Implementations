@@ -1,0 +1,54 @@
+/*PROBLEM: Given an array arr of n integers. Print the contiguous sub-array with maximum sum.
+*/
+
+pair<long long, long long> kadaneAlgo(vector<long long> &v)
+{
+	long long n=v.size();
+    
+    //to store the maximum of all the sub-array sums calculated so far
+	long long maxSoFar=v[0];
+
+	//to store maximum sum of sub-array 𝒆𝒏𝒅𝒊𝒏𝒈 at current position (i)
+	long long maxEndingHere=v[0];
+    
+    //to store end-points of maximum sum subarray found so far
+	long long start=0, end=0;
+	//to store starting index of a positive sum sequence
+	long long beg=0;
+
+	for(long long i=1; i<n; i++)
+	{
+	   //update maximum sum of sub-array "𝒆𝒏𝒅𝒊𝒏𝒈" at index i (by adding
+	   //current element to maximum sum ending at previous index i-1)
+	   maxEndingHere+=v[i];
+
+	   //if maximum sum for sub-array ending at current index (i) is -ve, 
+	   //set it to max(maxEndingHere, v[i]) to handle case of all -ve nos. also
+	   //(which represents an empty sub-array), ∵ adding a -ve
+	   //num doesn't increase a quantity
+	   if(maxEndingHere<0)
+	   {
+          maxEndingHere=max(maxEndingHere, v[i]);
+          beg=i+1; 
+	   }
+	  
+       //update result if current sub-array(ending at index(i)) sum is 
+       //found to be greater
+       if(maxSoFar<maxEndingHere)
+	   {
+	      maxSoFar=maxEndingHere;
+	      start=beg;
+	      end=i;  
+	   }
+	}
+    
+    pair<long long, long long> p; //to store result
+    p=make_pair(start, end);
+
+    //return final result
+	return p;
+}
+
+/* # Time Complexity: O(n)
+   # Space Complexity: O(1)
+*/
