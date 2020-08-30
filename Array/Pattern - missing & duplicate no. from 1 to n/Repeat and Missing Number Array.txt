@@ -52,11 +52,39 @@
          Using eqⁿ(1) & eqⁿ(1),
          b = (c1+c3)/2
          a = b-c1
+   ● Beware of overflow in this approach.
 */
 
-long long repeatAndMissing(vector<long long> &v)
+vector<long long> repeatAndMissing(vector<long long> &v)
 {
 	long long n=v.size();
+
+	//for the ideal array
 	//taking care of overflow
 	long long sum = (n&1) ? ((n+1)/2)*n : (n/2)*(n+1); 
+	long long sqsum = ((n*(n+1)(2*n+1)))/6;
+
+	//for the i/p array
+	long long vsum=0;
+	for(long long i=0; i<n; i++) 
+	   vsum+=v[i];
+
+	long long vsqsum;
+	for(long long i=0; i<n; i++) 
+	   vsqsum+=(v[i]*v[i]);
+
+	long long c1=sum-vsum;
+	long long c2=sqsum-vsqsum;
+	long long c3=c2/c1;
+
+	//for storing the res i.e. missing & repeating number
+	vector<long long> res;
+	long long b=(c1+c3)/2; //missing number
+	res.push_back(b); 
+	res.push_back(b-c1); //repeating nmber
+
+	return res;
 }
+
+//Time complexity: O(n)
+//Space complexity: O(1)
