@@ -25,12 +25,10 @@ pair<long long, long long> kadaneAlgo(vector<long long> &v)
 	   //if maximum sum for sub-array ending at current index (i) is -ve, 
 	   //set it to max(maxEndingHere, v[i]) to handle case of all -ve nos. also
 	   //(which represents an empty sub-array), ∵ adding a -ve
-	   //num doesn't increase a quantity
+	   //num doesn't increase a quantity 
+	   maxEndingHere=max(maxEndingHere, v[i]);
 	   if(maxEndingHere<0)
-	   {
-          maxEndingHere=max(maxEndingHere, v[i]);
           beg=i+1; 
-	   }
 	  
        //update result if current sub-array(ending at index(i)) sum is 
        //found to be greater
