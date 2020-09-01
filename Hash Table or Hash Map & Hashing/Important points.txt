@@ -1,0 +1,162 @@
+* A hash table (or hash map) is a data structure that maps keys to values for highly 
+  efficient lookup.
+
+* A hash table is typically an array of linked lists. Remember, Values are not stored
+  in a sorted order in hash table.
+
+* [Algorithm]  Average Case	 Worst case
+    Space		     O(n)	        O(n)
+    Search		   O(1)	        O(n)
+    Insert		   O(1)	        O(n)
+    Delete		   O(1)	        O(n)
+
+* A hash table uses a hash function to compute an index, also called a hash code, into an
+  array of buckets or slots, from which the desired value can be found. During lookup, the 
+  key is hashed and the resulting hash indicates where the corresponding value is stored.
+
+* Ideally, the hash function will assign each key to a unique bucket, but most hash table
+  designs employ an imperfect hash function, which might cause hash collisions where the 
+  hash function generates the same index for more than one key. Such collisions are always 
+  accommodated in some way.
+
+* In many situations, hash tables turn out to be on average more efficient than search
+  trees or any other table lookup structure. For this reason, they are widely used in many 
+  kinds of computer software, particularly for associative arrays, database indexing, caches,
+  and sets.
+
+* Hashing: The idea of hashing is to distribute the entries (key/value pairs) across an
+           array of buckets. Given a key, the algorithm computes an index that suggests 
+           where the entry can be found:
+
+           index = f(key, array_size)
+           Often this is done in two steps: hash = hashfunc(key)
+                                            index = hash % array_size
+
+* In the above method, the hash is independent of the array size, and it is then reduced 
+  to an index (a number between 0 and array_size − 1) using the modulo operator (%).
+
+* Choosing a hash function ->
+  A basic requirement is that the function should provide a uniform distribution of hash
+  values. A non-uniform distribution increases the number of collisions and the cost of 
+  resolving them. 
+
+* Perfect hash function ->
+  A perfect hash function for a set S is a hash function that maps distinct elements in S
+  to a set of integers, with no collisions. In mathematical terms, it is an injective function.
+  It has the advantage that no collision resolution has to be implemented for it.
+  But ofcourse it is not practical always.
+  Therefore ideal hash function: h(key)=key
+
+* If all keys are known ahead of time, a perfect hash function can be used to create a perfect
+  hash table that has no collisions.
+
+* Perfect hashing allows for constant time lookups in all cases.
+
+* A good hash function should have the following properties:
+  1). Efficiently computable.
+  2). Should uniformly distribute the keys (Each table position equally likely for each key)
+
+* A critical statistic for a hash table is the load factor, defined as
+  Load factor(ƛ) = (n/k), where ● n is the number of entries occupied in the hash table.
+                                ● k is the number of buckets(size of hash table).
+                                 
+* As the load factor grows larger, the hash table becomes slower, and it may even fail to 
+  work (depending on the method used). 
+
+* THE EXPECTED CONSTANT TIME PROPERTY OF A HASH TABLE ASSUMES THAT THE LOAD FACTOR BE KEPT
+  BELOW SOME BOUND. 
+
+* A low load factor is not especially beneficial. As the load factor approaches 0, the 
+  proportion of unused areas in the hash table increases, but there is not necessarily any 
+  reduction in search cost. This results in wasted memory.
+
+* Collusion Resolution: Hash collisions are practically unavoidable when hashing a random 
+  subset of a large set of possible keys. For example, if 2,450 keys are hashed into a 
+  million buckets, even with a perfectly uniform random distribution, according to the 
+  birthday paradox there is approximately a 95% chance of at least two of the keys being 
+  hashed to the same slot.
+
+  Therefore, almost all hash table implementations have some collision resolution strategy 
+  to handle such events. Some common strategies are described below. All these methods 
+  require that the keys (or pointers to them) be stored in the table, together with the
+  associated values.
+
+* In practice, we can often employ heuristic techniques to create a hash function that 
+  performs well.
+
+* The two heuristic methods are hashing by modulo and hashing by multiplication which 
+  are as follows: 
+  1). The mod method:
+      # In this method for creating hash functions, we map a key into one of the slots 
+        of table by taking the remainder of key divided by table_size. That is, the hash 
+        function is - h(key) = key mod table_size 
+                      i.e. key % table_size
+      # Since it requires only a single division operation, hashing by division is 
+        quite fast.
+
+  2). The multiplication method:
+      # In multiplication method, we multiply the key k by a constant real number c 
+        in the range 0 < c < 1 and extract the fractional part of k * c.
+      # Then we multiply this value by table_size m and take the floor of the result. 
+        It can be represented as: h(k) = floor (m * (k * c mod 1))
+                                                or
+                                  h(k) = floor (m * frac (k * c))
+        where the function floor(x), available in standard library math.h, yields 
+        the integer part of the real number x, and frac(x) yields the fractional part.
+        [frac(x) = x – floor(x)]
+
+* COLLUSION RESOLUTION TECHNIQUES: 
+  1). Open hashing: * Chaining 
+      (extra space is consumed in open hashing)
+  2). Closed hashing: * Open addressing
+                          * Linear probing
+                          * Quadratic probing
+                          * Double hashing 
+      (no extra space is consumed in closed hashing)
+
+* Analysis of hashing is always done on the basis of loading factor.
+* It is recommended that the loading factor must not exceed 0.5, i.e. ƛ<=0.5
+
+* Hash function used in chaining: h(x)=x%size
+* Average time taken for successful search in chaining = 1+(ƛ/2)
+  Average time taken for unsuccessful search in chaining = 1+ƛ
+
+* Modified Hash function used in linear probing: h'(x)=(h(x)+f(i))%size, where
+                                             h(x) is the basic hash function &
+                                             f(i)=i for i=0, 1, 2, 3, & so on.
+* Average time taken for successful search in linear probing = (1/ƛ)ln(1/(1-ƛ))
+* Average time taken for unsuccessful search in linear probing = 1/(1-ƛ)  
+* Linear probing leads to the problem of primary clustering.
+* Deletion of an entity(key-value pair) is not so easy in linear probing, as after
+  deletion of an entity REHASHING should be performed (to adjust rest of the entities).
+* As deletion is not so easy in linear probing that's why it is not a suggested practice
+  (deletion of an key-value pair).
+
+* Modified Hash function used in linear probing: h'(x)=(h(x)+f(i))%size, where
+                                             h(x) is the basic hash function &
+                                             f(i)=i^2 for i=0, 1, 2, 3, & so on.
+* Average time taken for successful search in quadratic probing = -(ln(1-ƛ))/ƛ
+* Average time taken for unsuccessful search in quadratic probing = 1/(1-ƛ)  
+
+* Modified Hash function used in linear probing: h'(x)=(h1(x) + i*h2(x))%size, where
+                                                 h1(x) is the basic hash function,
+                                                 h2(x)=R-(x%R) or any such function is
+                                                 helpful in removing collision and having
+                                                 the below given desired properties,
+                                                 R is a prime no. < size of hash table &
+                                                 i=0, 1, 2, 3 & so on.
+* h2(x) function should have 2 desired properties ->
+  1). It should not give index 0. 
+  2). It should try to probe all the locations means whenever there is a collision it 
+      should not give the indices in the same pattern but it should give indices such
+      that all the locations are utilized.
+
+* Few suggested hash functions ->
+  1). Modulus hash function: # h(x)=x%size or h(x)=x%size+1
+                             # It is suggested that the size chosen for hash table should
+                               be a prime number(so as to reduce collisions).
+  2). Midsquare hash function: # in it firstly square the key of the key-value pair to be
+                                 be inserted, then take the middle digit of the squared key,
+                                 this middle digit is the index.
+  3). Folding hash function: # partition the key into more than 1 partitions by taking some
+                               number of digits, add these partitions, take mod if required.

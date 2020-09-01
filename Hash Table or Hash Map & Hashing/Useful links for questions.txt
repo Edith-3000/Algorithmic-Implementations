@@ -1,0 +1,8 @@
+1). https://www.techiedelight.com/find-duplicates-within-given-range-array/
+2). https://www.techiedelight.com/replace-each-element-corresponding-rank-array/
+3). https://www.techiedelight.com/find-minimum-index-repeating-element-array/
+4). https://www.geeksforgeeks.org/find-index-maximum-occurring-element-equal-probability/#:~:text=The%20
+    idea%20is%20to%20iterate,occurring%20element%20in%20the%20array.
+    (or)
+    https://www.techiedelight.com/find-index-maximum-occurring-element-equal-probability/
+5). 
