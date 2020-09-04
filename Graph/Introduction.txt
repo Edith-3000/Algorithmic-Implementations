@@ -1,0 +1,6 @@
+# The father of graph theory is the great Swiss mathematician Leonhard Euler, whose famous 1736 paper, 
+  "The Seven Bridges of Konigsberg," was the first treatise on the subject.
+
+# In the 18th century, Euler was intrigued by the question of whether a route existed that would traverse
+  each of the seven bridges exactly once. In demonstrating that the answer is 🅽🅾, he laid the foundation 
+  for graph theory.

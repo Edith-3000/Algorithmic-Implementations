@@ -138,3 +138,48 @@ pair<long long, long long> repeatAndMissing(vector<long long> &v)
 
 //Time complexity: O(n)
 //Space complexity: O(1)
+
+------------------------------------------------------------------------------------------
+
+/*Slightly different code from above code, although no difference in logic*/
+
+void swap(long long &x, long long &y)
+{
+   long long temp=x;
+   x=y;
+   y=temp;
+}
+
+pair<long long, long long> repeatAndMissing(vector<long long> &v)
+{
+   long long n=v.size();
+   
+   long long i=0; //array traverser
+   
+   //preprocessing the array
+   while(i<n)
+   {
+      if(v[i]!=v[v[i]-1])
+         swap(v[i], v[v[i]-1]);
+
+      else i++;
+   }  
+
+   //extracting result
+   for(long long i=0; i<n; i++)
+   {
+      if(i!=v[i]-1)
+      {
+         r=v[i];
+         m=i+1;
+         break;
+      }
+   }
+
+   pair<long long, long long> p; //for returning final result
+   p=make_pair(m, r);
+   return p;
+}
+
+//Time complexity: O(n)
+//Space complexity: O(1)

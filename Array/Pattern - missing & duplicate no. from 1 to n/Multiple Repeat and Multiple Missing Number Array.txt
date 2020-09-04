@@ -1,0 +1,54 @@
+/*PROBLEM: You are given an array of n integers from 1 to n.
+           Each integer appears exactly once except few which appears twice and few which are missing.
+           Array need not be sorted.
+           Return the repeating and missing numbers.
+           NOTE: Your algorithm should have a linear runtime complexity. Could you implement it without using extra memory?
+*/
+
+//OPTIMIZED IMPLEMENTATION USINIG Swap Sort
+
+/* # This method(by swap sort) is only applicable if the given array is mutable(i.e. it can be changed).
+   # If the array is immutable(read only), then this method is not applicable.
+   # The approach used here is similar to the approach used in 1 Repeat and 1 Missing Number Array.
+*/
+
+void swap(long long &x, long long &y)
+{
+   long long temp=x;
+   x=y;
+   y=temp;
+}
+
+pair<long long, long long> multipleRepeatAndMissing(vector<long long> &v)
+{
+   long long n=v.size();
+   
+   long long i=0; //array traverser
+   
+   //preprocessing the array
+   while(i<n)
+   {
+      if(v[i]!=v[v[i]-1])
+         swap(v[i], v[v[i]-1]);
+
+      else i++;
+   }  
+
+   //extracting result
+   for(long long i=0; i<n; i++)
+   {
+      if(i!=v[i]-1)
+      {
+         r=v[i];
+         m=i+1;
+         break;
+      }
+   }
+
+   pair<long long, long long> p; //for returning final result
+   p=make_pair(m, r);
+   return p;
+}
+
+//Time complexity: O(n)
+//Space complexity: O(1)

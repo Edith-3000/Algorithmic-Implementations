@@ -1,0 +1,41 @@
+                     BFS                          |                        DFS
+                                                  |
+* BFS finds the shortest path to the destination. | * DFS goes to the bottom of a subgraph, then backtracks.
+* It uses a queue to keep track of the next       | * It uses a stack to keep track of the 
+  location to visit                               |   next location to visit.
+* BFS traverses according to graph level.	      | * DFS traverses according to graph depth.
+* It is implemented using FIFO queue.	          | * It is implemented using LIFO stack.
+* It requires more memory as compare to DFS.	  | * It requires less memory as compare to BFS.
+* This algorithm gives the shallowest path	      | * This algorithm doesn't guarantee the shallowest 
+  solution.                                       |   path solution.
+* There is no need of backtracking in BFS.	      | * There is a need of backtracking in DFS.
+* You can never be trapped into finite loops.	  | * You can get trapped into infinite loops.
+* If you do not find any goal, you may need to    | * If you do not find any goal, the leaf node 
+  expand many nodes before the solution is        |   backtracking may occur.
+  found.                                          |	
+* BFS finds the shortest path to the destination  | * No guarantee of shortest path.
+
+# SOME EXTRA POINTS ------->
+
+* Breadth-first search is less space efficient than depth-first search because BFS keeps a priority queue 
+  of the entire frontier while DFS maintains a few pointers at each level.
+
+* BFS always returns an optimal answer, but this is not guaranteed for DFS.
+
+* While BFS may seem slower, it’s actually deemed faster(although asymptotically both BFS & DFS have
+  same runtime complexity) because if we were to implement them on larger graphs, you’ll find that DFS 
+  wastes a lot of time going down long paths that are ultimately wrong. In fact, BFS is often used in 
+  algorithms to determine the shortest path from one vertex to another.
+
+* The memory taken by DFS/BFS heavily depends on the structure of our graph/tree. The maximum memory 
+  taken by DFS (i.e. by recursion call stack) is equal to the depth of the tree and the maximum memory 
+  taken by BFS is equal to the width of the tree.
+
+* WHEN TO USE DFS AND BFS?
+  # If it is known that an answer will likely be found far into a graph, DFS is a better option than 
+    BFS. 
+  # BFS is good to use when the depth of the tree can vary or if a single answer is needed — for example, 
+    the shortest path in a graph. 
+  # If the entire graph is to be traversed, DFS is a better option.
+  # If graph/tree is very wide, use DFS as BFS will take too much memory. 
+    Similarly if graph/tree is very deep, choose BSF over DFS.
