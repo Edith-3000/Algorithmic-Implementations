@@ -1,0 +1,68 @@
+/* PROBLEM: Given a unweighted graph and a source, find shortest path from source to every other 
+            node in the graph in most optimal way.
+*/
+
+/*UNDERLYING CONCEPT:
+  # The idea is to use a slightly modified version of Breadth-first search.
+  # 𝑭𝒐𝒓 𝒂𝒏 𝑼𝑵𝑾𝑬𝑰𝑮𝑯𝑻𝑬𝑫 𝑮𝑹𝑨𝑷𝑯(𝒊.𝒆. 𝒂𝒍𝒍 𝒆𝒅𝒈𝒆𝒔 𝒉𝒂𝒗𝒊𝒏𝒈 𝒕𝒉𝒆 𝑺𝑨𝑴𝑬 𝒘𝒆𝒊𝒈𝒉𝒕/𝒄𝒐𝒔𝒕) 𝒕𝒉𝒆 𝒍𝒆𝒗𝒆𝒍 𝒐𝒓𝒅𝒆𝒓 𝒕𝒓𝒂𝒗𝒆𝒓𝒔𝒂𝒍
+    (𝑩𝑭𝑺) 𝒈𝒊𝒗𝒆𝒔 𝒕𝒉𝒆 𝒔𝒉𝒐𝒓𝒕𝒆𝒔𝒕 𝒑𝒂𝒕𝒉.
+*/
+
+vector<T> ssspUsingBFS(T src)
+{
+    //to store the distance of all vertices
+    //from src vertex, it'll also be used to
+    //check if a vertex is already visited or not
+	    unordered_map<T, T> d; 
+
+    //initialising distances of all vertices from
+    //source vertex (src) as ∞ 
+    for(auto p: mp)
+    {
+       T v=p.first;
+       d[v]=LLONG_MAX;
+    }
+    
+    //distance of src from itself = 0
+    d[src]=0;
+
+	  //queue to remember which vertex to visit next
+	  //in case of dead end in iteration
+	  queue<T> q;
+
+	  //initialisation of the bfs process
+	  //pushing the src in queue
+	  q.push(src);
+	
+	  //iterative process
+	  while(!q.empty())
+	  {
+	     //taking out vertex from q
+	     T v=q.front();
+	     //popping out this vertex v from q
+       q.pop();
+       
+       //visiting all the adjacent vertices of v
+       for(const auto &x: mp[v])
+       {
+          //check if x is visited for the first 
+          //time or not
+          if(d[x]==LLONG_MAX)
+          {
+             //update the distance from src
+             //i.e. d[child]=d[parent]+1
+             d[x]=d[v]+1;
+             //push it in the queue
+             q.push(x);
+          }
+       }
+	  }
+
+	  //return the final result of traversal
+	  return d;
+}
+
+/*# Here mp is an adjacency list representation of graph using hash map.
+    unordered_map<T, list<T>> mp;
+  # The Analysis of SSSP Algorithm using BFS ≡ Analysis of breadth-first search
+*/

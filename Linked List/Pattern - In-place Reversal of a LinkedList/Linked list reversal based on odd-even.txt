@@ -1,0 +1,21 @@
+Problem Statement: Given a LinkedList with ‘n’ nodes, reverse it based on its size in the 
+                   following way:
+                   1. If ‘n’ is even, reverse the list in a group of n/2 nodes.
+                   2. If n is odd, keep the middle node as it is, reverse the first ‘n/2’ nodes and reverse 
+                      the  last ‘n/2’ nodes.
+*/
+
+/*UNDERLYING CONCEPT: ---->
+  # This problem can be easily converted to the parent problem of Reversing a sublist from 'k' to 'l'; 
+    We can call this fⁿ 2 times.
+
+  # When ‘n’ is even we can perform the following steps:
+    1). Reverse first ‘n/2’ nodes: head = reverseSubList(head, 1, n/2)
+    2). Reverse last ‘n/2’ nodes: head = reverseSubList(head, n/2 + 1, n)
+  
+  # When ‘n’ is odd, our algorithm will look like:
+    1). head = reverseSubList(head, 1, n/2)
+    2). head = reverseSubList(head, n/2 + 2, n)
+    *NOTE: in the function call in 2ⁿᵈ step, we’re skipping two elements as we will be skipping 
+           the middle element.
+*/

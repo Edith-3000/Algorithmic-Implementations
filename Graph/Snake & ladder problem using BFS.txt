@@ -1,0 +1,174 @@
+/*PROBLEM: Given a snake and ladder board, find the minimum number of dice throws required to 
+           reach the destination or last cell from source or 1st cell. Basically, the player has total 
+           control over outcome of dice throw and wants to find out minimum number of throws required 
+           to reach last cell.
+           If the player reaches a cell which is base of a ladder, the player has to climb up that ladder 
+           and if reaches a cell which is mouth of the snake, has to go down to the tail of snake without 
+           a dice throw.
+           Print the shortest path as well.
+           
+           Inputs given - 1.) #cells in the snake and ladder board (n).
+                          2). A snake (vector of pairs) which contains the pair of cell numbers, eg.
+                              if snake mouth at 15 and tail at 2, then pair will be (15, 2).
+                          3). A ladder (vector of pairs) which contains the pair of cell numbers, eg.
+                              if ladders bottom is at 3 and top is at 27, then pair will be (3, 27).
+           NOTE: There is no double turn on getting a 6 on the dice.
+*/
+
+/*UNDERLYING CONCEPT ------>
+  # The idea is to consider the given snake and ladder board as a 𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝒈𝒓𝒂𝒑𝒉 with #vertices equal to
+    the #cells in the board. 
+  # The problem reduces to finding the shortest path in a graph. 
+  # Every vertex of the graph has a 𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝒆𝒅𝒈𝒆 to next six vertices if next 6 vertices do not have a 
+    snake or ladder. 
+  # If any of the next six vertices has a snake or ladder, then the edge from current vertex goes to the 
+    top of the ladder or tail of the snake. 
+  # Since the cost of travelling from one vertex to another is constant (here it is = 1 dice throw),
+    ∴ it is an 𝒖𝒏𝒘𝒆𝒊𝒈𝒉𝒕𝒆𝒅 𝒈𝒓𝒂𝒑𝒉.
+  # Now the problem boils down to find the shortest path from given source to a destination(which can be 
+    done using BFS) of an 𝒖𝒏𝒘𝒆𝒊𝒈𝒉𝒕𝒆𝒅 𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝒈𝒓𝒂𝒑𝒉.
+*/
+
+pair<T, vector<T>> ssspUsingBFS(T src, T n, unordered_map<T, list<T>> &mp)
+{
+    //to store the distance of all vertices
+    //from src vertex, it'll also be used to
+    //check if a vertex is already visited or not
+	unordered_map<T, T> d; 
+
+    //to store parent of each vertex during bfs traversal
+	unordered_map<T, T> p; 
+
+    //initialising distances of all vertices from
+    //source vertex (src) as ∞ 
+    for(auto p: mp)
+    {
+       T v=p.first;
+       d[v]=LLONG_MAX;
+    }
+    
+    //distance of src from itself = 0
+    d[src]=0;
+    
+    //parent of src vertex is src itself
+    p[src]=src;
+
+	//queue to remember which vertex to visit next
+	//in case of dead end in iteration
+	queue<T> q;
+
+	//initialisation of the bfs process
+	//pushing the src in queue
+	q.push(src);
+	
+	//iterative process
+	while(!q.empty())
+	{
+	    //taking out vertex from q
+	    T v=q.front();
+        
+        //if front vertex is the destination vertex, 
+        //we are done no need to calculate further 
+        if(v==n) break;
+
+	    //popping out this vertex v from q
+        q.pop();
+       
+        //visiting all the adjacent vertices of v
+        for(const auto &x: mp[v])
+        {
+           //check if x is visited for the first 
+           //time or not
+           if(d[x]==LLONG_MAX)
+           {
+              //update the distance from src
+              //i.e. d[child]=d[parent]+1
+              d[x]=d[v]+1;
+              
+              //parent of x is v
+              p[x]=v;
+
+              //push it in the queue
+              q.push(x);
+           }
+        }
+	}
+    
+    vector<T> path; //to store the shortest path 
+    T temp=n;
+    while(temp!=src)
+    {
+       path.push_back(temp);
+       temp=p[temp];
+    }
+    path.push_back(src); //src vertex is 1
+    reverse(path.begin(), path.end());
+    
+    //pair to store min #dice throws and the path followed
+    pair<T, vector<T>> res; 
+    res=make_pair(d[n], path);
+
+	//return the final result of traversal
+	return res;
+}
+
+void addEdge(T x, T y, unordered_map<T, list<T>> &mp)
+{
+	//to add unweighted directed edges from x to y
+	mp[x].push_back(y);
+}
+
+pair<T, vector<T>> snakeLadderProb(T n, vector<pair<T, T>> &snake, vector<pair<T, T>> &ladder)
+{
+	//to keep track of the cells which have a ladder
+	//bottom or snake mouth
+	//initialising it to 0
+	vector<T> board(n+1, 0);
+
+	//checking the snake vector
+	for(auto it=snake.begin(); it!=snake.end(); it++)
+    {
+       //if a cell x contains snake mouth then we have to 
+       //move down by (x-y) cells if snake tail is at cell y
+       board[it->first] = -(it->first - it->second);
+    }
+    
+    //checking the ladder vector
+    for(auto it=ladder.begin(); it!=ladder.end(); it++)
+    {
+       //if a cell x contains ladder bottom then we have to 
+       //move up by (y-x) cells if ladder top is at cell y
+       board[it->first] = (it->second - it->first);
+    }
+
+	//graph using adjacency list representation
+	unordered_map<T, list<T>> mp;
+    
+    //adding unweighted directed edges to the graph
+	for(T i=1; i<(n+1); i++)
+	{
+	   //for every cell there is a directed edge to next 6 vertices 
+	   //if next 6 vertices do not have a snake or ladder
+	   for(T dice=1; dice<=6; dice++)
+	   {
+          T j=i+dice;
+          //if there is a snake or ladder then do necessary
+          //promotion or demotion 
+          j+=board[j];
+          
+          //add edge b/w vertices i & j
+          if(j<=n)
+             addEdge(i, j, mp);
+	   }
+	}
+    //although there is no sense in adding an edge from n --> n
+    //but it is necessary to add n in mp so that in the ssspUsingBFS()
+    //it's distance can be initialised
+	addEdge(n, n, mp);
+    
+    //calling sssp algorithm src=0 to dest=n 
+    pair<T, vector<T>> res= ssspUsingBFS(1, n, mp);
+    return res;
+}
+
+// # Leaving the other things the time and space complexities are same as of breadth-first search

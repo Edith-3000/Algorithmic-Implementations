@@ -1,0 +1,92 @@
+/*Problem Statement: Given the head of a LinkedList and two positions ‘k’ and ‘l’, reverse the 
+                     LinkedList from position ‘k’ to ‘l’.
+*/
+
+/*UNDERLYING CONCEPT: ---->
+  # The problem follows the In-place Reversal of a LinkedList pattern. 
+  # We can use a similar approach as discussed in Reverse a LinkedList. Here are the steps we need to 
+    follow:
+    1). Skip the first k-1 nodes, to reach the node at position k.
+    2). Remember the node at position k-1 to be used later to connect with the reversed sub-list.
+    3). Next, reverse the nodes from k to q using the same approach discussed in Reverse a LinkedList.
+    4). Connect the k-1 and l+1 nodes to the reversed sub-list.
+*/
+
+/*ALGORITHM ------>
+1). Bring p upto the node from where we have to start changing links,
+    prev is pointing at the node just behind the node being pointed by p.
+2). p and prev are now on hold, from here pOfSubList & prevOfSubList takes the lead,
+    the internal links for group of k nodes will be changed by pOfSubList & prevOfSubList.
+    p & prev will connect the k nodes sublist to it's previous part and next part(but right now both are on 
+    hold).
+3). pOfSubList & prevOfSubList has done their work & changed the internal links.
+    Now, pOfSubList is either pointing to null or (k+1)ᵗʰ node, while
+    prevOfSubList is just right behind pOfSubList.
+4). prev will help in establishing a link for the sublist of k nodes with its's previous part.
+5). Similary p will help in establishing a link for the sublist of k nodes with its's next part.
+*/
+
+/*
+ * Definition for singly-linked list.
+ * struct node {
+ *     int val;
+ *     node *next;
+ *     node() : val(0), next(nullptr) {}
+ *     node(int x) : val(x), next(nullptr) {}
+ *     node(int x, Node *next) : val(x), next(next) {}
+ * };
+ */
+
+node* reverseSubList(node* head, long long k, long long l) 
+{
+    if(k==l || !head || !head->next)
+       return head;
+
+    node *p=head;
+    node *prev=nullptr;
+    
+    //after skipping 'k-1' nodes, pointer p will point to kᵗʰ node
+    for(long long i=0; i<(k-1) && p!=nullptr; i++)
+    {
+       prev=p;
+       p=p->next;
+    }
+    
+    //we are interested in three parts of the LinkedList: 
+    //part before index 'k', part between 'k' and 'l', and
+    //the part after index 'l'
+
+    //pOfSubList points to the node at index 'k' (1 based indexing) &
+    //it also points the node that we will be processing
+    node *pOfSubList=p; 
+    //points previous node that we have processed
+    node *prevOfSubList=prev; 
+    
+    //reverse nodes between 'k' and 'l'
+    for(long long i=0; i<(l-k+1) && pOfSubList!=nullptr; i++)
+    {
+       node *next=pOfSubList->next;
+       pOfSubList->next=prevOfSubList;
+       prevOfSubList=pOfSubList;
+       pOfSubList=next;
+    }
+    
+    //connect with the first part
+    //prev points to the (k-1)ᵗʰ node(last node of 1ˢᵗ part)
+    if(prev!=nullptr)
+       prev->next=prevOfSubList; 
+
+    //the case when k=1 i.e., we are changing 
+    //the first node (head) of the LinkedList
+    else
+       head=prevOfSubList; 
+    
+    //connect with the last part
+    p->next=pOfSubList;
+
+    return head;    
+}
+
+/*Time complexity: O(n), where ‘n’ is the total number of nodes in the LinkedList.
+  Space complexity: O(1).
+*/
