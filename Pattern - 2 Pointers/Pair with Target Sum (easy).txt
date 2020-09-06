@@ -1,0 +1,87 @@
+/*Problem Statement: Given an array of SORTED numbers and a target sum, find a pair in the array whose 
+                     sum is equal to the given target.
+                     Write a function to return the indices of the two numbers (i.e. the pair) such that 
+                     they add up to the given target.
+*/
+
+/*UNDERLYING CONCEPT -------->
+  #  Since the given array is sorted, a brute-force solution could be to iterate through the array, 
+     taking one number at a time and searching for the second number through Binary Search. The time 
+     complexity of this algorithm will be O(n*log₂(n)).
+
+  # Better approach could be --->
+  # Two Pointers approach. We will start with one pointer pointing to the beginning of the array and 
+    another pointing at the end. At every step, we will see if the numbers pointed by the two pointers 
+    add up to the target sum. If they do, we have found our pair; otherwise, we will do one of two 
+    things:
+
+    * If the sum of the two numbers pointed by the two pointers is greater than the target sum, this means 
+      that we need a pair with a smaller sum. So, to try more pairs, we can decrement the end-pointer.
+    * If the sum of the two numbers pointed by the two pointers is smaller than the target sum, this means 
+      that we need a pair with a larger sum. So, to try more pairs, we can increment the start-pointer.
+*/
+
+pair<long long, long long> pairWithTargetSum(vector<long long> &v, long long target)
+{
+	long long i=0; //points to left most end of v[]
+	long long j=v.size()-1; //points to right most end of v[]
+
+	while(i<j)
+	{
+	   long long currSum=v[i]+v[j];
+
+	   //if pair found return it
+	   if(currSum==target)
+	      return make_pair(i, j);
+
+	   else if(currSum<target)
+	      i++; //we need a pair with bigger sum
+
+	   else //when currSum>target
+	      j++; //we need a pair with smaller sum
+	}
+   
+    //if no such pair exists
+	return make_pair(-1, -1);
+}
+
+/* # Time Complexity: O(n), where ‘n’ is the total number of elements in the given array.
+   # Space Complexity: O(1).
+*/
+
+*****************************************************************************************************************
+
+//APPROACH USING HASH TABLE/HASH MAP
+
+/*UNDERLYING CONCEPT -------->
+  # Instead of using a two-pointer or a binary search approach, we can utilize a HashTable to search for 
+    the required pair. We can iterate through the array one number at a time. Let’s say during our iteration 
+    we are at number ‘X’, so we need to find ‘Y’ such that "X + Y == Target". We will do two things here:
+    * Search for ‘Y’ (which is equivalent to “Target - X”) in the HashTable. If it is there, we have found 
+      the required pair.
+    * otherwise, insert “X” in the HashTable, so that we can search it for the later numbers.
+*/
+
+pair<long long, long long> pairWithTargetSum(vector<long long> &v, long long target)
+{
+	//map to store (element, index) as (key, val) pair
+	unordered_map<long long, long long> mp;
+
+	for(long long i=0; i<v.size(); i++)
+	{
+	   if(mp.find(target-v[i])!=mp.end())
+	      return make_pair(mp[target-v[i]], i);
+
+	   else
+	      mp[v[i]]=i;
+	}
+
+	//if no such pair exists
+	return make_pair(-1, -1);
+}
+
+/* # Time Complexity: O(n), where ‘n’ is the total number of elements in the given array.
+   # Space Complexity: O(n), as in the worst case, we will be pushing ‘n’ numbers in the HashTable.
+
+   # ∴ this method is not as space efficient as the 2 pointer method above.
+*/

@@ -1,0 +1,7 @@
+# The 𝑭𝒂𝒔𝒕 & 𝑺𝒍𝒐𝒘 𝒑𝒐𝒊𝒏𝒕𝒆𝒓 𝒂𝒑𝒑𝒓𝒐𝒂𝒄𝒉, also known as the 𝑯𝒂𝒓𝒆 & 𝑻𝒐𝒓𝒕𝒐𝒊𝒔𝒆 𝒂𝒍𝒈𝒐𝒓𝒊𝒕𝒉𝒎, is a pointer 
+  algorithm that uses two pointers which move through the array (or sequence/LinkedList) at different 
+  speeds. This approach is quite useful when dealing with 𝒄𝒚𝒄𝒍𝒊𝒄 𝑳𝒊𝒏𝒌𝒆𝒅𝑳𝒊𝒔𝒕𝒔 𝒐𝒓 𝒂𝒓𝒓𝒂𝒚𝒔.
+
+# By moving at different speeds (say, in a cyclic LinkedList), the algorithm proves that the two pointers 
+  are bound to meet. The fast pointer should catch the slow pointer once both the pointers are in a cyclic 
+  loop.

@@ -1,0 +1,32 @@
+/*Problem Statement: Given an 𝑼𝑵𝑺𝑶𝑹𝑻𝑬𝑫 array of numbers and a target ‘key’, remove all instances of ‘key’ 
+                     in-place and return the new length of the array.
+*/
+/*UNDERLYING CONCEPT -------->
+  # As the array is 𝑼𝑵𝑺𝑶𝑹𝑻𝑬𝑫, but we need to fix things in-place, 𝒘𝒆 𝒄𝒂𝒏 𝒕𝒉𝒊𝒏𝒌 𝒐𝒇 𝒖𝒔𝒊𝒏𝒈 2 𝑷𝒐𝒊𝒏𝒕𝒆𝒓 
+    𝑻𝒆𝒄𝒉𝒏𝒊𝒒𝒖𝒆.
+  # Concept similar to "Remove Duplicates(easy)" problem can be used.
+*/
+
+long long removeKeyInPlace(vector<long long> &v, long long key)
+{
+	//i stores the index(of last number(which is not
+	//the key)seen so far
+	long long i=0;
+	//to iterate over v[]
+	long long j=0;
+
+	for(; j<v.size(); j++)
+	{
+	   if(v[i]!=key)
+	   {
+	      v[i]=v[j];
+	      i++;
+	   }
+	}
+
+	return i;
+}
+
+/* # Time Complexity: O(n), where ‘n’ is the total number of elements in the given array.
+   # Space Complexity: O(1).
+*/

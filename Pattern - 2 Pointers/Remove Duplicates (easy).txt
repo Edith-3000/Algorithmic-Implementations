@@ -1,0 +1,40 @@
+/* Problem Statement: Given an array of sorted numbers, remove all duplicates from it. You should not
+                      use any extra space; after removing the duplicates in-place return the new length of 
+                      the array.
+*/
+
+/*UNDERLYING CONCEPT -------->
+  # In this problem, we need to remove the duplicates in-place such that the resultant length of the 
+    array remains sorted. 
+  # 𝑨𝒔 𝒕𝒉𝒆 𝒊𝒏𝒑𝒖𝒕 𝒂𝒓𝒓𝒂𝒚 𝒊𝒔 𝑺𝑶𝑹𝑻𝑬𝑫 (𝒘𝒆 𝒄𝒂𝒏 𝒕𝒉𝒊𝒏𝒌 𝒐𝒇 𝒖𝒔𝒊𝒏𝒈 2 𝑷𝒐𝒊𝒏𝒕𝒆𝒓 𝑻𝒆𝒄𝒉𝒏𝒊𝒒𝒖𝒆), 
+  # Therefore, one way to do this is to shift the elements left whenever we encounter duplicates. 
+  # In other words, we will keep one pointer for iterating the array(j is used for this purpose in 
+    the below algorithm) and one pointer for placing the next non-duplicate number(i is used for this 
+    purpose in the below algorithm).
+  # So our algorithm will be to iterate the array and whenever we see a non-duplicate number we move it 
+    next to the last non-duplicate number we’ve seen.
+*/
+
+long long removeDupInPlace(vector<long long> &v)
+{
+	//i stores the index(of last non-duplicate number
+	//seen so far) + 1
+	long long i=1;
+	//to iterate over v[]
+	long long j=1;
+
+	for(; j<v.size(); j++)
+	{
+	   if(v[i-1]!=v[j])
+	   {
+	      v[i]=v[j];
+	      i++;
+	   }
+	}
+
+	return i;
+}
+
+/* # Time Complexity: O(n), where ‘n’ is the total number of elements in the given array.
+   # Space Complexity: O(1).
+*/
