@@ -1,0 +1,68 @@
+/*Problem Statement: Given ‘M’ sorted arrays, find the K’th smallest number among all the arrays.  
+*/
+
+/*UNDERLYING CONCEPT ------>
+  # This problem follows the K-way merge pattern and we can follow a similar approach as discussed in 
+    Merge K Sorted Lists.
+
+  # We can start merging all the arrays, but instead of inserting numbers into a merged list, we will keep 
+    count to see how many elements have been inserted in the merged list. Once that count is equal to ‘K’, 
+    we have found our required number.
+
+  # A big difference from Merge K Sorted Lists is that in this problem, the input is a list of arrays 
+    compared to LinkedLists. This means that when we want to push the next number in the heap we need to 
+    know what the index of the current number in the current array was. 
+    To handle this, we will need to keep track of the array and the element indices.
+*/
+
+#define ll long long;
+
+ll kthSmallestInMSortedLists(vector<vector<ll>> &v, ll k)
+{
+	struct comparator(const auto &x, const auto &y)
+	{
+       return x.first > y.first;
+	};
+    
+    /*to store elements in the form (element, (index of arr containing the element, index of the 
+                                               element in the arr in which it is contained))*/
+	priority_queue<pair<ll, pair<ll, ll>>, vector<pair<ll, pair<ll, ll>>>, comparator> minHeap;
+    
+    //push the 1ˢᵗ of each array in minHeap
+	for(ll i=0; i<v.size(); i++)
+	{
+	   if(!v[i].empty())
+	      minHeap.push(make_pair(v[i][0], make_pair(i, 0)));
+	}
+
+	ll count=0, res=0;
+    
+    //take the smallest(top) element from the min heap if the running count is equal 
+    //to k return the number, if the array of the top element has more elements, 
+    //add the next element to the heap 
+	while(!minHeap.empty())
+	{
+	   auto t=minHeap.top();
+	   res=t.first;
+	   minHeap.pop();
+
+	   if(++count==k)
+	      break;
+
+	   t.second.second++;
+	   if(v[t.second.first].size()>t.second.second)
+	   {
+	      t.first=v[t.second.first][t.second.second];
+	      minHeap.push(t);
+	   }
+	}
+
+	return res;
+}
+
+/* # Time complexity: ∵ we’ll be going through at most ‘k’ elements among all the arrays, and we 
+                       will remove/add one element in the heap in each step, the time complexity of the 
+                       above algorithm will be O(k*logm) where ‘m’ is the total number of input arrays.
+   # Space complexity: The space complexity will be O(m) because, at any time, our min-heap will be storing 
+                       one number from all the ‘m’ input arrays.
+*/

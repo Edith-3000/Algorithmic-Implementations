@@ -1,0 +1,11 @@
+/*Problem Statement: Given ‘M’ sorted arrays, find the median number among all arrays.
+*/
+
+/*UNDERLYING CONCEPT ------>
+  # This problem is similar to our parent problem of finding kᵗʰ Smallest Number in M Sorted Lists (Medium)
+    with K=Median. 
+  # So if there are ‘N’ total numbers in all and
+    1). if N is odd, then median is k=((N/2)+1)ᵗʰ smallest number.
+    2). else if N is even, then median is Avg. of((N/2)ᵗʰ & (N/2 + 1)ᵗʰ) smallest number.
+*/
+
