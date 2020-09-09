@@ -1,0 +1,76 @@
+/*Problem Statement: Given a binary tree, populate an array to represent its zigzag level order traversal. 
+                     You should populate the values of all nodes of the first level from left to right, then right to left for the next level and keep alternating in the same manner for the following levels.
+*/
+
+/*UNDERLYING CONCEPT ------>
+  # This problem follows the Binary Tree Level Order Traversal pattern. We can follow the same BFS approach. 
+  # The only additional step we have to keep in mind is to alternate the level order traversal.
+*/
+
+/*
+ * Definition for a binary tree node.
+ * struct node {
+ *     int val;
+ *     node *left;
+ *     node *right;
+ *     node() : val(0), left(nullptr), right(nullptr) {}
+ *     node(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     node(int x, node *left, node *right) : val(x), left(left), right(right) {}
+ * };
+*/
+
+vector<vector<long long>> zigZagTraversalBT(node *root)
+{
+   //to store the levels one by one
+   vector<vector<long long>> res;
+    
+   if(root==nullptr)
+     return res;
+
+   queue<node *> q;
+   q.push(root);
+   
+   //to toggle the order in which nodes to be inserted
+   bool leftToRight=true;
+
+   while(!q.empty())
+   {
+       long long levelSize=q.size();       
+       vector<long long> currLevel(levelSize); //to store the current level
+       
+       for(long long i=0; i<levelSize; i++)
+       {
+          node *t=q.front();
+          q.pop();  
+          
+          //add the node value to the current level based on traverse dirⁿ
+          if(leftToRight)
+             currLevel[i]=t->val;
+          else
+             currLevel[levelSize-1-i]=t->val;     
+          
+          //insert the children of the popped out node in the queue
+          if(t->left!=nullptr)
+             q.push(t->left);
+
+          if(t->right!=nullptr)
+             q.push(t->right);
+       }
+       
+       //add current level to the result
+       res.push_back(currLevel);
+
+       //toogle the traverse direction
+       leftToRight=!leftToRight;
+   }
+
+   return res;
+}
+
+/* # Time complexity: O(n), where ‘n’ is the total number of nodes in the tree. 
+                      This is due to the fact that we traverse each node once.
+   # Space complexity: O(n) as we need to return a list containing the level order traversal. 
+                       We also need O(n) space for the queue. 
+                       ∵ 𝒘𝒆 𝒄𝒂𝒏 𝒉𝒂𝒗𝒆 𝒂 𝒎𝒂𝒙𝒊𝒎𝒖𝒎 𝒐𝒇 (𝒏/2) 𝒏𝒐𝒅𝒆𝒔 𝒂𝒕 𝒂𝒏𝒚 𝒍𝒆𝒗𝒆𝒍 (𝒕𝒉𝒊𝒔 𝒄𝒐𝒖𝒍𝒅 𝒉𝒂𝒑𝒑𝒆𝒏 𝒐𝒏𝒍𝒚 𝒂𝒕 𝒕𝒉𝒆 
+                       𝒍𝒐𝒘𝒆𝒔𝒕 𝒍𝒆𝒗𝒆𝒍), 𝒕𝒉𝒆𝒓𝒆𝒇𝒐𝒓𝒆 𝒘𝒆 𝒘𝒊𝒍𝒍 𝒏𝒆𝒆𝒅 𝑶(𝒏) 𝒔𝒑𝒂𝒄𝒆 𝒕𝒐 𝒔𝒕𝒐𝒓𝒆 𝒕𝒉𝒆𝒎 𝒊𝒏 𝒕𝒉𝒆 𝒒𝒖𝒆𝒖𝒆.
+*/

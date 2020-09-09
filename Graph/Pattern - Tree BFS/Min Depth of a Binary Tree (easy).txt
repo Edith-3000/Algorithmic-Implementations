@@ -1,0 +1,68 @@
+/*Problem Statement: Find the minimum depth of a binary tree. 
+                     𝑻𝒉𝒆 𝒎𝒊𝒏𝒊𝒎𝒖𝒎 𝒅𝒆𝒑𝒕𝒉 𝒊𝒔 𝒕𝒉𝒆 𝒏𝒖𝒎𝒃𝒆𝒓 𝒐𝒇 𝒏𝒐𝒅𝒆𝒔 𝒂𝒍𝒐𝒏𝒈 𝒕𝒉𝒆 𝒔𝒉𝒐𝒓𝒕𝒆𝒔𝒕 𝒑𝒂𝒕𝒉 𝒇𝒓𝒐𝒎 𝒕𝒉𝒆 𝒓𝒐𝒐𝒕 
+                     𝒏𝒐𝒅𝒆 𝒕𝒐 𝒕𝒉𝒆 𝒏𝒆𝒂𝒓𝒆𝒔𝒕 𝒍𝒆𝒂𝒇 𝒏𝒐𝒅𝒆.
+*/
+
+/*
+ * Definition for a binary tree node.
+ * struct node {
+ *     int val;
+ *     node *left;
+ *     node *right;
+ *     node() : val(0), left(nullptr), right(nullptr) {}
+ *     node(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     node(int x, node *left, node *right) : val(x), left(left), right(right) {}
+ * };
+*/
+
+/*UNDERLYING CONCEPT --------->
+  # This problem follows the Binary Tree Level Order Traversal pattern. We can follow the same BFS approach. 
+  # The only difference will be, instead of keeping track of all the nodes in a level, we will only track 
+    the depth of the tree. 
+  # As soon as we find our first leaf node, that level will represent the minimum depth of the tree.
+*/
+
+long long minDepthOfBT(node *root)
+{
+	if(root==nullptr)
+	   return 0;
+    
+    //to store the minDepth
+	long long minDepth=0;
+
+	queue<node *> q;
+	q.push(root);
+
+	while(!q.empty())
+	{
+	   minDepth++; //increase minDepth by 1
+	   long long levelSize=q.size();
+
+	   for(long long i=0; i<levelSize; i++)
+	   {
+	      node *t=q.front();
+	      q.pop();
+          
+          //check if this is a leaf node or not
+	      if(t->left==nullptr && t->right==nullptr)
+	         return minDepth;
+          
+          //insert the children of the popped out node in the queue
+	      if(t->left!=nullptr)
+	         q.push(t->left);
+
+	      if(t->right!=nullptr)
+	         q.push(t->right);
+	   }
+	}
+
+	return minDepth;
+}
+
+
+/* # Time complexity: O(n), where ‘n’ is the total number of nodes in the tree. 
+                      This is due to the fact that we traverse each node once.
+   # Space complexity: O(n) as we need O(n) space for the queue. 
+                       ∵ 𝒘𝒆 𝒄𝒂𝒏 𝒉𝒂𝒗𝒆 𝒂 𝒎𝒂𝒙𝒊𝒎𝒖𝒎 𝒐𝒇 (𝒏/2) 𝒏𝒐𝒅𝒆𝒔 𝒂𝒕 𝒂𝒏𝒚 𝒍𝒆𝒗𝒆𝒍 (𝒕𝒉𝒊𝒔 𝒄𝒐𝒖𝒍𝒅 𝒉𝒂𝒑𝒑𝒆𝒏 𝒐𝒏𝒍𝒚 𝒂𝒕 𝒕𝒉𝒆 
+                       𝒍𝒐𝒘𝒆𝒔𝒕 𝒍𝒆𝒗𝒆𝒍), 𝒕𝒉𝒆𝒓𝒆𝒇𝒐𝒓𝒆 𝒘𝒆 𝒘𝒊𝒍𝒍 𝒏𝒆𝒆𝒅 𝑶(𝒏) 𝒔𝒑𝒂𝒄𝒆 𝒕𝒐 𝒔𝒕𝒐𝒓𝒆 𝒕𝒉𝒆𝒎 𝒊𝒏 𝒕𝒉𝒆 𝒒𝒖𝒆𝒖𝒆.
+*/

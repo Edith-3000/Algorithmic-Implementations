@@ -1,0 +1,56 @@
+/*Problem Statement: Given a binary tree and a number ‘S’, find all paths from root-to-leaf such 
+                     that the sum of all the node values of each path equals ‘S’.
+*/
+
+/*
+ * Definition for a binary tree node.
+ * struct node {
+ *     int val;
+ *     node *left;
+ *     node *right;
+ *     node() : val(0), left(nullptr), right(nullptr) {}
+ *     node(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     node(int x, node *left, node *right) : val(x), left(left), right(right) {}
+ * };
+*/
+
+void allPathsUtil(node *currNode, long long sum, vector<long long> &currPath, vector<vector<long long>> &res)
+{
+	if(currNode==nullptr)
+	   return;
+    
+    //add the current node to current path
+    currPath.push_back(currNode->val);
+    
+    //if the current node is a leaf and its value is equal to sum, save the current path
+    if(currNode->val==sum && currNode->left==nullptr && currNode->right==nullptr)
+       res.push_back(currPath);
+
+    else
+    {  
+       //traverse the left sub-tree
+       allPathsUtil(currNode->left, sum-currNode->val, currPath, res);
+
+       //traverse the right sub-tree
+       allPathsUtil(currNode->right, sum-currNode->val, currPath, res);
+    }
+    
+    //remove the current node from the path to backtrack,
+    //we need to remove the current node while we are going up the recursive call stack.
+    currPath.pop_back();
+}
+
+vector<vector<long long>> allPaths(node *root, long long sum)
+{
+    //to store the final result consisting of all valid Paths
+	vector<vector<long long>> res;
+    
+    //to store the current path of nodes
+	vector<long long> currPath;
+
+	//utility function
+	allPathsUtil(root, sum, currPath, res);
+
+	return res;
+}
+
