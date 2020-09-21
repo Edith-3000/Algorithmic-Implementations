@@ -129,7 +129,7 @@ long long mcmTabulation(vector<long long> &v, long long n)
        dp[i][i]=0;
     
     //choice diagram code iterative version
-    for(long long L=2; L<n; l++)
+    for(long long L=2; L<n; L++)
     {
        //for each chain length L, i=left end index
        //                         j=right end index

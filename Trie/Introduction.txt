@@ -1,0 +1,33 @@
+# In computer science, a trie, also called 𝒅𝒊𝒈𝒊𝒕𝒂𝒍 𝒕𝒓𝒆𝒆 or 𝒑𝒓𝒆𝒇𝒊𝒙 𝒕𝒓𝒆𝒆, is a kind of search tree—an ordered 
+  tree data structure used to store a dynamic set or associative array where the keys are usually strings.
+
+# Trie is an efficient information re𝑻𝒓𝒊𝒆val data structure. Using Trie, search complexities can be brought 
+  to optimal limit (key length). 
+
+# If we store keys in binary search tree, a well balanced BST will need time proportional to M * log N, 
+  where M is maximum string length and N is number of keys in tree. 
+  Using Trie, we can search the key in O(M) time. However the penalty is on 𝑻𝒓𝒊𝒆 𝒔𝒕𝒐𝒓𝒂𝒈𝒆 𝒓𝒆𝒒𝒖𝒊𝒓𝒆𝒎𝒆𝒏𝒕𝒔.
+
+# Every node of Trie consists of multiple branches. Each branch represents a possible character of keys. 
+  We need to mark the last node of every key as end of word node (i.e. terminal).
+
+# Inserting a key into Trie is a simple approach. Every character of the input key is inserted as an 
+  individual Trie node. Note that the children is an array of pointers (or references) (or it can be a hash map
+  also) to next level trie nodes. The key character acts as an index into the array children. If the input key 
+  is new or an extension of the existing key, we need to construct non-existing nodes of the key, and mark end 
+  of the word for the last node. If the input key is a prefix of the existing key in Trie, we simply mark 
+  the last node of the key as the end of a word. The key length determines Trie depth.
+
+# Searching for a key is similar to insert operation, however, we only compare the characters and move down. 
+  The search can terminate due to the end of a string or lack of key in the trie. 
+  In the former case, if the terminal data member of the last node is true, then the key exists in the trie. 
+  In the second case, the search terminates without examining all the characters of the key, since the key is 
+  not present in the trie.
+
+# Insert and search costs 𝑶(𝒌𝒆𝒚_𝒍𝒆𝒏𝒈𝒕𝒉), however the memory requirements of Trie is: 
+  𝑶(𝑨𝑳𝑷𝑯𝑨𝑩𝑬𝑻_𝑺𝑰𝒁𝑬 * 𝒌𝒆𝒚_𝒍𝒆𝒏𝒈𝒕𝒉 * 𝑵) where N is number of keys in Trie. 
+  There are efficient representation of trie nodes (e.g. compressed trie, ternary search tree, etc.) to
+  minimize memory requirements of trie.
+
+# 𝑨 𝒄𝒐𝒎𝒎𝒐𝒏 𝒂𝒑𝒑𝒍𝒊𝒄𝒂𝒕𝒊𝒐𝒏 𝒐𝒇 𝒂 𝒕𝒓𝒊𝒆 𝒊𝒔 𝒔𝒕𝒐𝒓𝒊𝒏𝒈 𝒂 𝒅𝒊𝒄𝒕𝒊𝒐𝒏𝒂𝒓𝒚, 𝒔𝒖𝒄𝒉 𝒂𝒔 𝒐𝒏𝒆 𝒇𝒐𝒖𝒏𝒅 𝒐𝒏 𝒂 𝒎𝒐𝒃𝒊𝒍𝒆 𝒕𝒆𝒍𝒆𝒑𝒉𝒐𝒏𝒆. 
+  𝑺𝒖𝒄𝒉 𝒂𝒑𝒑𝒍𝒊𝒄𝒂𝒕𝒊𝒐𝒏𝒔 𝒕𝒂𝒌𝒆 𝒂𝒅𝒗𝒂𝒏𝒕𝒂𝒈𝒆 𝒐𝒇 𝒂 𝒕𝒓𝒊𝒆’𝒔 𝒂𝒃𝒊𝒍𝒊𝒕𝒚 𝒕𝒐 𝒒𝒖𝒊𝒄𝒌𝒍𝒚 𝒔𝒆𝒂𝒓𝒄𝒉 𝒇𝒐𝒓, 𝒊𝒏𝒔𝒆𝒓𝒕, 𝒂𝒏𝒅 𝒅𝒆𝒍𝒆𝒕𝒆 𝒆𝒏𝒕𝒓𝒊𝒆𝒔
