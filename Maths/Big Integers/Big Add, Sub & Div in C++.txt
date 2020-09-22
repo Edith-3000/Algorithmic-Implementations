@@ -1,0 +1,127 @@
+//ADDITION OF BIG NUMBERS
+
+vector<int> add(vector<int> &x, vector<int> &y)
+{
+	//Reverse the numbers so that we can add them from units place
+	reverse(x.begin(), x.end());
+	reverse(y.begin(), y.end());
+
+	//to store the result
+	vector<int> res;
+
+	//to add nos. of x[] & y[] one by one
+	int len=min(x.size(), y.size()); 
+	//to store the carry generated
+	int carry=0;
+
+    for(int i=0; i<len; i++)
+    {
+       //Add the digits at the iᵗʰ pos from x[] and y[] 
+       //and add the prev carry
+       int val=x[i]+y[i]+carry;
+
+       //Push the sum of digits to res
+       res.push_back(val%10);
+
+       //update carry to be forwarded
+       carry=val/10;
+    }
+
+    //If any digits remain in x[], add them to res
+    if(x.size()>len)
+    {
+       for(int i=len; i<x.size(); i++)
+       {
+          int val=x[i]+carry;
+          res.push_back(val%10);
+          carry=val/10;
+       }
+    }
+    
+    //If any digits remain in y[], add them to res
+    if(y.size()>len)
+    {
+       for(int i=len; i<y.size(); i++)
+       {
+          int val=y[i]+carry;
+          res.push_back(val%10);
+          carry=val/10;
+       }
+    }
+    
+    //While there is still some carry left-over, 
+    //add new digits to res
+    while(carry>0)
+    {
+       res.push_back(carry%10);
+       carry/=10;
+    }
+    
+    //Reverse res to get back actual answer and return res.
+    reverse(res.begin(), res.end());
+    return res;
+}
+
+****************************************************************************************************************
+
+//SUBTRACTION OF BIG NUMBERS
+
+vector<int> sub(vector<int> &x, vector<int> &y)
+{
+	//Reverse the numbers so that we can subtract them from units place
+	reverse(x.begin(), x.end());
+	reverse(y.begin(), y.end());
+
+	//to store the result
+	vector<int> res;
+    
+    //assumiing value stored in x[] >= value store in y[]
+    int len=y.size();
+
+    for(int i=0; i<len; i++)
+    {
+       if(x[i]<y[i])
+       {
+          x[i+1]--; //Borrow from next 10's place
+          res.push_back(10+x[i]-y[i]); //insert answer for current index
+       }
+       
+       //Simply subtract and push the result
+       else //when x[i]>=y[i]
+          res.push_back(x[i]-y[i]);
+    }
+    
+    //If there are any digits left in x, just add them to res
+    if(x.size()>len)
+    {
+       for(int i=len; i<x.size(); i++)
+       {  
+          //x[i] can be -ve if we had borrowed repeatedly
+          //from it or initially it was 0 & we borrowed from it
+          if(x[i]<0)
+          {
+             x[i+1]--;
+             res.push_back(10+x[i]);
+          }
+
+          else //when x[i]>=0
+             res.push_back(x[i]);
+       }
+    }
+
+    reverse(res.begin(), res.end());
+    vector<int> final;
+    int i=0;
+    
+    //Omit the leading zeros and return final result
+    while(res[i]==0) 
+       i++;
+
+    for(; i<res.size(); i++)
+       final.push_back(res[i]);
+
+    return final;
+}
+
+****************************************************************************************************************
+

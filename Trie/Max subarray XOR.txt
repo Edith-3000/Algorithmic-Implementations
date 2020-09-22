@@ -1,0 +1,35 @@
+/*PROBLEM STATEMENT: Given an array of integers. find the maximum XOR subarray value in given array. 
+                     Expected time complexity O(n).
+*/
+
+/*UNDERLYING CONCEPT:
+  # Naive Approach: * Use two loops to find XOR of all subarrays and return the maximum.
+                    * Not efficient time complexity, O(n²)
+
+  # Efficient Solution: * O(n) implementation using Trie under the assumption that integers take fixed number 
+                          of bits to store.
+            			* The basic idea is to create a cumulative XOR array cumulative[], such as cumulative[i]
+            			  stores the XOR of all the numbers from (0 to iᵗʰ index) of the main given array/vector.
+            			* Once the cumulative[] is formed in O(n) time complexity, then an approach similar to
+            			  "Max XOR pair value" can be used to return the max XOR subarray value.
+*/
+
+int maxSubarrayXorValue(vactor<int> &v)
+{
+    //cumulative XOR vector
+	vector<int> cumulative(v.size());
+
+    cumulative[0]=v[0];
+	int cum_xor=v[0];
+
+	for(int i=1; i<cumulative.size(); i++)
+	{
+	   cum_xor^=v[i];
+	   cumulative[i]=cum_xor;
+	}
+
+	return maxXor(cumulative);
+}
+
+//use rest of the code from "Max XOR pair values" for implementation purpose.
+//Time Complexity: O(n), where n is v.size() 

@@ -1,0 +1,44 @@
+//PROBLEM STATEMENT: Given a number n, find the last non-zero digit in n!.
+
+/*UNDERLYING CONCEPT: ----->
+  # A Simple Solution is to first find n!, then find last non-zero digit of n. 
+    This solution doesn’t work for even slightly large numbers due to arithmetic overflow.
+
+  # Efficient solution ---->
+    # There is actually a cool trick for finding the last non zero digit of a factorial. 
+      This is actually a recurrent relation which states that:
+    
+      If D(N) denotes the last non zero digit of factorial, then:
+
+      * D(N) = (4 * D(floor(n/5)) * D(Units digit of N)) % 10 ----> (If tens digit of N is odd)
+      * D(N) = (6 * D(floor(n/5)) * D(Units digit of N)) % 10 ----> (If tens digit of N is even)
+
+    # For understanding maths behind the above formula: -
+      Visit: http://math.stackexchange.com/questions/130352/last-non-zero-digit-of-a-factorial
+*/
+
+int lastNonZeroDigit(int n)
+{
+	//base condition
+	if(n<=9)
+	   return last[n];
+    
+    //Check whether tens (or second last) digit is odd or even 
+    //If n = 375, So n/10 = 37 and (n/10)%10 = 7 
+    // Applying formula for even and odd cases. 
+	else
+	{
+	   //when digit at ten's place is odd
+	   if((n/10)%10 & 1)
+	      return (4 * lastNonZeroDigit(n/5) * lastNonZeroDigit(n%10)) % 10;
+       
+       //when digit at ten's place is odd
+	   else
+	      return (6 * lastNonZeroDigit(n/5) * lastNonZeroDigit(n%10)) % 10;
+	}
+}
+
+/* # Here last[] is a global vector/array which stores the last non-zero digits of the factorials of
+     nos. from 0 to 9 i.e. vector<int> last{1, 1, 2, 6, 4, 2, 2, 4, 2, 8};
+   # //Time Complexity: O(log₅(n))
+*/

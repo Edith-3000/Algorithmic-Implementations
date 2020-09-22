@@ -1,0 +1,49 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define MAX 10000
+
+void multiply(vector<int> &v, int &n, int num)
+{
+	int carry=0;
+	for(int i=0; i<n; i++)
+	{
+		int product=v[i]*num + carry;
+		v[i]=product%10;
+		carry=product/10;
+	}
+	
+	//to store the value leftover in carry
+	while(carry)
+	{
+		v[n]=carry%10;
+		carry/=10;
+		n++;
+	}
+}
+
+void bigFactorial(int x)
+{
+	//for storing the factorial in reverse order
+	vector<int> v(MAX, 0); 
+    v[0]=1; //initialising
+    int n=1; //current size of the vector storing the factorial
+    
+    //multiply the vector from 2 to x repeatedly for x!
+    for(int i=2; i<=x; i++)
+    {
+    	//n should be passed by reference
+    	multiply(v, n, i);
+    }
+    
+    for(int i=n-1; i>=0; i--)
+       cout<<v[i];
+}
+
+int main()
+{
+	int x; cin>>x; //no. whose factorial is to be calculated
+	bigFactorial(x);
+}
+
+//Time Complexity: O(n x log₁₀n!), where n is the number whose factorial is to be calculated.
+//For more info visit: https://stackoverflow.com/questions/39092964/calculating-large-factorial-time-complexity

@@ -1,0 +1,22 @@
+//PROBLEM STATEMENT: Given an integer n, write a function that returns count of trailing zeroes in n!.
+
+/*UNDERLYING CONCEPT: ----->
+  #Powers of a number x in n! = floor(n/x) + floor(n/x²) + floor(n/x³) + .... 
+                                till (n/any power of x) does't becomes 0
+
+  So, here we've to calculate the #powers of 5 present in n!
+*/
+
+int findTrailingZeros(int n)
+{
+	int count=0; //to store answer
+	
+	//to find the #powers of 5 in n!
+	for(int i=5; (n/i)>0; i*=5)
+	   count+=(n/i);
+	
+	//return final answer
+	return count;
+}
+
+//Time Complexity: O(log₅(n))
