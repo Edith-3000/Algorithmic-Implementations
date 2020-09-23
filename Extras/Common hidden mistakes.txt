@@ -1,0 +1,6 @@
+# If the algorithm seems very robust but still don't give desired result, then check for the following
+  parameters --------->
+  * There might be possibility of 𝑺𝒆𝒈𝒎𝒆𝒏𝒕𝒂𝒕𝒊𝒐𝒏 𝑭𝒂𝒖𝒍𝒕.
+  * It is possible that the fⁿ name or variable name you are using is a 𝒌𝒆𝒚𝒘𝒐𝒓𝒅 in the language.
+  * See if the #𝑻𝒆𝒔𝒕 𝑪𝒂𝒔𝒆𝒔 are correct.
+  * Be cautious whether you've passed the arguements to fⁿs. by 𝒓𝒆𝒇𝒆𝒓𝒆𝒏𝒄𝒆 or by 𝒄𝒐𝒑𝒚.

@@ -1,0 +1,26 @@
+/*PROBLEM STATEMENT: Given a list of numbers where every number occurs exactly twice except one,
+                     find the unique number.
+*/
+
+//UNDERLYING CONCEPT: The bitwise XOR of a number with itself gives 0.
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int uniqueNum(vector<int> &v)
+{
+	int res=v[0];
+	for(int i=1; i<v.size(); i++)
+	   res^=v[i];
+	   
+	return res;
+}
+
+int main()
+{
+	vector<int> v{5, 4, 10, 8, 5, 8, 10, 36, 4};
+	cout<<uniqueNum(v);
+}
+
+//Time Complexity: O(n), where n is v.size()
+//Space Complexity: O(1)

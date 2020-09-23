@@ -1,0 +1,96 @@
+//𝑵𝑶𝑻𝑬: 𝑰𝒏 𝒂𝒍𝒍 𝒕𝒉𝒆 𝒃𝒆𝒍𝒐𝒘 𝒄𝒐𝒅𝒆𝒔 0 𝒃𝒂𝒔𝒆𝒅 𝒊𝒏𝒅𝒆𝒙𝒊𝒏𝒈 𝒐𝒇 𝒃𝒊𝒕𝒔 𝒇𝒓𝒐𝒎 𝑹𝑯𝑺 𝒕𝒐 𝑳𝑯𝑺 (𝒊.𝒆. 𝒇𝒓𝒐𝒎 𝑳𝑺𝑩 𝒕𝒐 𝑴𝑺𝑩) 𝒊𝒔 
+//𝒄𝒐𝒏𝒔𝒊𝒅𝒆𝒓𝒆𝒅
+
+//CHECK IF A NUMBER IS ODD or EVEN
+
+bool isOdd(int n)
+{
+	if(n & 1) //number is odd
+	   return true;
+
+	else //number is even
+	   return false;
+}
+
+*****************************************************************************************************************
+
+//GET(FIND) THE iᵗʰ BIT
+
+int getBit(int n, int i)
+{
+	int mask=1<<i;
+	int bit = (n & mask) > 0 ? 1 : 0;
+	return bit;
+}
+
+*****************************************************************************************************************
+
+//SET THE iᵗʰ BIT
+
+int setBit(int n, int i)
+{
+	int mask=1<<i;
+	int res = n | mask;
+	return res;
+}
+
+*****************************************************************************************************************
+
+//CLEAR THE iᵗʰ BIT
+
+int clearBit(int n, int i)
+{
+	int mask = ~(1 << i);
+	int res = n & mask;
+	return res;
+}
+
+*****************************************************************************************************************
+
+//UPDATE THE iᵗʰ BIT to v (v can be either 0 or 1)
+
+int updateBit(int n, int i, int v)
+{
+	// first clear the ith bit
+	int mask = ~(1 << i);
+	int cleared_n = n & mask;
+
+	//return updated number
+	return cleared_n | (v << i);
+}
+
+*****************************************************************************************************************
+
+//CLEAR THE LAST i BITS i.e. CLEAR THE BITS FROM (0ᵗʰ BIT TO iᵗʰ BIT)
+
+// -1 𝒊𝒏 2'𝒔 𝑪𝑶𝑴𝑷𝑳𝑬𝑴𝑬𝑵𝑻 𝑹𝑬𝑷𝑹𝑬𝑺𝑬𝑵𝑻𝑨𝑻𝑰𝑶𝑵 (𝒘𝒉𝒊𝒄𝒉 𝒊𝒔 𝒕𝒉𝒆 𝒓𝒆𝒑𝒓𝒆𝒔𝒆𝒏𝒕𝒂𝒕𝒊𝒐𝒏 𝒖𝒔𝒆𝒅 𝒃𝒚 𝒕𝒉𝒆 𝒎𝒂𝒄𝒉𝒊𝒏𝒆𝒔) = 
+//                                                                          11111111111111111......
+
+int clearLastIBits(int n, int i)
+{
+	int mask = (-1 << i); // mask = (~0) << i can also be used 
+	                      // as binary of -1 and ~0 are equivalent
+	return n & mask;
+}
+
+*****************************************************************************************************************
+
+//CLEAR A RANGE OF BITS FROM (iᵀᴴ BIT TO jᵀᴴ BIT)
+
+int clearRange_i_to_j(int n, int i, int j)
+{
+    // to form a number whose binary representation
+    // is of the form 1111000000 
+	int a = (-1) << (j+1); // mask = (~0) << (j+1) can also be used 
+
+	// to form a number whose binary representation
+    // is of the form 0000000111 (which is of the form
+    // 2^n - 1, now 2^n can be represented as 1 << n)
+    int b = (1 << i) - 1; 
+    
+    // mask will be of the form 1111000111
+    int mask = a | b;
+    return n & mask;
+}
+
+*****************************************************************************************************************

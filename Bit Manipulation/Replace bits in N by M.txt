@@ -1,0 +1,37 @@
+/*PROBLEM STATEMENT: You are given two 32-bit numbers, N and M and 2 bit positions i and j. 
+                     Write a method to set all bits between i and j in N equal to M (for example M becomes 
+                     a substring of N located at i am starting at j).
+                     EXAMPLE: Input: N = 10000000000, M = 10101, i = 2, j = 6
+                              Output: N = 10001010100
+                     Note: In the example N and M are written in binary only for explanation purpose, 
+                           actually both will be numbers in base 10. 
+*/
+
+/*UNDERLYING CONCEPT --------->
+  # Firstly, clear the bits from i to j in N.
+  # Then left shift M by i positions.
+  # Perform bitwise OR between N and M.
+*/
+
+void clearRange_i_to_j(int &n, int i, int j)
+{
+    // to form a number whose binary representation
+    // is of the form 1111000000 
+	int a = (-1) << (j+1); // mask = (~0) << (j+1) can also be used 
+
+	// to form a number whose binary representation
+    // is of the form 0000000111 (which is of the form
+    // 2^n - 1, now 2^n can be represented as 1 << n)
+    int b = (1 << i) - 1; 
+    
+    // mask will be of the form 1111000111
+    int mask = a | b;
+    n = n & mask;
+}
+
+int replaceBits(int n, int m, int i, int j)
+{
+	clearRange_i_to_j(n, i, j);
+	m = m << i;
+	return n | m;
+}

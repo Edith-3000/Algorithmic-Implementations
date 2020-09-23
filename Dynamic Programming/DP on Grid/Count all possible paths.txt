@@ -1,0 +1,75 @@
+/*PROBLEM: Given a 2-D matrix, find the number of ways to reach cell with coordinates (m, n) from 
+           starting cell (0,0) under the condition that you can only travel one step right or one step down.
+           Note: # No cells of the matrix are blocked.
+                 # m and n are given on 0 based indexing.
+*/
+
+//RECURSIVE IMPLEMENTATION
+
+int numberOfPaths(int m, int n)
+{
+    // base condition(s)
+	if(m==0 || n==0)
+	   return 1;
+    
+    // choice diagram code
+	return numberOfPaths(m-1, n) + numberOfPaths(m, n-1);
+}
+
+//Time complexity: Exponential in power of 2
+//Auxiliary Space: O(1)
+
+*****************************************************************************************************************
+
+//MEMOIZED IMPLEMENTATION
+
+int numberOfPaths(int m, int n)
+{
+	// base condition(s)
+	if(m==0 || n==0)
+	   return 1;
+    
+    // check if already calculated or not
+	if(dp[m][n]!=-1)
+	   return dp[m][n];
+
+    // choice diagram code
+	return dp[m][n]=numberOfPaths(m-1, n) + numberOfPaths(m, n-1);
+}
+
+/*# Time complexity: 
+  # Auxiliary Space: O(r*c), where r and c are the #rows and #columns in the given 2 D Matrix.
+  # dp[][] is a 2 D global matrix/vector of vectors, with size same as that of given 2 D Matrix and 
+    initialized with -1, memset(dp, -1, sizeof(dp));
+*/
+
+*****************************************************************************************************************
+
+//TABULATION IMPLEMENTATION (Real DP ;))
+
+int numberOfPaths(int m, int n)
+{
+	// initialisation of dp matrix
+	for(int i=0; i<=m; i++) dp[i][0]=1;
+	for(int j=1; j<=n; i++) dp[0][j]=1;
+
+	// choice diagram code iterative version
+	for(int i=1; i<=m; i++)
+	{
+	   for(int j=1; j<=n; j++)
+	      dp[i][j]=d[i-1][j]+d[i][j-1];
+	}
+
+	// return final answer
+	return dp[m][n];
+}
+
+/*# Time complexity: O(m*n)
+  # Auxiliary Space: O(r*c), where r and c are the #rows and #columns in the given 2 D Matrix.
+  # dp[][] is a 2 D global matrix/vector of vectors, with size same as that of given 2 D Matrix given.
+*/
+
+*****************************************************************************************************************
+
+// SPACE OPTIMIZED TABULATION IMPLEMENTATION
+// The idea is to use same given cost[][] matrix to store the solutions of subproblems.
