@@ -1,6 +1,9 @@
 //ADDITION OF BIG NUMBERS
 
-vector<int> add(vector<int> &x, vector<int> &y)
+//𝑪𝑨𝑼𝑻𝑰𝑶𝑵:- 𝑫𝑶𝑵'𝑻 𝑷𝑨𝑺𝑺 𝑻𝑯𝑬 𝑽𝑬𝑪𝑻𝑶𝑹𝑺 𝒙 & 𝒚 𝑩𝒀 𝑹𝑬𝑭𝑬𝑹𝑬𝑵𝑪𝑬, 𝑱𝑼𝑺𝑻 𝑷𝑨𝑺𝑺 𝑨 𝑪𝑶𝑷𝒀 𝑶𝑭 𝑻𝑯𝑬𝑺𝑬 𝑽𝑬𝑪𝑻𝑶𝑹𝑺 
+             𝑺𝑶 𝑨𝑺 𝑻𝑶 𝑨𝑽𝑶𝑰𝑫 𝑨𝑵𝒀 𝑪𝑯𝑨𝑵𝑮𝑬𝑺 𝑰𝑵 𝑻𝑯𝑬 𝑶𝑹𝑰𝑮𝑰𝑵𝑨𝑳 𝑽𝑬𝑪𝑻𝑶𝑹.
+
+vector<int> bigAdd(vector<int> x, vector<int> y)
 {
 	//Reverse the numbers so that we can add them from units place
 	reverse(x.begin(), x.end());
@@ -66,14 +69,17 @@ vector<int> add(vector<int> &x, vector<int> &y)
 
 //SUBTRACTION OF BIG NUMBERS
 
-vector<int> sub(vector<int> &x, vector<int> &y)
-{
-	//Reverse the numbers so that we can subtract them from units place
-	reverse(x.begin(), x.end());
-	reverse(y.begin(), y.end());
+//𝑪𝑨𝑼𝑻𝑰𝑶𝑵:- 𝑫𝑶𝑵'𝑻 𝑷𝑨𝑺𝑺 𝑻𝑯𝑬 𝑽𝑬𝑪𝑻𝑶𝑹𝑺 𝒙 & 𝒚 𝑩𝒀 𝑹𝑬𝑭𝑬𝑹𝑬𝑵𝑪𝑬, 𝑱𝑼𝑺𝑻 𝑷𝑨𝑺𝑺 𝑨 𝑪𝑶𝑷𝒀 𝑶𝑭 𝑻𝑯𝑬𝑺𝑬 𝑽𝑬𝑪𝑻𝑶𝑹𝑺 
+             𝑺𝑶 𝑨𝑺 𝑻𝑶 𝑨𝑽𝑶𝑰𝑫 𝑨𝑵𝒀 𝑪𝑯𝑨𝑵𝑮𝑬𝑺 𝑰𝑵 𝑻𝑯𝑬 𝑶𝑹𝑰𝑮𝑰𝑵𝑨𝑳 𝑽𝑬𝑪𝑻𝑶𝑹.
 
-	//to store the result
-	vector<int> res;
+vector<int> bigSub(vector<int> x, vector<int> y)
+{
+	  //Reverse the numbers so that we can subtract them from units place
+	  reverse(x.begin(), x.end());
+	  reverse(y.begin(), y.end());
+
+	  //to store the result
+	  vector<int> res;
     
     //assumiing value stored in x[] >= value store in y[]
     int len=y.size();
@@ -123,5 +129,66 @@ vector<int> sub(vector<int> &x, vector<int> &y)
     return final;
 }
 
-****************************************************************************************************************
+**************************************************************************************************************rem
+//DIVISION OF BIG NUMBER BY A NUMBER
 
+//𝑪𝑨𝑼𝑻𝑰𝑶𝑵:- 𝑫𝑶𝑵'𝑻 𝑷𝑨𝑺𝑺 𝑻𝑯𝑬 𝑽𝑬𝑪𝑻𝑶𝑹 𝒙 𝑩𝒀 𝑹𝑬𝑭𝑬𝑹𝑬𝑵𝑪𝑬, 𝑱𝑼𝑺𝑻 𝑷𝑨𝑺𝑺 𝑨 𝑪𝑶𝑷𝒀 𝑶𝑭 𝑻𝑯𝑬 𝑽𝑬𝑪𝑻𝑶𝑹
+             𝑺𝑶 𝑨𝑺 𝑻𝑶 𝑨𝑽𝑶𝑰𝑫 𝑨𝑵𝒀 𝑪𝑯𝑨𝑵𝑮𝑬𝑺 𝑰𝑵 𝑻𝑯𝑬 𝑶𝑹𝑰𝑮𝑰𝑵𝑨𝑳 𝑽𝑬𝑪𝑻𝑶𝑹.
+
+vector<int> bigDiv(vector<int> x, int d)
+{
+  //to store the result
+  vector<int> res;
+
+  // rem stores any previous remainders from division
+  int rem=0;
+  
+  for(int i=0; i<x.size(); i++)
+  {
+     if(rem)
+     {
+        // If there are remainders, then add them in 
+        // current division
+        rem=(10*rem)+x[i];
+        res.push_back(rem/d);
+        rem%=d;
+     }
+     
+     // when rem==0 i.e. no remainders from prev division
+     else 
+     {
+        // If digit < d, add 0 to res and put the digit as rem
+        if(x[i]<d)
+        {
+           rem=x[i];
+           res.push_back(0);
+        }
+
+        else //when x[i]>=d, just divide
+        {
+           rem=x[i]%d;
+           res.push_back.(x[i]/d);
+        }
+     }
+  }
+
+  vector<int> final;
+  int i=0;
+    
+  //Omit the leading zeros and return final result
+  while(res[i]==0) 
+     i++;
+
+  for(; i<res.size(); i++)
+     final.push_back(res[i]);
+
+  return final;
+}
+
+/* # NOTE: The big number can be taken as input in the form of string & then convert it into 
+           corresponding vector.
+           For eg. string s; cin>>s;
+                   vector<int>v;
+                   for(int i=0; i<s.length(); i++)
+                      v.push_back(s[i]-'0');
+*/
