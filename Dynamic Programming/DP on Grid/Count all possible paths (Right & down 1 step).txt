@@ -1,6 +1,6 @@
 /*PROBLEM: Given a 2-D matrix, find the number of ways to reach cell with coordinates (m, n) from 
            starting cell (0,0) under the condition that you can only travel one step right or one step down.
-           Note: # No cells of the matrix are blocked.
+           Note: # 𝑵𝒐 𝒄𝒆𝒍𝒍𝒔 𝒐𝒇 𝒕𝒉𝒆 𝒎𝒂𝒕𝒓𝒊𝒙 𝒂𝒓𝒆 𝒃𝒍𝒐𝒄𝒌𝒆𝒅.
                  # m and n are given on 0 based indexing.
 */
 
@@ -57,7 +57,7 @@ int numberOfPaths(int m, int n)
 	for(int i=1; i<=m; i++)
 	{
 	   for(int j=1; j<=n; j++)
-	      dp[i][j]=d[i-1][j]+d[i][j-1];
+	      dp[i][j]=dp[i-1][j]+dp[i][j-1];
 	}
 
 	// return final answer
@@ -72,4 +72,42 @@ int numberOfPaths(int m, int n)
 *****************************************************************************************************************
 
 // SPACE OPTIMIZED TABULATION IMPLEMENTATION
-// The idea is to use same given cost[][] matrix to store the solutions of subproblems.
+
+int numberOfPaths(int m, int n)
+{
+	// initialisation of dp matrix
+    dp[0]=1;
+
+    for(int i=0; i<=m; i++)
+    {
+       for(int j=1; j<=n; j++)
+          dp[j]+=dp[j-1];
+    }
+
+    // return final answer
+	return dp[n];
+}
+
+/*# Time complexity: O(m*n)
+  # Auxiliary Space: O(n), where n is the column number from (m, n).
+  # dp[] is a 1 D global matrix/vector, with size 'n', initially initialised with 0 in main fⁿ,
+    int dp[n] = {0};
+*/
+
+****************************************************************************************************************
+
+// MATHEMATICAL IMPLEMENTATION
+
+/*UNDERLYING CONCEPT ----->
+  # In order to reach a cell (m, n) (0 based indexing), effectively we've to travel m rows downwards 
+    and n columns right.
+  # Therefore permute all the steps i.e. (m + n)!
+                                        ---------- 
+                                         m! * n!
+    (∵ all the m downward steps are same & all the n rights steps are same, ∴ we division by m! * n!)
+
+ # The above formula changes to (m + n - 2)!
+                               ---------------  if (m, n) are given on 1 based indexing.
+                               (m-1)! * (n-1)!
+
+*/

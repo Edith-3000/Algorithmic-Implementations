@@ -19,11 +19,12 @@ void swap(long long &x, long long &y)
    y=temp;
 }
 
-pair<long long, long long> multipleRepeatAndMissing(vector<long long> &v)
+vector<pair<long long, long long>> multipleRepeatAndMissing(vector<long long> &v)
 {
    long long n=v.size();
    
    long long i=0; //array traverser
+   vector<pair<long long, long long>> res; // for storing result
    
    //preprocessing the array
    while(i<n)
@@ -39,15 +40,13 @@ pair<long long, long long> multipleRepeatAndMissing(vector<long long> &v)
    {
       if(i!=v[i]-1)
       {
-         r=v[i];
-         m=i+1;
-         break;
+         int r=v[i];
+         int m=i+1;
+         res.push_back({m, r});
       }
    }
 
-   pair<long long, long long> p; //for returning final result
-   p=make_pair(m, r);
-   return p;
+   return res;
 }
 
 //Time complexity: O(n)

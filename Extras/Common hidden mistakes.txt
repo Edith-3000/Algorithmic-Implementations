@@ -1,6 +1,13 @@
 # If the algorithm seems very robust but still don't give desired result, then check for the following
   parameters --------->
-  * There might be possibility of 𝑺𝒆𝒈𝒎𝒆𝒏𝒕𝒂𝒕𝒊𝒐𝒏 𝑭𝒂𝒖𝒍𝒕.
-  * It is possible that the fⁿ name or variable name you are using is a 𝒌𝒆𝒚𝒘𝒐𝒓𝒅 in the language.
-  * See if the #𝑻𝒆𝒔𝒕 𝑪𝒂𝒔𝒆𝒔 are correct.
-  * Be cautious whether you've passed the arguements to fⁿs. by 𝒓𝒆𝒇𝒆𝒓𝒆𝒏𝒄𝒆 or by 𝒄𝒐𝒑𝒚.
+1. There might be possibility of 𝑺𝒆𝒈𝒎𝒆𝒏𝒕𝒂𝒕𝒊𝒐𝒏 𝑭𝒂𝒖𝒍𝒕.
+2. It is possible that the fⁿ name or variable name you are using is a 𝒌𝒆𝒚𝒘𝒐𝒓𝒅 in the language.
+3. See if the #𝑻𝒆𝒔𝒕 𝑪𝒂𝒔𝒆𝒔 are correct.
+4. Be cautious whether you've passed the arguements to fⁿs. by 𝒓𝒆𝒇𝒆𝒓𝒆𝒏𝒄𝒆 or by 𝒄𝒐𝒑𝒚.
+5. See if you're using 𝒄𝒐𝒓𝒓𝒆𝒄𝒕 𝒊𝒏𝒅𝒆𝒙𝒊𝒏𝒈 either 0 - based or 1 - based.
+6. Don't ever use indexing to insert in container if their size hasn't been declared beforehand.
+   Eg. vector<int> v;
+       Then don't ever use v[i]=100;
+       This will always give 𝑺𝒆𝒈𝒎𝒆𝒏𝒕𝒂𝒕𝒊𝒐𝒏 𝑭𝒂𝒖𝒍𝒕 (𝒄𝒐𝒓𝒆 𝒅𝒖𝒎𝒑𝒆𝒅).
+       To correct it either use v.push_back(100);
+                     or declare vector size i.e. vector<int> v(size);

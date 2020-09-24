@@ -164,7 +164,8 @@ pair<long long, long long> repeatAndMissing(vector<long long> &v)
 
       else i++;
    }  
-
+   
+   int r, m;
    //extracting result
    for(long long i=0; i<n; i++)
    {

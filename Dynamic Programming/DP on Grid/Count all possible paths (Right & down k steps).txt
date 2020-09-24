@@ -1,0 +1,19 @@
+/*PROBLEM: Given a 2-D matrix, find the number of ways to reach cell with coordinates (m, n) from 
+           starting cell (0,0) under the condition that you can only travel any number of steps right or any
+           number of steps down.
+           Note: # 𝑵𝒐 𝒄𝒆𝒍𝒍𝒔 𝒐𝒇 𝒕𝒉𝒆 𝒎𝒂𝒕𝒓𝒊𝒙 𝒂𝒓𝒆 𝒃𝒍𝒐𝒄𝒌𝒆𝒅.
+                 # m and n are given on 0 based indexing.
+*/
+
+/*UNDERLYING CONCEPT ----->
+  # An approach similar to "Count all possible paths (Right & down 1 step)" can be used.
+  # THe only difference is we've to add all the values of cells left and top to find answer for the 
+    current cell into consideration in the TABULATION IMPLEMENTATION.
+  # The formula will be -------->
+                
+    dp[m][n] = ∑dp[m][k]  + ∑dp[k][n]
+              (k=0 to n-1) (k=0 to m-1)
+  
+  # Time complexity: O(m*n*max(m, n))
+  # Auxiliary Space(worsst case): O(r*c), where r and c are the #rows and #columns in the given 2 D Matrix.
+*/
