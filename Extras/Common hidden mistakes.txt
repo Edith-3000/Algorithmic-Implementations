@@ -11,3 +11,4 @@
        This will always give 𝑺𝒆𝒈𝒎𝒆𝒏𝒕𝒂𝒕𝒊𝒐𝒏 𝑭𝒂𝒖𝒍𝒕 (𝒄𝒐𝒓𝒆 𝒅𝒖𝒎𝒑𝒆𝒅).
        To correct it either use v.push_back(100);
                      or declare vector size i.e. vector<int> v(size);
+7. Always check if there is only 1 𝒕𝒆𝒔𝒕 𝒄𝒂𝒔𝒆 in i/p, 𝒄𝒐𝒎𝒎𝒆𝒏𝒕 𝒐𝒖𝒕 𝒕𝒉𝒆 𝒍𝒊𝒏𝒆 𝒄𝒊𝒏>>𝒕 𝒊𝒏 𝒚𝒐𝒖𝒓 𝒕𝒆𝒎𝒑𝒍𝒂𝒕𝒆.
