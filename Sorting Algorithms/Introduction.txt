@@ -1,0 +1,6 @@
+# Criteria for analysis of a Sorting Algorithm ------->
+  1. Number of comparisons.
+  2. Number of swaps.
+  3. Adaptivity.
+  4. Stability.
+  5. Auxiliary Space.

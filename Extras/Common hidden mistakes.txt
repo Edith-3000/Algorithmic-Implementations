@@ -12,3 +12,8 @@
        To correct it either use v.push_back(100);
                      or declare vector size i.e. vector<int> v(size);
 7. Always check if there is only 1 𝒕𝒆𝒔𝒕 𝒄𝒂𝒔𝒆 in i/p, 𝒄𝒐𝒎𝒎𝒆𝒏𝒕 𝒐𝒖𝒕 𝒕𝒉𝒆 𝒍𝒊𝒏𝒆 𝒄𝒊𝒏>>𝒕 𝒊𝒏 𝒚𝒐𝒖𝒓 𝒕𝒆𝒎𝒑𝒍𝒂𝒕𝒆.
+8. Check for the 𝑬𝑫𝑮𝑬 𝑪𝑨𝑺𝑬𝑺.
+9. Remember, most of the times 𝑺𝑨𝑴𝑷𝑳𝑬 𝑰/𝑷 & 𝑶/𝑷 given are 𝑴𝑰𝑺𝑳𝑬𝑨𝑫𝑰𝑵𝑮.
+9. Don't 𝑨𝑺𝑺𝑼𝑴𝑬 𝒂𝒏𝒚𝒕𝒉𝒊𝒏𝒈 by 𝒚𝒐𝒖𝒓𝒔𝒆𝒍𝒇, follow the things written in problem statement, no self assumption.
+10. Sometimes there are questions having possibility of 𝑴𝑼𝑳𝑻𝑰𝑷𝑳𝑬 𝑨𝑵𝑺𝑾𝑬𝑹𝑺, so if the o/p doesn't 
+    matches with the eg. o/p just submit the code and check if answer is correct or not.
