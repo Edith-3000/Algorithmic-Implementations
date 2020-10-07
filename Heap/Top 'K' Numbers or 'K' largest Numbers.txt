@@ -1,0 +1,27 @@
+/*PROBLEM STATEMENT: Given an unsorted array of numbers, find the ‘K’ largest numbers in it.
+*/
+
+vector<int> topKNum(vector<int> &v, int k)
+{
+	if(v.size()==0)
+		return vector<int>();
+
+	priority_queue<int, vector<int>, greater<int>> minHeap;
+ 	for(int i=0; i<v.size(); i++)
+ 	{
+ 		minHeap.push(v[i]);
+
+ 		if(minHeap.size()>k)
+ 			minHeap.pop();
+ 	}
+
+ 	vector<int> res;
+ 	while(!minHeap.empty())
+ 	{
+ 		res.push_back(minHeap.top());
+ 		minHeap.pop();
+ 	}
+}
+
+// Time complexity: O(n x log₂(k))
+// Space complexity: O(k), ∵ we need to store ‘K’ smallest numbers in the heap.

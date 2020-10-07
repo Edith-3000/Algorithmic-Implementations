@@ -1,0 +1,4 @@
+# Following are some line of thoughts to solve algorithmic problems ------>
+
+1. You can find out all the possible conditions for the Problem Statement given.
+2. Try to frame any Mathematical Eqⁿ, if suitable.

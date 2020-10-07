@@ -1,0 +1,114 @@
+/* PROBLEM STATEMENT: There are ‘N’ tasks, labeled from ‘0’ to ‘N-1’. Each task can have some prerequisite 
+					  tasks which need to be completed before it can be scheduled. Given the number of tasks 
+					  and a list of prerequisite pairs, write a method to print 𝑨𝑳𝑳 possible ordering of tasks meeting all prerequisites. 
+
+*/
+
+/* UNDERLYING CONCEPT ------>
+   # This problem is similar to the parent problem Tasks Scheduling Algo, the only difference is that we 
+     need to find all the topological orderings of the tasks.
+   # At any stage, if we have more than one source available and since we can choose any source, therefore, 
+     in this case, we will have multiple orderings of the tasks. We can use a recursive approach with Backtracking to consider all sources at any step.
+*/
+
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+#include<algorithm>
+using namespace std;
+
+class TopologicalSort
+{
+	public:
+		static void sort(int vertices, vector<vector<int>> &edges)
+		{
+			if(vertices<=0)
+				return;
+				
+			unordered_map<int, int> inDegree; // count of incoming edges for every vertex
+			unordered_map<int, vector<int>> graph; // adjacency list graph
+			vector<int> res; // to store the final result
+			
+			// a. Initialize the graph 
+			for(int i=0; i<vertices; i++)
+			{
+				inDegree[i]=0;
+				graph[i]=vector<int>();
+			}
+			
+			// b. build the graph
+			for(int i=0; i<edges.size(); i++)
+			{
+				int parent=edges[i][0], child=edges[i][1];
+				graph[parent].push_back(child);
+				inDegree[child]++;
+			}
+			
+			// c. Find all sources i.e., all vertices with 0 in-degrees
+			vector<int> q;
+			for(auto entry: inDegree)
+			{
+				if(entry.second==0)
+					q.push_back(entry.first);
+			}
+			
+			printAllOrderings(graph, inDegree, q, res);
+		}
+	
+		static void printAllOrderings(auto &graph, auto &inDegree, auto &q, auto &res)
+		{
+			if(!q.empty())
+			{
+				for(auto vertex: q)
+				{
+					res.push_back(vertex);
+					vector<int> sourcesForNextCall=q;
+					
+					// only remove the current source, all other sources should remain in the queue for the next call
+					sourcesForNextCall.erase(find(sourcesForNextCall.begin(), sourcesForNextCall.end(), vertex));
+					
+					// get the node's children to their their inDegrees
+					vector<int> children=graph[vertex];
+					for(auto child: children)
+					{
+						inDegree[child]--;
+						if(inDegree[child]==0)
+							sourcesForNextCall.push_back(child); //save the new source for the next call
+					}
+					
+					// recursive call to Drint other orderings from the remaining (and new)
+					printAllOrderings(graph, inDegree, sourcesForNextCall, res);
+					
+					// backtrack, remove the vertex from the sorted order and put all of its
+					// children back to consider the next source instead of the current vertex
+					res.erase(find(res.begin(), res.end(), vertex));
+					
+					for(auto child: children)
+						inDegree[child]++;
+				}
+			}
+			
+			// if res doesn't contain all tasks, either we''ve a cyclic dependency between tasks, or
+			// we have not processed all the tasks in this recursive call
+			if(res.size()==inDegree.size())
+			{
+				for(auto x: res)
+					cout<<x<<" ";
+					
+				cout<<"\n";
+			}
+		}
+};
+
+int main(int argc, char *argv[])
+{
+	vector<vector<int>> v{{2, 5}, {0, 5}, {0, 4}, {1, 4}, {3, 2}, {1, 3}};
+	TopologicalSort::sort(6, v);
+}
+
+/* Time and Space Complexity ---->
+   # If we don’t have any prerequisites, all combinations of the tasks can represent a topological ordering.
+   # As we know, that there can be N! combinations for ‘N’ numbers, therefore the time and space complexity 
+    of our algorithm will be O(V! * E) where ‘V’ is the total number of tasks and ‘E’ is the total prerequisites. 
+   # We need the ‘E’ part because in each recursive call, at max, we remove (and add back) all the edges.
+*/

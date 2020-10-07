@@ -1,0 +1,119 @@
+/* PROBLEM STATEMENT: There is a dictionary containing words from an alien language for which we don’t
+                      know the ordering of the characters. Write a method to find the correct order of 
+                      characters in the alien language.
+                      NOTE: The words are sorted lexicographically by the rules of the alien language
+                            as it is given that a dictionary is containing the words.
+                      Input: Words: ["cab", "aaa", "aab"]
+					  Output: cab
+					  Explanation: From the given words we can conclude the following ordering among 
+					  its characters:
+						 
+					  1. From "cab" and "aaa", we can conclude that 'c' comes before 'a'.
+					  2. From "aaa" and "aab", we can conclude that 'a' comes before 'b'
+						 
+					  From the above two points, we can conclude that the correct character order is: "cab"
+*/
+
+/* UNDERLYING CONCEPT ------>
+   # Since the given words are sorted lexicographically by the rules of the alien language, we can 
+     always compare two adjacent words to determine the ordering of the characters. 
+   1. Take the first two words for eg. “ba” and “bc”. Starting from the beginning of the words, find the first 
+     character that is different in both words: it would be ‘a’ from “ba” and ‘c’ from “bc”. Because of 
+     the sorted order of words (i.e. the dictionary!), we can conclude that ‘a’ comes before ‘c’ in the 
+     alien language.
+   2. Similarly, from “bc” and “ac”, we can conclude that ‘b’ comes before ‘a’.
+   # These two points tell us that we are actually asked to find the topological ordering of the characters, 
+     and that the ordering rules should be inferred from adjacent words from the alien dictionary.
+
+   # This makes the current problem similar to Tasks Scheduling Order, the only difference being that we need 
+     to build the graph of the characters by comparing adjacent words first, and then perform the topological 
+     sort for the graph to determine the order of the characters.
+*/
+
+#include<iostream>
+#include<vector>
+#include<unordered_map>
+#include<queue>
+using namespace std;
+
+class TopologicalSort
+{
+	public:
+		static string sort(const vector<string> &v)
+		{
+			if(v.size()==0)
+				return "";
+				
+			string res;
+			unordered_map<char, int> inDegree;
+			unordered_map<char, vector<char>> graph;
+			
+			for(auto word: v)
+			{
+				for(auto ch: word)
+				{
+					inDegree[ch]=0;
+					graph[ch]=vector<char>();
+				}
+			}
+			
+			for(int i=0; i<v.size()-1; i++)
+			{
+				string s1=v[i], s2=v[i+1];
+				for(int j=0; j<min(s1.length(), s2.length()); j++)
+				{
+					char parent=s1[j], child=s2[j];
+					if(parent!=child)
+					{
+						graph[parent].push_back(child);
+						inDegree[child]++;
+						break;
+					}
+				}
+			}
+			
+			queue<char> q;
+			for(auto entry: inDegree)
+			{
+				if(entry.second==0)
+					q.push(entry.first);
+			}
+			
+			while(!q.empty())
+			{
+				char vertex=q.front();
+				res+=vertex;
+				q.pop();
+				vector<char> children=graph[vertex];
+				for(auto child: children)
+				{
+					inDegree[child]--;
+					if(inDegree[child]==0)
+						q.push(child);
+				}
+			}
+			
+			if(res.size()!=inDegree.size())
+				return "";
+				
+			return res;			
+		}
+};
+
+int main(int argc, char **argv[])
+{
+	string res=TopologicalSort::sort(vector<string>{"ywx", "wz", "xz", "zyy", "zwz"});
+	cout<<res;
+}
+
+/* Time Complexity ---->
+   # The time complexity of the above algorithm will be O(V+E), where ‘V’ is the total number of different
+     characters and ‘E’ is the total number of the rules in the alien language. 
+   # ∵ at most, each pair of words can give us one rule, therefore, we can conclude that the upper bound for   
+     the rules is O(N) where ‘N’ is the number of words in the input. 
+   # So, the time complexity of our algorithm is O(V+N).
+
+   Space Complexity ----->
+   # The space complexity will be O(V+N), ∵ we are storing all of the rules for each character in an 
+     adjacency list.
+*/

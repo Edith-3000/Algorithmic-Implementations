@@ -17,3 +17,4 @@
 9. Don't 𝑨𝑺𝑺𝑼𝑴𝑬 𝒂𝒏𝒚𝒕𝒉𝒊𝒏𝒈 by 𝒚𝒐𝒖𝒓𝒔𝒆𝒍𝒇, follow the things written in problem statement, no self assumption.
 10. Sometimes there are questions having possibility of 𝑴𝑼𝑳𝑻𝑰𝑷𝑳𝑬 𝑨𝑵𝑺𝑾𝑬𝑹𝑺, so if the o/p doesn't 
     matches with the eg. o/p just submit the code and check if answer is correct or not.
+11. Always analyze the 𝑪𝑶𝑵𝑺𝑻𝑹𝑨𝑰𝑵𝑻𝑺 very carefully, sometimes the answer lies in the constraints.

@@ -1,0 +1,15 @@
+/* PROBLEM STATEMENT: There are ‘N’ tasks, labeled from ‘0’ to ‘N-1’. Each task can have some prerequisite
+					  tasks which need to be completed before it can be scheduled. Given the number of tasks 
+					  and a list of prerequisite pairs, find out if it is possible to schedule all the tasks.
+*/
+
+/*UNDERLYING CONCEPT ------>
+  # This problem is asking us to find out if it is possible to find a topological ordering of the given 
+    tasks. 
+  # Here, the tasks are equivalent to the vertices and the prerequisites are the edges of our directed 
+    graph.
+  # A similar algorithm as described in "Topological sort algo.txt" to find the topological ordering of 
+    the tasks. 
+    If the ordering does not include all the tasks, we will conclude that some tasks have cyclic 
+    dependencies and ∴ not possible to schedule the given tasks.
+*/
