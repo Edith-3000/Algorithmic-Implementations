@@ -1,0 +1,151 @@
+/*PROBLEM STATEMENT: Given a set of 𝑫𝑰𝑺𝑻𝑰𝑵𝑪𝑻 numbers, find all of its permutations.
+					 Input: [1,3,5]
+					 Output: [1,3,5], [1,5,3], [3,1,5], [3,5,1], [5,1,3], [5,3,1]
+*/
+
+/*UNDERLYING CONCEPT ----->
+  # If a set has ‘n’ 𝑫𝑰𝑺𝑻𝑰𝑵𝑪𝑻 elements it will have n! permutations. 
+  # This problem follows the Subsets pattern and we can follow a similar Breadth First Search (BFS) approach.
+    However, unlike Subsets, every permutation must contain all the numbers.
+  # Let’s take the example mentioned above to generate all the permutations. 
+    Following a BFS approach, we will consider one number at a time:
+	1. If the given set is empty then we have only an empty permutation set: []
+	2. Let’s add the first element (1), the permutations will be: [1]
+    3. Let’s add the second element (3), the permutations will be: [3,1], [1,3]
+    4. Let’s add the third element (5), the permutations will be: 
+       [5,3,1], [3,5,1], [3,1,5], [5,1,3], [1,5,3], [1,3,5]
+    5. By closely analyzing the permutations in the 3rd and 4th step:
+	   It is realized that when we add a new number (5), we take each permutation of the previous step 
+	   and insert the new number in 𝒆𝒗𝒆𝒓𝒚 𝒑𝒐𝒔𝒊𝒕𝒊𝒐𝒏 to generate the new permutations. 
+*/
+
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+
+class Permutation
+{
+  public:
+    static vector<vector<int>> findPermutations(const vector<int> &v)
+    {
+      vector<vector<int>> res;
+        if(v.size()<=0)
+            return res;
+      
+      queue<vector<int>> permu;
+      permu.push(vector<int>());
+      
+      for(auto num: v)
+      {
+        // take all the existing permutations and add the current num
+        // to create new permutations
+        int n=permu.size();
+        for(int i=0; i<n; i++)
+        {
+          vector<int> oldPermu=permu.front();
+          permu.pop();
+          
+          // create new permutations by adding the current num at 
+          // every possible position
+          for(int j=0; j<=oldPermu.size(); j++)
+          {
+            vector<int> newPermu(oldPermu);
+            newPermu.insert(newPermu.begin()+j, num);
+            
+            if(newPermu.size()==v.size())
+              res.push_back(newPermu);
+              
+            else permu.push(newPermu);
+          }
+        }
+      }
+      
+      return res;
+    }
+};
+
+int main(int argc, char *argv[])
+{
+  vector<vector<int>> res=Permutation::findPermutations(vector<int>{1, 3, 5});
+  for(auto v: res){
+    for(auto x: v)
+      cout<<x<<" ";
+      
+    cout<<"\n";
+  } 
+}
+
+/* # Time complexity 
+    *There are a total of n! permutations of a set with all ‘n’ distinct numbers. 
+    * In the algorithm above, we are iterating through all of these permutations with the help of the two 
+     ‘for’ loops. 
+    * In each iteration, we go through all the current permutations to insert a new number in them .
+    * To insert a number into a permutation of size ‘n’ will take O(n), which makes the overall time 
+      complexity of our algorithm O(n x n!).
+
+  # Space complexity 
+    * All the additional space used by our algorithm is for the result list and the queue to store 
+      the intermediate permutations. 
+    * At any time, we don’t have more than n! permutations between the result list and the queue. 
+      ∴ the overall space complexity to store n! permutations each containing n elements will be 
+      O(n x n!).
+*/
+
+=================================================================================================================
+
+// ALTERNATER RECURSIVE APPROACH
+
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+
+class Permutation
+{
+  public:
+    static vector<vector<int>> findPermutations(const vector<int> &v)
+    {
+      vector<vector<int>> res;
+        if(v.size()<=0)
+            return res;
+      
+      vector<int> currPermu;
+      int index=0;
+      
+      findPermutationsRecur(v, currPermu, res, index);
+      
+      return res;
+    }
+    
+    static void findPermutationsRecur(const vector<int> &v, vector<int> &currPermu, vector<vector<int>> &res, int index)
+    {
+      if(index==v.size())
+      {
+        res.push_back(currPermu);
+        return;
+      }
+        
+        
+      for(int i=0; i<=currPermu.size(); i++)
+      {
+        vector<int> newPermu(currPermu);
+        newPermu.insert(newPermu.begin()+i, v[index]);
+        findPermutationsRecur(v, newPermu, res, index+1);
+      }
+    }
+};
+
+int main(int argc, char *argv[])
+{
+  vector<vector<int>> res=Permutation::findPermutations(vector<int>{1, 3, 5, 10, 19});
+  for(auto v: res){
+    for(auto x: v)
+      cout<<x<<" ";
+      
+    cout<<"\n";
+  } 
+}
+
+// Time COmplexity:
+// Space Complexity: 

@@ -1,0 +1,63 @@
+/*PROBLEM STATEMENT: Given a set of numbers that might contain duplicates, find all of its distinct subsets.
+					 Input: [1, 3, 3]
+                     Output: [], [1], [3], [1,3], [3,3], [1,3,3]
+*/
+
+/*UNDERLYING CONCEPT ------>
+  # This problem follows the Subsets pattern and we can follow a similar Breadth First Search (BFS) approach. 
+  # The only additional thing we need to do is handle duplicates. 
+  # Since the given set can have duplicate numbers, if we follow the same approach discussed in Subsets, 
+    we will end up with duplicate subsets, which is not acceptable. 
+    To handle this, we will do two extra things:
+	1. Sort all numbers of the given set. This will ensure that all duplicate numbers are next to each other.
+	2. Follow the same BFS approach but whenever we are about to process a duplicate (i.e., when the current 
+	   and the previous numbers are same), instead of adding the current number (which is a duplicate) to 
+	   all the existing subsets, only add it to the subsets which were created in the previous step.
+*/
+
+vector<vector<int>> subsets(vector<int> &v)
+{
+	// sort v[] to handle duplicates
+	sort(v.begin(), v.end());
+
+	// to store final result
+	vector<vector<int>> res;
+	if(v.size()<=0)
+		return res;
+
+	// start by adding the empty subset
+	res.push_back(vector<int>());
+
+	int startIndex=0, endIndex=0;
+	for(int i=0; i<v.size(); i++)
+	{
+		startIndex=0;
+
+		// if current and the previous elements are same, create new 
+		// subsets only from the subsets added in the previous step
+		if(i>0 && v[i]==v[i-1])
+			startIndex=endIndex+1;
+
+		endIndex=res.size()-1;
+		for(int j=startIndex; j<=endIndex; j++)
+		{
+			// create a new subset from the existing subset and 
+			// insert the current element to it
+			vector<int> set(res[j]);
+			set.push_back(v[i]);
+			res.push_back(set);
+		}
+	}
+
+	return res;
+}
+
+/* # Time complexity:
+	 * Since, in each step, the number of subsets could double (if not duplicate) as we add each element to 
+	   all the existing subsets, the time complexity of the above algorithm is O(2ⁿ), where ‘n’ is the total number of elements in the
+	   input set. This also means that, in the end, we will have a total of O(2ⁿ) subsets.
+
+   # Space complexity: 
+	 * All the additional space used by our algorithm is for the output list. 
+	   ∵ we will have a total of O(2ⁿ) subsets, the space complexity of algorithm is also O(2ⁿ).
+*/

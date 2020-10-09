@@ -1,0 +1,91 @@
+/*PROBLEM STATEMENT: Given a string, find all of its permutations preserving the character sequence but 
+					 changing case.
+					 Input: "ab7c"
+					 Output: "ab7c", "Ab7c", "aB7c", "AB7c", "ab7C", "Ab7C", "aB7C", "AB7C"
+*/
+
+/*UNDERLYING CONCEPT ----->
+  # This problem follows the Subsets pattern and can be mapped to Permutations.
+  # Take Example mentioned above to generate all the permutations. 
+    Following is a BFS approach, we consider one character at a time. 
+    ∵ we need to preserve the character sequence, we can start with the actual string and process each 
+    character (i.e., make it upper-case or lower-case) one by one:
+
+	1. Starting with the actual string: "ab7c"
+	2. Processing the first character (‘a’), we will get two permutations: "ab7c", "Ab7c"
+	3. Processing the second character (‘b’), we will get four permutations: "ab7c", "Ab7c", "aB7c", "AB7c"
+	4. Since the third character is a digit, we can skip it.
+	5. Processing the fourth character (‘c’), we will get a total of eight permutations: "ab7c", "Ab7c", "aB7c", 
+	   "AB7c", "ab7C", "Ab7C", "aB7C", "AB7C"
+	
+   # Analyzing the permutations in the 3rd and the 5th step. It can be observed that to generate the 
+     permutations in the 5th step from the permutations in the 3rd step, it is realized that in the 5th 
+     step, when we processed the new character (‘c’), we took all the permutations of the previous step 
+     (3rd) and changed the case of the letter (‘c’) in them to create four new permutations.
+*/
+
+#include<iostream>
+#include<vector>
+#include<string>
+using namespace std;
+
+class Solve
+{
+	public:
+		static vector<string> letterCaseStrPermu(const string &s)
+		{
+			// to store the final result
+			vector<string> res;
+			if(s=="")
+				return res;
+				
+			res.push_back(s);
+			
+			// process every character of the string one by one
+			for(int i=0; i<s.length(); i++)
+			{
+				// only process characters, skip digits
+				if(isalpha(s[i]))
+				{
+					// take all existing permutations and change the 
+					// letter case appropriately
+					int n=res.size();
+					for(int j=0; j<n; j++)
+					{
+						vector<char> ch(res[j].begin(), res[j].end());
+						
+						// if the current character is in upper case change 
+						// it to lower case or vice versa
+						if(islower(ch[i]))
+							ch[i]=toupper(ch[i]);
+							
+						else ch[i]=tolower(ch[i]);
+						
+						res.push_back(string(ch.begin(), ch.end()));
+					}
+				}
+			}
+			
+			// return final result
+			return res;
+		}
+};
+
+int main(int argc, char *argv[])
+{
+	vector<string> res=Solve::letterCaseStrPermu("ab7c");
+	for(auto s: res){
+		cout<<s<<" "<<"\n";
+	}
+}
+
+/* # Time complexity 
+	 * Since we can have O(2ⁿ) permutations at the most and while processing each permutation we convert 
+	   it into a character array, the overall time complexity of the algorithm will be O(n x 2ⁿ).
+	   Here n is the size of string. 
+
+   # Space complexity 
+     * All the additional space used by our algorithm is for the output list. 
+       Since we can have a total of O(2ⁿ) permutations, the space complexity of our algorithm 
+       is O(n x 2ⁿ).
+*/

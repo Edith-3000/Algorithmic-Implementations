@@ -1,0 +1,54 @@
+/*PROBLEM STATEMENT: Given a set with distinct elements, find all of its distinct subsets.
+					 Input: [1, 5, 3]
+                     Output: [], [1], [5], [3], [1,5], [1,3], [5,3], [1,5,3]
+*/
+
+/* UNDERLYING CONCEPT ----->
+   # To generate all subsets of the given set, we can use the Breadth First Search (BFS) approach. 
+     We can start with an empty set, iterate through all numbers one-by-one, and add them to existing sets to create new subsets.
+   # Eg. Given set: [1, 5, 3]
+     * Start with an empty set: [[]]
+     * Add the first number (1) to all the existing subsets to create new subsets: [[], [1]];
+     * Add the second number (5) to all the existing subsets: [[], [1], [5], [1,5]];
+     * Add the third number (3) to all the existing subsets: [[], [1], [5], [1,5], [3], [1,3], [5,3], [1,5,3]].
+
+     # NOTE: 𝑺𝒊𝒏𝒄𝒆 𝒕𝒉𝒆 𝒊𝒏𝒑𝒖𝒕 𝒔𝒆𝒕 𝒉𝒂𝒔 𝒅𝒊𝒔𝒕𝒊𝒏𝒄𝒕 𝒆𝒍𝒆𝒎𝒆𝒏𝒕𝒔, 𝒕𝒉𝒆 𝒂𝒃𝒐𝒗𝒆 𝒔𝒕𝒆𝒑𝒔 𝒘𝒊𝒍𝒍 𝒆𝒏𝒔𝒖𝒓𝒆 𝒕𝒉𝒂𝒕 𝒘𝒆 𝒘𝒊𝒍𝒍 𝒏𝒐𝒕 𝒉𝒂𝒗𝒆 
+             𝒂𝒏𝒚 𝒅𝒖𝒑𝒍𝒊𝒄𝒂𝒕𝒆 𝒔𝒖𝒃𝒔𝒆𝒕𝒔.
+*/
+
+vector<vector<int>> subsets(vector<int> &v)
+{
+	// to store final result
+	vector<vector<int>> res;
+	if(v.size()<=0)
+		return res;
+
+	// start by adding the empty subset
+	res.push_back(vector<int>());
+
+	for(int i=0; i<v.size(); i++)
+	{
+		// take all existing subsets and insert the current number 
+		// in them to create new subsets
+		for(int j=0; j<res.size(); j++)
+		{
+			// create a new subset from the existing subset and 
+			// insert the current element to it
+			vector<int> set=res[j];
+			set.push_back(v[i]);
+			res.push_back(set);
+		}
+	}
+
+	return res;
+}
+
+/* # Time complexity:
+	 * Since, in each step, the number of subsets doubles as we add each element to all the existing subsets, 
+	   the time complexity of the above algorithm is O(2ⁿ), where ‘n’ is the total number of elements in the
+	   input set. This also means that, in the end, we will have a total of O(2ⁿ) subsets.
+
+   # Space complexity: 
+	 * All the additional space used by our algorithm is for the output list. 
+	   ∵ we will have a total of O(2ⁿ) subsets, the space complexity of algorithm is also O(2ⁿ).
+*/

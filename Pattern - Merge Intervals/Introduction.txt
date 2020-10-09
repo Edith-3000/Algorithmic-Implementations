@@ -1,0 +1,15 @@
+# This pattern describes an efficient technique to deal with overlapping intervals. 
+# In a lot of problems involving intervals, we either need to find overlapping intervals or merge intervals 
+  if they overlap.
+
+# Given two intervals (‘a’ and ‘b’), there will be 6 different ways the two intervals can relate to 
+  each other:
+  
+         Time ⟶
+
+  1. '𝒂' 𝒂𝒏𝒅 '𝒃' 𝒅𝒐 𝒏𝒐𝒕 𝒐𝒗𝒆𝒓𝒍𝒂𝒑.
+  2. '𝒂' 𝒂𝒏𝒅 '𝒃' 𝒐𝒗𝒆𝒓𝒍𝒂𝒑𝒔, '𝒃' 𝒆𝒏𝒅𝒔 𝒂𝒇𝒕𝒆𝒓 '𝒂'.
+  3. '𝒂' 𝒄𝒐𝒎𝒑𝒍𝒆𝒕𝒆𝒍𝒚 𝒐𝒗𝒆𝒓𝒍𝒂𝒑𝒔 '𝒃'.
+  4. '𝒂' 𝒂𝒏𝒅 𝒃 𝒐𝒗𝒆𝒓𝒍𝒂𝒑𝒔, '𝒂' 𝒆𝒏𝒅𝒔 𝒂𝒇𝒕𝒆𝒓 '𝒃'.
+  5. '𝒃' 𝒄𝒐𝒎𝒑𝒍𝒆𝒕𝒆𝒍𝒚 𝒐𝒗𝒆𝒓𝒍𝒂𝒑𝒔 '𝒂'. 
+  6. '𝒂' 𝒂𝒏𝒅 '𝒃' 𝒅𝒐 𝒏𝒐𝒕 𝒐𝒗𝒆𝒓𝒍𝒂𝒑.

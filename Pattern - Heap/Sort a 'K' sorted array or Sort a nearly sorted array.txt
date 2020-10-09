@@ -31,3 +31,6 @@ void sortNearlySortedArr(vector<int> &v, int k)
 		minHeap.pop();
 	}
 }
+
+// Time complexity: O(n x log₂(k)), where n is v.size()
+// Space complexity: O(k), ∵ we need to store atmost ‘k’ pairs in the heap.

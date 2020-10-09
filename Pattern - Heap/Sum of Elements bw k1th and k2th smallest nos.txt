@@ -1,0 +1,21 @@
+/*PROBLEM STATEMENT: Given an array, find the sum of all numbers between the K1’th and K2’th smallest 
+					 elements of that array.
+					 Input: [1, 3, 12, 5, 15, 11], and K1=3, K2=6
+                     Output: 23
+                     Explanation: The 3rd smallest number is 5 and 6th smallest number 15. The sum of numbers 
+                     coming
+                     between 5 and 15 is 23 (11+12).
+*/
+
+/* UNDERLYING CONCEPT ------>
+   # Find out the k1ᵗʰ and k2ᵗʰ smallest numbers (using 𝑴𝑨𝑿 𝑯𝑬𝑨𝑷)
+   # Treaverse the array and add the elements which are b/w k1ᵗʰ and k2ᵗʰ smallest numbers.
+*/
+
+=================================================================================================================
+
+// ALTERNATE APPROACH (using min heap)
+
+# First, insert all numbers in a 𝑴𝑰𝑵 𝑯𝑬𝑨𝑷.
+# Remove the first K1 smallest numbers from the min-heap.
+# Now take the next (K2-K1-1) numbers out of the heap and add them. This sum will be our required output.

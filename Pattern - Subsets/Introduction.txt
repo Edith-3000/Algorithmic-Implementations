@@ -1,0 +1,2 @@
+# This pattern deals with problems involving 𝑷𝒆𝒓𝒎𝒖𝒕𝒂𝒕𝒊𝒐𝒏𝒔 𝒂𝒏𝒅 𝑪𝒐𝒎𝒃𝒊𝒏𝒂𝒕𝒊𝒐𝒏𝒔 of a given set of elements. 
+  An efficient 𝑩𝒓𝒆𝒂𝒅𝒕𝒉 𝑭𝒊𝒓𝒔𝒕 𝑺𝒆𝒂𝒓𝒄𝒉 (𝑩𝑭𝑺) approach can be used to handle all these problems.

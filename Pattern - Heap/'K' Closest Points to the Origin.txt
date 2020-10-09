@@ -1,0 +1,110 @@
+/*PROBLEM STATEMENT: Given an array of points in the a 2D2D plane, find ‘K’ closest points to the origin.
+					 Input: points = [[1,2],[1,3]], K = 1
+                     Output: [[1,2]]
+                     Explanation: The Euclidean distance between (1, 2) and the origin is sqrt(5).
+                     The Euclidean distance between (1, 3) and the origin is sqrt(10).
+                     Since sqrt(5) < sqrt(10), therefore (1, 2) is closer to the origin.
+*/
+
+typedef pair<int, pair<int, int>> pipii;
+vector<pair<int, int>> kClosestPoints(vector<pair<int, int>> &v, int k)
+{
+	if(v.size<=0)
+		vector<pair<int, int>>();
+
+	priority_queue<pipii> maxHeap;
+	for(int i=0; i<v.size(); i++)
+	{
+		pair<int, int> p=v[i];
+		int x=p.first, y=p.second;
+		// no need of sqrt as we have to check relative ordering
+		maxHeap.push({x*x + y*y, p});
+
+		if(maxHeap.size()>k)
+			maxHeap.pop();
+	}
+
+	vector<pair<int, int>> res;
+	while(!maxHeap.empty())
+	{
+		res.push_back(maxHeap.top().second);
+		maxHeap.pop();
+	}
+
+	return res;
+}
+
+// Time complexity: O(n x log₂(k)), where n is v.size()
+// Space complexity: O(k), ∵ we need to store atmost ‘k’ pairs in the heap.
+
+=================================================================================================================
+
+// ALTERNATE APPROACH BY MAKING USE OF make_heap() f²
+
+/* # There's no difference in terms of performance b/w std::priority_queue and make_heap()
+   # If you don't want to modify that vector then you should use priority queue as it creates a separate vector.
+   # But, if you can afford to edit it, then obviously using make_heap would be better as it doesn't create 
+   	 an auxiliary space and modify that vector in-place and would therefore, save space. 
+   # Moreover, Priority queue is easy to implement. For example, when you use make_heap while popping an element
+     you have to use two commands, firstly pop_heap and then pop_back.. but you can do it with just one command
+     in case of priority queue. Similarly, while pushing the element into the heap.
+   # When you use make_heap you still have access to all elements.
+   # When you use priority_queue, you have only a few operations giving very limited access to elements 
+    (basically just insert an item, and remove the item at the head of the queue).
+*/
+
+#include<iostream>
+#include<vector>
+#include<queue>
+using namespace std;
+
+class Point
+{
+	public:
+		// data members
+		int x=0, y=0;
+		
+		// member functions
+		Point(int x, int y): x(x), y(y) {} // constructor
+		
+		int distance() const{
+			return (x*x) + (y*y);
+		}
+		
+		bool operator<(const Point &p) const {
+			return p.distance() > this->distance();
+		}
+};
+
+class KClosestPoints
+{
+	public:
+		static vector<Point> solve(const vector<Point> &v, int k)
+		{
+			vector<Point> maxHeap(v.begin(), v.begin()+k);
+			make_heap(maxHeap.begin(), maxHeap.end());
+			
+			for(int i=k; i<v.size(); i++)
+			{
+				if(v[i].distance() < maxHeap.front().distance())
+				{
+					pop_heap(maxHeap.begin(), maxHeap.end());
+					maxHeap.pop_back();
+					maxHeap.push_back(v[i]);
+					push_heap(maxHeap.begin(), maxHeap.end());
+				}
+			}
+			
+			return maxHeap;
+		}
+};
+
+int main()
+{
+	vector<Point> v=KClosestPoints::solve({{1, 3}, {3, 4}, {2, -1}}, 2);
+	for(auto pt: v)
+		cout<<"("<<pt.x<<", "<<pt.y<<")"<<"\n";
+}
+
+// Time complexity: O(n x log₂(k)), where n is v.size()
+// Space complexity: O(k), ∵ we need to store atmost ‘k’ pairs in the heap.

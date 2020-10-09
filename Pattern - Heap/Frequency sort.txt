@@ -1,0 +1,70 @@
+/*PROBLEM STATEMENT: Given an array, sort it based on the decreasing frequency of its elements.
+*/
+
+void frequencySort(vector<int> &v)
+{
+	if(v.size()<=0)
+		return;
+
+	unordered_map<int, int> mp;
+	for(auto x: v)
+		mp[x]++;
+
+	priority_queue<pair<int, int>> maxHeap;
+	for(auto p: mp)
+		maxHeap.push(make_pair(p.second, p.first));
+
+	while(!maxHeap.empty())
+	{
+		int freq=maxHeap.top().first;
+		int ele=maxHeap.top().second;
+
+		for(int i=0; i<freq; i++)
+			cout<<ele<<" ";
+
+ 		maxHeap.pop();		
+	}
+}
+
+// Time complexity: O(n x log₂(n)), where n is v.size()
+// Space complexity: O(n)	
+
+=================================================================================================================
+
+// ALTERNATE APPROACH USING comparator fⁿ
+
+class myComparator
+{
+	bool operator()(const pair<int, int> &p1, const pair<int, int> &p2)
+	{
+		return p2.second > p1.second;
+	}	
+};
+
+void frequencySort(vector<int> &v)
+{
+	if(v.size()<=0)
+		return;
+
+	unordered_map<int, int> mp;
+	for(auto x: v)
+		mp[x]++;
+
+	priority_queue<pair<int, int>, vector<pair<int, int>>, myComparator> maxHeap;
+	for(auto p: mp)
+		maxHeap.push(p);
+
+	while(!maxHeap.empty())
+	{
+		int freq=maxHeap.top().second;
+		int ele=maxHeap.top().first;
+
+		for(int i=0; i<freq; i++)
+			cout<<ele<<" ";
+
+ 		maxHeap.pop();		
+	}
+}
+
+// Time complexity: O(n x log₂(n)), where n is v.size()
+// Space complexity: O(n)	

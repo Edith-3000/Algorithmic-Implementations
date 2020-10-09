@@ -1,0 +1,32 @@
+/*PROBLEM STATEMENT: Given ‘N’ ropes with different lengths, we need to connect these ropes into one big 
+					 rope with minimum cost. The cost of connecting two ropes is equal to the sum of their
+					 lengths.
+*/
+
+int connectRopes(vector<int> &v)
+{
+	if(v.size()<=0)
+		return -1;
+
+	priority_queue<int, vector<int>, greater<int>> minHeap;
+	for(auto x: v)
+		minHeap.push(x);
+
+	int res=0;
+	while(minHeap.size()>=2)
+	{
+		int first=minHeap.top();
+		minHeap.pop();
+		int second=minHeap.top();
+		minHeap.pop();
+
+		res+=(first+second);
+		minHeap.push(first+second);
+		}
+	}
+
+	return res;
+}
+
+// Time complexity: O(n x log₂(n)), where n is v.size()
+// Space complexity: O(n)	

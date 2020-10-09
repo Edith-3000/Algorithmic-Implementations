@@ -29,5 +29,5 @@ vector<int> kClosestElements(vector<int> &v, int k)
 	return res;
 }				
 
-// Time complexity: O(n x log₂(k))
+// Time complexity: O(n x log₂(k)), where n is v.size()
 // Space complexity: O(k), ∵ we need to store atmost ‘k’ pairs in the heap.
