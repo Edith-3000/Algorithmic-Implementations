@@ -1,0 +1,78 @@
+/*PROBLEM STATEMENT: Given an array of intervals representing ‘N’ appointments, find out if a person can 
+ 					 attend all the appointments.
+                     Appointments: [[6,7], [2,4], [8,12]]
+					 Output: true
+					 Explanation: None of the appointments overlap, therefore a person can attend all of them.
+*/
+
+/*UNDERLYING CONCEPT ----->
+  # The problem follows the Merge Intervals pattern. We can sort all the intervals by start time and then 
+    check if any two intervals overlap. 
+  # A person will not be able to attend all appointments if any two appointments overlap.
+*/
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+class Interval
+{
+	public:
+		// data members
+		int start=0;
+		int end=0;
+		
+		// constructor
+		Interval(int start, int end): start(start), end(end) {}
+};
+
+class Solve
+{
+	public:
+		bool conflictAppointments(vector<Interval> &v)
+		{
+			if(v.size()<=0)
+				return false;
+            
+            // sort the intervals on the basis of start time
+			sort(v.begin(), v.end(), [](const Interval &x, const Interval &y){
+				return x.start < y.start;
+			})
+
+			// find any overlapping appointment
+			for(int i=1; i<v.size(); i++)
+			{
+				if(v[i].start < v[i-1].end)
+				{
+					// note the comparison above, it is "<" and not "<="
+					// while merging we needed "<=" comparison, as we will be merging thw two
+					// intervals having condition "v[i].start==v[i-1].end" but
+					// such intervals don't represent conflicting appointments as onbe starts right
+					// afte the other
+					return false;
+				}
+			}
+
+			return true;
+		}
+
+};
+
+int main(int argc, char *argv[])
+{
+	vector<Interval> v{{6, 7}, {2, 4}, {8, 12}};
+	bool res=Solve::conflictAppointments(v);
+	for(auto interval: res)
+		cout<<"["<<interval.start<<", "<<interval.end<<"]"<<" "<<"\n";
+}
+
+/*# Time complexity:
+	* The time complexity of the above algorithm is O(n x log(n)), where ‘n’ is the total number of 
+	  appointments. 
+	* Though we are iterating the intervals only once, our algorithm will take O(n x log(n)), since we 
+	  need to sort them in the beginning.
+
+ # Space complexity:
+    * The space complexity of the above algorithm will be O(n).
+*/

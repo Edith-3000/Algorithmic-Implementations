@@ -1,0 +1,104 @@
+/*PROBLEM STATEMENT: Given a list of non-overlapping intervals sorted by their start time, insert a 
+					 given interval at the correct position and merge all necessary intervals to produce 
+					 a list that has only mutually exclusive intervals.
+					 Input: Intervals=[[1,3], [5,7], [8,12]], New Interval=[4,10]
+					 Output: [[1,3], [4,12]]
+					 Explanation: After insertion, since [4,10] overlaps with [5,7] & [8,12], we merged 
+					 them into [4,12].
+*/
+
+/*UNDERLYING CONCEPT ----->
+  # If the given list was not sorted, we could have simply appended the new interval to it and used the 
+    merge() function from Merge Intervals. 
+  # But since the given list is sorted, we should try to come up with a solution better than 
+    O(n x log(n)).
+
+  # When inserting a new interval in a sorted list, we need to first find the correct index where the 
+    new interval can be placed. In other words, we need to skip all the intervals which end before the 
+    start of the new interval. So we can iterate through the given sorted listed of intervals and skip 
+    all the intervals with the following condition:
+    𝒊𝒏𝒕𝒆𝒓𝒗𝒂𝒍𝒔[𝒊].𝒆𝒏𝒅 < 𝒏𝒆𝒘𝑰𝒏𝒕𝒆𝒓𝒗𝒂𝒍.𝒔𝒕𝒂𝒓𝒕
+  # Once we have found the correct place, we can follow an approach similar to Merge Intervals to insert 
+    and/or merge the new interval. 
+
+  # Our overall algorithm will look like this:
+    1. Skip all intervals which end before the start of the new interval, i.e., skip all intervals with 
+       the following condition: 𝒊𝒏𝒕𝒆𝒓𝒗𝒂𝒍𝒔[𝒊].𝒆𝒏𝒅 < 𝒏𝒆𝒘𝑰𝒏𝒕𝒆𝒓𝒗𝒂𝒍.𝒔𝒕𝒂𝒓𝒕
+    2. Let’s call the last interval ‘b’ that does not satisfy the above condition. If ‘b’ overlaps with the 
+       new interval (a) (i.e. b.start <= a.end), we need to merge them into a new interval ‘c’:
+	   𝒄.𝒔𝒕𝒂𝒓𝒕 = 𝒎𝒊𝒏(𝒂.𝒔𝒕𝒂𝒓𝒕, 𝒃.𝒔𝒕𝒂𝒓𝒕)
+	   𝒄.𝒆𝒏𝒅 = 𝒎𝒂𝒙(𝒂.𝒆𝒏𝒅, 𝒃.𝒆𝒏𝒅)
+    3. Repeat the above two steps to merge ‘c’ with the next overlapping interval.
+*/
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+class Interval
+{
+	public:
+		// data members
+		int start=0;
+		int end=0;
+		
+		// constructor
+		Interval(int start, int end): start(start), end(end) {}
+};
+
+class Solve
+{
+	public:
+		static vector<Interval> insertInterval(vector<Interval> &v, Interval newiv)
+		{
+			if(v.empty())
+				return vector<Interval>{newiv};
+				
+			int i=0;
+			vector<Interval> res; // to sore final result
+			
+			// skip (and add to output) all intervals that come before 
+			// the 'newiv'
+			while(i<v.size() && v[i].end < newiv.start) 
+			{
+				res.push_back(v[i]);
+				i++;
+			}
+			
+			// merge all intervals that overlap with newiv
+			while(i<v.size() && v[i].start<=newiv.end)
+			{
+				newiv.start=min(v[i].start, newiv.start);
+				newiv.end=max(v[i].end, newiv.end);
+				i++;
+			}
+			
+			// insert the newiv
+			res.push_back(newiv);
+			
+			// add all the remaining intervals to the output
+			while(i<v.size())
+				res.push_back(v[i++]);
+				
+			// return the final result
+			return res;
+		}
+};
+
+int main(int argc, char *argv[])
+{
+	vector<Interval> v{{1, 3}, {5, 7}, {8, 12}};
+	vector<Interval> res=Solve::insertInterval(v, {4, 6});
+	for(auto interval: res)
+		cout<<"["<<interval.start<<", "<<interval.end<<"]"<<" "<<"\n";
+}
+
+/*# Time complexity:
+    * As we are iterating through all the intervals only once, the time complexity of the above algorithm is 
+      O(n)O, where ‘n’ is the total number of intervals.
+
+  # Space complexity:
+    * The space complexity of the above algorithm will be O(n) as we need to return a list containing 
+      all the merged intervals.
+*/

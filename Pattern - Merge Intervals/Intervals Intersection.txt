@@ -1,0 +1,87 @@
+/*PROBLEM STATEMENT: Given two lists of intervals, find the intersection of these two lists. 
+                     Each list consists of disjoint intervals sorted on their start time.
+  Example:
+  Input: arr1=[[1, 3], [5, 6], [7, 9]], arr2=[[2, 3], [5, 7]]
+  Output: [2, 3], [5, 6], [7, 7]
+  Explanation: The output list contains the common intervals between the two lists.
+*/
+
+/*UNDERLYING CONCEPT ----->
+  # This problem follows the Merge Intervals pattern.
+  # A close observation will tell us that whenever the two intervals overlap, 𝒐𝒏𝒆 𝒐𝒇 𝒕𝒉𝒆 𝒊𝒏𝒕𝒆𝒓𝒗𝒂𝒍’𝒔 𝒔𝒕𝒂𝒓𝒕 
+    𝒕𝒊𝒎𝒆 𝒍𝒊𝒆𝒔 𝒘𝒊𝒕𝒉𝒊𝒏 𝒕𝒉𝒆 𝒐𝒕𝒉𝒆𝒓 𝒊𝒏𝒕𝒆𝒓𝒗𝒂𝒍.   
+  # Now, if we have found that the two intervals overlap, the overlapping interval will be equal to:
+    𝒔𝒕𝒂𝒓𝒕 = 𝒎𝒂𝒙(𝒂.𝒔𝒕𝒂𝒓𝒕, 𝒃.𝒔𝒕𝒂𝒓𝒕)
+    𝒆𝒏𝒅 = 𝒎𝒊𝒏(𝒂.𝒆𝒏𝒅, 𝒃.𝒆𝒏𝒅) 
+    That is, the highest start time and the lowest end time will be the overlapping interval.
+
+  # So our algorithm will be to iterate through both the lists together to see if any two intervals overlap. 
+    If two intervals overlap, we will insert the overlapped part into a result list and move on to the next 
+    interval which is finishing early.
+*/
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+class Interval
+{
+	public:
+		// data members
+		int start=0;
+		int end=0;
+		
+		// constructor
+		Interval(int start, int end): start(start), end(end) {}
+};
+
+class Solve
+{
+	public:
+		static vector<Interval> intervalsIntersec(const vector<Interval> &v1, const vector<Interval> &v2)
+		{
+			if(v1.size()<=0 && v2.size()<=0)
+				return vector<Interval>();
+				
+			vector<Interval> res;
+			int i=0, j=0;
+			
+			while(i<v1.size() && j<v2.size())
+			{
+				// check if the interval v1[i] intersects with v2[j]
+				// check if one of the interval's start time lies within the other interval
+				if(v1[i].start>=v2[j].start && v1[i].start<=v2[j].end ||
+				   v2[j].start>=v1[i].start && v2[j].start<=v1[i].end)
+				{
+					// store the intersection part
+					res.push_back({max(v1[i].start, v2[j].start), min(v1[i].end, v2[j].end)});
+				}
+				
+				// move next from the interval which is finishing first
+				if(v1[i].end<v2[j].end) i++;
+				else j++;
+			}
+			
+			// return  the final result
+			return res;
+		}
+};
+
+int main(int argc, char *argv[])
+{
+	vector<Interval> v1{{1, 3}, {5, 6}, {7, 9}};
+	vector<Interval> v2{{2, 3}, {5, 7}};
+	vector<Interval> res=Solve::intervalsIntersec(v1, v2);
+	for(auto interval: res)
+		cout<<"["<<interval.start<<", "<<interval.end<<"]"<<" "<<"\n";
+}
+
+/*#Time complexity:
+  * As we are iterating through both the lists once, the time complexity of the above algorithm is 
+    O(n+m) ≡ O(max(n, m)), where ‘n’ and ‘m’ are the total number of intervals in the input arrays 
+    respectively.
+
+ #Space complexity:
+  * Ignoring the space needed for the result list, the algorithm runs in constant space O(1).
+*/

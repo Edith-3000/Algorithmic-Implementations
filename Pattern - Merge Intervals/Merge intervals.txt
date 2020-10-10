@@ -1,4 +1,4 @@
-Problem Statement: Given a list of intervals, merge all the overlapping intervals to produce a list 
+/*Problem Statement: Given a list of intervals, merge all the overlapping intervals to produce a list 
                    that has only mutually exclusive intervals.
                    Example: Intervals: [[1,4], [2,5], [7,9]]
                             Output: [[1,5], [7,9]]
@@ -6,4 +6,93 @@ Problem Statement: Given a list of intervals, merge all the overlapping interval
                             we merged them into one [1,5].
 */
 
-                
+/*UNDERLYING CONCEPT ----->
+  # Algorithm :-
+    1. Sort the intervals on the start time to ensure a.start <= b.start.
+    2. If ‘a’ overlaps ‘b’ (i.e. b.start <= a.end), we need to merge them into a new interval ‘c’ 
+       such that: c.start = a.start
+                  c.end = max(a.end, b.end)
+    3. We will keep repeating the above two steps to merge ‘c’ with the next interval if it overlaps 
+       with ‘c’.
+*/
+
+#include<iostream>
+#include<vector>
+#include<algorithm>
+using namespace std;
+
+class Interval
+{
+	public:
+		// data members
+		int start=0;
+		int end=0;
+		
+		// constructor
+		Interval(int start, int end): start(start), end(end) {}
+};
+
+class Solve
+{
+	public:
+		static vector<Interval> mergeIntervals(vector<Interval> &v)
+		{
+			if(v.size()<2)
+				return v;
+				
+			vector<Interval> res; // to store final result
+			
+			// sort the intervals by start time
+			// making use of lambda expression to sort
+			sort(v.begin(), v.end(), [](const Interval &iv1, const Interval &iv2){
+				return iv1.start < iv2.start;
+			});
+			
+			vector<Interval>::const_iterator it=v.begin();
+			Interval invl= *it++;
+			int start=invl.start;
+			int end=invl.end;
+			
+			while(it != v.end())
+			{
+				invl= *it++;
+				
+				// overlapping intervals, adjust the 'end'
+				if(invl.start<=end)
+					end=max(end, invl.end);
+				
+				// non-overlapping interval, add the previous 
+				// interval and reset start and end
+				else
+				{
+					res.push_back({start, end});
+					start=invl.start;
+					end=invl.end;
+				}
+			}
+			
+			// add the last interval
+			res.push_back({start, end});
+			
+			// return final result
+			return res;
+		}
+};
+
+int main(int argc, char *argv[])
+{
+	vector<Interval> v{{1, 4}, {2, 6}, {3, 5}};
+	vector<Interval> res=Solve::mergeIntervals(v);
+	for(auto interval: res)
+		cout<<"["<<interval.start<<", "<<interval.end<<"]"<<" ";
+}
+
+/*# Time complexity:
+    * The time complexity of the above algorithm is O(n x log(n)), where ‘n’ is the total number of 
+      intervals. We are iterating the intervals only once which will take O(n), in the beginning though, 
+      since we need to sort the intervals, our algorithm will take O(n x log(n)).
+
+  # Space complexity:
+    * The space complexity of the above algorithm will be O(n) as we need to return a list containing all the 
+      merged intervals. 
+*/
