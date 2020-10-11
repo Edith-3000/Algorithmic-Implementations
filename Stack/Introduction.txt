@@ -1,0 +1,9 @@
+# How to identify questions based on STACK?
+⟶  1. The problem most probably makes use of an array.
+⟶  2. If the algorithm of the problem is an O(n²) algo and there is a 𝒅𝒆𝒑𝒆𝒏𝒅𝒆𝒏𝒕 𝒇𝒐𝒓 𝒍𝒐𝒐𝒑 present in the 
+       algorithm, such as: 
+                          for(int i=0; i<n; i++)
+       					      for(int j=0; j<i; j++)
+       Here j is dependent on i (or some other variant of dependent for loop such as j is from (i to 0) or
+       (i to n) or (n to i)), then there is a high probability that the algo can be made better by making 
+       use of a STACK.

@@ -1,0 +1,60 @@
+/*PROBLEM STATEMENT: Given an array, print the Next Greater Element (NGE) for every element. The Next
+                     greater Element for an element x is the first greater element on the right side of x 
+                     in array. Elements for which no greater element exist, consider next greater element 
+                     as -1. 
+*/
+
+// BRUTE FORCE APPROACH = O(n²)
+
+==================================================================================================================
+
+// EFFICENT APPROACH
+
+/*UNDERLYING CONCEPT ----->
+  # There are 3 conditions which are to be checked ->
+    1. If stack.size()==0, push -1 in the result vector res.
+    2. If stack.top()>v[i], push stack.top() in the resul vector rest.
+    3. If stack.top()<=v[i], perform stack.pop() until the stack is empty or stack.top()>v[i],
+       if stack.top()>v[i], push stack.top() in the result vector res
+       else push -1 in the result vector res.
+*/
+
+vector<int> ngr(vector<int> &v)
+{
+	if(v.size()<=0)
+		return v;
+
+	// to store the final result
+	vector<int> res(v.size());
+
+	stack<int> st; 
+
+	for(int i=v.size()-1; i>=0; i--)
+	{
+		if(st.empty())
+			res[i]=-1;
+
+		else if(st.top()>v[i])
+			res[i]=st.top();
+
+		else if(st.top()<=v[i])
+		{
+			while(!st.empty() && st.top()<=v[i])
+				st.pop();
+
+			if(st.empty())
+				res[i]=-1;
+			else res[i]=st.top();
+		}
+
+		st.push(v[i]);
+	}
+
+	// return the final res vector
+	return res;
+}
+
+/*# Time Complexity: O(n), where n is v.size()
+  # Space Complexity: O(n): The worst case occurs when all elements are sorted in increasing order,
+   						    as in this case the stack size will be 'n'.
+*/
