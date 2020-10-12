@@ -1,0 +1,36 @@
+/*PROBLEM STATEMENT: Design a Data Structure SpecialStack that supports all the stack operation like push(),
+                     pop(), getMin() (which should return minimum element from the SpecialStack), the operations of SpecialStack can be O(n). To implement SpecialStack, you should only use standard Stack data structure and no other data structure like arrays, list, .. etc.
+*/
+
+stack<int> s; // main stack
+stack<int> ss; // special stack or supporting stack
+
+void push(int n)
+{
+	s.push(n);
+
+	if(ss.empty() || ss.top()>=n)
+		ss.push(n);
+}
+
+int pop()
+{
+	if(s.empty())
+		return -1;
+
+	int x=s.top();
+	s.pop();
+
+	if(ss.top()==x)
+		ss.pop();
+
+	return x;
+}
+
+int getMin()
+{
+	if(ss.empty())
+		return -1;
+
+	else return ss.top();
+}

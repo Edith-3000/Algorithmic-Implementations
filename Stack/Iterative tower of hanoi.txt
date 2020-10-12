@@ -1,0 +1,95 @@
+NOTE: THIS QUESTION IS INCOMPLETE, IT'S GIVING WRONG ANSWER.
+
+// PROBLEM STATEMENT: Implement TOH iteratively.
+
+/*ALGORITHM : ⟶ 
+
+ 1. Calculate the total number of moves required i.e. "pow(2, n) - 1" here n is number of disks.
+ 2. If number of disks (i.e. n) is even then interchange destination pole and auxiliary pole.
+ 3. for i = 1 to total number of moves:
+  	  if i%3 == 0:
+        legal movement of top disk 𝒃𝒆𝒕𝒘𝒆𝒆𝒏 auxiliary pole and destination pole (i.e. A <--> D)
+  	  if i%3 == 1:
+      	legal movement of top disk 𝒃𝒆𝒕𝒘𝒆𝒆𝒏 source pole and destination pole (i.e. D <--> S)
+      if i%3 == 2:
+      	legal movement of top disk 𝒃𝒆𝒕𝒘𝒆𝒆𝒏 source pole and auxiliary pole (i.e. S <--> A)       
+*/
+
+void moveDiskPrint(char fromPole, char toPole, int x)
+{
+	cout<<"Move Disk "<<x<<" from "<<fromPole<<" to "<<toPole<<endl;
+}
+
+// Function to implement legal movement between two poles 
+void legalMovementBwTwoPoles(stack<int> &src, stack<int> &des, char s, char d)
+{
+	int pole1TopDisk, pole2TopDisk;
+	if(!src.empty()) { pole1TopDisk = src.top(); src.pop(); }
+	if(!des.empty()) { pole2TopDisk = des.top(); des.pop(); }
+    
+    // When pole 1 is empty 
+	if(src.empty())
+	{
+		src.push(pole2TopDisk);
+		moveDiskPrint(d, s, pole2TopDisk);
+	}
+    
+    // When pole2 pole is empty 
+	else if(des.empty())
+	{
+		des.push(pole1TopDisk);
+		moveDiskPrint(s, d, pole1TopDisk);
+	}
+    
+    // When top disk of pole1 > top disk of pole2 
+    else if(pole1TopDisk > pole2TopDisk)
+	{
+		src.push(pole1TopDisk);
+		src.push(pole2TopDisk);
+		moveDiskPrint(d, s, pole2TopDisk);
+	}
+    
+    // When top disk of pole1 < top disk of pole2 
+    else 
+	{
+		des.push(pole2TopDisk);
+		des.push(pole1TopDisk);
+		moveDiskPrint(s, d, pole1TopDisk);
+	}
+}
+
+void iterativeTOH(int n)
+{
+	stack<int> src; 
+	stack<int> aux; 
+	stack<int> des; 
+
+	int moves=(int)(pow(2, n)+0.5) - 1;
+
+	char s='S', a='A', d='D';
+	
+	//If number of disks are even, then interchange 
+    //destination pole and auxiliary pole 
+	if(n%2==0)
+	{
+		char temp=d;
+		d=a;
+		a=temp;
+	}
+	
+	//Larger disks will be pushed first in the src pole initially
+	for(int i=n; i>=1; i--)
+		src.push(i);
+	
+	for(int i=1; i<=moves; i++)
+	{
+		if(i%3 == 0)
+			legalMovementBwTwoPoles(aux, des, a, d);
+
+		else if(i%3 == 1)
+			legalMovementBwTwoPoles(des, src, d, s);
+
+		else 
+			legalMovementBwTwoPoles(src, aux, s, a);
+	}
+}
