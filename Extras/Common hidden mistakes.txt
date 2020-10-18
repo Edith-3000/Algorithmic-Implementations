@@ -18,3 +18,10 @@
 10. Sometimes there are questions having possibility of 𝑴𝑼𝑳𝑻𝑰𝑷𝑳𝑬 𝑨𝑵𝑺𝑾𝑬𝑹𝑺, so if the o/p doesn't 
     matches with the eg. o/p just submit the code and check if answer is correct or not.
 11. Always analyze the 𝑪𝑶𝑵𝑺𝑻𝑹𝑨𝑰𝑵𝑻𝑺 very carefully, sometimes the answer lies in the constraints.
+12. Don't 𝑩𝑳𝑰𝑵𝑫𝑳𝒀 make the data type of std::vector as 𝒊𝒏𝒕, as it becomes a habit many a times.
+13. In C++ we can omit the curly braces after if-else statements, or after any loop. If we do not use 
+    curly braces then only one statement after the if-else or loop will be considered under that block.
+    𝑩𝒖𝒕 𝑹𝑬𝑴𝑬𝑴𝑩𝑬𝑹, 𝒇𝒖𝒏𝒄𝒕𝒊𝒐𝒏 𝒅𝒆𝒇𝒊𝒏𝒊𝒕𝒊𝒐𝒏𝒔 𝒂𝒓𝒆 𝒕𝒐 𝒃𝒆 𝒊𝒏𝒄𝒍𝒖𝒅𝒆𝒅 𝒊𝒏 𝒄𝒖𝒓𝒍𝒚 { } 𝒃𝒓𝒂𝒄𝒆𝒔, 𝒆𝒗𝒆𝒏 𝒊𝒇 𝒕𝒉𝒆 𝒇𝒖𝒏𝒄𝒕𝒊𝒐𝒏 
+    𝒅𝒆𝒇𝒊𝒏𝒊𝒕𝒊𝒐𝒏 𝒊𝒔 𝒐𝒇 1 𝒍𝒊𝒏𝒆 𝒐𝒏𝒍𝒚, 𝒐𝒕𝒉𝒆𝒓𝒘𝒊𝒔𝒆 𝒇𝒐𝒍𝒍𝒐𝒘𝒊𝒏𝒈 𝒆𝒓𝒓𝒐𝒓 𝒘𝒊𝒍𝒍 𝒃𝒆 𝒔𝒉𝒐𝒘𝒏 𝒃𝒚 𝒕𝒉𝒆 𝒄𝒐𝒎𝒑𝒊𝒍𝒆𝒓: 
+    "𝒏𝒂𝒎𝒆𝒅 𝒓𝒆𝒕𝒖𝒓𝒏 𝒗𝒂𝒍𝒖𝒆𝒔 𝒂𝒓𝒆 𝒏𝒐 𝒍𝒐𝒏𝒈𝒆𝒓 𝒔𝒖𝒑𝒑𝒐𝒓𝒕𝒆𝒅".
+14. A vector isn't always of 𝒔𝒊𝒛𝒆 𝒏. 😁😁
