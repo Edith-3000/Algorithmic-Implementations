@@ -1,0 +1,6 @@
+# Ideally only unique values must be present in a BST.
+# Inorder traversal of BST always produces sorted output.
+# We can construct a BST with only Preorder or Postorder or Level Order traversal. Note that we can always 
+  get inorder traversal by sorting the only given traversal.
+# The inorder predecessor of a node in BST is the maximum node value in its left subtree while,
+  the inorder successor of a node in BST is the minimum node value in its right subtree.

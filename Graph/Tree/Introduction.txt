@@ -1,0 +1,2 @@
+# We call a tree balanced if for all nodes the difference between the heights of left and right subtrees 
+  is not greater than one.

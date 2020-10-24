@@ -1,0 +1,40 @@
+# Following are few formulae and properties of a BINARY TREE ⟶ 
+
+• The 𝒎𝒂𝒙𝒊𝒎𝒖𝒎 number of nodes at level 'l' will be 2⁽ˡ⁻¹⁾. 
+  Here level is the number of nodes on path from root to the node, including the root itself.
+  We are considering the level of root is 1.
+
+• 𝑴𝒂𝒙𝒊𝒎𝒖𝒎 number of nodes present in binary tree of height h is 2ʰ−1 
+  𝑴𝒊𝒏𝒊𝒎𝒖𝒎 number of nodes in a binary tree of height h = h 
+  Here height is the max number of nodes on root to leaf path. 
+  Here we are considering height of a tree with one node is 1.
+
+• In a binary tree with n nodes, minimum possible height or minimum number of levels are ceil(log₂(n+1)). 
+  If we consider that the height of leaf node is considered as 0, then the formula will be ceil(log₂(n+1)) − 1.
+
+• A binary tree with 'L' leaves has at least (ceil(log₂L) + 1) number of levels
+
+• If every node of a binary tree has either 0 or 2 children, then ⟶
+  #leaf nodes = #nodes with two children + 1.
+
+• 𝑷𝒆𝒓𝒇𝒆𝒄𝒕 𝒃𝒊𝒏𝒂𝒓𝒚 𝒕𝒓𝒆𝒆 = a binary tree where each level contains the maximum number of nodes i.e., every 
+  level is completely full of nodes.
+
+  # The number of nodes at depth 'd' (or level 'l') in a perfect binary tree = 2⁽ᵈ⁻¹⁾.
+    Here depth (or level) is the number of nodes on path from root to the node, including the root itself.
+    We are considering the depth (or level) of root is 1.
+
+  # A perfect binary tree of height h has: 2ʰ − 1 nodes.
+    Number of leaf nodes in a perfect binary tree of height h = 2⁽ʰ⁻¹⁾.   
+    Here height is the max number of nodes on root to leaf path. 
+    Here we are considering height of a tree with one node is 1.         
+
+  # #internal nodes in a perfect binary tree of height h = (2ʰ − 1) - 2⁽ʰ⁻¹⁾
+  														 = 2⁽ʰ⁻¹⁾ - 1
+    Here we are considering height of a tree with one node is 1.  
+
+• In normal in-order traversal we visit complete left subtree of a node before the right subtree. 
+  If we visit complete right subtree before visiting the left subtree, it is referred as reverse in-order
+  traversal.
+  
+• NOTE: As binary tree is one kind of tree; it has all properties of tree in graph theory.
