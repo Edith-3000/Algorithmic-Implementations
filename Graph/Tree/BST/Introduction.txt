@@ -4,3 +4,4 @@
   get inorder traversal by sorting the only given traversal.
 # The inorder predecessor of a node in BST is the maximum node value in its left subtree while,
   the inorder successor of a node in BST is the minimum node value in its right subtree.
+# The height of a BALANCED binary search tree with n nodes is never more than log2(n) + 1.

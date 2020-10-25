@@ -1,34 +1,37 @@
-/*Sieve of Eratosthenes is an algorithm for finding all the prime numbers in a segment [1;n] using O(n*log(log n) operations.
+/*Sieve of Eratosthenes is an algorithm for finding all the prime numbers in a segment [1;n] using O(n*log₂(log₂n) operations.
   Sieve of eratosthenes is primarily used when there are multiple queries asked to check primality 
   of given nos.
   Multiple of a prime no. cannot be a prime no.
 */
 
-void sieve_of_eratosthenes(long long n)
+void sieveOfEratosthenes(long long n)
 {
-	//n is the max no. for which we have to check primality
-	vector<long long>v(n+1); //v is the sieve of size (n+1)
-	for(long long i=0; i<=n; i++)
-	  v[i]=1; //initialising all the nos. a prime
+	// n is the max no. for which we have to check primality
+	vector<long long>v(n+1, 0); //v is the sieve of size (n+1)
+	
+	// all odd nos. are potential prime numbers
+	for(long long i=3; i<=n; i+=2) v[i]=1; 
 
-	v[0]=0; v[1]=0; //0 & 1 are not primes
+	v[2]=1; // 2 is a prime num
 
-	for(long long i=2; i*i<=n; i++)
+	for(long long i=3; i*i<=n; i+=2)
 	{
 	   if(v[i]) //i.e. if the current element i is prime
 	   {
 	      for(long long j=i*i; j<=n; j+=i) 
 	      {
-	         //marking all the proper multiples of 
-	        //the current prime i as non primes
+	         // marking all the proper multiples of 
+	         // the current prime i as non primes
 	         v[j]=0;
 	      }
 	   }
 	} 
 }
 
-/*CAUTION: Always use the data type of v as bool if time constraint is very less in the problem statement*/
+/*CAUTION: 𝑨𝒍𝒘𝒂𝒚𝒔 𝒖𝒔𝒆 𝒕𝒉𝒆 𝒅𝒂𝒕𝒂 𝒕𝒚𝒑𝒆 𝒐𝒇 𝒗 𝒂𝒔 𝒃𝒐𝒐𝒍/𝒃𝒊𝒕𝒔𝒆𝒕 𝒊𝒇 𝒕𝒊𝒎𝒆 𝒄𝒐𝒏𝒔𝒕𝒓𝒂𝒊𝒏𝒕 𝒊𝒔 𝒗𝒆𝒓𝒚 𝒍𝒆𝒔𝒔 𝒊𝒏 𝒕𝒉𝒆 𝒑𝒓𝒐𝒃𝒍𝒆𝒎 𝒔𝒕𝒂𝒕𝒆𝒎𝒆𝒏𝒕*/
 
-//Time complexity analysis: Preprocessing time - O(n*log(log n))
-                            Answers a single query in: O(1)
-                            Auxiliary space: O(n)
+//Limitation of Sieve: Only numbers upto 10⁷ can be stored in the sieve.
+
+//Time complexity analysis: Preprocessing time - O(n*log₂(log₂n))
+//                          Answers a single query in: O(1)
+//                          Auxiliary space: O(n)

@@ -1,0 +1,58 @@
+#define max 10000001
+vector<int> spf_sieve(max); //spf_sieve[i] stores the smallest prime factor for i 
+
+void sieve_having_min_prime_factor_for_every_no()
+{
+	spf_sieve[1]=1;
+	for(int i=2; i<max; i++)
+	{
+	   // marking smallest prime factor for every 
+       // number to be itself initially 
+	   spf_sieve[i]=i;
+	}
+
+	for(int i=4; i<max; i+=2)
+	{
+	   // separately marking spf for every even 
+       // number as 2 
+	   spf_sieve[i]=2;
+	}
+
+	for(int i=3; i*i<=(max-1); i+=2)
+	{
+	   if(spf_sieve[i]=i) //checking if i is prime or not as only a prime
+	                      //no. can be it's own spf
+	   {
+	      //marking spf for all numbers divisible by i as i 
+	      for(int j=i*i; i<=(max-1); j+=i)
+	      {
+	         if(spf_sieve[j]==j) //marking spf[j] if it is not previously marked  
+	           spf_sieve[j]=i;
+	      }
+	   }
+	}
+}
+
+//A O(log n) function returning #divisors of a no. n
+//by dividing the no. by it's smallest prime factor at every step 
+
+int noOfDivisors(int n)
+{
+	int res=1;
+
+	while(n>1)
+	{
+	   int s=spf_sieve[n];
+	   int cnt=0;
+	   
+	   while(spf_sieve[n]==s)
+	   {
+	       cnt++;
+	       n/=s;
+	   }
+	   
+	   res*=(cnt+1);
+	}
+
+	return res;
+}

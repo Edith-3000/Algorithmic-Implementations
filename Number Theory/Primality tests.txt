@@ -41,3 +41,6 @@ bool is_prime(long long n)
 
 //Time complexity: O(sqrt(n))
 
+*****************************************************************************************************************
+
+// MOST OPTIMIZED APPROACH ---> Using Sieve of Eratosthenes

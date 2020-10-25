@@ -1,0 +1,49 @@
+// PROBLEM STATEMENT: Given a +ve integer which can be as large as 10¹⁴, find out whether it is a prime
+//    				  number or not.
+
+/*UNDERLYING CONCEPT ---->
+  # As Sieve can only be used to check primality of numbers of the order of 10⁷, ∴ for larger numbers
+    just find whether a divisor of given large number exists from 2 to sqrt(large number) in the sieve.
+*/
+
+const int N = 10000001;
+bitset<N> v;
+
+void bitsetSieve()
+{
+	// all odd nos. are potential prime numbers
+	for(long long i=3; i<=n; i+=2) v[i]=1; 
+
+	v[2]=1; // 2 is a prime num
+
+	for(long long i=3; i*i<=n; i+=2)
+	{
+	   if(v[i]) //i.e. if the current element i is prime
+	   {
+	      for(long long j=i*i; j<=n; j+=i) 
+	      {
+	         // marking all the proper multiples of 
+	         // the current prime i as non primes
+	         v[j]=0;
+	      }
+	   }
+	} 
+} 
+
+bool isPrime(long long n)
+{
+	if(n<=N-1)
+		return v[n]==1 ? true : false;
+
+	for(long long i=2; i*i<=n; i++)
+	{
+		if(v[i] && n%v[i]==0)
+			return false;
+	}
+
+	return true;
+}
+
+//Time complexity analysis: Preprocessing time - O(n*log₂(log₂n))
+//                          Answers a single query in: O(sqrt(n)), worst case
+//   						Auxiliary space: O(N)

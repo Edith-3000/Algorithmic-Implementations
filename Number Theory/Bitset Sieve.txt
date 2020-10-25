@@ -1,0 +1,36 @@
+/* # Bistset Sieve is space optimized version of Sieve of Eratosthenes.
+   # More space means more number of prime numbers can be stored, as space taken by bitset bs is less than 
+     that of bool array and vector array.
+   # To use bitset sieve include the header #include<bitset> in the C++ code.
+*/
+
+void bitsetSieve(long long n)
+{
+	// n is the max no. for which we have to check primality
+	// default constructor initializes with all bits 0 
+	bitset<n+1> v; // v is the bitset sieve of size (n+1)
+	
+	// all odd nos. are potential prime numbers
+	for(long long i=3; i<=n; i+=2) v[i]=1; 
+
+	v[2]=1; // 2 is a prime num
+
+	for(long long i=3; i*i<=n; i+=2)
+	{
+	   if(v[i]) //i.e. if the current element i is prime
+	   {
+	      for(long long j=i*i; j<=n; j+=i) 
+	      {
+	         // marking all the proper multiples of 
+	         // the current prime i as non primes
+	         v[j]=0;
+	      }
+	   }
+	} 
+}
+
+//Limitation of Sieve: Only numbers upto 10⁷ can be stored in the sieve.
+
+//Time complexity analysis: Preprocessing time - O(n*log₂(log₂n))
+//                          Answers a single query in: O(1)
+//                          Auxiliary space: O(n)
