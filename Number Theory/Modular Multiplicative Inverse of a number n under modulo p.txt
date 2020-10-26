@@ -1,0 +1,73 @@
+//𝒎𝒐𝒅𝒖𝒍𝒐_𝒎𝒖𝒍_𝒊𝒏𝒗 𝒐𝒇 𝒂 𝒏𝒖𝒎𝒃𝒆𝒓 𝒏 𝒖𝒏𝒅𝒆𝒓 𝒎𝒐𝒅𝒖𝒍𝒐 𝒑 𝒆𝒙𝒊𝒔𝒕𝒔 𝒊𝒇𝒇 𝒃𝒐𝒕𝒉 𝒏 𝒂𝒏𝒅 𝒑 𝒂𝒓𝒆 𝒄𝒐-𝒑𝒓𝒊𝒎𝒆𝒔.
+
+=================================================================================================================
+
+//USING FERMAT's LITTLE THEOREM 
+
+//Prerequisite to use this theorem - p must be a prime number
+
+long long gcd(long long a, long long b)
+{
+	if(a==0) return b;
+	else return gcd(b%a, a);
+}
+
+long long fast_exponent(long long a, long long b, long long p)
+{
+	a=a%p; //update a if a>=p
+	if(a==0) return 0; //in case a is divisible by p
+
+    long long result=1; //initialize result
+    while(b>0)
+    {
+       if(b&1) result=(result*a)%p;
+       a=(a*a)%p;
+       b/=2; //or b=b>>1
+    }
+
+    return result;
+}
+
+long long modulo_mul_inv(long long n, long long p)
+{
+	long long g=gcd(n, p);
+	if(g!=1) return -1; //i.e. if n & p are not co-primes then modulo_mul_inv 
+	                   //for n does not exist under modulo p
+
+	else return fast_exponent(n, p-2, p); //a^-1 ≡ a^(m-2) (mod m)
+}
+
+=================================================================================================================
+
+//USING EXTENDED EUCLEDIAN ALGORITHM
+
+// Prerequisite to use this theorem - n and p must be co-primes(it is not necessary that p must be a prime, just
+// as it was in the Fermat's Little Theorem)
+
+long long gcd_by_extended_euclid(long long a, long long b, long long &x, long long &y)
+{
+	// this algorithm find the gcd(a,b) as a linear combination of a & b
+    // i.e. gcd(a,b) = ax + by
+   
+	// base condition
+	if(b==0)
+	{
+       x=1; y=0;
+       return a;
+	}
+
+	long long x1, y1; //to store results of recursive call  
+	long long g=gcd_by_extended_euclid(b, a%b, x1, y1);
+	x=y1; //update x and y using results of recursive call 
+	y=x1 - floor(a/b)*y1;
+	return g;
+}
+
+long long modulo_mul_inv(long long n, long long p)
+{
+	long long x, y;
+	long long g=gcd_by_extended_euclid(n, p, x, y);
+
+	if(g!=1) return -1; // modulo_mul_inv of n under modulo p doesn't exist if both aren't co-primes
+	else return (x%p + p)%p; // p is added to handle negative x 
+}

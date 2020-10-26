@@ -1,0 +1,33 @@
+long long gcd_by_basic_euclid(long long a, long long b)
+{
+	// base condition
+	if(b==0) return a;
+
+	return gcd_by_basic_euclid(b, a%b);
+}
+
+long long reduce_s(long long a, string s)
+{
+    /*here 'a' is long long int and 's' is string. The idea is to make 
+      the 0 <= s <= (a-1) by calculating its mod with number 'a' using
+      basic mathematics  
+    */  
+    
+    long long mod=0; //initialize result 
+
+	for(long long i=0; i<s.length(); i++)
+	  mod=(mod*10 + (s[i]-'0'))%a;
+
+	return mod;  
+}
+
+long long gcd_large(long long a, string s)
+{
+	// assuming s is extremely large & is taken in string form
+    // if a=0 then ans is s
+
+	long long b=reduce_s(a, s); //reduce 's' (extremely large no.) after modulo with a 
+
+	long long g=gcd_by_basic_euclid(a, b);
+	return g;
+}

@@ -1,0 +1,81 @@
+//𝒔𝒕𝒅::𝒈𝒄𝒅 | 𝑪++ 𝒊𝒏𝒃𝒖𝒊𝒍𝒕 𝒇𝒖𝒏𝒄𝒕𝒊𝒐𝒏 𝒇𝒐𝒓 𝒇𝒊𝒏𝒅𝒊𝒏𝒈 𝑮𝑪𝑫 (𝑾𝑶𝑹𝑲𝑺 𝑶𝑵𝑳𝒀 𝑭𝑶𝑹 𝒊𝒏𝒕)
+  __gcd(a, b);
+
+=================================================================================================================
+
+/*The algorithm is based on below facts.
+  # If we subtract smaller number from larger (we reduce larger number), GCD doesn’t change. 
+    So if we keep subtracting repeatedly the larger of two, we end up with GCD.
+  # Now instead of subtraction, if we divide smaller number, the algorithm stops when we find remainder 0.
+*/
+
+//RECURSIVE IMPLEMENTATION (Using Modulo)
+
+long long gcd_by_basic_euclid(long long a, long long b)
+{
+	//base condition
+	if(b==0) return a;
+	return gcd_by_basic_euclid(b, a%b);
+}
+
+OR
+
+long long gcd_by_basic_euclid(long long a, long long b){
+	return b==0 ? a : gcd_by_basic_euclid(b, a%b);
+}
+
+//RECURSIVE IMPLEMENTATION (Using Subtraction)
+
+long long gcd_by_basic_euclid(long long a, long long b)
+{
+	//base condition
+	if(a==b) return a;
+	else if(a>b) return gcd_by_basic_euclid(a-b, b);
+	else return gcd_by_basic_euclid(a, b-a);
+}
+
+=================================================================================================================
+
+//ITERATIVE IMPLEMENTATION (Using Modulo)
+
+long long gcd_by_basic_euclid(long long a, long long b)
+{
+	while(b)
+	{
+	   long long temp=a%b; //swapping a & b
+       a=b;
+       b=temp;
+	}
+
+	return a;
+}
+
+//ITERATIVE IMPLEMENTATION (Using Modulo)
+
+long long gcd_by_basic_euclid(long long a, long long b)
+{
+	while (a!=b)  
+    {  
+        if (a > b) a = a - b;        
+        else b = b - a;      
+    }  
+    
+    return a; 
+}
+
+=================================================================================================================
+
+long long lcm_by_basic_euclid(long long a, long long b)
+{
+	long long g=gcd_by_basic_euclid(a, b); //calculating gcd
+	return (a/g)*b; //since lcm*gcd=a*b
+	                //to avoid overflow
+}
+
+
+/*Worst case of Basic Euclidean Algorithm: when a and b are 2 consecutive fibonacci nos.
+  Time Complexity in worst case: O(log₂(max(a,b)))
+
+  Best case of Basic Euclidean Algorithm: when a%b==0 or b%a==0
+  Time Complexity in best case: O(1)
+*/ 
