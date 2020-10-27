@@ -1,9 +1,0 @@
-int birthday_paradox(double p_same, int n)
-{
-	/*n are the total #birthdays available eg. 365
-     P(no 2 people in the room have same birthdays)=e^(-m^2/(2*n))
-     m are the #people in the room, n are the #birthdays available
-    */
-    
-	return ceil(sqrt(2*n*log(1/(1-p_same))));
-}

@@ -1,0 +1,48 @@
+//ITERATIVE APPROACH
+
+#include<bits/stdc++.h>
+using namespace std;
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+	
+	// p is the probability of at least 2 people
+	// having the same b'days
+    float p; cin>>p;
+    
+    // assuming no leap year
+    if(p==(float)1) cout<<366<<" "<<"People";
+    
+    float x=1.0;
+    float num=365, den=365; 
+    int people=0;
+    
+    while(x > (1-p))
+    {
+    	x*=(num/den);
+    	num--;
+    	people++;
+    }
+    
+    cout<<people<<" "<<"People";
+
+    return 0;
+}
+
+==================================================================================================================
+
+//FORMULA BASED APPROACH
+
+int birthday_paradox(double p_same, int n)
+{
+    /*n are the total #birthdays available eg. 365
+     P(no 2 people in the room have same birthdays)=e^(-m^2/(2*n))
+     m are the #people in the room, n are the #birthdays available
+    */
+    
+    return ceil(sqrt(2*n*log(1/(1-p_same))));
+}
+
+// Visit(for formula derivation): https://www.geeksforgeeks.org/birthday-paradox/ 

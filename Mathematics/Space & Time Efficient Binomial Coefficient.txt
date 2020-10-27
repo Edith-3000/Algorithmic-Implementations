@@ -1,7 +1,7 @@
 /*a binomial coefficient nCr gives number of r-element subsets (or r-combinations) 
   of an n-element set.
-  * nCr = (n-1)Cr + (n-1)C(r-1)
-  * nCr = nC(n-r)
+  * ⁿCᵣ = ⁽ⁿ⁻¹⁾Cᵣ + ⁽ⁿ⁻¹⁾C₍ᵣ₋₁₎
+  * ⁿCᵣ = ⁿC₍ₙ₋ᵣ₎
   * C(n, r) = [n * (n-1) * .... * (n-r+1)] / [r * (r-1) * .... * 1]
             = [(n/r) * (n-1)/(r-1) * .....* (n-r+1)/1] ---> total r terms
 */  
@@ -23,7 +23,8 @@ long long binomial_coeff(long long n, long long r)
 }
 
 
-/*Complexity Analysis: Time Complexity: O(r) since a loop has to be run from 0 to r. So, the time complexity is O(r).
+/*Complexity Analysis: Time Complexity: O(r) since a loop has to be run from 0 to r.
+                       So, the time complexity is O(r).
                        Auxiliary Space: O(1) as no extra space is required.*/
     
   

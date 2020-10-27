@@ -1,0 +1,13 @@
+/* # Fermat’s little theorem states that if p is a prime number, then for any integer a, the number 
+     (aᵖ – a) is an integer multiple of p.
+
+   # Here p is a prime number
+     aᵖ ≡ a (mod p).
+
+   # Special Case: If a is not divisible by p, Fermat’s little theorem is equivalent to the statement that 
+     a⁽ᵖ⁻¹⁾-1 is an integer multiple of p.
+	 a⁽ᵖ⁻¹⁾ ≡ 1 (mod p)
+	 OR
+	 a⁽ᵖ⁻¹⁾ % p = 1
+	 Here a is not divisible by p.
+*/

@@ -1,0 +1,202 @@
+//𝑩𝒆𝒍𝒐𝒘 𝒊𝒎𝒑𝒍𝒆𝒎𝒆𝒏𝒕𝒂𝒕𝒊𝒐𝒏 𝒓𝒆𝒕𝒖𝒓𝒏 0-𝒃𝒂𝒔𝒆𝒅 𝒏𝒕𝒉 𝒏𝒖𝒎𝒃𝒆𝒓 𝒐𝒇 𝒕𝒉𝒆 𝒇𝒊𝒃𝒐𝒏𝒂𝒄𝒄𝒊 𝒔𝒆𝒒𝒖𝒆𝒏𝒄𝒆
+
+==================================================================================================================
+
+//RECURSIVE APPROACH
+//Go for this approach if n<=20 (Suggestion)
+
+long long fib(long long n)
+{
+	// base condition
+	if(n==0) return 0;
+	if(n==1) return 1;
+
+	return fib(n-1)+fib(n-2);
+}
+
+// Time Complexity: O(2ⁿ) ∵ T(n) = T(n-1) + T(n-2) is the recurrence relation, which gives exponential 
+                            complexity.
+// Space Complexity: O(n) if we consider the function call stack size, otherwise O(1).
+
+==================================================================================================================
+
+//MEMOIZED DP IMPLEMENTATION
+
+long long fib(long long n)
+{
+	// base condition
+	if(n==0) return 0;
+	if(n==1) return 1;
+
+	// check if already calculated or not
+    if(dp[n]!=-1) return dp[n];
+    
+	else return dp[n]=dp[n-1]+dp[n-2];
+}
+
+//dp[] is a 1 D global matrix/vector, with size (n+1) and initialized 
+//with -1, memset(dp, -1, sizeof(dp));
+
+// Time Complexity: O(n)
+// Space Complexity: O(n) which is used to store the dp[] array.
+
+==================================================================================================================
+
+//TABULATION DP IMPLEMENTATION
+
+long long fib(long long n)
+{
+	// initialisation of dp vector
+	dp[0]=0; dp[1]=1;
+
+	// choice diagram code iterative version
+	for(long long i=2; i<(n+1); i++)
+	   dp[i]=dp[i-1]+dp[i-2];
+
+	return dp[n];
+}
+
+//dp[] is a 1 D global matrix/vector, with size (n+1) 
+/*# Time Complexity: O(n)
+  # Space Complexity: O(n) which is used to store the dp[] array.
+*/
+
+===================================================================================================================
+
+//MEMORY OPTIMIZED DP IMPLEMENTATION (3 Variables Approach)
+
+/*As we can see from the visualization of the recursive stack and other solutions,
+  to be able to calculate the n, you need the value of last two combinations: n-1 
+  and n-2.
+  These two values are enough and we don’t need to store all other past combinations.
+*/
+
+long long fib(long long n)
+{
+	// base condition
+	if(n==0) return 0;
+	if(n==1) return 1;
+
+	long long first=0, second=1, third;
+
+	for(long long i=2; i<(n+1); i++)
+	{
+		third=second+first;
+		first=second;
+		second=third;
+	}
+
+	return third;
+}
+
+// Time Complexity: O(n)
+// Space Complexity: O(1)
+
+===================================================================================================================
+
+//USING ITERATIVE FAST MATRIX EXPONENTIATION METHOD
+
+void matrix_multiply(vector<vector<long long>> &a, const vector<vector<long long>> &b)
+{
+	vector<vector<long long>> c(2, vector<long long>(2)); //for storing the result
+	for(long long i=0; i<2; i++)
+	{
+	   for(long long j=0; j<2; j++)
+	   {
+	      c[i][j]=0;
+	      for(long long k=0; k<2; k++)
+	        c[i][j]+=a[i][k]*b[k][j];
+	   }
+	}
+
+	for(long long i=0; i<2; i++) //copying result back to a
+	{
+	   for(long long j=0; j<2; j++)
+	     a[i][j]=c[i][j];
+	}
+}
+
+void fast_matrix_exponentiation(vector<vector<long long>> &v, long long n)
+{
+	vector<vector<long long>> res(2, vector<long long>(2)); //very much similar to fast_exponentiation for nos.
+	for(long long i=0; i<2; i++) //initializing res as an identity matrix 
+	{
+	    for(long long j=0; j<2; j++)
+	    {
+	        if(i==j) res[i][j]=1;
+	        else res[i][j]=0;
+	    }
+	}
+
+	while(n)
+	{
+	   if(n&1) matrix_multiply(res, v);
+	   matrix_multiply(v, v);
+	   n/=2;
+	}
+
+	for(long long i=0; i<2; i++) //copying the res back to v, as v was original matrix
+	{
+	   for(long long j=0; j<2; j++)
+	     v[i][j]=res[i][j];
+	}
+}
+
+long long find_nth_term_of_fibonacci(long long n)
+{
+	//base cases
+    if(n==0) return 0;
+    if(n==1) return 1;       
+
+	vector<vector<long long>> v{{1, 1}, {1, 0}}; 
+	vector<long long> constants{1, 0}; //constants[0]=fib[1], constants[1]=fib[0]
+	                                  //constants vector stores the base cases values.
+
+    fast_matrix_exponentiation(v, n-1); //computes (Matrix v)^(n-1) in O(logn) time
+    long long res=0; //initialize final result
+    for(long long k=0; k<2; k++) //1st row of matrix v is multiplied with the column vector constants
+      res+=(v[0][k]*constants[k]);
+
+    return res; 
+}
+
+//Time Complexity: O(k^3 * logn) //where k is the size of matrix v, here k=2
+
+===================================================================================================================
+
+//CODEFORCES HACK (Kind of Top down DP only)
+//visit: https://codeforces.com/blog/entry/14516
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+===================================================================================================================
+
+//𝑰𝒏𝒕𝒆𝒓𝒆𝒔𝒕𝒊𝒏𝒈 𝑷𝒓𝒐𝒑𝒆𝒓𝒕𝒊𝒆𝒔 𝒂𝒔𝒔𝒐𝒄𝒊𝒂𝒕𝒆𝒅 𝒘𝒊𝒕𝒉 𝑭𝒊𝒃𝒐𝒏𝒂𝒄𝒄𝒊 𝑵𝒖𝒎𝒃𝒆𝒓𝒔 ---->
+
+• 𝒁𝑬𝑪𝑲𝑬𝑵𝑫𝑶𝑹𝑭’𝒔 𝑻𝑯𝑬𝑶𝑹𝑬𝑴 (Non-Neighbouring Fibonacci Representation):
+  # It states that every positive integer can be written uniquely as a sum of distinct non-neighbouring 
+    Fibonacci numbers. 
+  # Two Fibonacci numbers are neighbours if they one come after other in Fibonacci Sequence (0, 1, 1, 2, 3, 
+    5, ..). For example, 3 and 5 are neighbours, but 2 and 5 are not.
+  # For more info visit: ->
+    https://www.geeksforgeeks.org/zeckendorfs-theorem-non-neighbouring-fibonacci-representation/
+
+• 𝑷𝑰𝑺𝑨𝑵𝑶 𝑷𝑬𝑹𝑰𝑶𝑫:
+  # Last 1/2/3/4 digit(s) of fibonacci sequence repeat with a perios of 60/300/1500/15000 respectively.
