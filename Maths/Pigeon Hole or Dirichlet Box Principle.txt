@@ -1,0 +1,24 @@
+/*The Pigeonhole Principle (also known as the Dirichlet box principle, Dirichlet principle or box principle) 
+  states that if (n+1) or more pigeons are placed in (n) holes, then at least one hole must contain atleast two or 
+  more pigeons.
+
+  Another definition could be phrased as, among any (n) integers, there are at least two integers with the same 
+  modulo (n-1) residue.
+  Here modulo (n-1) residue is the set S = {0, 1, 2, 3, 4, ........., (n-2)} containing (n-1) elements.
+  
+  The extended version of the Pigeonhole Principle states that if (k) objects are placed in (n) boxes then at least
+  one box must hold at least ceil(k/n) objects, and the remaining boxes can hold at most floor(k/n) objects.
+
+  * Pigeonhole principle strong form –
+    Theorem: Let q1, q2, . . . , qn be positive integers.
+             If q1+ q2+ . . . + qn – n + 1 objects are put into n boxes, then either the 1st box contains at least 
+             q1 objects, or the 2nd box contains at least q2 objects, . . ., the nth box contains at least qn 
+             objects.
+
+  * Another slight variation of Pigeon hole principle which can be used to solve question is-
+    If there are (n+1) objects with values ranging from 1 to n, 1 & n both inclusive, then there will be atleast 2 
+    objects with same value or there will be atleast one value which will be repeated.
+
+  * Remember: (a-b)%m = ((a%m)-(b%m)+m)%m
+    Remember: abs(a-b)%m != abs((a%m)-(b%m)+m)%m
+*/

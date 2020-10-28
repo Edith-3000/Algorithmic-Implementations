@@ -1,0 +1,43 @@
+/*QUESTION: Given an array of positive and/or negative integers and an integral value k . 
+            The task is to find count of all sub-arrays whose sum is divisible by k.
+            NOTE: Null subarray (i.e. subarray with 0 number of elements) is also to be considered.
+
+  *Here Brute force approach will give time complexity of O(n^2), where n is the size of array.
+  *Efficient approach is by using the PIGEON HOLE PRINCIPLE.
+*/
+
+long long solve(const vector<long long> &v, long long k, map<long long, long long> &m)
+{
+	//m is used to count frequency of remainders 
+  m[0]++; //considering null subarray
+	long long sum=0;
+  /*Traverse original array and compute cumulative 
+    sum, take remainder of this current cumulative 
+    sum and increase count by 1 for this remainder 
+    in map*/
+
+	for(long long i=0; i<v.size(); i++)
+	{
+       sum+=v[i]; //stores the current cumulative sum upto v[i]
+       sum%=k;
+       sum=(sum+k)%k; //in case (sum%k) comes out to be -ve
+       m[sum]++;
+	}
+    
+  long long res=0; //initialize result 
+	for(auto it=m.begin(); it!=m.end(); it++)
+	{
+       if(it->second >= 2)
+       {
+          long long temp=(it->second)*(it->second - 1)/2;
+          res+=temp;
+       }  
+	}
+
+	return res;
+}
+
+// Instead of map, vector can also be used for storing the frequency.
+
+/*Time complexity : O(n + k), n is the size of array
+  Auxiliary Space : O(k)*/

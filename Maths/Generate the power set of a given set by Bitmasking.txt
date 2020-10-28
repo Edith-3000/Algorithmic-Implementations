@@ -1,0 +1,41 @@
+/*Statement 1: The total #subsets (i.e. cardinality of power set of the given set) for a given set with n elements is (2ⁿ).
+  Statement 2: For a binary string of length n, the total #possible configurations are (2ⁿ).
+  
+  There is a direct co-relation between the above 2 statements.
+
+  *Idea to be used - 1. Get the size of power set, powet_set_size = pow(2, set_size)
+                     2.  Loop for counter i from 0 to pow_set_size-1
+                         (a) Loop for j = 0 to set_size-1
+                              (i) If jth bit in counter i is set
+                                    Print ith element from set for this subset
+                         (b) Print separator for subsets i.e., newline
+*/
+
+//IMPORTANT NOTE: THIS ALGORITHM WILL GENERATE ALL THE SUBSETS INCLUDING THE EMPTY or NULL SUBSET
+
+bool check_bit(long long i, long long n)
+{
+	if(n & (1<<i)) return true;
+	else return false;
+}
+
+void power_set_generator_by_bitmasking(vector<long long> &v)
+{
+	  long long n=v.size();
+	  long long total=1<<n; // to stores the total possible unique subsets
+	                        // in the power set of v i.e. (2^n)
+
+    for(long long i=0; i<total; i++) //Run i from 000......0 to 111.....1
+    {
+       for(long long j=0; j<n; j++)
+       {
+          // Check if jth bit in i is set or not.
+          // If set then print jth element from set
+          if(check_bit(j, i)) cout<<v[j]<<" ";
+       }
+       
+       cout<<"\n";
+    }
+}
+
+//Time Complexity: O(n*(2^n))

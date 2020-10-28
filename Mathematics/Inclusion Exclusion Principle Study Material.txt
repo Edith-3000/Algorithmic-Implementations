@@ -1,5 +1,0 @@
-/*The principle of inclusion-exclusion says that in order to count only unique ways of doing a task, we must add the number of ways to do 
-  it in one way and the number of ways to do it in another and then subtract the number of ways to do the task that are common to both sets of ways.
-  
-  The principle of inclusion-exclusion is also known as the subtraction principle.
-*/

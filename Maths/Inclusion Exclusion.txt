@@ -1,0 +1,61 @@
+/*The principle of inclusion-exclusion says that in order to count only unique ways of doing a task, we must add 
+  the number of ways to do it in one way and the number of ways to do it in another and then subtract the number of ways to do the task that are common to both sets of ways.
+  
+  The principle of inclusion-exclusion is also known as the subtraction principle.
+*/
+
+// PROBLEM STATEMENT- visit: https://hack.codingblocks.com/app/practice/1/1264/problem
+
+#include<bits/stdc++.h>
+using namespace std;
+typedef long long ll;
+
+void solve()
+{
+  	ll n; cin>>n;
+  	
+  	// primes from 1 to 20
+  	vector<ll> v{2, 3, 5, 7, 11, 13, 17, 19};
+  	
+  	// total subsets possible for 8 elements
+  	ll subsets = 1<<8; // or 2^8
+  	// to store final result;
+  	ll res=0;
+  	
+  	for(ll i=1; i<subsets; i++)
+  	{
+  		// count of the total sets bits in the ith subset i.e.
+  		// the total number of elements in the current set number i
+  		ll setBits=__builtin_popcount(i);
+  		ll denom=1;
+  		
+  		// iterating over all the bits of the current set number i
+  		for(ll j=0; j<8; j++)
+  		{
+  			// if jth bit of ith set number is set
+  			if(i & (1<<j)) denom*=v[j];
+  		}
+  		
+  		// if number of elements in the current subset are odd
+  		if(setBits & 1) res+=(n/denom);
+  		
+  		// when number of elements in the current subset are even
+  		else res-=(n/denom);
+  	}
+  	
+  	cout<<res<<"\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+    int t = 1;
+    cin >> t;
+    while(t--) {
+      solve();
+    }
+
+    return 0;
+}
