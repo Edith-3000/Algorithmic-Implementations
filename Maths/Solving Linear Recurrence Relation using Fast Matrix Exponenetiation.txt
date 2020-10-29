@@ -1,0 +1,191 @@
+/* # A linear recurrence relation is a function or a sequence such that each term is a linear combination of
+     previous terms. 
+   # Each term can be described as a function of the previous terms. 
+     A famous example is the Fibonacci sequence: f(i) = f(i-1) + f(i-2).
+   # Linear means that the previous terms in the definition are only multiplied by a constant (possibly zero) and
+     nothing else.
+
+   # Following is the approach to solve and find the nth term of LINEAR RECURRENCE RELATIONS.
+   # Below code is for the following Linear Recurence Relation: F(n) = F(n-1) + F(n-2) + F(n-3), for n >= 3 
+                                                                Base Cases : F(0) = 0, F(1) = 1, F(2) = 1 
+   # Similar Approach can be used to solve for other Linear Recurrence Relations, by little modifications in 
+     the code.
+
+   # 𝑨𝑳𝑮𝑶𝑹𝑰𝑻𝑯𝑴 ⟶
+     • Find the value of k, (k denotes the number of previous terms on which current term depends).
+       for eg. for F(n) = F(n-1) + F(n-4) + F(n-6), k = 6 (i.e. terms with constant as 0 are also to be considered).
+
+     • Find out the first 'k' terms of the sequence(generally given in the problem) and form a vector
+       say F₀ vector, eg. for fibonacci recurrence F₀ = | 0 |
+       												    | 1 |
+
+       eg. 2, F₀ vector for the recurrence F(i) = F(i-1) + 2*F(i-2) + 4*F(i-4) + d
+       		  Remember farthest term from F(i) will be on the top ->
+       		  F₀ = | F(i-4) |
+       		  	   | F(i-3) |
+       		  	   | F(i-2) |
+       		  	   | F(i-1) |
+       		  	   |   d    |
+
+       		  NOTE: in this case T matrix will be of size (5 * 5)
+
+     • Find out transformation matrix T of size (k x k)
+       for eg. for fibonacci sequence T matrix will be used in the following manner -->
+
+         [𝑻]       𝑭(𝒊-1)        𝑭(𝒊)
+       | 0 1 | * | F(i-3) | = | F(i-2) |
+       | 1 1 |   | F(i-2) |	  | F(i-1) |
+
+       in general for fibonacci F(n) = T * F(n-1)
+       								 = T * T * F(n-2)
+       								 = T * T * T * F(n-3)
+       								 = T * T * T * T * F(n-4)
+       								 .
+       								 .
+       								 .
+       								 .
+       								 .
+       								 = T⁽ⁿ⁻¹⁾ * F₀ 
+
+     • Using Matrix Exponentiation calculate T⁽ⁿ⁻¹⁾
+     • Return value of F(n) just by multiplying the first row of T⁽ⁿ⁻¹⁾ with first column of F₀ 
+*/
+
+===================================================================================================================
+
+𝑭𝑶𝑹 𝑰𝑴𝑷𝑳𝑬𝑴𝑬𝑵𝑻𝑨𝑻𝑰𝑶𝑵 𝑷𝑼𝑹𝑷𝑶𝑺𝑬 𝑺𝑬𝑬 "𝑺𝑬𝑸 - 𝑹𝒆𝒄𝒖𝒓𝒔𝒊𝒗𝒆 𝑺𝒆𝒒𝒖𝒆𝒏𝒄𝒆.𝒕𝒙𝒕" 𝑻𝑶 𝑯𝑨𝑽𝑬 𝑩𝑬𝑻𝑻𝑬𝑹 𝑼𝑵𝑫𝑬𝑹𝑺𝑻𝑨𝑵𝑫𝑰𝑵𝑮, 𝑩𝑬𝑳𝑶𝑾
+𝑪𝑶𝑫𝑬 𝑰𝑺 𝑻𝑶𝑶 𝑴𝑼𝑪𝑯 𝑺𝑷𝑬𝑪𝑰𝑭𝑰𝑪 𝑭𝑶𝑹 𝑨 𝑷𝑨𝑹𝑻𝑰𝑪𝑼𝑳𝑨𝑹 𝑷𝑹𝑶𝑩𝑳𝑬𝑴.
+
+===================================================================================================================
+
+
+//USING ITERATIVE FAST MATRIX EXPONENTIATION METHOD
+
+void matrix_multiply(vector<vector<long long>> &a, const vector<vector<long long>> &b)
+{
+	vector<vector<long long>> c(3, vector<long long>(3)); //for storing the result
+	for(long long i=0; i<3; i++)
+	{
+	   for(long long j=0; j<3; j++)
+	   {
+	      c[i][j]=0;
+	      for(long long k=0; k<3; k++)
+	        c[i][j]+=a[i][k]*b[k][j];
+	   }
+	}
+
+	for(long long i=0; i<3; i++) //copying result back to a
+	{
+	   for(long long j=0; j<3; j++)
+	     a[i][j]=c[i][j];
+	}
+}
+
+void fast_matrix_exponentiation(vector<vector<long long>> &v, long long n)
+{
+	vector<vector<long long>> res(3, vector<long long>(3)); //very much similar to fast_exponentiation for nos.
+	for(long long i=0; i<3; i++) //initializing res as an identity matrix 
+	{
+	    for(long long j=0; j<3; j++)
+	    {
+	        if(i==j) res[i][j]=1;
+	        else res[i][j]=0;
+	    }
+	}
+
+	while(n)
+	{
+	   if(n&1) matrix_multiply(res, v);
+	   matrix_multiply(v, v);
+	   n/=2;
+	}
+
+	for(long long i=0; i<3; i++) //copying the res back to v, as v was original matrix
+	{
+	   for(long long j=0; j<3; j++)
+	     v[i][j]=res[i][j];
+	}
+}
+
+long long find_nth_term_of_linear_recur_relation(long long n)
+{
+	//base cases
+    if(n==0) return 0;
+    if(n==1 || n==2) return 1;       
+
+	vector<vector<long long>> v{{1, 1, 1}, {1, 0, 0}, {0, 1, 0}}; //v is the Transformation matrix, initialization may vary acc. to question
+	vector<long long> constants{1, 1, 0}; //constants[0]=F[2], constants[1]=F[1], constants[2]=F[0]
+	                                     //constants vector stores the base cases values.
+
+    fast_matrix_exponentiation(v, n-2); //computes (Matrix v)^(n-2) in O(logn) time
+                                       //The power raised may vary acc. to question
+    long long res=0; //initialize final result
+    for(long long k=0; k<3; k++) //1st row of matrix v is multiplied with the column vector constants
+      res+=(v[0][k]*constants[k]);
+
+    return res; 
+}
+
+
+//Time Complexity: O(k^3 * logn) //where k is the size of Transformation matrix v
+
+***************************************************************************************************************************
+
+//USING RECURSIVE FAST MATRIX EXPONENTIATION METHOD
+(Remember Recursive methods are more costly than iterative methods)
+
+void matrix_multiply(vector<vector<long long>> &a, vector<vector<long long>> &b)
+{
+	vector<vector<long long>> c(3, vector<long long>(3)); //for storing the result
+	for(long long i=0; i<3; i++)
+	{
+	   for(long long j=0; j<3; j++)
+	   {
+	      c[i][j]=0;
+	      for(long long k=0; k<3; k++)
+	        c[i][j]+=a[i][k]*b[k][j];
+	   }
+	}
+
+	for(long long i=0; i<3; i++) //copying result back to a
+	{
+	   for(long long j=0; j<3; j++)
+	     a[i][j]=c[i][j];
+	}
+}
+
+long long fast_matrix_exponentiation(vector<vector<long long>> &v, long long n)
+{
+	//base case of recursive function
+    if(n==1) return v[0][0]+v[0][1];
+
+	vector<vector<long long>> temp(v.begin(), v.end());
+	
+	fast_matrix_exponentiation(v, n/2);
+	matrix_multiply(v, v);
+	if(n&1) matrix_multiply(v, temp);
+	
+	return v[0][0]+v[0][1];
+}
+
+long long find_nth_term_of_linear_recur_relation(long long n)
+{
+	//base cases
+    if(n==0) return 0;
+    if(n==1 || n==2) return 1;       
+
+	vector<vector<long long>> v{{1,1,1}, {1,0,0}, {0,1,0}};
+	
+    return fast_matrix_exponentiation(v, n-2);
+}
+
+//Time Complexity: O(k^3 * logn) //where k is the size of Transformation matrix v
+
+****************************************************************************************************************************
+//VERY IMPORTANT NOTE -
+  
+  *For the query of nth number which is 1 based indexing i.e. if user asks for 1st term or 2nd term & so on...... (not for 0th term, 1st term & so on)
+     1) If smallest base case defined is F(1), then find T^(n-k), where T is the Transformation matrix,
+                                                                        k is the size of Transformation matrix
+     2) If smallest base case defined is F(0), such as in case of Fibonacci Sequence, then find T^(n-k+1), where T is the Transformation matrix,
+                                                                                                           k is the size of Transformation matrix

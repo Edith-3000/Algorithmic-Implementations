@@ -1,0 +1,123 @@
+// PROBLEM LINK: https://www.spoj.com/problems/SEQ/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define pb push_back
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int>	vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<pii>	vpii;
+typedef vector<pll>	vpll;
+typedef vector<vi> vvi;
+typedef vector<vll>	vvll;
+typedef vector<vull> vvull;
+mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
+int rng(int lim) {
+    uniform_int_distribution<int> uid(0,lim-1);
+    return uid(rang);
+}
+
+#define mod 1000000000
+
+vector<vector<ll>> matrixMul(vector<vector<ll>> A, vector<vector<ll>> B, ll k)
+{
+	// to store the result
+	vector<vector<ll>> C(k+1, vector<ll>(k+1));
+	
+	for(ll i=1; i<=k; i++){
+		for(ll j=1; j<=k; j++){
+			C[i][j]=0;
+			for(ll l=1; l<=k; l++){
+				C[i][j]= (C[i][j] + (A[i][l] * B[l][j])  % mod) % mod;
+			}
+		}
+	}
+	
+	return C;
+}
+
+vector<vector<ll>> fastMatrixExpo(vector<vector<ll>> T, ll n, ll k)
+{
+	// base condition
+	if(n==1) return T;
+	
+	vector<vector<ll>> tmp = T;
+	vector<vector<ll>> res = fastMatrixExpo(T, n/2, k);
+	res = matrixMul(res, res, k);
+	
+	if(n & 1) res = matrixMul(res, tmp, k);
+	return res;
+}
+
+void solve()
+{
+  	// Step 1 - Find value of k(given in problem)
+  	ll k; cin>>k;
+  	vll b(k), c(k);
+  	for(ll i=0; i<k; i++) cin>>b[i];
+  	for(ll i=0; i<k; i++) cin>>c[i];
+  	ll n; cin>>n;
+  	
+  	if(n<=k) 
+  	{
+  		cout<<b[n-1]<<"\n";
+  		return;
+  	}
+  	
+  	// Step 2 - Form F0 vector
+  	vll F0(k+1);
+  	for(ll i=1; i<=k; i++) F0[i]=b[i-1];
+  	
+  	// Step 3 - Form Transformation Matrix T
+  	vector<vector<ll>> T(k+1, vector<ll>(k+1));
+  	for(ll i=1; i<=k; i++)
+  	{
+  		for(ll j=1; j<=k; j++)
+  		{
+  			if(i<k)
+  			{
+  				if(j==i+1) T[i][j]=1;
+  				else T[i][j]=0;
+  			}
+  			
+  			else T[i][j]=c[k-j];
+  		}
+  	}
+  	
+  	// Step 4 - Using Fast Matrix Exponentiation find T^(n-1)
+  	T = fastMatrixExpo(T, n-1, k);
+  	
+  	// Step 5 - Find F(n) just by multiplying the first row 
+  	// of T^(n-1) with first column of F0
+  	ll res=0;
+  	for(ll i=1; i<=k; i++){
+  		res = (res + (T[1][i] * F0[i])%mod)%mod;
+  	}
+
+  	cout<<res<<"\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+    int t = 1;
+    cin >> t;
+    while(t--) {
+      solve();
+    }
+
+    return 0;
+}
+
+// Time Complexity: O(k³ x log₂n), ∵ we've used Fast Matrix Exponentiation.
