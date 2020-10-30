@@ -1,0 +1,14 @@
+/* # 𝑨 𝑳𝒊𝒏𝒆𝒂𝒓 𝒄𝒐𝒏𝒈𝒓𝒖𝒆𝒏𝒄𝒆 𝒓𝒆𝒍𝒂𝒕𝒊𝒐𝒏 𝒊𝒔 𝒐𝒇 𝒕𝒉𝒆 𝒕𝒚𝒑𝒆: 𝒂 ≡ 𝒃(𝒎𝒐𝒅 𝒄).
+   # The CRT is used to solve a system of such linear congruences.
+   
+   # We've to find the unique x such that x ≡ rem[i] (mod num[i])
+     • the numbers are given in the num[] array, of size k
+     • the corresponding remainders are given in the rem[] array, of size k.
+
+     𝒙 = { ∑(𝒓𝒆𝒎[𝒊] * 𝒑𝒑[𝒊] * 𝒊𝒏𝒗[𝒊]) } % 𝒑𝒓𝒐𝒅, 𝒘𝒉𝒆𝒓𝒆 𝒊 𝒈𝒐𝒓𝒔 𝒇𝒓𝒐𝒎 0 𝒕𝒐 (𝒌-1)
+     𝒘𝒉𝒆𝒓𝒆 𝒑𝒓𝒐𝒅 = 𝒏𝒖𝒎[0] * 𝒏𝒖𝒎[1] * ..... * 𝒏𝒖𝒎[𝒌-1]
+     	   𝒑𝒑[𝒊] = 𝒑𝒓𝒐𝒅 / 𝒏𝒖𝒎[𝒊]
+     	   𝒊𝒏𝒗[𝒊] = 𝒎𝒐𝒅𝒖𝒍𝒐 𝒎𝒖𝒍𝒕𝒊𝒑𝒍𝒊𝒄𝒂𝒕𝒊𝒗𝒆 𝒊𝒏𝒗 𝒐𝒇 𝒑𝒑[𝒊] 𝒘𝒊𝒕𝒉 𝒎𝒐𝒅𝒖𝒍𝒐 𝒏𝒖𝒎[𝒊]
+
+   # Very nice article given on www.brilliant.org (visit: https://brilliant.org/wiki/chinese-remainder-theorem/)
+*/
