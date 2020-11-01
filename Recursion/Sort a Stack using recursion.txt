@@ -1,0 +1,36 @@
+// Exactly similar to "Sort an array using recursion.txt"
+
+void insertLast(stack<int> &s, int l)
+{
+	// base condition
+	if(s.size()==0 || s.top()<=l)
+	{
+		s.push(l);
+		return;
+	}
+
+	int m=s.top();
+	s.pop();
+
+	// hypothesis
+	insert(s, l);
+
+	// induction
+	s.push(m);
+}
+
+void sort(stack<int> &s)
+{
+ 	// base condition
+	if(s.size()==0 || s.size()==1)
+		return;
+
+	int l=s.top();
+	s.pop();
+
+	// hypothesis
+	sort(s);
+
+	// induction
+	insertLast(s, l);
+}

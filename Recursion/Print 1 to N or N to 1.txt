@@ -1,0 +1,37 @@
+// PRINT NOS. FROM 1 to N
+
+void fun(int n)
+{
+	// base condition
+	if(n==1)
+	{
+		cout<<1<<" ";
+		return;
+	}
+
+	// hypothesis
+	fun(n-1);
+
+	// induction
+	cout<<n<<" ";
+}
+
+====================================================================================================================
+
+// PRINT NOS. FROM N to 1
+
+void fun(int n)
+{
+	// base condition
+	if(n==1)
+	{
+		cout<<1<<" ";
+		return;
+	}
+
+	// induction
+	cout<<n<<" ";
+	
+	// hypothesis
+	fun(n-1);
+}

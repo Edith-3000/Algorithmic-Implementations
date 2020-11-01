@@ -1,0 +1,51 @@
+# Children of RECURSION: • DP	• Backtracking	 • Divide and Conquer
+
+# Easiest way to approach to recursion problems --->
+  
+  • 𝑴𝒂𝒈𝒊𝒄𝒂𝒍 𝑹𝒆𝒄𝒖𝒓𝒔𝒊𝒐𝒏 𝑹𝒖𝒍𝒆 - 𝑷𝒓𝒊𝒏𝒄𝒊𝒑𝒂𝒍 𝒐𝒇 𝑴𝒂𝒕𝒉𝒆𝒎𝒂𝒕𝒊𝒄𝒂𝒍 𝑰𝒏𝒅𝒖𝒄𝒕𝒊𝒐𝒏 (𝑷𝑴𝑰)
+  
+  1). Figure out the base case(s).
+  2). 𝑨𝑺𝑺𝑼𝑴𝑬 sub-problems can be solved by recursion (automatically).
+  3). Using sub-problems write the answer fot the current problem.
+
+# How to identify whether we can use recursion in a problem or not?
+  • If there are some kind 𝑪𝑯𝑶𝑰𝑪𝑬𝑺 + 𝑫𝑬𝑪𝑰𝑺𝑰𝑶𝑵𝑺 in a problem then there is a high probability that recursion can 
+    be used to crack the given problem.
+
+# Following are the approaches which can be used to solve any recursion based problem
+  1). Forming RECURSIVE TREE (by making use of O/P - I/P Method). (used when we are clearly able to understand 
+      the decision).
+  2). Hypothesis - Induction - Base condition(HIB) Method (Making I/P smaller), this method is popularly used in
+      solving questions based on tree, linked list.
+  3). Choice Diagram Approach (used in DP).
+
+  • Very crudely we can say simple problems of recursion can be solved by HIB Method,
+  							medium problems of recursion can be solved by RECURSIVE TREE Method &
+  							hard problems of recursion can be solved by CHOICE DIAGRAM Method.
+
+  	And basically all the above methods are almost same, just to give clear line of thought they ha've benn
+  	classified in 3.
+
+# To solve any recursion problem using 𝑹𝑬𝑪𝑼𝑹𝑺𝑰𝑽𝑬 𝑻𝑹𝑬𝑬 formation approach.
+  ⟶ How to draw 𝑹𝑬𝑪𝑼𝑹𝑺𝑰𝑽𝑬 𝑻𝑹𝑬𝑬? 
+      ◘ (Make use of 𝑶/𝑷 - 𝑰/𝑷 𝑴𝑬𝑻𝑯𝑶𝑫) ---->
+      
+      The O/P is initialised with suitable value and I/P is the I/P given in problem
+
+      *************************************** O/P    I/P  *************************************
+                                                 /  \
+                                                /	 \
+                                               /	  \
+                                              / 	   \
+                                             /			\
+                                        O/P1  I/P      O/P2  I/P
+                                            (smaller)      (smaller)
+                                            /  \			  /  \
+                                           /	\            /    \
+                                          /		 \          /      \
+                                         /		  \      Similarly here
+                                        /		   \
+                                    O/P3  I/P     O/P4  I/P
+                                       (smaller)   (smaller)
+
+    • #branches in the above O/P - I/P method represents the #choices available.

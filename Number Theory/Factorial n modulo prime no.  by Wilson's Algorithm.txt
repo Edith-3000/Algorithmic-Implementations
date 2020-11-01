@@ -1,0 +1,135 @@
+/* # Used to compute n! under modulo p, where p is necessarily a prime no.
+   # Note that n! % p = 0 if n >= p.
+   # Wilson's algorithm is mainly useful - 1) p is a prime
+                                           2) n<p
+                                           3) when p is close to input number n.
+*/
+
+long long gcd(long long a, long long b)
+{
+	if(b==0) return a;
+	else return gcd(b, a%b);
+}
+
+long long fast_exponent(long long a, long long b, long long p)
+{
+	a=a%p; // update a if a>=p
+	if(a==0) return 0; // in case a is divisible by p
+
+    long long result=1; // initialize result
+    while(b>0)
+    {
+       if(b&1) result=(result*a)%p;
+       a=(a*a)%p;
+       b/=2; // or b=b>>1
+    }
+
+    return result;
+}
+
+long long modulo_mul_inv(long long n, long long p)
+{
+	// function to find modular multi inverse of n under modulo p 
+    // using Fermat's Little Theorem. Assumption: p is prime 
+	
+	long long g=gcd(n, p);
+	if(g!=1) return -1; // i.e. if n & p are not co-primes then modulo_mul_inv 
+	                    // for n does not exist under modulo p
+
+	else return fast_exponent(n, p-2, p); // a^-1 (mod m) ≡ a^(m-2), where m is prime
+}
+
+long long wilson_algo(long long n, long long p)
+{
+	if(p<=n) return 0; // n! % p = 0 if n >= p
+	long long res=p-1; // initialize result for (p-1)! which is -1 or (p-1) 
+
+	// multiply modulo multiplicative inverses of all nos. from n+1 
+	// to p-1 under modulo p
+	for(long long i=n+1; i<=(p-1); i++) 
+	  res=(res * modulo_mul_inv(i, p))%p;
+
+	return (res+p)%p; // to handle the case if res comes 
+					  // out to be -ve
+}
+
+// Time complexity: O((p-n) x log₂n) 
+// remember n is close to p 
+
+====================================================================================================================
+
+// 𝑺𝒊𝒎𝒊𝒍𝒂𝒓 𝒄𝒐𝒏𝒄𝒆𝒑𝒕 𝒊𝒔 𝒖𝒔𝒆𝒅 𝒕𝒐 𝒔𝒐𝒍𝒗𝒆 𝒕𝒉𝒆 𝒒𝒖𝒆𝒔𝒕𝒊𝒐𝒏 𝑫𝑪𝑬𝑷𝑪11𝑩 - 𝑩𝒐𝒓𝒊𝒏𝒈 𝑭𝒂𝒄𝒕𝒐𝒓𝒊𝒂𝒍𝒔 𝒂𝒕 𝑺𝑷𝑶𝑱
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define pb push_back
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int>	vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<pii>	vpii;
+typedef vector<pll>	vpll;
+typedef vector<vi> vvi;
+typedef vector<vll>	vvll;
+typedef vector<vull> vvull;
+mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
+int rng(int lim) {
+    uniform_int_distribution<int> uid(0,lim-1);
+    return uid(rang);
+}
+
+ll fastModuloExpo(ll a, ll b, ll p)
+{
+	ll res=1;
+	while(b>0)
+	{
+		if(b & 1) res=(res*a)%p;
+		a=(a*a)%p;
+		b>>=1;
+	}
+	
+	return res;
+}
+
+const int mod = 1e9+7;
+
+void solve()
+{
+  	ll n, p; cin>>n>>p;
+  	
+  	if(n>=p){
+  		cout<<0<<"\n";
+  		return;
+  	}
+  	
+  	ll res=-1;
+  	for(ll i=n+1; i<=p-1; i++)
+  	{
+  		ll temp=fastModuloExpo(i, p-2, p);
+  		res=(res*temp)%p;
+  	}
+  	
+  	cout<<(res+p)%p<<"\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+    int t = 1;
+    cin >> t;
+    while(t--) {
+      solve();
+    }
+
+    return 0;
+}
