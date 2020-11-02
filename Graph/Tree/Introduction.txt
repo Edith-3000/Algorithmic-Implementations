@@ -1,2 +1,4 @@
 # We call a tree balanced if for all nodes the difference between the heights of left and right subtrees 
   is not greater than one.
+
+# 𝑨 𝒄𝒐𝒍𝒍𝒆𝒄𝒕𝒊𝒐𝒏 𝒐𝒇 𝑻𝑹𝑬𝑬𝑺 𝒊𝒔 𝒄𝒂𝒍𝒍𝒆𝒅 𝒂 𝑭𝑶𝑹𝑬𝑺𝑻.

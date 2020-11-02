@@ -18,7 +18,7 @@ class graph{
     void print()
     {
    	   //iterate over all the (key, value) pairs in the map
-       for(auto p: mp) //p is of type pair<string, list<pair<int, int>>
+       for(auto p: mp) //p is of type pair<string, list<pair<string, int>>
        {
            cout<<p.first<<" --> ";
            list<pair<string, int>> l=p.second;

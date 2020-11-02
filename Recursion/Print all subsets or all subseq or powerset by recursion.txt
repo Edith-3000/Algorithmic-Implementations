@@ -1,0 +1,22 @@
+// ACCOMPLISHED USING RECURSIVE TREE APPROACH (by making use of O/P - I/P Method)
+
+void powerSet(string op, string ip)
+{
+	// base condition(s)
+	if(ip.length()==0)
+	{
+		cout<<op<<" ";
+		return;
+	}
+
+	string op1=op;
+	string op2=op;
+	op2.push_back(ip[0]);
+
+	ip.erase(ip.begin()+0);
+
+	powerSet(op1, ip);
+	powerSet(op2, ip);
+}
+
+// op is initialised as an empty string in main()

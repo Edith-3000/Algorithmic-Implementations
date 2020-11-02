@@ -48,4 +48,4 @@
                                     O/P3  I/P     O/P4  I/P
                                        (smaller)   (smaller)
 
-    • #branches in the above O/P - I/P method represents the #choices available.
+    • #branches in the above O/P - I/P method represents the #choices available at any particular level.

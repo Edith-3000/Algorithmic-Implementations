@@ -3,13 +3,13 @@
 * BFS finds the shortest path to the destination. | * DFS goes to the bottom of a subgraph, then backtracks.
 * It uses a queue to keep track of the next       | * It uses a stack to keep track of the 
   location to visit                               |   next location to visit.
-* BFS traverses according to graph level.	      | * DFS traverses according to graph depth.
-* It is implemented using FIFO queue.	          | * It is implemented using LIFO stack.
-* It requires more memory as compare to DFS.	  | * It requires less memory as compare to BFS.
+* BFS traverses according to graph level.	        | * DFS traverses according to graph depth.
+* It is implemented using FIFO queue.	            | * It is implemented using LIFO stack.
+* It requires more memory as compare to DFS.	    | * It requires less memory as compare to BFS.
 * This algorithm gives the shallowest path	      | * This algorithm doesn't guarantee the shallowest 
   solution.                                       |   path solution.
 * There is no need of backtracking in BFS.	      | * There is a need of backtracking in DFS.
-* You can never be trapped into finite loops.	  | * You can get trapped into infinite loops.
+* You can never be trapped into finite loops.	    | * You can get trapped into infinite loops.
 * If you do not find any goal, you may need to    | * If you do not find any goal, the leaf node 
   expand many nodes before the solution is        |   backtracking may occur.
   found.                                          |	

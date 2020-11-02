@@ -1,0 +1,35 @@
+/* PROBLEM STATEMENT: Given a string you need to print all possible strings that can be made by placing 
+                      spaces (zero or one) in between them. 
+
+                      Input:  str[] = "ABC"
+                      Output: ABC
+                              AB C
+                              A BC
+                              A B C
+*/
+
+// This problem can be solved by RECURSIVE TREE METHOD (making use of the O/P - I/P Method)
+
+void printPattern(string op, string ip)
+{
+	if(ip.length()==0)
+	{
+		cout<<op<<" ";
+		return;
+	}
+
+	string op1=op;
+	string op2=op;
+
+	op1.push_back(ip[0]);
+	op2.push_back(' ');
+	op2.push_back(ip[0]);
+
+	ip.erase(ip.begin()+0);
+
+	printPattern(op1, ip);
+	printPattern(op2, ip);
+}
+
+// op is initialised as op.push_back(ip[0]), as initially we've only 1 choice to include the first character.
+// then ip[0] is erased.

@@ -8,6 +8,9 @@
      Depth-first search is often used as a subroutine in network flow algorithms such as the Ford-Fulkerson algorithm.
    # DFS is also used as a subroutine in matching algorithms in graph theory such as the Hopcroft–Karp 
      algorithm.
+   # Depth First Traversal (or Search) for a graph is similar to Depth First Traversal of a tree. 
+     The only catch here is, unlike trees, graphs may contain cycles, a node may be visited twice. 
+     To avoid processing a node more than once, use a boolean visited array.
    # Depth-first searches are used in mapping routes, scheduling, and finding spanning trees.
    # It employs the following rules -----> 
      Rule 1 − Visit the adjacent unvisited vertex. Push it in a stack. Mark it as visited. Display it.
@@ -117,6 +120,60 @@ vector<T> dfs(T src)
 	  return res;
 }
 
+-------------------------------------------------------------------------------------------------------------------
+
+/*# HANDLING DISCONNECTED GRAPH
+  • The above code traverses only the vertices reachable from a given source vertex. 
+  • All the vertices may not be reachable from a given vertex as in the case of a 𝑫𝒊𝒔𝒄𝒐𝒏𝒏𝒆𝒄𝒕𝒆𝒅 𝒈𝒓𝒂𝒑𝒉. 
+    To do complete DFS traversal of such graphs, run DFS from all unvisited nodes after a DFS.
+    i.e. Run a loop from through all the vertices and check if the vertex is unvisited in previous DFS then 
+    call the dfs fⁿ with current node.
+*/
+
+void dfsHelper(T src, unordered_map<T, bool> &visited, vector<T> &res)
+{
+    //marking a node visited as soon as it is pushed in 
+    //internal call stack
+    visited[src]=true;
+
+    //push src in the result
+    res.push_back(src);
+    
+    //go to all the unvisited nodes of the current
+    //node, but one by one
+    for(auto x: mp[src])
+    {
+       //check if already visited or not
+       if(!visited[x])
+       {
+          //push it in the stack(internal call stack is used)
+          dfsHelper(x, visited, res);
+       }
+    }
+}
+
+vector<T> dfs(T src)
+{
+   //to store one of the many possible dfs traversal, 
+   //using any vertex as source(starting vertex)
+   vector<T> res;
+
+   //to check if a vertex isVisited
+   unordered_map<T, bool> visited;
+
+   for(auto p: mp)
+   {
+        if(!visited[p.first])
+            dfsHelper(p.first, visited, res); //helper function
+   }
+
+   //return the final result of traversal
+   return res;
+}
+
+
+-------------------------------------------------------------------------------------------------------------------
+
 /*# Here mp is an adjacency list representation of graph using hash map.
     unordered_map<T, list<T>> mp;
   # The Analysis of depth-first search ≡ Analysis of breadth-first search
@@ -129,9 +186,9 @@ vector<T> dfs(T src)
 
    * In the iterative approach: You first insert all the elements into the stack of the current node
      and then handle the head(top) of the stack [which is the last node inserted] - thus the first 
-     node you handle is the last child(adjacent neighbour) of the current node.
+     node you handle is the last child (last adjacent neighbour) of the current node.
    * While in the recursive approach: You handle each node when you see it. Thus the first node you handle 
-     is the first child.
+     is the first child (first adjacent neighbour).
    
    * These two variations of DFS visit the neighbors of each vertex in the opposite order from each other: 
      the first neighbor of v(current node) visited by the recursive variation is the first one in the list 

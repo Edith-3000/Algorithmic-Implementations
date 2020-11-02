@@ -13,10 +13,10 @@ vector<T> ssspUsingBFS(T src)
     //to store the distance of all vertices
     //from src vertex, it'll also be used to
     //check if a vertex is already visited or not
-	    unordered_map<T, T> d; 
+	  unordered_map<T, T> d; 
 
     //initialising distances of all vertices from
-    //source vertex (src) as ∞ 
+    //source vertex (src) as infinite (i.e. very large)
     for(auto p: mp)
     {
        T v=p.first;

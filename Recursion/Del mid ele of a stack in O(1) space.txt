@@ -1,0 +1,21 @@
+void delMid(stack<int> &s, int k)
+{
+	// base condition(s)
+	if(s.size()==0) return;
+	if(k==1)
+	{
+		s.pop();
+		return;
+	}	
+
+	int temp=s.top();
+	s.pop();
+
+	// hypothesis
+	delMid(s, k-1);
+
+	// induction
+	s.push(temp);
+}
+
+// Here k is the mid element index to be deleted, it is take as (stack.size()/2 + 1).
