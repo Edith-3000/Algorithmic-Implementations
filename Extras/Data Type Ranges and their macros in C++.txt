@@ -1,0 +1,20 @@
+Data Type                              Range                      Macro for min value           Macro for max value
+char                                -128 to +127                        CHAR_MIN                      CHAR_MAX
+short char                          -128 to +127                       SCHAR_MIN                     SCHAR_MAX
+unsigned char                         0  to 255                             0                        UCHAR_MAX
+
+short int                         -32768 to +32767                      SHRT_MIN                      SHRT_MAX
+unsigned short int                    0  to  65535                          0                        USHRT_MAX 
+int                          -2147483648 to +2147483647                  INT_MIN                       INT_MAX
+unsigned int                          0  to  4294967295                     0                         UINT_MAX
+long int            -9223372036854775808 to +9223372036854775807        LONG_MIN                      LONG_MAX
+unsigned long int                     0  to  18446744073709551615           0                        ULONG_MAX 
+long long int       -9223372036854775808 to +9223372036854775807       LLONG_MIN                     LLONG_MAX
+unsigned long long int                0  to  18446744073709551615           0                       ULLONG_MAX
+
+float                        1.17549e-38 to  3.40282e+38                 FLT_MIN                       FLT_MAX
+float(negative)             -1.17549e-38 to -3.40282e+38                -FLT_MIN                      -FLT_MAX
+double                      2.22507e-308 to  1.79769e+308                DBL_MIN                       DBL_MAX
+double(negative)           -2.22507e-308 to -1.79769e+308               -DBL_MIN                      -DBL_MAX
+
+// Reference: https://www.geeksforgeeks.org/data-type-ranges-and-their-macros-in-c/

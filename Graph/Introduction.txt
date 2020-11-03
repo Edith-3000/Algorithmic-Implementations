@@ -4,3 +4,23 @@
 # In the 18th century, Euler was intrigued by the question of whether a route existed that would traverse
   each of the seven bridges exactly once. In demonstrating that the answer is 🅽🅾, he laid the foundation 
   for graph theory.
+
+# Difference b/w Explicit Graph & Implicit Graph ------>
+  • Explicit Graph:
+    – All vertices are identified individually and represented separately.
+    – All edges are identified individually and represented separately.
+
+  • Implicit Graph:
+    – Only a subset, possibly only one, of the vertices is given an explicit representation. (The others 
+      are implied.) or we can say it is a graph whose vertices or edges are not represented as explicit objects 
+      in a computer's memory, but rather are determined algorithmically from some more concise input.
+    – Only a subset, and possibly zero, of the edges is given an explicit representation.
+    – A set of “operators” is provided that can be used to construct “new” edges and vertices. 
+
+  • For more info visit: https://courses.cs.washington.edu/courses/cse373/16wi/slides/18-Implicit-Graphs.pdf
+
+# In all over the section following are the acronyms used ⟶
+  • UG = Undirected Graph
+  • DG = Directed Graph
+  • UWG = Unweighted Graph
+  • WG = Weighted Graph

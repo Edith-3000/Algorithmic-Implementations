@@ -1,0 +1,83 @@
+/* # 𝑩𝑨𝑪𝑲𝑬𝑫𝑮𝑬 𝑰𝑺 𝑨𝑵 𝑬𝑫𝑮𝑬 𝑻𝑯𝑨𝑻 𝑰𝑺 𝑵𝑶𝑻 𝑷𝑶𝑰𝑵𝑻𝑰𝑵𝑮 𝑻𝑶 𝑻𝑯𝑬 𝑷𝑨𝑹𝑬𝑵𝑻 𝑰𝑵 𝑼𝑮.
+   # 𝑾𝑯𝑬𝑹𝑬𝑽𝑬𝑹 𝑨 𝑩𝑨𝑪𝑲𝑬𝑫𝑮𝑬 𝑰𝑺 𝑭𝑶𝑼𝑵𝑫 𝑩/𝑾 𝑨𝑵𝒀 2 𝑵𝑶𝑫𝑬𝑺 𝑾𝑯𝑰𝑳𝑬 𝑫𝑶𝑰𝑵𝑮 𝑩𝑹𝑬𝑨𝑫𝑻𝑯-𝑭𝑰𝑹𝑺𝑻 𝑺𝑬𝑨𝑹𝑪𝑯 𝑨 𝑪𝒀𝑪𝑳𝑬 
+     𝑰𝑺 𝑷𝑹𝑬𝑺𝑬𝑵𝑻 𝑰𝑵 𝑻𝑯𝑬 𝑮𝑹𝑨𝑷𝑯.
+   
+   # Whenever the BFS process is initiated with a src vertx which is itself present in a cycle, then this
+     process will give the correct length of the cycle in which it is present otherwise wrong answer.
+
+   # Here the length of a cycle is taken as the number of edges in the cycle.
+   # Now, in order to find the length of the shortest cycle in the graph we have to find all the 𝑽𝑨𝑳𝑰𝑫
+     length cycles, which can be accomplished by doing the BFS from every node(i.e. taking every node as
+     a src).
+*/
+
+int bfs(int src, int &res)
+{
+	// similar to the visited[] array
+	vector<int> dis(n, INT_MAX);
+
+	// queue to remember which vertex to visit next
+	// in case of dead end in iteration
+	queue<int> q;
+
+	// distance of src from itself = 0
+	dis[src]=0;
+
+	// initialisation of the bfs process
+	// pushing the src in queue
+	q.push(src);
+
+	while(!q.empty())
+	{
+		int curr=q.front();
+		q.pop();
+
+		// visiting all the adjacent vertices of src
+		for(auto nbr: mp[curr])
+		{
+			// neighbour not visited, therefore it is 
+			// is normal edge and not a backedge
+			if(dis[nbr]==INT_MAX)
+			{
+				// updating the distance of nbr from src
+				dis[nbr]=dis[curr]+1;
+				q.push(nbr);
+			}
+
+			// backedge is encountered i.e. nbr has already
+			// been visited and it is also not the parent of curr
+			else if(dis[nbr]>=dis[curr])
+			{
+			    // updating the res
+			    // the length of cycle in this case will be equal to
+			    // dis[nbr] + dis[curr] + 1, (1 is for the backedge presents)
+				res=min(res, dis[nbr]+dis[curr]+1);
+			}
+		}
+	}
+
+	// return final result
+	return res;
+}
+
+int shortestCycleLen()
+{
+	int res=INT_MAX;
+	for(int i=0; i<n; i++)
+	{
+		// res is to be passed by-reference
+		bfs(i, res);
+	}
+
+	// if res not updated no cycle is present
+	if(res==INT_MAX) return -1;
+
+	// else return the length found
+	else return res;
+}
+
+// here n is = |V|
+// Note: Here an extra parent variable is not maintained to compare in the case when a nbr is already visited,
+//       instead we've just used the fact that the distance[nbr]>=distance[curr], if nbr is already visited
+//		 and not parent of curr, which is quiet obvious.
+// Time Complexity: O(|V| x max(|V|, |E|))

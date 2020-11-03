@@ -11,6 +11,8 @@
 						          5) 4, 2, 0, 3, 1
 */
 
+// USING BFS
+
 /*UNDERLYING CONCEPT ------>
   # The basic idea behind the topological sort is to provide a partial ordering among the vertices of the
     graph such that if there is an edge from U to V then U≤V i.e., U comes before V in the ordering. 
@@ -130,3 +132,63 @@ int main(int argc, char *argv[])
 
 // Time Complexity: O(|V|+|E|)
 // Space Complexity: O(|V|+|E|)
+
+======================================================================================================================================
+
+// USING DFS
+
+void dfsHelper(int src, map<int, bool> &visited, list<int> &res)
+{
+	visited[src]=true;
+
+	// go to all the unvisited nodes of the current
+    // node, but one by one
+	for(auto nbr: mp[src])
+	{
+		if(!visited[nbr])
+			dfsHelper(nbr, visited, res);
+	}
+
+	// in the last push the src in the FRONT of the list
+	// to resolve all the dependencies
+	res.push_front(src);
+	return;
+}
+
+list<int> topoSort()
+{
+	map<int, bool> visited;
+
+	// mark all the vertices as not visited 
+	// in the beginning
+	for(auto p: mp)
+		visited[p.first]=false;
+
+	// to store the topological ordering
+	list<int> res;
+
+	// dfs function is to be called for all vertices in 
+	// directed graphs in order to include all vertices 
+	// in the final topological ordering(see the graph below
+	// to understand why?)
+	for(auto p: mp)
+	{
+		int vertex=p.first;
+		if(!visited[vertex])
+			dfsHelper(vertex, visited, res);
+	}
+
+	// return the topological ordering at last
+	return res;
+}
+
+/* Why the dfsHelper fⁿ is needed to be called for ALL the vertices?
+   • Because it will not include all the vertices in some directed graphs cases such as given below ⟶
+     Following are the vertices in the graph: 0 ------> 2
+     										  1 ------> 2
+     										  1 ------> 4
+     										  2 ------> 5
+     										  4 ------> 5
+*/
+
+// Time Complexity: O(|V|+|E|)

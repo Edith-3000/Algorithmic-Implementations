@@ -1,7 +1,0 @@
-/* PROBLEM STATEMENT: Find if a given Directed Graph has a cycle in it or not.
-*/
-
-/*UNDERLYING CONCEPT ------>
-  # If we can’t determine the topological ordering of all the vertices of a directed graph, the graph
-    has a cycle in it i.e. for a directed cyclic graph : res.size()!=vertices (refer "Topological Sort Algo.txt")
-*/

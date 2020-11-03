@@ -1,0 +1,6 @@
+/* # The term 𝑺𝑻𝑹𝑶𝑵𝑮𝑳𝒀 is always used in reference with 𝑫𝑰𝑹𝑬𝑪𝑻𝑬𝑫 𝑮𝑹𝑷𝑨𝑯(𝑫𝑮).
+   # A DG is strongly connected graph if there is a path between all the pairs of vertices.
+   # A strongly connected component (SCC) of a DG is a 𝒎𝒂𝒙𝒊𝒎𝒂𝒍 𝒔𝒕𝒓𝒐𝒏𝒈𝒍𝒚 𝒄𝒐𝒏𝒏𝒆𝒄𝒕𝒆𝒅 𝒔𝒖𝒃𝒈𝒓𝒂𝒑𝒉.
+   # Thus it can be said that if a DG has exactly 1 SCC, then it is a strongly connected graph.
+*/
+
