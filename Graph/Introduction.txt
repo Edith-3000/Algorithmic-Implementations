@@ -19,6 +19,11 @@
 
   • For more info visit: https://courses.cs.washington.edu/courses/cse373/16wi/slides/18-Implicit-Graphs.pdf
 
+# 𝑪𝒐𝒎𝒑𝒍𝒆𝒕𝒆 𝒈𝒓𝒂𝒑𝒉: it is a simple undirected graph in which every pair of distinct vertices is connected by a 
+                   unique edge. 
+# 𝑪𝒐𝒎𝒑𝒍𝒆𝒕𝒆 𝒅𝒊𝒈𝒓𝒂𝒑𝒉: it is a directed graph in which every pair of distinct vertices is connected by a pair of
+                     unique edges (one in each direction i.e. bi-directional edges).
+
 # In all over the section following are the acronyms used ⟶
   • UG = Undirected Graph
   • DG = Directed Graph
