@@ -1,6 +1,8 @@
 /* # Reference: https://cp-algorithms.com/graph/dijkstra.html
    				https://brilliant.org/wiki/dijkstras-short-path-finder/
 
+   # This algorithm is Greedy based.
+   
    # This algorithm is used for finding the shortest path(as well as their costs) from a starting node to all 
      other nodes in a weighted & UD/DG.
    # The edges of the graph can be unidirectional/bidirectional.
@@ -49,7 +51,7 @@ class Graph
 		void dijkstraSSSP(T src)
 		{
 			// dist[key] stores the minimum distance 
-			// key from given src
+			// of key from given src
 			unordered_map<T, int> dist;
 			
 			// parent[key] stores the immediate parent of key
