@@ -1,0 +1,51 @@
+# Backtracking paradigm uses brute-force approach in generating the 𝑺𝒕𝒂𝒕𝒆 𝑺𝒑𝒂𝒄𝒆 𝑻𝒓𝒆𝒆 in a DFS manner by
+  making use of bounding function(s).
+  NOTE: Branch and bound paradigm also uses brute-force approach in generating the 𝑺𝒕𝒂𝒕𝒆 𝑺𝒑𝒂𝒄𝒆 𝑻𝒓𝒆𝒆 but in 
+        a BFS manner.
+
+# What does brute-force says?
+  • Find out all the possibilities & pick up the desired ones.
+
+# Backtracking is not used for optimal solutions instead it's used for finding out all the possible solutions.
+
+# Reference(s): https://medium.com/techie-delight/backtracking-practice-problems-and-interview-questions-6a17cb6d08a
+7#:~:text=Backtracking%20can%20be%20applied%20only,completed%20to%20a%20valid%20solution.
+
+# 3 Keys to a Backtracking problem ⟶ 
+  • 𝑪𝑯𝑶𝑰𝑪𝑬(𝑺) (𝑻𝑯𝑬 𝑫𝑬𝑪𝑰𝑺𝑰𝑶𝑵 𝑺𝑷𝑨𝑪𝑬)
+  • 𝑪𝑶𝑵𝑺𝑻𝑹𝑨𝑰𝑵𝑻𝑺 𝑮𝑰𝑽𝑬𝑵
+  • 𝑮𝑶𝑨𝑳
+
+  𝑾𝒆 𝒎𝒂𝒌𝒆 𝒂 𝒄𝒉𝒐𝒊𝒄𝒆 𝒂𝒅𝒉𝒆𝒓𝒆 𝒕𝒐 𝒕𝒉𝒆 𝒄𝒐𝒏𝒔𝒕𝒓𝒂𝒊𝒏𝒕𝒔 𝒂𝒏𝒅 𝒂𝒄𝒉𝒊𝒆𝒗𝒆 𝒐𝒖𝒓 𝒈𝒐𝒂𝒍.
+
+# Try to craft a function based on choice(s) available 
+  Now this function contain(s) ⟶ 
+  1. Base case(s) to which we converge to.
+  2. Decision space (we take decisions adhering to the constraints given).
+  3. Undo our decision after we explore on them i.e if our decision does not work out then once we come back 
+     from recursion, then we need to undo our decision taken.
+
+# For eg. the function for a sudoku solver may seem like this (crudely) ⟶
+  
+  solve(row, col ….){
+
+    // base case(s)
+    if(col == board[row].length){
+        // this is one of the base cases    
+    }
+    
+    // taking decision
+    for(int value = 1; value <= 9; valur++{
+         board[row][col] = value;
+         if(validPlacement(row, col …)){
+             if(solve(row, col + 1, board)){
+                 return true;
+             }
+          }
+     }
+     
+     // rolling back the incorrect decision
+     board[row][col] = EMPTY_ENTRY;
+  }
+
+# Reference to the above approach: https://www.youtube.com/watch?v=Zq4upTEaQyM
