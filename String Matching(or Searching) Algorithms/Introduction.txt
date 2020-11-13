@@ -1,0 +1,18 @@
+# In computer science, string-searching algorithms, sometimes called string-matching algorithms, are an 
+  important class of string algorithms that try to find a place where one or several strings (also called patterns)
+  are found within a larger string or text.
+
+# The most basic case of string searching involves one (often very long) string, sometimes called the 𝒉𝒂𝒚𝒔𝒕𝒂𝒄𝒌,
+  and one (often very short) string, sometimes called the 𝒏𝒆𝒆𝒅𝒍𝒆. 
+  The goal is to find one or more occurrences of the needle within the haystack. 
+  For example, one might search for "𝒕𝒐" within:
+  𝑺𝒐𝒎𝒆 𝒃𝒐𝒐𝒌𝒔 𝒂𝒓𝒆 𝒕𝒐 𝒃𝒆 𝒕𝒂𝒔𝒕𝒆𝒅, 𝒐𝒕𝒉𝒆𝒓𝒔 𝒕𝒐 𝒃𝒆 𝒔𝒘𝒂𝒍𝒍𝒐𝒘𝒆𝒅, 𝒂𝒏𝒅 𝒔𝒐𝒎𝒆 𝒇𝒆𝒘 𝒕𝒐 𝒃𝒆 𝒄𝒉𝒆𝒘𝒆𝒅 𝒂𝒏𝒅 𝒅𝒊𝒈𝒆𝒔𝒕𝒆𝒅.
+
+# There are various string matching/searching algorithms, few of them are ⟶
+  • 𝑺𝒕𝒓𝒊𝒏𝒈 𝒔𝒆𝒂𝒓𝒄𝒉𝒊𝒏𝒈 𝒖𝒔𝒊𝒏𝒈 𝒕𝒓𝒊𝒆
+  • 𝑹𝒂𝒃𝒊𝒏-𝑲𝒂𝒓𝒑 𝒂𝒍𝒈𝒐𝒓𝒊𝒕𝒉𝒎 (𝑹𝒐𝒍𝒍𝒊𝒏𝒈 𝒉𝒂𝒔𝒉)
+  • 𝑲𝒏𝒖𝒕𝒉–𝑴𝒐𝒓𝒓𝒊𝒔–𝑷𝒓𝒂𝒕𝒕 (𝑲𝑴𝑷) 𝒂𝒍𝒈𝒐𝒓𝒊𝒕𝒉𝒎
+  • 𝒁-𝒇𝒖𝒏𝒄𝒕𝒊𝒐𝒏
+  • 𝑴𝒂𝒏𝒂𝒄𝒉𝒆𝒓'𝒔 𝒂𝒍𝒈𝒐𝒓𝒊𝒕𝒉𝒎
+
+# Reference: https://en.wikipedia.org/wiki/String-searching_algorithm

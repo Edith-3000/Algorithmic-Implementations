@@ -85,7 +85,7 @@ bool n_queen(int i, int n, vector<vector<int>> &board)
 			// try to place another queen in the next row
 			bool next_row_mein_queen_rakh_paye = n_queen(i+1, n, board);
 			
-			if(next_row_mein_queen_rakh_paye){
+			if(next_row_mein_queen_rakh_paye == true){
 				return true;
 			}
 			
@@ -116,7 +116,14 @@ int main()
     return 0;
 }
 
-// Time Complexity: 
+// Time Complexity: Exponential O(2^n)
+// Refer: https://medium.com/@jmohon1986/timeout-the-story-of-n-queens-time-complexity-c80636d92f8b#:~:text=The%20worst%20case%20%E2%80%9Cbrute,N%20times%2C%20for%20N%20queens.&text=However%2C%20if%20it%20is%20found,and%20try%20another%20safe%20position.
+
+/* Optimizations: The exponential time complexity of above backtracking algorithm can be improved by using 
+   Branch and Bound. 
+   In backtracking solution we backtrack when we hit a dead end but in branch and bound, after building a 
+   partial solution, we figure out that there is no point going any deeper as we are going to hit a dead end.  
+*/
 
 /*
 
