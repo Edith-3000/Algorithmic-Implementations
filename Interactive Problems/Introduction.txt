@@ -1,0 +1,9 @@
+# 𝑰𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒊𝒗𝒆 𝑷𝒓𝒐𝒃𝒍𝒆𝒎: 𝑨 𝒑𝒓𝒐𝒃𝒍𝒆𝒎 𝒘𝒉𝒆𝒓𝒆 𝒚𝒐𝒖𝒓 𝒔𝒐𝒍𝒖𝒕𝒊𝒐𝒏 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕𝒔 𝒘𝒊𝒕𝒉 𝒂 𝒈𝒓𝒂𝒅𝒆𝒓 (𝒑𝒓𝒐𝒃𝒍𝒆𝒎 𝒋𝒖𝒅𝒈𝒆).
+# The crux of getting an AC for an interactive problem is to 𝒊𝒏𝒕𝒆𝒓𝒂𝒄𝒕 𝒘𝒊𝒕𝒉 𝒕𝒉𝒆 𝒋𝒖𝒅𝒈𝒆 𝒐𝒑𝒕𝒊𝒎𝒂𝒍𝒍𝒚.
+
+# The process of printing o/p on the console(or screen) is an 𝑬𝑿𝑷𝑬𝑵𝑺𝑰𝑽𝑬 process.
+# Programming languages try to store the o/p (i.e. they try to buffer the o/p) & when the program terminates
+  all of the o/p is printed 𝑨𝑻 𝑶𝑵𝑬 𝑮𝑶.
+
+# ∴ in order to solve interactive problems, after giving printing command, we tell the program to not
+  to store the o/p in a buffer instead flush it out onto the screen then and there only.

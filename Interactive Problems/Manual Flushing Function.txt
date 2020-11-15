@@ -1,0 +1,9 @@
+# fflush(stdout); - in C++ (when using printf() and scanf())
+
+# cout << flush; - in C++ (when using cout and cin)
+  OR
+  cout << endl; - can also be used as it works similar to cout << "\n" << flush;
+
+# System.out.flush(); - in Java
+
+# stdout.flush() - in Python
