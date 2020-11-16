@@ -1,0 +1,11 @@
+# Greedy Algorithms are one of the most intuitive algorithms. 
+# Whenever we see a problem we first try to apply some greedy strategy to get the answer.
+
+# Greedy Algorithm always makes the choice that 𝒍𝒐𝒐𝒌𝒔 𝒃𝒆𝒔𝒕 𝒂𝒕 𝒕𝒉𝒆 𝒎𝒐𝒎𝒆𝒏𝒕.
+# We hope that by choosing a 𝒍𝒐𝒄𝒂𝒍 𝒐𝒑𝒕𝒊𝒎𝒖𝒎 at each step, we will end up at a 𝒈𝒍𝒐𝒃𝒂𝒍 𝒐𝒑𝒕𝒊𝒎𝒖𝒎.
+  
+  for eg., from a point there are 5 available paths (& weight is associated with each path), then 
+  • by brute force and DP paradigms we will choose all the paths and proceed further,
+  • but by greedy strategy we'll select the most optimal path at the current moment and then proceed further.
+
+# For further explanation for the difference b/w Greedy and DP refer the pdf notes.

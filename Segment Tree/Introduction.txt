@@ -1,0 +1,26 @@
+# References: https://cp-algorithms.com/data_structures/segment_tree.html
+              https://www.hackerearth.com/practice/data-structures/advanced-data-structures/segment-trees/tutorial/
+              https://en.wikipedia.org/wiki/Segment_tree
+
+# A Segment Tree is a full binary tree data structure that allows answering range queries over an array 
+  effectively, while still being flexible enough to allow modifying the array.
+# It is used for storing the intervals or segments. Each node in the Segment Tree represents an interval.
+
+# In general a Segment Tree is a very flexible data structure, and a huge number of problems can be solved with it.
+
+# One important property of Segment Trees is, that they require only a linear amount of memory. The standard 
+  Segment Tree requires (4 x n) vertices for working on an array of size n.
+
+# It is, in principle, a static structure; that is, it's a structure that cannot be modified once it's built.
+
+# It's also known as statistic tree.
+
+# Applications of the segment tree are in the areas of computational geometry, and geographic information systems.
+
+# The segment tree can be generalized to higher dimension spaces.
+
+# In conclusion a Segment Tree is useful for: 𝑹𝒂𝒏𝒈𝒆 𝒃𝒂𝒔𝒆𝒅 𝒒𝒖𝒆𝒓𝒊𝒆𝒔 + 𝑼𝒑𝒅𝒂𝒕𝒆𝒔.
+# For Range based queries + updates, other approaches can also be used, such as ⟶
+  • Brute force approach.
+  • Using a 2D Matrix of size (n x n).
+  But for larger values of n both the above methods as inefficient, thus Segment Tree comes to rescue. 😎😎
