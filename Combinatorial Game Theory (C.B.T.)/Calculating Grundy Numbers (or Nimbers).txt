@@ -1,0 +1,33 @@
+// A game starts with a pile of n stones, and the player to move may take out any +ve number of stones. 
+// Calculate the Grundy Numbers for this game.
+
+// Utility function to find the mex(minimum excludant)
+// of a set
+int cal_mex(unordered_set<int> &s)
+{
+	int mex = 0;
+	while(s.find(mex) != s.end()){
+	    mex++;
+	}
+
+	return mex;
+}
+
+// A function to Compute Grundy Number of 'n'
+// Only this function varies according to the game.
+// For this game G(n) = mex(G(n-1), G(n-2), G(n-3)......G(0))
+int cal_grundy_num(int n)
+{
+	// base case
+	// G(0) = mex({phi}) = 0
+	if(n == 0){
+	    return 0;
+	}
+
+	unordered_set<int> s;
+	for(int i = 1; i <=n; i++){
+        s.insert(cal_grundy_num(n - i));
+	}
+
+	return cal_mex(s);
+}

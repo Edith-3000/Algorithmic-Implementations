@@ -1,0 +1,15 @@
+# The Normal Game of Nim is of type Finders Winners type (i.e. the player who picks the last coin WINS the game).
+
+# But in case of problem exactly similar to Game of Nim with only 1 alteration that the game is of type Keepers
+  Losers type (misère game) (i.e. the player who picks the last coin LOSES the game), here is the way to 
+  solve it ⟶
+  
+  • If all the piles are of size = 1, then
+    if #piles == even, 1st player wins.
+    else 2nd player wins.
+
+  • Else if(s1 ^ s2 ^ s3 ..... ^ sk) != 0, 1st player wins.
+         else 2nd player wins.
+    
+    where k = #piles
+          si is the size of iᵗʰ pile, i ∈ [1, k]

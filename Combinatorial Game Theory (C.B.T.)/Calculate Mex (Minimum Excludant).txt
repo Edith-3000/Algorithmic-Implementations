@@ -1,4 +1,4 @@
-int calculate_mex(unordered_set<int> s)
+int calculate_mex(unordered_set<int> &s)
 {
 	int mex=0;
 	while(s.find(mex) != s.end()) mex++;

@@ -1,0 +1,26 @@
+# The only difference b/w Nim Game and a game to which Sprague Grundy Theorem is applied is that:
+  in Nim game there is no restriction on the #stones/coins a player can take any during her/his turn,
+  while Sprague Grundy Theorem is used for restricted Nim Game i.e. a player have some some sort of
+  restriction on the #stones/coins s(he) can take any during the turn.
+
+# We can also say Nim Game is a special case of Sprague Grundy Theorem.
+  Reason --> Because if we apply Sprague Grundy Theorem to Nim Game with 'k' (𝑾𝑯𝑬𝑹𝑬 '𝒌' 𝑪𝑨𝑵 𝑩𝑬 = 1 𝑨𝑳𝑺𝑶) 
+             piles of sizes s1, s2, s3, s4, s5.....sk, then G(s1) comes out to be s1 only, similarly G(s2) = s2....G(sk) = sk.
+             ∴ we directly take XOR of (s1, s2, s3....sk) instead of taking XOR of (G(s1), G(s2), ...G(sk)),
+             as both comes out to be same to find out the result.
+
+# For eg. consider a single pile of size = 10 and 2 players A & B play turn wise (A starts first). During 
+  a players turn he/she can pick coins b/w 2 and 4 (both inclusive). Player which picks the last coin
+  wins the game. If both player play optimally find the winner?
+---> • Use Sprague Grundy Theorem as it's a restricted Game of Nim.
+     • ∴ calculate result = G(10) (as we've only 1 pile, no xoring is required)
+     • if(result != 0) A wins, B loses.
+       else A loses, B wins.
+
+# For eg. consider 4 pile of sizes 10, 7, 15, 9 and 2 players A & B play turn wise (A starts first). During 
+  a players turn he/she can pick coins b/w 2 and 4 (both inclusive) from a single pile. Player which picks the last 
+  coin wins the game. If both player play optimally find the winner?
+---> • Use Sprague Grundy Theorem as it's also a restricted Game of Nim.
+     • ∴ calculate result = G(10) ^ G(7) ^ G(15) ^ G(9) 
+     • if(result != 0) A wins, B loses.
+       else A loses, B wins.
