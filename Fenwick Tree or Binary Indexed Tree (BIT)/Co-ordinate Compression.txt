@@ -1,0 +1,7 @@
+# 𝑨 𝒗𝒆𝒓𝒚 𝒔𝒎𝒂𝒍𝒍 𝒃𝒖𝒕 𝒖𝒔𝒆𝒇𝒖𝒍 𝒕𝒓𝒊𝒄𝒌.
+
+# Resources: https://www.youtube.com/watch?v=s9oXy-fZUzg
+             https://codeforces.com/blog/entry/23180
+
+# P.S. - This small trick could've been used in the "Inversion Count - Spoj" Question, if the i/p array 
+  numbers were larger than 10⁷ (or so) or if there were -ve inputs.

@@ -1,0 +1,24 @@
+# References: https://codeforces.com/blog/entry/57292
+			  https://brilliant.org/wiki/fenwick-tree/
+			  https://cp-algorithms.com/data_structures/fenwick.html
+
+# A Fenwick tree or binary indexed tree is a data structure that helps compute prefix sums efficiently. 
+  Computing prefix sums are often important in various other algorithms.
+
+# The nᵗʰ prefix sum of an array is the sum of the first n elements of the array.
+  This idea is also referred to as partial sums or cumulative sums.
+
+# BITs are used to efficiently answer certain types of range queries, on ranges from a root to some distant node. 
+  They also allow quick updates on individual data points.
+  • An example of a range query would be this: "What is the sum of the numbers indexed from [1,x]?"
+  • An example of an update would be this: "Increase the number indexed by x by v."
+  
+  A BIT can perform both of these operations in O(log N) time, and takes O(N) memory.
+
+# A Segment Tree can also perform both of the operations in O(Log N) time, but 𝒄𝒐𝒎𝒑𝒂𝒓𝒆𝒅 𝒘𝒊𝒕𝒉 𝑺𝒆𝒈𝒎𝒆𝒏𝒕 𝑻𝒓𝒆𝒆,
+  𝑩𝒊𝒏𝒂𝒓𝒚 𝑰𝒏𝒅𝒆𝒙𝒆𝒅 𝑻𝒓𝒆𝒆 𝒓𝒆𝒒𝒖𝒊𝒓𝒆𝒔 𝒍𝒆𝒔𝒔 𝒔𝒑𝒂𝒄𝒆 𝒂𝒏𝒅 𝒊𝒔 𝒆𝒂𝒔𝒊𝒆𝒓 𝒕𝒐 𝒊𝒎𝒑𝒍𝒆𝒎𝒆𝒏𝒕.
+  𝑩𝒖𝒕 𝑩𝑰𝑻 𝒊𝒔 𝒏𝒐𝒕 𝒂𝒔 𝒑𝒐𝒘𝒆𝒓𝒇𝒖𝒍 𝒂𝒔 𝑺𝒆𝒈𝒎𝒆𝒏𝒕 𝑻𝒓𝒆𝒆.
+
+# It is very easy to implement and can be extended for n dimensions.
+
+# Basically BIT is used for Prefix Sum type of queries.
