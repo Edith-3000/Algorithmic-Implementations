@@ -76,7 +76,7 @@ class TopologicalSort
 							sourcesForNextCall.push_back(child); //save the new source for the next call
 					}
 					
-					// recursive call to Drint other orderings from the remaining (and new)
+					// recursive call to Print other orderings from the remaining (and new)
 					printAllOrderings(graph, inDegree, sourcesForNextCall, res);
 					
 					// backtrack, remove the vertex from the sorted order and put all of its
@@ -88,7 +88,7 @@ class TopologicalSort
 				}
 			}
 			
-			// if res doesn't contain all tasks, either we''ve a cyclic dependency between tasks, or
+			// if res doesn't contain all tasks, either we've a cyclic dependency between tasks, or
 			// we have not processed all the tasks in this recursive call
 			if(res.size()==inDegree.size())
 			{
