@@ -4,7 +4,7 @@ void dfsHelper(T src, unordered_map<T, bool> &visited, vector<T> &r)
     //internal call stack
     visited[src]=true;
 
-    //push src in the rult
+    //push src in the result
     r.push_back(src);
     
     //go to all the unvisited nodes of the current
