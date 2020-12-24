@@ -33,6 +33,9 @@
     spanning trees of the same graph. 
   • In real-world situations, this weight can be measured as distance, congestion, traffic load or any arbitrary
     value denoted to the edges.
+  • Minimum spanning tree may or may not be unique.
+    If the weight assign for all the edges of graph are unique, then minimum spanning tree will be unique.
+    Otherwise there can be many minimum spanning tree.
 
 # Algorithms used for finding MST for UG ⟶ 
   • Kruskal's Algorithm
