@@ -39,6 +39,9 @@ vvi mat(N, vi(M, 0));
 // simple way of dfs & nothing else
 // only used to store the depths of all nodes in the traversal
 // variable par is used in dfs traversal instead of making a visited array
+// REMEMBER: This type of DFS methos works only when we are sure that there is
+//           NO CYCLE in the graph, otherwise it will give RUNTIME ERROR
+// As in this problem input graph is tree or a DAG thereby it won't have any cycles.
 void dfs(int curr, int par) {
 	for(auto x: g[curr]) {
 		if(x != par) {

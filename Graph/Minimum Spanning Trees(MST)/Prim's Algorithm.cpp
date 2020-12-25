@@ -144,6 +144,6 @@ int main()
     return 0;
 }
 
-// Time Complexity: O(|E| x log|E|) which in turn = O(|E| x log|E|), same as Kruskal's algorithm.
+// Time Complexity: O(|E| x log|E|) which in turn = O(|E| x log|V|), same as Kruskal's algorithm.
 // However, Prim's algorithm can be improved using Fibonacci Heaps to O(|E| + log|V|).
 // Reference: https://www.cs.auckland.ac.nz/software/AlgAnim/prim.html#:~:text=The%20time%20complexity%20is%20O,O(E%20%2B%20logV).

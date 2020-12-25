@@ -58,6 +58,9 @@ int lca_brute(int u, int v) {
 	return u; // or return v
 }
 
+// REMEMBER: This type of DFS methos works only when we are sure that there is
+//           NO CYCLE in the graph, otherwise it will give RUNTIME ERROR
+// As in this problem input graph is tree or a DAG thereby it won't have any cycles.
 void dfs(int curr, int parent) {
 	par[curr] = parent;
 	for(auto x: g[curr]) {
