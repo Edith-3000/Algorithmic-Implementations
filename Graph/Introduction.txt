@@ -24,6 +24,13 @@
 # 𝑪𝒐𝒎𝒑𝒍𝒆𝒕𝒆 𝒅𝒊𝒈𝒓𝒂𝒑𝒉: it is a directed graph in which every pair of distinct vertices is connected by a pair of
                      unique edges (one in each direction i.e. bi-directional edges).
 
+# 𝑺𝒊𝒎𝒑𝒍𝒆 𝒈𝒓𝒂𝒑𝒉: A graph which has neither self loops nor multiple edges(parallel edges.) i.e. where each edge 
+                 connects two distinct vertices and no two edges connects the same pair of vertices is called a simple graph. 
+# 𝑴𝒖𝒍𝒕𝒊𝒈𝒓𝒂𝒑𝒉: Any graph which contains some multiple edges is called a multigraph. In a multigraph, no self loops
+              are allowed.
+# 𝑷𝒔𝒆𝒖𝒅𝒐 𝒈𝒓𝒂𝒑𝒉: A graph in which self loops and multiple edges are allowed is called psuedograph.
+
+
 # In all over the section following are the acronyms used ⟶
   • UG = Undirected Graph
   • DG = Directed Graph

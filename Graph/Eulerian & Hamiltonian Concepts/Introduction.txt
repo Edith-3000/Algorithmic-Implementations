@@ -1,0 +1,78 @@
+# Reference 1: https://stackoverflow.com/questions/3269013/difference-between-hamiltonian-path-and-euler-path
+# Reference 2: https://courses.lumenlearning.com/wmopen-mathforliberalarts/chapter/introduction-euler-paths/
+# In Reference 2 very nice explanations are given.
+
+# NOTE: HERE EVERYTHING RELATED TO UNDIRECTED GRAPH IS BEING DISCUSSED, CONCEPT FOR DIRECTED GRAPHS ARE 
+        VERY MUSH SIMILAR & THINGS CAN BE ACCOMPLISHED WITH SLIGHT MODIFICATIONS ONLY.
+
+# Link to find if a DG is Eulerian or not: https://www.geeksforgeeks.org/euler-circuit-directed-graph/
+
+# 𝑬𝒖𝒍𝒆𝒓 𝒑𝒂𝒕𝒉: It is a path that passes through 𝒆𝒗𝒆𝒓𝒚 𝒆𝒅𝒈𝒆 exactly once. If it ends at the initial vertex 
+              then it is an 𝑬𝒖𝒍𝒆𝒓 𝒄𝒚𝒄𝒍𝒆/𝒄𝒊𝒓𝒄𝒖𝒊𝒕.
+              or we can say Euler cycle/circuit is a Euler path which starts & ends at the same vertex.
+
+# Therefore conditions for Euler Circuit --->
+  1. Start = End
+  2. Every edge must be visited exactly once.
+
+# In an Euler path you might pass through a vertex more than once.
+
+# 𝑬𝒖𝒍𝒆𝒓 𝑮𝒓𝒂𝒑𝒉: It is a graph having an Eulerian Circuit.
+# Therefore conditions for Euler Graph --->
+  1. It must have a Euler Circuit & all the 𝑬𝑫𝑮𝑬𝑺 must be present in a single component of the graph.
+  2. All the other components of the graph should not have any edge & hence should be of size 1 vertex only.
+
+# Finally in a more refined manner, conditions for Euler Graph --->
+  i. Start node = End node in the traversal.
+  ii. Every edge of the graph should be visited exactly once in the traversal.
+  Now point i & ii can be condensed in a single point i.e. 
+  1. All the vertices should have 𝑬𝑽𝑬𝑵 𝑫𝑬𝑮𝑹𝑬𝑬.
+  2. All the vertices with non zero degree must be present in a single component only, rest all the 
+     vertices should have degree = 0.
+
+# 𝑮𝒓𝒂𝒑𝒉 𝒘𝒊𝒕𝒉 𝑵𝑶 𝒆𝒅𝒈𝒆 𝒊𝒔 𝒄𝒐𝒏𝒔𝒊𝒅𝒆𝒓𝒆𝒅 𝒂 𝑬𝒖𝒍𝒆𝒓 𝑮𝒓𝒂𝒑𝒉.
+
+# 𝑺𝒆𝒎𝒊 𝑬𝒖𝒍𝒆𝒓𝒊𝒂𝒏 𝑮𝒓𝒂𝒑𝒉 conditions --->
+  1. Every edge is visited exactly once in the traversal.
+  2. But start vertex is 𝑵𝑶𝑻 𝑬𝑸𝑼𝑨𝑳 to end vertex.
+
+  or in a more refined manner, conditions for Semi Eulerian Graph --->
+  1. Exactly 2 vertices (the start & end vertex) must have 𝑶𝑫𝑫 𝑫𝑬𝑮𝑹𝑬𝑬.
+  2. All the vertices with non zero degree must be present in a single component only, rest all the 
+     vertices should have degree = 0.
+
+# How to find whether a given graph is Eulerian or not ?
+  The problem is same as following question. “Is it possible to draw a given graph without lifting pencil from 
+  the paper and without tracing any of the edges more than once”.
+
+# 𝑨𝒍𝒈𝒐𝒓𝒊𝒕𝒉𝒎 for finding whether a graph is Eulerian or Semi Eulerian or Non Eulerian --->
+  Step 1. Connectivity check ==> to check if all the edges are present in a single component or not
+          (to handle the case of multi component graph).
+          Now, find a node with degree > 0, 
+                    if no such node found --> Euler Graph, exit the algorithm.
+                    else: do DFS with that node & mark all nodes as visited in the component
+                          check if any node with degree > 0 is unvisited => if true then it is confirmed it 
+                                                                            is not Euler Graph
+                                                                            now move to Step 2.
+
+ If the graph passes Step 1, then we can't necessarily claim that it is a Euler Graph, so apply below step.
+ Step 2. Count the #nodes with odd degree using the adjacency list
+         if(count == 0) ==> Euler Graph
+         if(count == 2) ==> Semi Euler Graph
+         if(count > 2) ==> Non Euler Graph
+
+ # Time complexity of the above algorithm = O(|V| + |E|)
+
+# 𝑵𝑶𝑻𝑬: #𝒗𝒆𝒓𝒕𝒊𝒄𝒆𝒔 𝒘𝒊𝒕𝒉 𝒐𝒅𝒅 𝒅𝒆𝒈𝒓𝒆𝒆 𝒊𝒏 𝒂𝒏 𝑼𝒏𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝑮𝒓𝒂𝒑𝒉 𝒂𝒓𝒆 𝒂𝒍𝒘𝒂𝒚𝒔 𝒆𝒗𝒆𝒏.
+  Proof: https://math.stackexchange.com/questions/181833/proving-that-the-number-of-vertices-of-odd-degree-in-any-graph-g-is-even
+
+=================================================================================================================
+
+# 𝑯𝒂𝒎𝒊𝒍𝒕𝒐𝒏𝒊𝒂𝒏 𝑷𝒂𝒕𝒉: It is a path that passes through 𝒆𝒗𝒆𝒓𝒚 𝒗𝒆𝒓𝒕𝒆𝒙 exactly once (NOT every edge). 
+                     If it ends at the initial vertex then it is a 𝑯𝒂𝒎𝒊𝒍𝒕𝒐𝒏𝒊𝒂𝒏 𝒄𝒚𝒄𝒍𝒆/𝒄𝒊𝒓𝒄𝒖𝒊𝒕.
+                     or we can say Hamiltonian cycle visit every vertex in the graph exactly once as well as
+                     starting & ending at the same vertex (similar to the travelling salesman problem).
+                     As a result, all vertices are traversed exactly once & each edge will be traversed 
+                     AT MOST ONCE in Hamiltonian Cycle.
+
+# In a Hamiltonian path you may not pass through all edges.
