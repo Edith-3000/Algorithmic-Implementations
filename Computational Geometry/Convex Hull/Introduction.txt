@@ -1,0 +1,30 @@
+# Reference(s): https://brilliant.org/wiki/convex-hull/
+				https://cp-algorithms.com/geometry/grahams-scan-convex-hull.html
+				https://artofproblemsolving.com/wiki/index.php/Polygon
+
+# Visit above link(s) for definiton and all.
+
+# A convex polygon is defined as a polygon with all its interior angles less than 180°. 
+  This means that all the vertices of the polygon will point outwards, away from the interior of the shape. 
+  Think of it as a 'bulging' polygon. Note that a triangle (3-gon) is always convex.
+
+# A convex polygon is the opposite of a concave polygon.
+
+# Or we can also say that convex hull is the smallest convex polygon that contains all the given points.
+
+# A polygon is a closed planar figure consisting of straight line segments. 
+  There are two types of polygons: convex and concave.
+
+# A polygon can be regular or irregular. A polygon is regular if all sides are the same length and all angles 
+  are congruent.
+
+# In their most general form, polygons are an ordered set of vertices, {A₁, A₂, A₃ ... Aₙ}, n >= 3 with
+  edges {A₁A₂, A₂A₃, A₃A₄, ... AₙA₁} joining consecutive vertices. Most frequently, one deals with simple 
+  polygons in which no two edges are allowed to intersect. (In fact, the adjective "simple" is almost always
+  omitted, so the term "polygon" should be understood to mean "simple polygon" unless otherwise noted.)
+
+# A degenerate polygon is one in which some vertex lies on an edge joining two other vertices. 
+  This can happen in one of two ways: either the vertices A₍ᵢ₋₁₎, Aᵢ and A₍ᵢ₊₁₎ can be colinear or the vertices
+  Aᵢ and A₍ᵢ₊₁₎ can overlap (fail to be distinct). In either of these cases, our polygon of (n) vertices 
+  will appear to have (n - 1) or fewer -- it will have "degenerated" from an n-gon to an (n - 1)-gon. 
+  (In the case of triangles, this will result in either a line segment or a point.)
