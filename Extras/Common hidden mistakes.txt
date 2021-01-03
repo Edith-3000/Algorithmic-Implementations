@@ -27,3 +27,5 @@
 14. A vector isn't always of 𝒔𝒊𝒛𝒆 𝒏. 😁😁
 15. Make sure you aren't using 'if' instead of 'while' or 'for' instead of 'if'.
 16. Read question very carefullt, don't 𝑨𝑺𝑺𝑼𝑴𝑬 𝑨𝑵𝒀𝑻𝑯𝑰𝑵𝑮 𝑩𝒀 𝒀𝑶𝑼𝑹𝑺𝑬𝑳𝑭.
+17. While doing division always be extra careful that there might be a possibility that the divisor may be 0 
+    which may lead to Runtime Error or NaN.
