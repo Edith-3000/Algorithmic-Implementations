@@ -23,7 +23,7 @@
 vector<long long>primes; //to store all prime nos. from 1 to sqrt(R)
                         //in contiguous form
 
-vector<long long>primes_l_to _r; //to store all prime nos. from l to r
+vector<long long>primes_l_to_r; //to store all prime nos. from l to r
                                 //in contiguous form
 
 void sieve_of_eratosthenes(long long n)

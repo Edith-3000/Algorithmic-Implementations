@@ -8,4 +8,13 @@
   • by brute force and DP paradigms we will choose all the paths and proceed further,
   • but by greedy strategy we'll select the most optimal path at the current moment and then proceed further.
 
+# So DP considers all the choices, while Greedy also CONSIDERS all the choices BUT CHOOSES only ONE CHOICE 
+  to continue with.
+
+# Every Greedy solution can be solved using Dynamic programming.
+
+# For a problem that can be solved using DP and Greedy ==>
+  • O(memory) (DP) >= O(memory) (Greedy) 
+  • O(time) (DP)>= O(time) (Greedy)
+
 # For further explanation for the difference b/w Greedy and DP refer the pdf notes.
