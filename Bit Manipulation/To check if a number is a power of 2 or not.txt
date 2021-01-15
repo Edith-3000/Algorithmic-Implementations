@@ -1,0 +1,26 @@
+// Link: https://www.hackerearth.com/practice/basic-programming/bit-manipulation/basics-of-bit-manipulation/tutorial/
+
+// Approach 1 ( without using bit manipulation )
+
+bool isPowerOfTwo(int x)
+{
+    if(x == 0)
+        return false;
+    else
+    {
+         while(x % 2 == 0) x /= 2;
+         return (x == 1);
+    }
+}
+
+// Time complexity: O(log2(n)).
+
+/*******************************************************************************************************************/
+
+// Approach 2 ( by bit manipulation )
+
+bool isPowerOfTwo(int x)
+{
+    // x will check if x == 0 and !(x & (x - 1)) will check if x is a power of 2 or not
+    return (x && !(x & (x - 1)));
+}

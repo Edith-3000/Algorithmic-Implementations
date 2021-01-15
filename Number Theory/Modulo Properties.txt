@@ -2,3 +2,13 @@
 • (a - b) % m = ((a % m) - (b % m) + m) % m
 • (a * b) % m = ((a % m) * (b % m)) % m
 • (a / b) % m = ((a % m) * (b⁻¹ % m)) % m, where b⁻¹ = Multiplicative modulo inverse of b under modulo m
+
+============================================================================================================
+
+# Following one liners can be used for Modular arithmetic --->
+
+ll mod_add(ll a, ll b) { ll res = a + b; return (res >= mod ? res - mod : res); }
+ll mod_sub(ll a, ll b) { ll res = a - b; return (res < 0 ? res + mod : res); }
+ll mod_mul(ll a, ll b) { ll res = a * b; return (res >= mod ? res % mod : res); }
+ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0; ll res = 1; while(b) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
+ll mod_inv(ll a) { return mod_exp(a, X); } [X = Modulo under which inverse of a is to be calculated]
