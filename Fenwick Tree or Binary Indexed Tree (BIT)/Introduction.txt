@@ -1,6 +1,6 @@
 # References: https://codeforces.com/blog/entry/57292
-			  https://brilliant.org/wiki/fenwick-tree/
-			  https://cp-algorithms.com/data_structures/fenwick.html
+			        https://brilliant.org/wiki/fenwick-tree/
+			        https://cp-algorithms.com/data_structures/fenwick.html
 
 # A Fenwick tree or binary indexed tree is a data structure that helps compute prefix sums efficiently. 
   Computing prefix sums are often important in various other algorithms.
@@ -14,6 +14,13 @@
   • An example of an update would be this: "Increase the number indexed by x by v."
   
   A BIT can perform both of these operations in O(log N) time, and takes O(N) memory.
+
+# BIT[i] will store the answer for the range [l, r], 
+  where l = i - 2ᵖᵒˢ + 1 and r = i
+  Here pos = 0-based indexing of the 1ˢᵗ set bit in 'i'.
+  * Based on observations --->
+    1. For all odd indices 'i', BIT[i] will store the answer for the range [i, i]
+    2. 1. For all indices 'i' which are powers of 2, BIT[i] will store the answer for the range [1, i]
 
 # A Segment Tree can also perform both of the operations in O(Log N) time, but 𝒄𝒐𝒎𝒑𝒂𝒓𝒆𝒅 𝒘𝒊𝒕𝒉 𝑺𝒆𝒈𝒎𝒆𝒏𝒕 𝑻𝒓𝒆𝒆,
   𝑩𝒊𝒏𝒂𝒓𝒚 𝑰𝒏𝒅𝒆𝒙𝒆𝒅 𝑻𝒓𝒆𝒆 𝒓𝒆𝒒𝒖𝒊𝒓𝒆𝒔 𝒍𝒆𝒔𝒔 𝒔𝒑𝒂𝒄𝒆 𝒂𝒏𝒅 𝒊𝒔 𝒆𝒂𝒔𝒊𝒆𝒓 𝒕𝒐 𝒊𝒎𝒑𝒍𝒆𝒎𝒆𝒏𝒕.
