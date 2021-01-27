@@ -11,4 +11,8 @@ ll mod_add(ll a, ll b) { ll res = a + b; return (res >= mod ? res - mod : res); 
 ll mod_sub(ll a, ll b) { ll res = a - b; return (res < 0 ? res + mod : res); }
 ll mod_mul(ll a, ll b) { ll res = a * b; return (res >= mod ? res % mod : res); }
 ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0; ll res = 1; while(b) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
-ll mod_inv(ll a) { return mod_exp(a, X); } [X = Modulo under which inverse of a is to be calculated]
+ll mod_inv(ll a) { return mod_exp(a, X - 2); } [X = Modulo under which inverse of a is to be calculated]
+
+* Note the function mod_inv() will give correct answer onlt when 'X' is prime.
+  For more info see "Method 3" --->
+  https://www.geeksforgeeks.org/multiplicative-inverse-under-modulo-m/#:~:text=To%20find%20multiplicative%20inverse%20of,value%20of%20gcd%20as%201.&text=We%20can%20remove%20the%20second,0%20for%20an%20integer%20y.
