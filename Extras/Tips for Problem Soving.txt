@@ -4,3 +4,6 @@
 2. Try to frame any Mathematical Eqⁿ, if suitable.
 3. Although this may not work always in CP, but try to use meaningful variable names, sometimes it
    minimizes confusion.
+4. Whenever you are asked to find the best subarray or subsequence & the problem involves DP, then you should
+   define your DP in such a way that dp[i] store the best subarray or subsequence that ends at the iᵗʰ element.
+   ex. problem: https://codeforces.com/contest/1155/problem/D
