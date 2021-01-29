@@ -1,0 +1,15 @@
+// References: https://www.geeksforgeeks.org/graph-coloring-applications/
+//             https://www.techiedelight.com/greedy-coloring-graph/
+
+# 𝑽𝒆𝒓𝒕𝒆𝒙 𝒄𝒐𝒍𝒐𝒓𝒊𝒏𝒈: It is the most common graph coloring problem. The problem is, given m colors, find a way of 
+                   coloring the vertices of a graph such that no two adjacent vertices are colored using same 
+                   color.
+
+# 𝑪𝒉𝒓𝒐𝒎𝒂𝒕𝒊𝒄 𝑵𝒖𝒎𝒃𝒆𝒓: The smallest number of colors needed to color a graph G is called its chromatic number. 
+# The problem to find chromatic number of a given graph is NP Complete.
+
+# 𝒌-𝒄𝒐𝒍𝒐𝒓𝒂𝒃𝒍𝒆 𝒈𝒓𝒂𝒑𝒉: A coloring using at most k colors is called a (proper) k-coloring and graph that can be 
+                     assigned a (proper) k-coloring is k colorable.
+
+# 𝒌-𝒄𝒉𝒓𝒐𝒎𝒂𝒕𝒊𝒄 𝒈𝒓𝒂𝒑𝒉: The smallest number of colors needed to color a graph G is called its chromatic number 
+                      and a graph that is k-chromatic if its chromatic number is exactly k.
