@@ -79,3 +79,12 @@ long long lcm_by_basic_euclid(long long a, long long b)
   Best case of Basic Euclidean Algorithm: when a%b==0 or b%a==0
   Time Complexity in best case: O(1)
 */ 
+
+=================================================================================================================
+
+# EXTRAS --->
+  * GCD(a, b) = GCD(|a|, |b|) for any integers a and b, at least one of which is nonzero.
+    For eg. GCD(18, −12) = GCD(−18, 12) = GCD(−18, −12) = GCD(18, 12) = 6.
+    6 divides all of 18, 12, −12, and −18; no greater integer divides all of those values.
+
+    Source: https://www.quora.com/What-is-the-GCD-of-a-positive-and-a-negative-number/answer/Howard-Ludwig
