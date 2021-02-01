@@ -1,3 +1,6 @@
 # Number of numbers in the range [X, Y] divisible by Z are ==>
   (Y/Z) - (X/Z) , if X % Z != 0
   (Y/Z) - (X/Z) + 1 , if X % Z == 0
+
+# ceil(n, k) = floor(n + k - 1, k)
+  Sample Problem: https://codeforces.com/contest/1476/problem/A
