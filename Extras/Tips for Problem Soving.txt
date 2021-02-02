@@ -10,3 +10,5 @@
 5. In some problems doing generalization & observation helps a lot to reach the solution.
    ex. problem: https://codeforces.com/contest/1476/problem/D
 6. Some mathematical equations and prof by contradiction also helps.
+7. Sometimes even though the final answer is well fitted in "int" and you have used "long long" may give "Runtime
+   Error" or "Time Limit Exceeded".
