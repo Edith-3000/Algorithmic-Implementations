@@ -1,9 +1,9 @@
-// Problem: Grid Paths
+// Problem: Removing Digits
 // Contest: CSES - CSES Problem Set
-// URL: https://cses.fi/problemset/task/1638
+// URL: https://cses.fi/problemset/task/1637
 // Memory Limit: 512 MB
 // Time Limit: 1000 ms
-// Parsed on: 03-02-2021 00:23:44 IST (UTC+05:30)
+// Parsed on: 03-02-2021 09:14:09 IST (UTC+05:30)
 // Author: Kapil Choudhary
 // ********************************************************************
 // कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
@@ -41,43 +41,22 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
-int dp[1000][1000];
-char a[1000][1000];
-int n;
-
-bool is_valid(int x, int y) {
-	return x >= 0 && x < n && y >= 0 && y < n;
-}
-
-int driver(int i, int j) {
-	// base case(s)
-	if(a[i][j] == '*') return 0;
-	if(i == n - 1 and j == n - 1) {
-		return a[i][j] == '.' ? 1 : 0;
-	}
-	
-	int &res = dp[i][j];
-	if(res != -1) return res;
-	
-	res = 0;
-	int x1 = i + 1, y1 = j;
-	if(is_valid(x1, y1) and a[x1][y1] == '.') res = (res % mod + driver(x1, y1) % mod) % mod;
-	
-	int x2 = i, y2 = j + 1;
-	if(is_valid(x2, y2) and a[x2][y2] == '.') res = (res % mod + driver(x2, y2) % mod) % mod;
-	
-	return res;
-}
-
 void solve()
 {
-  	cin >> n;
-  	for(int i = 0; i < n; i++) {
-  		for(int j = 0; j < n; j++) cin >> a[i][j];
+  	int n; cin >> n;
+  	int dp[n+1];
+  	dp[0] = 0;
+  	for(int num = 1; num <= n; num++) {
+  		dp[num] = INF;
+  		int tmp = num;
+  		while(tmp > 0) {
+  			int dig = tmp % 10;
+  			tmp /= 10;
+  			if(num - dig >= 0) dp[num] = min(dp[num], 1 + dp[num - dig]);
+  		}
   	}
   	
-  	memset(dp, -1, sizeof dp);
-  	cout << driver(0, 0);
+  	cout << dp[n] << "\n";
 }
 
 int main()
