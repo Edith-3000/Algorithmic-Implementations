@@ -1,15 +1,9 @@
-// Reference(s): https://www.youtube.com/watch?v=lFBpH_Mt_LI
-//               https://www.youtube.com/watch?v=CvPIX0HBZbQ
-//               https://www.youtube.com/watch?v=i7xZ4Yd_jN8
-
-/***************************************************************************************************************/
-
-// Problem: Pongal Bunk
-// Contest: CodeChef - Practice(Extcontest)
-// URL: https://www.codechef.com/problems/COWA19B
+// Problem: B. Ternary String
+// Contest: Codeforces - Educational Codeforces Round 87 (Rated for Div. 2)
+// URL: https://codeforces.com/problemset/problem/1354/B
 // Memory Limit: 256 MB
-// Time Limit: 1000 ms
-// Parsed on: 04-02-2021 09:09:32 IST (UTC+05:30)
+// Time Limit: 2000 ms
+// Parsed on: 04-02-2021 22:54:37 IST (UTC+05:30)
 // Author: Kapil Choudhary
 // ********************************************************************
 // कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
@@ -46,27 +40,54 @@ int rng(int lim) {
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
+string s;
+
+// This function will return true if there exists a subarray of length
+// exactly 'k' such that there is atleast one occurrence of each of the
+// elements 1, 2 and 3.
+// This func. is monotonic: bcoz if there exists such subarray as claimed
+// by this func. then there will surely exist such a subarray of size (k + 1) also
+bool is_valid(int k) {
+	int cnt[4] = {0};
+	for(int i = 0; i < (k - 1); i++) {
+		int ele = s[i] - '0';
+		cnt[ele]++;
+	}
+	
+	for(int i = k - 1; i < (int)s.length(); i++) {
+		int ele = s[i] - '0';
+		cnt[ele]++;
+		
+		if(cnt[1] > 0 and cnt[2] > 0 and cnt[3] > 0) return true;
+		
+		ele = s[i - k + 1] - '0';
+		cnt[ele]--;
+	}
+	
+	return false;
+}
+
+int binsearch() {
+	int res = INF;
+	int L = 3, H = s.length();
+	
+	while(L <= H) {
+		int mid = L + ((H - L) >> 1);
+		if(is_valid(mid)) {
+			res = min(res, mid);
+			H = mid - 1;
+		}
+		
+		else L = mid + 1;
+	}
+	
+	return (res == INF) ? 0 : res;
+}
 
 void solve()
 {
-  	int n, q; cin >> n >> q;
-  	int a[n+2] = {0}, b[n+2] = {0};
-  	while(q--) {
-  		int l, r; cin >> l >> r;
-  		a[l] += 1; a[r+1] -= 1;
-  		b[r+1] -= r - l + 1;
-  	} 
-  	
-  	for(int i = 1; i <= n; i++) a[i] += a[i-1];
-  	for(int i = 1; i <= n; i++) a[i] += a[i-1];
-  	for(int i = 1; i <= n; i++) b[i] += b[i-1];
-  	for(int i = 1; i <= n; i++) b[i] += a[i];
-  	
-  	int m; cin >> m;
-  	while(m--) {
-  		int idx; cin >> idx;
-  		cout << b[idx] << "\n";
-  	}
+  	cin >> s;
+  	cout << binsearch() << "\n";
 }
 
 int main()
@@ -80,7 +101,7 @@ int main()
     // #endif
 
     int t = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) {
       solve();
     }

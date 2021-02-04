@@ -1,15 +1,9 @@
-// Reference(s): https://www.youtube.com/watch?v=lFBpH_Mt_LI
-//               https://www.youtube.com/watch?v=CvPIX0HBZbQ
-//               https://www.youtube.com/watch?v=i7xZ4Yd_jN8
-
-/***************************************************************************************************************/
-
-// Problem: Pongal Bunk
-// Contest: CodeChef - Practice(Extcontest)
-// URL: https://www.codechef.com/problems/COWA19B
-// Memory Limit: 256 MB
+// Problem: Two Sets II
+// Contest: CSES - CSES Problem Set
+// URL: https://cses.fi/problemset/task/1093
+// Memory Limit: 512 MB
 // Time Limit: 1000 ms
-// Parsed on: 04-02-2021 09:09:32 IST (UTC+05:30)
+// Parsed on: 04-02-2021 11:21:09 IST (UTC+05:30)
 // Author: Kapil Choudhary
 // ********************************************************************
 // कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
@@ -47,26 +41,45 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
+ll mod_expo(ll a, ll b) {
+	a %= mod;
+	if(a == 0) return 0;
+	ll res = 1;
+	while(b > 0) {
+		if(b & 1) res = (res * a) % mod;
+		a = (a * a) % mod;
+		b >>= 1;
+	}
+	
+	return res;
+}
+
+// to calculate modulo multiplicative inverse of 
+// a number 'n' under modulo 'mod'
+ll mod_inv(ll n) {
+	return mod_expo(n, mod - 2) % mod;
+}
+
 void solve()
 {
-  	int n, q; cin >> n >> q;
-  	int a[n+2] = {0}, b[n+2] = {0};
-  	while(q--) {
-  		int l, r; cin >> l >> r;
-  		a[l] += 1; a[r+1] -= 1;
-  		b[r+1] -= r - l + 1;
-  	} 
+  	ll n; cin >> n;
+  	if((n * (n + 1)) % 4 != 0) { cout << 0 << "\n"; return; }
   	
-  	for(int i = 1; i <= n; i++) a[i] += a[i-1];
-  	for(int i = 1; i <= n; i++) a[i] += a[i-1];
-  	for(int i = 1; i <= n; i++) b[i] += b[i-1];
-  	for(int i = 1; i <= n; i++) b[i] += a[i];
+  	ll dp[n+1][n*(n+1)/4 + 1];
+  	dp[0][0] = 1;
+  	for(ll x = 1; x <= (n * (n + 1))/4; x++) dp[0][x] = 0;
   	
-  	int m; cin >> m;
-  	while(m--) {
-  		int idx; cin >> idx;
-  		cout << b[idx] << "\n";
+  	for(ll i = 1; i <= n; i++) {
+  		for(ll x = 0; x <= (n * (n + 1))/4; x++) {
+  			dp[i][x] = (((x < i) ? 0 : dp[i-1][x-i]) + dp[i-1][x]) % mod;
+  		}
   	}
+  	
+    // we have to divide the result by 2 but as we are dealing
+    // with modular arithmetic we must multiply the result
+    // by mod_inv of 2 under mod
+  	ll res = (dp[n][n*(n+1)/4] * mod_inv(2)) % mod;
+  	cout << res << "\n";
 }
 
 int main()

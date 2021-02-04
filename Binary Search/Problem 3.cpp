@@ -1,15 +1,13 @@
-// Reference(s): https://www.youtube.com/watch?v=lFBpH_Mt_LI
-//               https://www.youtube.com/watch?v=CvPIX0HBZbQ
-//               https://www.youtube.com/watch?v=i7xZ4Yd_jN8
+// Reference(s): https://codeforces.com/blog/entry/79107
+//				 https://www.youtube.com/watch?v=OWhmH4W_CJs&list=PL2q4fbVm1Ik5Z3xcF-D0OgHv7QOvlokSm&index=2
+/**************************************************************************************************************/
 
-/***************************************************************************************************************/
-
-// Problem: Pongal Bunk
-// Contest: CodeChef - Practice(Extcontest)
-// URL: https://www.codechef.com/problems/COWA19B
+// Problem: D. Odd-Even Subsequence
+// Contest: Codeforces - Codeforces Round #651 (Div. 2)
+// URL: https://codeforces.com/contest/1370/problem/D
 // Memory Limit: 256 MB
-// Time Limit: 1000 ms
-// Parsed on: 04-02-2021 09:09:32 IST (UTC+05:30)
+// Time Limit: 2000 ms
+// Parsed on: 04-02-2021 20:02:29 IST (UTC+05:30)
 // Author: Kapil Choudhary
 // ********************************************************************
 // कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
@@ -47,26 +45,48 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
+int a[200001];
+int n, k;
+
+bool chk_even(int val) {
+	int cnt = 0;
+	for(int i = 1; i <= n; i++) {
+		if(cnt % 2 == 0) cnt++;
+		else if(a[i] <= val) cnt++;
+	}
+	
+	return cnt >= k;
+}
+
+bool chk_odd(int val) {
+	int cnt = 0;
+	for(int i = 1; i <= n; i++) {
+		if(cnt % 2 == 0) {
+			if(a[i] <= val) cnt++;
+		}
+		
+		else cnt++;
+	}
+	
+	return cnt >= k;
+}
+
+int binsearch(int L, int H) {
+	while(L < H) {
+		int mid = L + ((H - L) >> 1);
+		if(chk_odd(mid) || chk_even(mid)) H = mid;
+		else L = mid + 1;
+	}
+	
+	return L;
+}
+
 void solve()
 {
-  	int n, q; cin >> n >> q;
-  	int a[n+2] = {0}, b[n+2] = {0};
-  	while(q--) {
-  		int l, r; cin >> l >> r;
-  		a[l] += 1; a[r+1] -= 1;
-  		b[r+1] -= r - l + 1;
-  	} 
+  	cin >> n >> k;
+  	for(int i = 1; i <= n; i++) cin >> a[i];
   	
-  	for(int i = 1; i <= n; i++) a[i] += a[i-1];
-  	for(int i = 1; i <= n; i++) a[i] += a[i-1];
-  	for(int i = 1; i <= n; i++) b[i] += b[i-1];
-  	for(int i = 1; i <= n; i++) b[i] += a[i];
-  	
-  	int m; cin >> m;
-  	while(m--) {
-  		int idx; cin >> idx;
-  		cout << b[idx] << "\n";
-  	}
+  	cout << binsearch(1, 1e9);
 }
 
 int main()
