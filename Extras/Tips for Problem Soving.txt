@@ -12,3 +12,5 @@
 6. Some mathematical equations and prof by contradiction also helps.
 7. Sometimes even though the final answer is well fitted in "int" and you have used "long long" may give "Runtime
    Error" or "Time Limit Exceeded".
+8. At times it becomes easier if you can draw out somee conclusions from the final answer which may help in getting
+   to the result. For eg. it can be done in questions related to strings.
