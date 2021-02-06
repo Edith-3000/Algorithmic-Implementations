@@ -1,16 +1,26 @@
 # Following are some line of thoughts to solve algorithmic problems ------>
 
 1. You can find out all the possible conditions for the Problem Statement given.
+
 2. Try to frame any Mathematical Eqⁿ, if suitable.
+
 3. Although this may not work always in CP, but try to use meaningful variable names, sometimes it
    minimizes confusion.
+
 4. Whenever you are asked to find the best subarray or subsequence & the problem involves DP, then you should
    define your DP in such a way that dp[i] store the best subarray or subsequence that ends at the iᵗʰ element.
    ex. problem: https://codeforces.com/contest/1155/problem/D
+
 5. In some problems doing generalization & observation helps a lot to reach the solution.
    ex. problem: https://codeforces.com/contest/1476/problem/D
+
 6. Some mathematical equations and prof by contradiction also helps.
+
 7. Sometimes even though the final answer is well fitted in "int" and you have used "long long" may give "Runtime
    Error" or "Time Limit Exceeded".
+
 8. At times it becomes easier if you can draw out somee conclusions from the final answer which may help in getting
    to the result. For eg. it can be done in questions related to strings.
+
+9. Whenever we are trying to solve a problem using DP on Trees approach, it is advisable to try root the tree at
+   any arbitrary node. 
