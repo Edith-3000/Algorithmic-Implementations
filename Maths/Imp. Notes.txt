@@ -4,3 +4,6 @@
 
 # ceil(n, k) = floor(n + k - 1, k)
   Sample Problem: https://codeforces.com/contest/1476/problem/A
+
+# Sum of 2 numbers 'a' and 'b' will be divisible by 'k' ==>
+  iff sum of their remainders is divisible by 'k' i.e. ((a % k) + (b % k)) % k = 0.

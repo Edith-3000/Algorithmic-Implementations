@@ -29,3 +29,13 @@
 16. Read question very carefullt, don't 𝑨𝑺𝑺𝑼𝑴𝑬 𝑨𝑵𝒀𝑻𝑯𝑰𝑵𝑮 𝑩𝒀 𝒀𝑶𝑼𝑹𝑺𝑬𝑳𝑭.
 17. While doing division always be extra careful that there might be a possibility that the divisor may be 0 
     which may lead to Runtime Error or NaN.
+
+18. std::unordered_map<> might give you "TLE" in some cases whereas std::map<> might not, this might be possible
+    due to collisions in std::unordered_map<>.
+    Unordered map might take O(n) as well in some cases. 
+    For eg. see these 2 submissions for the same problem: 
+    https://codeforces.com/contest/1374/submission/106730383
+    https://codeforces.com/contest/1374/submission/106730707
+
+    Same might be true for std::map<> also.
+    So use them nicely.
