@@ -24,3 +24,6 @@
 
 9. Whenever we are trying to solve a problem using DP on Trees approach, it is advisable to try root the tree at
    any arbitrary node. 
+
+10. When you are dealing with a "Number Theory" problem try to think out loud in terms of prime numbers, it doesn't
+    always helps but few times it does.

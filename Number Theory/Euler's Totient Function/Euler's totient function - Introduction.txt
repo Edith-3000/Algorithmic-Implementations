@@ -1,0 +1,37 @@
+/*# Euler's totient function (ETF), also known as phi-function ϕ(n), counts the number of integers between 1 and n 
+    inclusive, which are coprime to n. 
+  # Two numbers are coprime if their greatest common divisor equals 1 (1 is considered to be coprime to any  
+    number). 
+    OR
+    Two numbers are coprime if they do not share any prime divisor (when the number are prime factorized).
+
+  # n = p₁ᵏ¹ * p₂ᵏ² *..........* pₖᵏⁿ, i.e. the prime factorization of n, then 
+    ϕ(n) = n * (1 − 1/p₁) * (1 − 1/p₂) * (1 - 1/p₃)........(1 − 1/pₖ)
+         = n * ((p₁ - 1)/p₁) * ((p₂ - 1)/p₂) * ............((pₙ - 1)/pₙ)
+
+    Derivation of this formula can be seen at: 
+    https://www.youtube.com/watch?v=jtmi7Fj7fgE
+
+  # Primes and ETF ==>
+    ϕ(2) = 1
+    ϕ(3) = 2
+    ϕ(5) = 4
+    ϕ(7) = 7
+    ...........so on
+
+    i.e. ϕ(P) = P - 1, where P is a prime number.
+
+    Now, ===>
+    ϕ(Pˣ) = Pˣ - #numbers which are not co-prime with P(from 1 to Pˣ)
+          = Pˣ - #multiples of P(from 1 to Pˣ)
+          = Pˣ - (Pˣ / P)
+          = P⁽ˣ⁻¹⁾ * (P - 1)
+  	here x >= 1
+
+  #  A function f(n) is called multiplicative fⁿ iff ==>
+
+     f(N * M) = f(N) * f(M), where gcd(N, M) = 1 i.e. N & M are coprimes
+
+     For eg. ETF, Finding #divisors of a number, etc. are multiplicative fⁿs.
+
+*/

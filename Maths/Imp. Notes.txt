@@ -7,3 +7,7 @@
 
 # Sum of 2 numbers 'a' and 'b' will be divisible by 'k' ==>
   iff sum of their remainders is divisible by 'k' i.e. ((a % k) + (b % k)) % k = 0.
+
+# Upper bound on the #divisors of a natural number n can be taken as O(n ^ 1/3), although it's not completely
+  true.
+  Visit for more info: https://codeforces.com/blog/entry/14463
