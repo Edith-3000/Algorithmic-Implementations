@@ -1,6 +1,6 @@
 # The only difference b/w Nim Game and a game to which Sprague Grundy Theorem is applied is that:
   in Nim game there is no restriction on the #stones/coins a player can take any during her/his turn,
-  while Sprague Grundy Theorem is used for restricted Nim Game i.e. a player have some some sort of
+  while Sprague Grundy Theorem is used for restricted Nim Game i.e. a player have some sort of
   restriction on the #stones/coins s(he) can take any during the turn.
 
 # We can also say Nim Game is a special case of Sprague Grundy Theorem.

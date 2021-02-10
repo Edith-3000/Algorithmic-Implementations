@@ -31,3 +31,8 @@ int cal_grundy_num(int n)
 
 	return cal_mex(s);
 }
+
+/**************************************************************************************************************/
+
+# A Dynamic Programming (Memoization-based) approach to calculate Grundy Number of a Game
+  Visit: https://ide.geeksforgeeks.org/cTn5HI
