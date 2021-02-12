@@ -39,3 +39,8 @@
 
     Same might be true for std::map<> also.
     So use them nicely.
+
+19. For "Multidimensional ARRAYS (i.e. 2D or higher dimensionsl)" their sizes MUST be known at the compile time,
+    otherwise it will always give wrong or absurd answer or compile time error.
+    Also for 1D arrays it is better to specify their size beforehand as it gives error sometime and sometimes 
+    do not, so be on the safe side :)

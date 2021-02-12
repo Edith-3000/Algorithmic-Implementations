@@ -15,3 +15,7 @@
 # For any integer k and positive integer n, let k mod n denote the remainder when k is divided by n. 
   More formally, r = k mod n is the smallest non-negative integer such that (k − r) is divisible by n. 
   It always holds that 0 ≤ k mod n ≤ n − 1.
+
+# If m and n are nonzero integers, and more generally, nonzero elements of an integral domain, it is said that 
+  m divides n, m is a divisor of n or n is a multiple of m, and this is written as m | n,
+  if there exists an integer k, or an element k of the integral domain, such that m * k = n.
