@@ -27,3 +27,18 @@
 
 10. When you are dealing with a "Number Theory" problem try to think out loud in terms of prime numbers, it doesn't
     always helps but few times it does.
+
+11. Final checks before submit:
+    1. Array size or integer overflow, like uninitialised 0 index.
+    2. Think twice,code once. Check all possible counter test case.
+    3. Be careful about corner casees like n = 1 ? or k = 1 ? something about 0 ?
+    4. Avoid stupid mistake, like time complexity (t/m) ? or precision error ? or submit same code twice ?
+    5. If got WA than remember that you are missing something common.
+    6. Minus mod ans = (ans - k + mod) % mod;
+ 
+12. IF WA: 
+    1. Corner case, like n = 1 ? k = 1 ? or something about 0 ?
+    2. Check code (avoid stupid mistake)
+    3. Read the statement again (if there any missing point).
+    4. Check the idea (check all possible counter test cases again.)
+    5. Don't waste too much time, move to next problem. 
