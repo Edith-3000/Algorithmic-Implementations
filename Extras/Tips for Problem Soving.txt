@@ -42,3 +42,10 @@
     3. Read the statement again (if there any missing point).
     4. Check the idea (check all possible counter test cases again.)
     5. Don't waste too much time, move to next problem. 
+
+13. TIME AND MEMORY LIMITS
+    1. 1 second is approximately 10^8 operations (c++)
+    2. 10^6 Elements of 32 Bit (4 bytes) is equal to 4 MB
+    3. 62x10^6 Elements of 32 Bit (4 bytes) is equal to 250 MB
+    4. 10^6 Elements of 64 Bits (8 bytes) is equal to 8 MB
+    5. 31x10^6 Elements of 64 Bit (8 bytes) is equal to 250 MB

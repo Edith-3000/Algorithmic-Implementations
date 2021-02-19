@@ -1,0 +1,4 @@
+// Source: https://www.geeksforgeeks.org/count-distinct-subsequences/
+
+# As with every character we have the choice whether to include it or not, therefore the answer = 2^n.
+# Or we can also say, the count is equal to nC0 + nC1 + nC2 + ... + nCn = 2^n.

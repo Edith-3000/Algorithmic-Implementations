@@ -1,0 +1,2 @@
+# Star graph is the only connected graphs in which at most one vertex has degree greater than one.
+  https://en.wikipedia.org/wiki/Star_(graph_theory)
