@@ -36,6 +36,11 @@
    # Unlike many other graph algorithms, for Bellman-Ford algorithm, it is more convenient to represent the 
      graph using a single list of all edges (instead of n lists of edges - edges from each vertex) i.e. 
      edge list representation.
+
+   # Bellman-Ford algorithm returns SSSP (Single Source Shortest Path) in ((|V| - 1) x |E|) operations,
+     when no negative cycles present in graph.
+   # Bellman-Ford algorithm resolves negative cycle SSSP (Single Source Shortest Path) in (2 x (|V| - 1) x |E|) 
+     operations, when negative cycles are present in graph.
 */ 
 
 #include<bits/stdc++.h>
@@ -117,7 +122,7 @@ class Graph
         if((dist[u] != INT_MAX) && ((dist[u] + w) < dist[v])){
           cout<<"Negative Weight Cycle Present in Input Graph"<<"\n";
           // exit_success
-              exit(0); 
+          exit(0); 
         }
       }
       

@@ -1,0 +1,3 @@
+# Use BFS when no weights are associated with edges in the graph.
+  Use Dijkstra when +ve weights are associated with edges in the graph.
+  Use Bellman-Ford when -ve weights and -ve cycles associated with edges in the graph.
