@@ -11,6 +11,8 @@
 // Kosaraju's is an easy-to-implement algorithm based on two series of depth first search, and working 
 // for O(|V| + |E|) time.
 
+// Ref: https://cp-algorithms.com/graph/strongly-connected-components.html
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -99,7 +101,7 @@ void solve()
   	int col = 1;
   	
   	// start from the last vertex of order vector
-  	for(int i = n; i >= 1; i--) {
+  	for(int i = n - 1; i >= 0; i--) {
   		if(!vis[order[i]]) {
   			dfs_reverse(order[i], col);
   			col++;
@@ -154,16 +156,15 @@ SCC in the DG = 2
 */
 
 // Time complexity: O(|V| + |E|)
-// NOTE ---> It is worth mentioning the fact that the order vector represents reversed topological sort of
-//           of the original graph.
+// NOTE ---> It is worth mentioning the fact that the order vector represents reversed topological sort 
+//           (vertices' sort by exit time) of the vertices of condensation graph.
+//           For more details of this statement, visit: https://cp-algorithms.com/graph/strongly-connected-components.html
 
 
 /**********************************************************************************************************/
 
 // Another implementation to store the vertices of same SCC together
 // Below code is exactly same as above except the use of in_comp[] instead of color vector
-
-/*
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -203,8 +204,8 @@ vi vis(N); // visited array
 // in_comp[i] stores all the vertices in the ith component
 vi in_comp[N]; 
 
-// if there exists a path from vertex 'x' to 'y' of the original 
-// graph then in the order vector 'y' must come before 'x'
+// if there exists a path from vertex 'x' to 'y' in the DFS tree generated
+// of the original graph then in the order vector 'y' must come before 'x'
 vi order;
 
 void dfs(int curr) {
@@ -226,7 +227,7 @@ void dfs_reverse(int curr, int col) {
 
 void solve()
 {
-	// n = #vertices, m = #edges
+	  // n = #vertices, m = #edges
   	int n, m; cin >> n >> m;
   	
   	// vertices are 1-based indexed
@@ -311,4 +312,11 @@ Sample o/p --->
 Vertices in the same SCC = 1 3 2 
 Vertices in the same SCC = 4 6 5 
 
+*/
+
+/* # Code for finding out all the vertices of all SSC can also be found here:
+     https://cp-algorithms.com/graph/strongly-connected-components.html
+
+   # Another interesting question on this topic: 
+     https://cses.fi/problemset/task/1682/
 */

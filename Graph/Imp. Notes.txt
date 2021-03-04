@@ -1,2 +1,9 @@
 # Star graph is the only connected graphs in which at most one vertex has degree greater than one.
   https://en.wikipedia.org/wiki/Star_(graph_theory)
+
+# Dijkstra's algorithm works when distances/costs are monotonic i.e. ALL the edges are +ve, or
+  ALL the edges are -ve. But remember, there must be absolutely no NEGATIVE CYCLES.
+
+# Functional Graph: Directed graph in which every vertex has exactly one outgoing edge.
+                    This is also commonly referred to as a successor graph.
+  https://usaco.guide/silver/func-graphs?lang=cpp
