@@ -102,7 +102,7 @@ long long kadaneAlgo(vector<long long> &v)
 
 long long kadaneAlgo(vector<long long> &v)
 {
-	long long res= *max_element(v.begin(), v.end);
+	long long res= *max_element(v.begin(), v.end());
 	if(res<=0) return res;
 
 	long long n=v.size();
