@@ -63,3 +63,5 @@
     otherwise it will always give wrong or absurd answer or compile time error.
     Also for 1D arrays it is better to specify their size beforehand as it gives error sometime and sometimes 
     do not, so be on the safe side :)
+
+20. Beware of conflicting variable names, this may lead to many a times either TLE or RE.
