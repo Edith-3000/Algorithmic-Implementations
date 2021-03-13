@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// tl, tr are 0-based indexed
 void build_seg_tree(vector<int> &v, vector<int> &t, int tl, int tr, int ind)
 {
 	// base case
@@ -20,6 +21,8 @@ void build_seg_tree(vector<int> &v, vector<int> &t, int tl, int tr, int ind)
 	return;
 }
 
+// The overlaps are of [tl, tr] with respect to [ql, qr]
+// tl, tr, ql, qr are 0-based indexed
 int query_seg_tree(vector<int> &t, int tl, int tr, int ql, int qr, int ind)
 {
 	// base cases

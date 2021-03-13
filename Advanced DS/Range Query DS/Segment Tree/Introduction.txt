@@ -4,6 +4,9 @@
 
 # A Segment Tree is a full binary tree data structure that allows answering range queries over an array 
   effectively, while still being flexible enough to allow modifying the array.
+
+# It is a data structure based on divide and conquer strategy.
+
 # It is used for storing the intervals or segments. Each node in the Segment Tree represents an interval.
 
 # In general a Segment Tree is a very flexible data structure, and a huge number of problems can be solved with it.

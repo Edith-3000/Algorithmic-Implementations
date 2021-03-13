@@ -1,4 +1,4 @@
-/* # A Segment Tree is buld up in a bottom-up manner
+/* # A Segment Tree is build up in a bottom-up manner
    # It can be represented using an array like data strucutre.
 */
 
@@ -10,6 +10,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 
+// t[ind] is resposnible for storing the result of the segment v[tl......tr]
 void build_seg_tree(vector<int> &v, vector<int> &t, int tl, int tr, int ind)
 {
 	// base case
@@ -48,7 +49,7 @@ int main()
     
     // underlying vector used for representing segment tree in 
     // linear space. An array of size n can have approx. around
-    // (4 * n + 1) nodes in the corresponding sement tree
+    // (4 * n + 1) nodes in the corresponding segment tree
     vector<int> t(4 * n + 1);
     
     // ind = the index of the current vertex (starting from 1 

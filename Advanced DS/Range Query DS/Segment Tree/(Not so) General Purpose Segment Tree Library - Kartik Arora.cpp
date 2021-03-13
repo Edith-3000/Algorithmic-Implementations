@@ -11,6 +11,34 @@
 
 /*****************************************************************************************************************/
 
+/*
+
+1. include SegmentTree.h
+
+2. to construct a segment tree you need to specify the following:
+   a. The datatype of array for which the tree is being constructed.
+   b. an array or vector for which the tree is to be constructed.
+   c. a value that can be used to fill the extra nodes of the tree.
+      this value is the identity value such that combine(something, value) = something
+   d. a function combine that specifies how the result of left and right child of a node
+      should be used to generate the value of current node.
+
+3. Example usage:
+   int small(int x,int y){return min(x,y);}
+   SegmentTree < int > rangeMinQueries(dataVector,INT_MAX,small);
+
+   int sum(int x,int y){return x+y;}
+   SegmentTree < int > rangeSumQueries(dataVector,0,sum);
+
+   long long product(long long x,long long y){return x*y;}
+   SegmentTree < long long > rangeProductQueries(dataVector,1,product);
+
+# NOTE: * THE QUERY & UPDATE INDICES ARE 0-BASED INDEXED IN THIS LIBRARY.
+        * THE "update()" Fn. SETS THE ELEMENT AT INDEX "idx" TO "val", THEREFORE THE FINAL VALUE WHICH
+          IS TO BE STORED AT THE INDEX "idx" SHOULD BE PASSED IN THE "update()" Fn. AND NOT THE CHANGE
+          WHICH IS TO BE MADE.
+*/
+
 ///author : kartik8800
 #ifndef SEGMENTTREE_H
 #define SEGMENTTREE_H
