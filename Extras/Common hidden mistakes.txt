@@ -65,3 +65,6 @@
     do not, so be on the safe side :)
 
 20. Beware of conflicting variable names, this may lead to many a times either TLE or RE.
+
+21. Check carefully if you have defined a class then the useful things are in "public mode" or 
+    "private mode".
