@@ -16,3 +16,5 @@
   • More formally, let us say I conduct an experiment n times and I name the experiments e1, e2, e3..
     ...en and let's say the outcomes are x1, x2, x3...xn. 
     Then, the Expected value of a RV X, denoted as E(X) = lim n tends to ∞ (Σxi)/n.
+
+  • More good definition of EV: https://en.wikipedia.org/wiki/Expected_value
