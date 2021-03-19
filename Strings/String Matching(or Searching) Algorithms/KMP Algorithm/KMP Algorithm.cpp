@@ -25,19 +25,19 @@ vector<ll> prefix_function_optimized(string s)
 	// prefix which is also a suffix in the substring [0....(i-1)]
 	ll i = 1, j = 0;
 	
-	while(i < n){
-		if(s[i] == s[j]){
+	while(i < n) {
+		if(s[i] == s[j]) {
 			lps[i] = j + 1;
 			i++; j++;
 		}
 		
 		else{
-			if(j == 0){
+			if(j == 0) {
 				lps[i] = 0;
 				i++;
 			}
 			
-			else{
+			else {
 				j = lps[j - 1];
 			}
 		}
@@ -59,18 +59,18 @@ vector<ll> kmp(string text, string pat)
 	ll i = 0; // iterator for the text
 	ll j = 0; // iterator for the pattern
 	
-	while(i < n){
+	while(i < n) {
 		if(text[i] == pat[j]){
 			i++; 
 			j++;
 		}
 		
-		else{
+		else {
 			if(j == 0) i++;
 			else j = lps[j - 1];		
 		}
 		
-		if(j == m){
+		if(j == m) {
 			occurrences.push_back(i - m);
 			j = lps[j - 1];
 		}
