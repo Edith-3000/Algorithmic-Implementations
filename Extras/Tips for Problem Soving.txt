@@ -49,3 +49,5 @@
     3. 62x10^6 Elements of 32 Bit (4 bytes) is equal to 250 MB
     4. 10^6 Elements of 64 Bits (8 bytes) is equal to 8 MB
     5. 31x10^6 Elements of 64 Bit (8 bytes) is equal to 250 MB
+
+14. Sometimes looking at the test cases reveal a lot about how the problem can be solved.

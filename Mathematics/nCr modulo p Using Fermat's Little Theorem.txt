@@ -1,3 +1,6 @@
+// Ref: https://www.geeksforgeeks.org/compute-ncr-p-set-3-using-fermat-little-theorem/
+/******************************************************************************************************/
+
 /*Prerequisite to use this Algorithm - 1) p must be a prime no.
                                        2) p>n
   nCr % p= [(n! % p) * ((((n-r)! * r!)⁽⁻¹⁾) % p)] % p by using modular arithmetic
