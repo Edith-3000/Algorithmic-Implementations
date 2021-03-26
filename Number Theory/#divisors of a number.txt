@@ -1,3 +1,6 @@
+// Ref: https://www.geeksforgeeks.org/prime-factorization-using-sieve-olog-n-multiple-queries/
+/******************************************************************************************************/
+
 #define max 10000001
 vector<int> spf_sieve(max); //spf_sieve[i] stores the smallest prime factor for i 
 

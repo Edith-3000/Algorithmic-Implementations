@@ -21,3 +21,10 @@
 # If m and n are nonzero integers, and more generally, nonzero elements of an integral domain, it is said that 
   m divides n, m is a divisor of n or n is a multiple of m, and this is written as m | n,
   if there exists an integer k, or an element k of the integral domain, such that m * k = n.
+
+# If 0 <= a < m and 0 <= b < m
+  then, (a + b) % m will either be equal to --->
+  1. (a + b) or 
+  2. a - (m - b) or b - (m - a)
+
+  * Ques. based on this concept: https://codeforces.com/contest/1484/problem/B
