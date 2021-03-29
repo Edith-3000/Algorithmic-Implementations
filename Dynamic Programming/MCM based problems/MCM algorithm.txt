@@ -40,7 +40,7 @@ long long mcmRecur(vector<long long> &v, long long i, long long j)
 	{
 	   /*(v[i-1] * v[k] * v[j]) is the cost of multiplying matrices from
 	     (i to k) and (k+1 to j)*/ 
-	   long long temp= MCM(v, i, k) + MCM(v, k+1, j) + (v[i-1] * v[k] * v[j]);
+	   long long temp= mcmRecur(v, i, k) + mcmRecur(v, k+1, j) + (v[i-1] * v[k] * v[j]);
 	   
 	   //update res
 	   if(temp<res)
