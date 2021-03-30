@@ -38,3 +38,8 @@ int maxSumSubarrOfSizeK(vector<int> &v, int k)
 
 // Time Complexity = O(n).
 // Space Complexity is O(1).
+
+/*******************************************************************************************************/
+
+// Ques. based on min sum subarray of size k: 
+// https://www.codechef.com/COOK127B/problems/CONDEL
