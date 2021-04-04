@@ -32,3 +32,9 @@
 # If a number is divisible by 3, then the sum of digits of that number is also divivible by 3 and
   vice verse.
   * Ques. based on this concept: https://codeforces.com/contest/1498/problem/A
+
+# Given a number as
+  A = B + C * N   if ( B, C < N )
+  then A % N = B and A / N = C
+  
+  * Ques. based on this concept: https://www.interviewbit.com/problems/rearrange-array/
