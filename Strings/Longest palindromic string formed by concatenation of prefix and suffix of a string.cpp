@@ -64,10 +64,13 @@ const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
 // https://bit.ly/3vFvsHM
+// https://www.youtube.com/watch?v=c4akpqTwE5g
 
-// This variant of KMP algo. returns the length of the longest prefix 
-// that matches a suffix
+// This variant of KMP algo. returns the length of the longest proper prefix 
+// that matches a proper suffix of the string s
 int kmp(string s) {
+    // lps[i] = the length of the longest proper prefix of the string s[0...i]
+    //          that matches a proper suffix of the string s[0...i]
     vector<int> lps(s.size(), 0);
  
     // Traverse the string
@@ -87,7 +90,7 @@ int kmp(string s) {
 }
 
 int longest_prefix_palindrome(string s) {
-	// Append a character to separate the string
+	// Append a character to separate the string (i.e to avoid overlap)
 	string tmp = s + '?';
 	
 	// Append the reverse of the string
