@@ -66,7 +66,7 @@ void find_window(string &txt, string &pat) {
         // then increment count
 		if(hash_txt[txt[i]] <= hash_pat[txt[i]]) count += 1;
 		
-		 // if all the characters are matched
+		// if all the characters are matched
 		if(count == m) {
 			while(hash_txt[txt[start]] > hash_pat[txt[start]] or hash_pat[txt[start]] == 0) {
 			      hash_txt[txt[start]]--;
