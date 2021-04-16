@@ -1,5 +1,7 @@
-// Problem: https://www.interviewbit.com/problems/inorder-traversal/
-/*******************************************************************************************************/
+// Problem: https://www.interviewbit.com/problems/preorder-traversal/
+// Ref: https://www.geeksforgeeks.org/morris-traversal-for-preorder/
+//      https://www.youtube.com/watch?v=BxwRZ1BSfvo&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=20
+/****************************************************************************************************/
 
 // METHOD 1 (Using Recursion)
 
@@ -44,11 +46,11 @@ class TreeNode {
 		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
 };
 
-void inorder(TreeNode *root, vi &v) {
+void preorder(TreeNode *root, vi &v) {
 	if(root == NULL) return;
-	inorder(root->left, v);
 	v.pb(root->val);
-	inorder(root->right, v);
+	preorder(root->left, v);
+	preorder(root->right, v);
 }
 
 void solve()
@@ -64,7 +66,7 @@ void solve()
 	root->right->left->right->right = new TreeNode(9);
 	
 	vi res;
-	inorder(root, res); 
+	preorder(root, res); 
 	
 	for(auto x: res) cout << x << " ";
 	cout << "\n";
@@ -96,8 +98,6 @@ int main()
 /*******************************************************************************************************/
 
 // METHOD 2 (Using std::stack)
-// Ref: https://www.youtube.com/watch?v=rbINW7Dvwv0&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=5
-//      https://www.techiedelight.com/inorder-tree-traversal-iterative-recursive/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -140,24 +140,19 @@ class TreeNode {
 		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
 };
 
-vi inorder(TreeNode *root) {
+vi preorder(TreeNode *root) {
 	vi res;
 	if(root == NULL) return res;
 	
 	stack<TreeNode*> stk;
+	stk.push(root);
 	
-	while(!stk.empty() or root != NULL) {
-		if(root != NULL) {
-			stk.push(root);
-			root = root->left;
-		}
-		
-		else {
-			root = stk.top();
-			stk.pop();
-			res.pb(root->val);
-			root = root->right;
-		}
+	while(!stk.empty()) {
+		TreeNode *tmp = stk.top();
+		stk.pop();
+		res.pb(tmp->val);
+		if(tmp->right) stk.push(tmp->right);
+		if(tmp->left) stk.push(tmp->left);
 	}
 	
 	return res;
@@ -175,7 +170,7 @@ void solve()
 	root->right->left->right->left = new TreeNode(8);
 	root->right->left->right->right = new TreeNode(9);
 	
-	vi res = inorder(root); 
+	vi res = preorder(root); 
 	
 	for(auto x: res) cout << x << " ";
 	cout << "\n";
@@ -209,7 +204,7 @@ int main()
 /*************************************************************************************************/
 
 // METHOD 3 (Using MORRIS TRAVERSAL)
-// Inorder traversal without recursion and without stack 
+// Preorder traversal without recursion and without stack 
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -252,7 +247,7 @@ class TreeNode {
 		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
 };
 
-vi inorder(TreeNode *root) {
+vi preorder(TreeNode *root) {
 	vi res;
 	
 	while(root) {
@@ -269,18 +264,18 @@ vi inorder(TreeNode *root) {
 			while(tmp->right and tmp->right != root) tmp = tmp->right;
 			
 			// If the right child of inorder predecessor already points to 
-            // this node, this means we have already processed the left subtree
-            // of the root. Push the root value in the result
+            // this node 
 			if(tmp->right == root) {
 				tmp->right = NULL;
-				res.pb(root->val);
 				root = root->right;
 			}
 			
 			// If right child of inorder predecessor doesn't point to this node, 
-			// make right child of inorder predecessor point to this node (root)
+			// then push this node in res and make right child of inorder predecessor 
+			// point to this node (root)
 			else {
 				tmp->right = root;
+				res.pb(root->val);
 				root = root->left;
 			}
 		}
@@ -301,7 +296,7 @@ void solve()
 	root->right->left->right->left = new TreeNode(8);
 	root->right->left->right->right = new TreeNode(9);
 	
-	vi res = inorder(root); 
+	vi res = preorder(root); 
 	
 	for(auto x: res) cout << x << " ";
 	cout << "\n";
