@@ -16,17 +16,17 @@
 
 long long maxPathSumBwAnyTwoLeafNodes(node *root, long long &res)
 {
-	//base condition
-	if(root==nullptr)
-	   return 0;
+  	//base condition
+  	if(root==nullptr)
+  	   return 0;
 
-	//hypothesis
-	long long l= maxPathSumBwAnyTwoLeafNodes(root->left, res);
-	long long r= maxPathSumBwAnyTwoLeafNodes(root->right, res);
+  	//hypothesis
+  	long long l= maxPathSumBwAnyTwoLeafNodes(root->left, res);
+  	long long r= maxPathSumBwAnyTwoLeafNodes(root->right, res);
 
-	//induction
-	long long temp=max(l, r)+root->val;
-	long long ans=max(temp, l+r+root->val);
+  	//induction
+  	long long temp=max(l, r)+root->val;
+  	long long ans=max(temp, l+r+root->val);
     res=max(res, ans);
 
     return temp;
