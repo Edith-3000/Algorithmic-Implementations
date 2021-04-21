@@ -1,10 +1,9 @@
 // 𝒅𝒐𝒖𝒃𝒍𝒆 𝒔𝒒𝒓𝒕(𝒅𝒐𝒖𝒃𝒍𝒆 𝒂𝒓𝒈): 𝑰𝒕 𝒓𝒆𝒕𝒖𝒓𝒏𝒔 𝒕𝒉𝒆 𝒔𝒒𝒖𝒂𝒓𝒆 𝒓𝒐𝒐𝒕 𝒐𝒇 𝒂 𝒏𝒖𝒎𝒃𝒆𝒓 𝒕𝒐 𝒕𝒚𝒑𝒆 𝒅𝒐𝒖𝒃𝒍𝒆
 // int gets typecasted to double when it is passed as an arguement in sqrt()
 
-bool is_perfect_square(long long n)
-{
-	/*if difference of floating point value of square root of x  
-      & floor of x is 0, then no. is perfect sq.*/
+bool is_perfect_square(long long n) {
+	// if difference of floating point value of square root of x  
+    // & floor of x is 0, then no. is perfect sq.
       
 	return ((sqrt(n) - floor(sqrt(n))) == 0) ? true : false;
 }

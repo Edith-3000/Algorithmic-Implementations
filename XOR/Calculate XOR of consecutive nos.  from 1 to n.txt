@@ -1,5 +1,4 @@
-long long compute_xor_from_1_to_n(const long long n)
-{
+long long compute_xor_from_1_to_n(const long long n) {
 	// Modulus operator are expensive on most of the  
     // computers. n & 3 will be equivalent to n % 4.    
     
