@@ -44,3 +44,6 @@
    * Same goes for (5^a) and (10^a).
 
    Ques. based on this concept: https://codeforces.com/contest/1511/problem/B
+
+# Imp points regarding 𝑷𝑬𝑹𝑴𝑼𝑻𝑨𝑻𝑰𝑶𝑵𝑺 & 𝑪𝑶𝑴𝑩𝑰𝑵𝑨𝑻𝑰𝑶𝑵𝑺 ===>
+  https://www.cs.sfu.ca/~ggbaker/zju/math/perm-comb-more.html
