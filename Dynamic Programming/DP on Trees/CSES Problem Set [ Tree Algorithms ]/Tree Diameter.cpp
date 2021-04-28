@@ -1,7 +1,152 @@
 // Another approach other than below: 
-// https://stackoverflow.com/questions/20010472/proof-of-correctness-algorithm-for-diameter-of-a-tree-in-graph-theory#:~:text=Proof%20of%20correctness%3A%20Algorithm%20for%20diameter%20of%20a%20tree%20in%20graph%20theory,-algorithm%20tree%20graph&text=In%20order%20to%20find%20the,BFS%20will%20yield%20the%20diameter
+// 
 
 /****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+
+// METHOD - 1 O(n^2)
+
+/* # Run a DFS from every node of the tree and in every iteration, find the node which is at the farthest
+     distance from the selected source node.
+
+   # Update the final result after every iteration.
+*/
+
+/****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+
+// METHOD - 2 
+// Ref: https://www.youtube.com/watch?v=FQLPNQppBNs
+//      https://www.youtube.com/watch?v=x5ZH4pnts7Q
+
+// For Proof: --->
+// https://stackoverflow.com/questions/20010472/proof-of-correctness-algorithm-for-diameter-of-a-tree-in-graph-theory#:~:text=Proof%20of%20correctness%3A%20Algorithm%20for%20diameter%20of%20a%20tree%20in%20graph%20theory,-algorithm%20tree%20graph&text=In%20order%20to%20find%20the,BFS%20will%20yield%20the%20diameter
+// https://pasteboard.co/JZp6CVR.jpg
+
+/* ALGORITHM --->
+   # We can find diameter in only 2 DFS runs.
+   # Take any arbitrary node as root node, and find the node which is farthest from it. Let this node
+     be x.
+   # Run a DFS from node x, and find the maximum distance of this node from any other node, this distance
+     will be the diameter of the tree.
+*/
+
+// Problem: Tree Diameter
+// Contest: CSES - CSES Problem Set
+// URL: https://cses.fi/problemset/task/1131
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// Parsed on: 28-04-2021 07:54:23 IST (UTC+05:30)
+// Author: Kapil Choudhary
+// ********************************************************************
+// कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
+// मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि || १.४७ ||
+// ********************************************************************
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define pb push_back
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+#define deb(x) cout << #x << "=" << x << endl
+#define deb2(x, y) cout << #x << "=" << x << ", " << #y << "=" << y << endl
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int>	vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<pii>	vpii;
+typedef vector<pll>	vpll;
+typedef vector<vi> vvi;
+typedef vector<vll>	vvll;
+typedef vector<vull> vvull;
+mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
+int rng(int lim) {
+    uniform_int_distribution<int> uid(0,lim-1);
+    return uid(rang);
+}
+
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9+7;
+
+// to store the i/p tree
+vi tree[200001];
+
+// the #vertices
+int n;
+
+// the maximum distance of the farthest node
+// from the source node taken
+int mx;
+
+// the node which is at the maximum distance
+// from the source node taken
+int farthest;
+
+void dfs(int curr, int dist, int par) {
+	if(dist > mx) {
+		mx = dist;
+		farthest = curr;
+	}
+	
+	for(auto child: tree[curr]) {
+		if(child != par) dfs(child, dist + 1, curr);
+	}
+}
+
+void solve()
+{
+  	cin >> n;
+  	for(int i = 1; i < n; i++) {
+  		int u, v; cin >> u >> v;
+  		tree[u].pb(v);
+  		tree[v].pb(u);
+  	}
+  	
+  	// initialising max distance
+  	mx = -1;
+  	
+  	// arbitrarily choosing any root node & finding 
+  	// the node which is at max distance from it
+  	dfs(1, 0, 0);
+  	
+  	// again initialising max distance
+  	mx = -1;
+  	
+  	// running DFS for the second time, taking the farthest
+  	// node found in the 1st DFS as the source node
+  	dfs(farthest, 0, 0);
+  	
+  	cout << mx << "\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
+
+    int t = 1;
+    // int test = 1;
+    // cin >> t;
+    while(t--) {
+      // cout << "Case #" << test++ << ": ";
+      solve();
+    }
+
+    return 0;
+}
+
+/****************************************************************************************************************************************************************************************************************************************************************************************************************************/
+
+// METHOD - 3
 
 // Problem: Tree Diameter
 // Contest: CSES - CSES Problem Set

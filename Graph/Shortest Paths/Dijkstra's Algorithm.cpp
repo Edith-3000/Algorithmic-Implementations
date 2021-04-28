@@ -196,3 +196,13 @@ Jaipur <-- Delhi
 Bhopal <-- Agra <-- Delhi
 
 */
+
+// For Time complexity of Dijkstra's Algorithm implemented using std::priority_queue, visit: --->
+// https://cs.stackexchange.com/questions/104566/dijkstra-complexity-analysis-using-adjacency-list-and-priority-queue#:~:text=1%20Answer&text=Dijkstra's%20algorithm%20visits%20every%20node,in%20O(logV).
+
+/**********************************************************************************************************************************************************************************************************/
+
+// NOTE: A similar approach of implementing Dijkstra's by making use of an extra visited array so that
+//       the same vertex is not visited again and again, can be seen here ===>
+// Problem: https://www.interviewbit.com/problems/useful-extra-edges/
+// Sol: https://pastebin.ubuntu.com/p/2kn4dQWVh9/
