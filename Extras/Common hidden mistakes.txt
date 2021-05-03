@@ -68,3 +68,13 @@
 
 21. Check carefully if you have defined a class then the useful things are in "public mode" or 
     "private mode".
+
+22. Make sure you aren't declaring too much stack memory. Any large arrays should be declared GLOBALLY, 
+    outside of any functions - for eg. putting an array of 100000 ints inside a function probably won’t 
+    work. 
+
+    This really happened with me for eg in the following problem --->
+    https://www.codechef.com/INOIPRAC/problems/INOI2002
+    
+    Initially when the dp vectors were declared inside function it gave "SIGSEGV", but when declared
+    globally it passed.
