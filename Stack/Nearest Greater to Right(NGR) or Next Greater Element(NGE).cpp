@@ -111,7 +111,7 @@ vector<int> ngr_indices(vector<int> &v) {
 
   // to store the final result
   vector<int> res(n);
-
+  
   stack<pair<int, int>> st; 
 
   for(int i = n - 1; i >= 0; i--) {
