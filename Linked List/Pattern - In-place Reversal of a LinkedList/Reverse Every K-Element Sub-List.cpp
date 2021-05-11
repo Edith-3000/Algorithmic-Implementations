@@ -66,7 +66,7 @@ node* reverseEveryKNodes(node* head, long long k)
      Thus, the total space complexity is O((n/k)*(some constant)) = O(n/k).
 */
 
-*****************************************************************************************************************
+/******************************************************************************************************/
 
 //ITERATIVE IMPLEMENTATION
 
@@ -199,84 +199,84 @@ const int mod = 1e9+7;
 // Making a node class containing the value and a pointer
 // to next available node
 class ListNode {
-  public:
-    int val;
-    ListNode *next;
+    public:
+        int val;
+        ListNode *next;
 };
 
 class LinkedList {
-  public:
-    // head and tail pointers
-    ListNode *head, *tail;
-    
-    // default constructor. Initializing head and tail pointers
-    LinkedList() {
-      head = NULL;
-      tail = NULL;
-    }
-    
-    // inserting elements (at the end of the list)
-    void insert(int data) {
-      // make a new node
-      ListNode *new_node = new ListNode;
-      new_node->val = data;
-      new_node->next = NULL;
-      
-      // If list is empty, make the new node, the head
-      // initialise tail also as new node
-      if(head == NULL) {
-        head = new_node;
-        tail = new_node;
-      }
-      
-      else {
-        tail->next = new_node;
-        tail = tail->next;
-      }
-    }
-    
-    void display() {
-      ListNode *tmp = head;
-      while(tmp != NULL) {
-        cout << tmp->val;
-        tmp = tmp->next;
-        if(tmp != NULL) cout << "->";
-      }
-      
-      cout << "\n";
-    }   
+    public:
+        // head and tail pointers
+        ListNode *head, *tail;
+        
+        // default constructor. Initializing head and tail pointers
+        LinkedList() {
+            head = NULL;
+            tail = NULL;
+        }
+        
+        // inserting elements (at the end of the list)
+        void insert(int data) {
+            // make a new node
+            ListNode *new_node = new ListNode;
+            new_node->val = data;
+            new_node->next = NULL;
+            
+            // If list is empty, make the new node, the head
+            // initialise tail also as new node
+            if(head == NULL) {
+                head = new_node;
+                tail = new_node;
+            }
+            
+            else {
+                tail->next = new_node;
+                tail = tail->next;
+            }
+        }
+        
+        void display() {
+            ListNode *tmp = head;
+            while(tmp != NULL) {
+                cout << tmp->val;
+                tmp = tmp->next;
+                if(tmp != NULL) cout << "->";
+            }
+            
+            cout << "\n";
+        }       
 };
 
 ListNode* k_reverse_list(ListNode *head, int k) {
-  ListNode *prevtail = head, *currhead = head;
-  ListNode *prv = NULL, *cur = head, *nxt = head;
-  bool is_start = true;
+    ListNode *prevtail = head, *currhead = head;
+    ListNode *prv = NULL, *cur = head, *nxt = head;
+    bool is_start = true;
   
-  while(nxt != NULL) {
-    currhead = cur;
-    prv = NULL;
-    int cnt = 0;
+    while(nxt != NULL) {
+        currhead = nxt;
+        prv = NULL;
+        int cnt = 0;
     
-    while(cnt < k and nxt) {
-      nxt = nxt->next;
-      cur->next = prv;
-      prv = cur;
-      cur = nxt;
-      cnt += 1;
+        while(cnt < k and nxt) {
+            nxt = nxt->next;
+            cur->next = prv;
+            prv = cur;
+            cur = nxt;
+            cnt += 1;
+        }
+    
+        if(is_start) {
+            head = prv;
+            is_start = false;
+        }
+    
+        else {
+            prevtail->next = prv;
+            prevtail = currhead;
+        }
     }
     
-    if(is_start) {
-      head = prv;
-      is_start = false;
-    }
-    
-    else {
-      prevtail->next = prv;
-      prevtail = currhead;
-    }
-  }
-    
-  return head; 
+    return head; 
 }
 
 void solve()
@@ -285,15 +285,15 @@ void solve()
     LinkedList l;
     
     for(int i = 0; i < n; i++) {
-      int x; cin >> x;
-      l.insert(x);
+        int x; cin >> x;
+        l.insert(x);
     }
     
     l.display();
     l.head = k_reverse_list(l.head, k); 
     l.display();
   
-  cout << "\n";
+    cout << "\n";
 }
 
 int main()
