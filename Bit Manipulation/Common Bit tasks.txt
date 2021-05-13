@@ -123,3 +123,9 @@ int count_set_bits(int n) {
 * NOTE => 0 - based indexing of bits from LSB to MSB (right to left) is used.
 
 # Some more bit tricks: https://www.interviewbit.com/tutorial/tricks-with-bits/#tricks-with-bits
+
+*******************************************************************************************************************
+
+// SOME NOTES ======>
+
+• a += (1 << i) is same as a |= (1 << i)

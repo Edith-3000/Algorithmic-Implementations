@@ -1,4 +1,5 @@
 // Link: https://algorithms.tutorialhorizon.com/sum-of-all-sub-arrays-in-on-time/
+//       https://www.geeksforgeeks.org/sum-of-all-subarrays/
 
 #include<bits/stdc++.h>
 using namespace std;
