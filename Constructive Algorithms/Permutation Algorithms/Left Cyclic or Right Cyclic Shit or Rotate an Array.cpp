@@ -12,7 +12,7 @@
    # A left cyclic shift is the same as (n − 1) right cyclic shifts and vice versa. 
      So we only need to perform shifts of one type, say right i.e. only right rotation of the array.
 
-   # Array after K cyclic shifts is same as array after (K % N) cyclic shifts.	
+   # Array after K cyclic shifts is same as array after (K % N) cyclic shifts.  
 */
 
 #include<bits/stdc++.h>
@@ -23,40 +23,40 @@ typedef vector<ll> vll;
 
 // vector should be passed by reference
 void reverse(ll i, ll j, vll &v) {
-	if(i >= j) return;
-	while(i < j) {
-		ll tmp = v[i];
-		v[i] = v[j];
-		v[j] = tmp;
-		i++; j--;
-	}
+    if(i >= j) return;
+    while(i < j) {
+        ll tmp = v[i];
+        v[i] = v[j];
+        v[j] = tmp;
+        i++; j--;
+    }
 }
 
 // vector should be passed by reference
 void rotate(vll &v, ll k) {
-	ll n = v.size();
-	k = k % n;
-	if(k < 0) k = n + k;
-	
-	// reverse part 1
-	reverse(0, n - k - 1, v);
-	
-	// reverse part 2
-	reverse(n - k, n - 1, v);
-	
-	// reverse entire array
-	reverse(0, n - 1, v);
+    ll n = v.size();
+    k = k % n;
+    if(k < 0) k = n + k;
+    
+    // reverse part 1
+    reverse(0, n - k - 1, v);
+    
+    // reverse part 2
+    reverse(n - k, n - 1, v);
+    
+    // reverse entire array
+    reverse(0, n - 1, v);
 }
 
 void solve()
 {
-  	ll n, k; cin >> n >> k;
-  	vll v(n);
-  	for(ll i = 0; i < n; i++) cin >> v[i];
-  	
-  	rotate(v, k);
-  	for(auto x: v) cout << x << " ";
-  	cout << "\n";
+    ll n, k; cin >> n >> k;
+    vll v(n);
+    for(ll i = 0; i < n; i++) cin >> v[i];
+    
+    rotate(v, k);
+    for(auto x: v) cout << x << " ";
+    cout << "\n";
 }
 
 int main()

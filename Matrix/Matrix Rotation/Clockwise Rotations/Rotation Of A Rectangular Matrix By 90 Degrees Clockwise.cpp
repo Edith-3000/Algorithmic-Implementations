@@ -1,6 +1,3 @@
-// Problem: https://www.geeksforgeeks.org/maximum-sum-2-x-n-grid-no-two-elements-adjacent/
-/***************************************************************************************************/
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -32,35 +29,42 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
-ll find_ans(vvi &v) {
-    int n = v.size();
-    if(n == 0) return 0;
+vvi rotate_clock(vvi &v) {
+    int n1 = (int)v.size();
+    if(n1 == 0) return vvi();
+    int m1 = (int)v[0].size();
     
-    n = v[0].size();
+    int n2 = m1, m2 = n1;
+    vvi res(n2, vi(m2));
     
-    // dp[i] = max sum that can be obtained by considering the first (i + 1) elements
-    vll dp(n, 0);
-    dp[0] = max(v[0][0], v[1][0]);
-    
-    for(int i = 1; i < n; i++) {
-        ll op1 = max(v[0][i], v[1][i]) + ((i >= 2) ? dp[i-2] : 0);
-        ll op2 = dp[i-1];
-        dp[i] = max(op1, op2);
+    int i2 = 0, j2 = m2 - 1;
+    for(int i1 = 0; i1 < n1; i1++) {
+        for(int j1 = 0; j1 < m1; j1++) {
+            res[i2++][j2] = v[i1][j1];
+        }
+        
+        i2 = 0;
+        j2 -= 1;
     }
     
-    return dp[n-1];
+    return res;
 }
 
 void solve()
 {
-    int n; cin >> n;
-    vvi v(2, vi(n));
+    int n, m; cin >> n >> m;
+    vvi v(n, vi(m));
     
-    for(int i = 0; i < 2; i++) {
-        for(int j = 0; j < n; j++) cin >> v[i][j];
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) cin >> v[i][j];
     }
     
-    cout << find_ans(v) << "\n";
+    vvi res = rotate_clock(v);
+    
+    for(int i = 0; i < (int)res.size(); i++) {
+        for(int j = 0; j < (int)res[i].size(); j++) cout << res[i][j] << " ";
+        cout << "\n";
+    }
 }
 
 int main()
@@ -83,9 +87,3 @@ int main()
 
     return 0;
 }
-
-// TC: O(n)
-// SC: O(n)
-
-// NOTE: As for calculating the current state, only 2 previos states are required, we can maintain
-//       2 variables for this, no need for an entire dp array. Thus getting O(1) space complexity.

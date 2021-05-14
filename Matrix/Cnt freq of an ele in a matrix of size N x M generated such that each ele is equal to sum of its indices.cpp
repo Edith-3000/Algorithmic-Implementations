@@ -16,21 +16,21 @@
 using namespace std;
 
 void calc(int n, int m) {
-	for(int i = 1; i <= n; i++) {
-		int cnt = min(i, m);
-		cout << (i + 1) << " occurs: " << cnt << " times\n";
-	}
-	
-	for(int j = 2; j <= m; j++) {
-		int cnt = min(n, m - j + 1);
-		cout << (n + j) << " occurs: " << cnt << " times\n";
-	}
+    for(int i = 1; i <= n; i++) {
+        int cnt = min(i, m);
+        cout << (i + 1) << " occurs: " << cnt << " times\n";
+    }
+    
+    for(int j = 2; j <= m; j++) {
+        int cnt = min(n, m - j + 1);
+        cout << (n + j) << " occurs: " << cnt << " times\n";
+    }
 }
 
 void solve()
 {
-  	int n, m; cin >> n >> m;
-  	calc(n, m);
+    int n, m; cin >> n >> m;
+    calc(n, m);
 }
 
 int main()

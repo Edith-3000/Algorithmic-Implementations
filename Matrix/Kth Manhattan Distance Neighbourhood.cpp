@@ -16,13 +16,13 @@ using namespace std;
 #define deb2(x, y) cout << #x << "=" << x << ", " << #y << "=" << y << endl
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
-typedef vector<int>	vi;
+typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
-typedef vector<pii>	vpii;
-typedef vector<pll>	vpll;
+typedef vector<pii> vpii;
+typedef vector<pll> vpll;
 typedef vector<vi> vvi;
-typedef vector<vll>	vvll;
+typedef vector<vll> vvll;
 typedef vector<vull> vvull;
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
 int rng(int lim) {
@@ -37,47 +37,47 @@ vi dx = {-1, 0, 1, 0};
 vi dy = {0, 1, 0, -1};
 
 bool is_valid(int x, int y, int n, int m) {
-	return x >= 0 and x < n and y >= 0 and y < m;
+    return x >= 0 and x < n and y >= 0 and y < m;
 }
 
 vvi kth_manhattan(vvi &v, int k) {
-	vvi cur = v, nxt = v;
-	int n = v.size();
-	if(n == 0) return cur;
-	int m = v[0].size();
-	
-	for(int rep = 1; rep <= k; rep++) {
-		for(int i = 0; i < n; i++) {
-			for(int j = 0; j < m; j++) {
-				for(int d = 0; d < 4; d++) {
-					int nx = i + dx[d];
-					int ny = j + dy[d];
-					if(is_valid(nx, ny, n, m)) nxt[i][j] = max(nxt[i][j], cur[nx][ny]);
-				}	
-		    }
-	    }
-	    
-	    cur = nxt;
-	}
-	
-	return cur;
+    vvi cur = v, nxt = v;
+    int n = v.size();
+    if(n == 0) return cur;
+    int m = v[0].size();
+    
+    for(int rep = 1; rep <= k; rep++) {
+        for(int i = 0; i < n; i++) {
+            for(int j = 0; j < m; j++) {
+                for(int d = 0; d < 4; d++) {
+                    int nx = i + dx[d];
+                    int ny = j + dy[d];
+                    if(is_valid(nx, ny, n, m)) nxt[i][j] = max(nxt[i][j], cur[nx][ny]);
+                }   
+            }
+        }
+        
+        cur = nxt;
+    }
+    
+    return cur;
 }
 
 void solve()
 {
-  	int n, m, k; cin >> n >> m >> k;
-  	vvi v(n, vi(m));
-  	
-  	for(int i = 0; i < n; i++) {
-  		for(int j = 0; j < m; j++) cin >> v[i][j];
-  	}
-  	
-  	vvi res = kth_manhattan(v, k);
-  	
-  	for(int i = 0; i < n; i++) {
-  		for(int j = 0; j < m; j++) cout << res[i][j] << " ";
-  		cout << "\n";
-  	}
+    int n, m, k; cin >> n >> m >> k;
+    vvi v(n, vi(m));
+    
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) cin >> v[i][j];
+    }
+    
+    vvi res = kth_manhattan(v, k);
+    
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) cout << res[i][j] << " ";
+        cout << "\n";
+    }
 }
 
 int main()

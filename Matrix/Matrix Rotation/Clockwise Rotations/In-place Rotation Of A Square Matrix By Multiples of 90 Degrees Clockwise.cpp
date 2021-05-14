@@ -1,5 +1,5 @@
-// Problem: https://www.geeksforgeeks.org/maximum-sum-2-x-n-grid-no-two-elements-adjacent/
-/***************************************************************************************************/
+// Ref: https://www.youtube.com/watch?v=NnL9dB-Cxvs
+/******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -15,13 +15,13 @@ using namespace std;
 #define deb2(x, y) cout << #x << "=" << x << ", " << #y << "=" << y << endl
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
-typedef vector<int> vi;
+typedef vector<int>	vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
-typedef vector<pii> vpii;
-typedef vector<pll> vpll;
+typedef vector<pii>	vpii;
+typedef vector<pll>	vpll;
 typedef vector<vi> vvi;
-typedef vector<vll> vvll;
+typedef vector<vll>	vvll;
 typedef vector<vull> vvull;
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
 int rng(int lim) {
@@ -32,35 +32,52 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
-ll find_ans(vvi &v) {
-    int n = v.size();
-    if(n == 0) return 0;
+// Function to in-place reverse each row of a square matrix
+void reverse_rows(vvi &v) {
+    int n = (int)v.size();
+    if(n == 0) return;
     
-    n = v[0].size();
+    for(int i = 0; i < n; i++) {
+		for(int j = 0; j < (n / 2); j++) swap(v[i][j], v[i][n-j-1]);
+	}
+}
+
+// Function to find in-place transpose of a square matrix
+void transpose(vvi &v) {
+    int n = (int)v.size();
+    if(n == 0) return;
     
-    // dp[i] = max sum that can be obtained by considering the first (i + 1) elements
-    vll dp(n, 0);
-    dp[0] = max(v[0][0], v[1][0]);
-    
-    for(int i = 1; i < n; i++) {
-        ll op1 = max(v[0][i], v[1][i]) + ((i >= 2) ? dp[i-2] : 0);
-        ll op2 = dp[i-1];
-        dp[i] = max(op1, op2);
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < i; j++) swap(v[i][j], v[j][i]);
     }
-    
-    return dp[n-1];
+}
+
+void rotate_clock(vvi &v, int deg) {
+	int n = (int)v.size();
+	if(n == 0) return;
+	
+	for(int k = 1; k <= ((deg % 360) / 90); k++) {
+		transpose(v);
+		reverse_rows(v);
+	}
 }
 
 void solve()
 {
-    int n; cin >> n;
-    vvi v(2, vi(n));
+  	// deg is a multiple of 90
+  	int n, deg; cin >> n >> deg;
+    vvi v(n, vi(n));
     
-    for(int i = 0; i < 2; i++) {
+    for(int i = 0; i < n; i++) {
         for(int j = 0; j < n; j++) cin >> v[i][j];
     }
-    
-    cout << find_ans(v) << "\n";
+  	
+  	rotate_clock(v, deg);
+  	
+  	for(int i = 0; i < n; i++) {
+        for(int j = 0; j < n; j++) cout << v[i][j] << " ";
+        cout << "\n";
+    }
 }
 
 int main()
@@ -83,9 +100,3 @@ int main()
 
     return 0;
 }
-
-// TC: O(n)
-// SC: O(n)
-
-// NOTE: As for calculating the current state, only 2 previos states are required, we can maintain
-//       2 variables for this, no need for an entire dp array. Thus getting O(1) space complexity.

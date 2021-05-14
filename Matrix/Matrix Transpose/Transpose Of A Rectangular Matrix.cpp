@@ -1,5 +1,5 @@
-// Problem: https://www.geeksforgeeks.org/maximum-sum-2-x-n-grid-no-two-elements-adjacent/
-/***************************************************************************************************/
+// Ref: https://www.geeksforgeeks.org/program-to-find-transpose-of-a-matrix/
+/*******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -32,35 +32,37 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
-ll find_ans(vvi &v) {
-    int n = v.size();
-    if(n == 0) return 0;
+// Function to find transpose of a rectangular matrix
+vvi transpose(vvi &v) {
+    int n = (int)v.size();
+    if(n == 0) return vvi();
+    int m = (int)v[0].size();
     
-    n = v[0].size();
+    // note dimensions of res[][]
+    vvi res(m, vi(n));
     
-    // dp[i] = max sum that can be obtained by considering the first (i + 1) elements
-    vll dp(n, 0);
-    dp[0] = max(v[0][0], v[1][0]);
-    
-    for(int i = 1; i < n; i++) {
-        ll op1 = max(v[0][i], v[1][i]) + ((i >= 2) ? dp[i-2] : 0);
-        ll op2 = dp[i-1];
-        dp[i] = max(op1, op2);
+    for(int i = 0; i < m; i++) {
+        for(int j = 0; j < n; j++) res[i][j] = v[j][i];
     }
     
-    return dp[n-1];
+    return res;
 }
 
 void solve()
 {
-    int n; cin >> n;
-    vvi v(2, vi(n));
+    int n, m; cin >> n >> m;
+    vvi v(n, vi(m));
     
-    for(int i = 0; i < 2; i++) {
-        for(int j = 0; j < n; j++) cin >> v[i][j];
+    for(int i = 0; i < n; i++) {
+        for(int j = 0; j < m; j++) cin >> v[i][j];
     }
     
-    cout << find_ans(v) << "\n";
+    vvi res = transpose(v);
+    
+    for(int i = 0; i < m; i++) {
+        for(int j = 0; j < n; j++) cout << res[i][j] << " ";
+        cout << "\n";
+    }
 }
 
 int main()
@@ -83,9 +85,3 @@ int main()
 
     return 0;
 }
-
-// TC: O(n)
-// SC: O(n)
-
-// NOTE: As for calculating the current state, only 2 previos states are required, we can maintain
-//       2 variables for this, no need for an entire dp array. Thus getting O(1) space complexity.

@@ -1,6 +1,3 @@
-// Problem: https://www.geeksforgeeks.org/maximum-sum-2-x-n-grid-no-two-elements-adjacent/
-/***************************************************************************************************/
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -15,13 +12,13 @@ using namespace std;
 #define deb2(x, y) cout << #x << "=" << x << ", " << #y << "=" << y << endl
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
-typedef vector<int> vi;
+typedef vector<int>	vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
-typedef vector<pii> vpii;
-typedef vector<pll> vpll;
+typedef vector<pii>	vpii;
+typedef vector<pll>	vpll;
 typedef vector<vi> vvi;
-typedef vector<vll> vvll;
+typedef vector<vll>	vvll;
 typedef vector<vull> vvull;
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
 int rng(int lim) {
@@ -32,35 +29,69 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
-ll find_ans(vvi &v) {
-    int n = v.size();
-    if(n == 0) return 0;
-    
-    n = v[0].size();
-    
-    // dp[i] = max sum that can be obtained by considering the first (i + 1) elements
-    vll dp(n, 0);
-    dp[0] = max(v[0][0], v[1][0]);
-    
-    for(int i = 1; i < n; i++) {
-        ll op1 = max(v[0][i], v[1][i]) + ((i >= 2) ? dp[i-2] : 0);
-        ll op2 = dp[i-1];
-        dp[i] = max(op1, op2);
-    }
-    
-    return dp[n-1];
+vi spiral_clock(vvi &v) {
+	int n = (int)v.size();
+	if(n == 0) return vi();
+	int m = (int)v[0].size();
+	
+	int cnt = 0, tot = n * m;
+	int mnr = 0, mxr = n - 1;
+	int mnc = 0, mxc = m - 1;
+	vi res;
+	
+	while(cnt < tot) {
+		// up wall
+		for(int i = mnr, j = mnc; j <= mxc and cnt < tot; j++) {
+			res.pb(v[i][j]);
+			cnt += 1;
+		}
+		
+		mnr += 1;
+		
+		// right wall
+		for(int i = mnr, j = mxc; i <= mxr and cnt < tot; i++) {
+			res.pb(v[i][j]);
+			cnt += 1;
+		}
+		
+		mxc -= 1;
+		
+		// bottom wall
+		for(int i = mxr, j = mxc; j >= mnc and cnt < tot; j--) {
+			res.pb(v[i][j]);
+			cnt += 1;
+		}
+		
+		mxr -= 1;
+		
+		// left wall
+		for(int i = mxr, j = mnc; i >= mnr and cnt < tot; i--) {
+			res.pb(v[i][j]);
+			cnt += 1;
+		}
+		
+		mnc += 1;
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    int n; cin >> n;
-    vvi v(2, vi(n));
-    
-    for(int i = 0; i < 2; i++) {
-        for(int j = 0; j < n; j++) cin >> v[i][j];
-    }
-    
-    cout << find_ans(v) << "\n";
+  	int n, m; cin >> n >> m;
+  	vvi v(n, vi(m));
+  	
+  	for(int i = 0; i < n; i++) {
+  		for(int j = 0; j < m; j++) cin >> v[i][j];
+  	}
+  	
+  	vi res = spiral_clock(v);
+  	
+  	for(int i = 0; i < (int)res.size(); i++) {
+  		cout << res[i] << " ";
+  	}
+  	
+  	cout << "\n";
 }
 
 int main()
@@ -83,9 +114,3 @@ int main()
 
     return 0;
 }
-
-// TC: O(n)
-// SC: O(n)
-
-// NOTE: As for calculating the current state, only 2 previos states are required, we can maintain
-//       2 variables for this, no need for an entire dp array. Thus getting O(1) space complexity.
