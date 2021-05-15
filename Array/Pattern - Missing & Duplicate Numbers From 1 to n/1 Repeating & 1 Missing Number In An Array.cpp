@@ -8,126 +8,23 @@
             Could you implement it without using extra memory?
 */
 
-/*SIDE TIPS ----->
-  # There are certain problems which are asked in the interview to also check how you take care of overflows 
-    in your problem.
-  # This is one of those problems.
-    Take extra care to make sure that you are type-casting your ints to long properly and at all places. Try 
-    to verify if your solution works if number of elements is as large as 10⁵.
+/* SIDE TIPS ----->
+   # There are certain problems which are asked in the interview to also check how you take care of 
+     overflows in your problem.
+   # This is one of those problems.
+     Take extra care to make sure that you are type-casting your ints to long properly and at all places. 
+     Try to verify if your solution works if number of elements is as large as 10⁵.
 
-  # Food for thought :
-    Even though it might not be required in this problem, in some cases, you might be required to order the operations cleverly so that the numbers do not overflow.
-    For example, if you need to calculate n! / k! where n! is factorial(n), one approach is to calculate factorial(n), factorial(k) and then divide them.
-    Another approach is to only multiple numbers from (k+1)....n to calculate the result.
-    Obviously approach 1 is more susceptible to overflows.
+   # Food for thought :
+     Even though it might not be required in this problem, in some cases, you might be required to order 
+     the operations cleverly so that the numbers do not overflow.
+     For example, if you need to calculate n! / k! where n! is factorial(n), one approach is to calculate 
+     factorial(n), factorial(k) and then divide them.
+     Another approach is to only multiple numbers from (k+1)....n to calculate the result.
+     Obviously approach 1 is more susceptible to overflows.
 */
 
 /*****************************************************************************************************/
-
-//NAIVE IMPLEMENTATION
-
-/*The basic brute force implementation can be to create a map and count the occurrence of each number.
-  But Time Complexity will be O(n).
-      Space Complexity: O(n) (for map).
-*/
-
-/*****************************************************************************************************/
-
-//OPTIMIZED IMPLEMENTATION USINIG Swap Sort
-
-/* # The method using maths is not scalable i.e. it will be very much complicated if multiple missing and 
-     multiple duplicates occur.
-   # This method(by swap sort) is only applicable if the given array is mutable(i.e. it can be changed).
-   # If the array is immutable(read only), then this method is not applicable.
-*/
-
-void swap(long long &x, long long &y)
-{
-   long long temp=x;
-   x=y;
-   y=temp;
-}
-
-pair<long long, long long> repeatAndMissing(vector<long long> &v)
-{
-   long long n=v.size();
-   
-   long long i=0; //array traverser
-   long long m, r; //for storing the missing & repeating character
-
-   for(long long i=0; i<n; i++)
-   {
-      while(i!=(v[i]-1))
-      {
-         //if the current element at i i.e. v[i] != should be 
-         //element at i 
-         if(v[i]!=v[v[i]-1])
-            swap(v[i], v[v[i]-1]);
-
-         else 
-         {
-            r=v[i];
-            m=i+1;
-            break;
-         }
-      }
-   }
-   
-   pair<long long, long long> p; //for returning final result
-   p=make_pair(m, r);
-   return p;
-}
-
-//Time complexity: O(n)
-//Space complexity: O(1)
-
-------------------------------------------------------------------------------------------
-
-/*Slightly different code from above code, although no difference in logic*/
-
-void swap(long long &x, long long &y)
-{
-   long long temp=x;
-   x=y;
-   y=temp;
-}
-
-pair<long long, long long> repeatAndMissing(vector<long long> &v)
-{
-   long long n=v.size();
-   
-   long long i=0; //array traverser
-   
-   //preprocessing the array
-   while(i<n)
-   {
-      if(v[i]!=v[v[i]-1])
-         swap(v[i], v[v[i]-1]);
-
-      else i++;
-   }  
-   
-   int r, m;
-   //extracting result
-   for(long long i=0; i<n; i++)
-   {
-      if(i!=v[i]-1)
-      {
-         r=v[i];
-         m=i+1;
-         break;
-      }
-   }
-
-   pair<long long, long long> p; //for returning final result
-   p=make_pair(m, r);
-   return p;
-}
-
-//Time complexity: O(n)
-//Space complexity: O(1)
-
-/***************************************************************************************************/
 
 // METHOD - 1 (Using Sorting)
 // This method mutates(changes) the original array
@@ -451,3 +348,221 @@ int main()
 
 /*****************************************************************************************************/
 
+// METHOD - 4 (Using xor)
+// This method do not mutates(changes) the original array
+// Ref: https://www.youtube.com/watch?v=5nMGY4VUoRY
+//      https://www.geeksforgeeks.org/find-a-repeating-and-a-missing-number/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define ull unsigned long long
+#define pb push_back
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+#define deb(x) cout << #x << "=" << x << endl
+#define deb2(x, y) cout << #x << "=" << x << ", " << #y << "=" << y << endl
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<pii> vpii;
+typedef vector<pll> vpll;
+typedef vector<vi> vvi;
+typedef vector<vll> vvll;
+typedef vector<vull> vvull;
+mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
+int rng(int lim) {
+    uniform_int_distribution<int> uid(0,lim-1);
+    return uid(rang);
+}
+
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9+7;
+
+vi rep_and_miss(vi &v) {
+    int n = (int)v.size();
+    if(n == 0 or n == 1) return vi();
+    
+    vi res;
+    int rep, miss;
+    
+    // will hold xor of all elements of v[] and numbers from 1 to n 
+    // such that in the last it stores ===> rep ^ miss
+    ll XOR = 0LL;
+    for(int i = 1; i <= n; i++) XOR ^= i;
+    for(int i = 0; i < n; i++) XOR ^= v[i];
+    
+    // set is the number with only single set bit of XOR (it can be any bit),
+    // here I have chosen the number with rightmost set bit
+    ll set = XOR & ~(XOR - 1);
+    ll bucket1 = 0LL, bucket2 = 0LL;
+    
+    // now divide elements into two buckets by comparing a rightmost set
+    // bit of XOR with the bit at the same position in each element. 
+    for(int i = 0; i < n; i++) {
+        if(v[i] & set) bucket1 ^= v[i];
+        else bucket2 ^= v[i];
+    }
+    
+    // again dividing the numbers from 1 to n to divide them into the two
+    // buckets so as to nullify the effect of other numbers ans get the desired
+    // repeating and missing numbers 
+    for(int i = 1; i <= n; i++) {
+        if(i & set) bucket1 ^= i;
+        else bucket2 ^= i;
+    }
+    
+    // find which one is repeating and which one is missing among result
+    // of bucket1 and bucket2
+    bool ok = false;
+    for(int i = 0; i < n; i++) {
+        if(v[i] == bucket1) { ok = true; break; }
+    }
+    
+    if(ok) rep = bucket1, miss = bucket2;
+    else rep = bucket2, miss = bucket1;
+    
+    res.pb(rep);
+    res.pb(miss);
+    
+    return res;
+}
+
+void solve()
+{
+    int n; cin >> n;
+    vi v(n);
+    for(int i = 0; i < n; i++) cin >> v[i];
+    
+    vi res = rep_and_miss(v);
+    for(auto x: res) cout << x << " ";
+    cout << "\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
+
+    int t = 1;
+    // int test = 1;
+    // cin >> t;
+    while(t--) {
+      // cout << "Case #" << test++ << ": ";
+      solve();
+    }
+
+    return 0;
+}
+
+// Time complexity: O(n)
+// Space complexity: O(1)
+
+/******************************************************************************************************/
+
+// OTHER IMPLEMENTATIONS
+
+//OPTIMIZED IMPLEMENTATION USINIG Swap Sort
+// REf: https://i.ytimg.com/vi/KOsS5-1q9rU/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDK-vZ6OnFP4j8hUGXEmQVM6jV0lw
+
+/* # The method using maths is not scalable i.e. it will be very much complicated if multiple missing and 
+     multiple duplicates occur.
+   # This method(by swap sort) is only applicable if the given array is mutable(i.e. it can be changed).
+   # If the array is immutable(read only), then this method is not applicable.
+*/
+
+void swap(long long &x, long long &y)
+{
+   long long temp=x;
+   x=y;
+   y=temp;
+}
+
+pair<long long, long long> repeatAndMissing(vector<long long> &v)
+{
+   long long n=v.size();
+   
+   long long i=0; //array traverser
+   long long m, r; //for storing the missing & repeating character
+
+   for(long long i=0; i<n; i++)
+   {
+      while(i!=(v[i]-1))
+      {
+         //if the current element at i i.e. v[i] != should be 
+         //element at i 
+         if(v[i]!=v[v[i]-1])
+            swap(v[i], v[v[i]-1]);
+
+         else 
+         {
+            r=v[i];
+            m=i+1;
+            break;
+         }
+      }
+   }
+   
+   pair<long long, long long> p; //for returning final result
+   p=make_pair(m, r);
+   return p;
+}
+
+//Time complexity: O(n)
+//Space complexity: O(1)
+
+/******************************************************************************************************/
+
+/*Slightly different code from above code, although no difference in logic*/
+
+void swap(long long &x, long long &y)
+{
+   long long temp=x;
+   x=y;
+   y=temp;
+}
+
+pair<long long, long long> repeatAndMissing(vector<long long> &v)
+{
+   long long n=v.size();
+   
+   long long i=0; //array traverser
+   
+   //preprocessing the array
+   while(i<n)
+   {
+      if(v[i]!=v[v[i]-1])
+         swap(v[i], v[v[i]-1]);
+
+      else i++;
+   }  
+   
+   int r, m;
+   //extracting result
+   for(long long i=0; i<n; i++)
+   {
+      if(i!=v[i]-1)
+      {
+         r=v[i];
+         m=i+1;
+         break;
+      }
+   }
+
+   pair<long long, long long> p; //for returning final result
+   p=make_pair(m, r);
+   return p;
+}
+
+//Time complexity: O(n)
+//Space complexity: O(1)
