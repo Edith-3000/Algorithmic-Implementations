@@ -1,3 +1,12 @@
+/* Link: https://www.geeksforgeeks.org/count-of-subsets-with-sum-equal-to-x/
+   
+   PROBLEM: Given an array arr[] of length n and an integer sum, the task is to find the 
+            number of subsets with sum of their elements equal to sum.
+            All the elements of the array are non -ve.
+
+   Ref: https://www.youtube.com/watch?v=F7wqWbqYn9g&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=9
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -17,13 +26,11 @@ typedef pair<ll, ll> pll;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
-typedef vector<bool> vb;
 typedef vector<pii> vpii;
 typedef vector<pll> vpll;
 typedef vector<vi> vvi;
 typedef vector<vll> vvll;
 typedef vector<vull> vvull;
-typedef vector<vb> vvb;
 
 /************************************************** DEBUGGER ******************************************************************/
 
@@ -71,9 +78,36 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
+vvi dp;
+
+int cnt_subset(vi &v, int sum, int n) {
+    // initialisation of dp matrix
+    
+    // if sum is 0, then only 1 subset is possible(i.e. Ø) 
+    for(int i = 0; i <= n; i++) dp[i][0] = 1;
+    for(int j = 1; j <= sum; j++) dp[0][j] = 0;
+    
+    // choice diagram code iterative version
+    for(int i = 1; i <= n; i++) {
+        for(int j = 1; j <= sum; j++) {
+            if(v[i-1] <= j) dp[i][j] = dp[i-1][j - v[i-1]] + dp[i-1][j];
+            else dp[i][j] = dp[i-1][j];
+        }
+    }
+    
+    return dp[n][sum];
+}
+
 void solve()
 {
-  
+    int n, sum; cin >> n >> sum;
+    vi v(n);
+    for(int i = 0; i < n; i++) cin >> v[i];
+    
+    dp.resize(n+1);
+    for(int i = 0; i <= n; i++) dp[i].resize(sum+1);
+    
+    cout << cnt_subset(v, sum, n) << "\n"; 
 }
 
 int main()
@@ -92,7 +126,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) {
       // cout << "Case #" << test++ << ": ";
       solve();
@@ -100,3 +134,9 @@ int main()
 
     return 0;
 }
+
+// dp[][] is a 2 D global matrix/vector of vectors, with size (n+1) x (sum+1), where n is the
+// size of v vector.
+
+// Time Complexity: O(n x sum) 
+// Auxiliary Space: O(n x sum) 
