@@ -300,7 +300,7 @@ int main()
     return 0;
 }
 
-// dp[] is a 1 D global matrix/vector, with size (sum/2 + 1), where n is the size of v vector.
+// dp[] is a 1 D global matrix/vector, with size (sum/2 + 1)
 
 // Time Complexity: O(n x sum) 
 // Auxiliary Space: O(sum) 

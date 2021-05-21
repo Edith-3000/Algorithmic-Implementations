@@ -1,3 +1,15 @@
+/* Link: https://www.geeksforgeeks.org/coin-change-dp-7/
+
+   PROBLEM: Given a value "sum", if we want to make change for "sum" cents, and we have INFINITE
+            supply of each of S = { S1, S2, .. , Sm} valued coins, find out in how many ways
+            can we make the change? The order of coins does matter (i.e. find out the total 
+            #permutations)
+*/
+
+// Ref: https://www.youtube.com/watch?v=yc0LunmJA1A&list=PL-Jc9J83PIiG8fE6rj9F5a6uyQ5WPdqKy&index=14
+// The order of the nested loops in the cnt_ways() function is very important, in order to ensure to
+// aount all "PERMUTATIONS". For more info about it visit the reference link video.
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -75,9 +87,34 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
+vi dp;
+
+int cnt_ways(vi &v, int n, int sum) {
+	// initialisation of dp matrix
+	for(int i = 0; i <= sum; i++) dp[i] = 0;
+	
+	// there is only 1 ways to form sum = 0 
+	dp[0] = 1;
+
+	// choice diagram code iterative version
+	for(int amt = 1; amt <= sum; amt++) {
+		for(int i = 0; i < n; i++) {
+			if(v[i] > amt) continue;
+			dp[amt] += dp[amt - v[i]];
+		}
+	}
+
+	return dp[sum];
+}
+
 void solve()
 {
-  
+  	int n, sum; cin >> n >> sum;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	dp.resize(sum + 1);
+  	cout << cnt_ways(v, n, sum) << "\n"; 
 }
 
 int main()
@@ -96,7 +133,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) {
         // cout << "Case #" << test++ << ": ";
         solve();

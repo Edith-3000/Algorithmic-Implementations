@@ -1,11 +1,16 @@
-/* Link: https://www.geeksforgeeks.org/count-of-subsets-with-sum-equal-to-x/
-   
-   PROBLEM: Given an array arr[] of length n and an integer sum, the task is to find the 
-            number of subsets with sum of their elements equal to sum.
-            All the elements of the array are non -ve.
+/* Link: https://leetcode.com/problems/target-sum/
 
-   Ref: https://www.youtube.com/watch?v=F7wqWbqYn9g&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=9
+   PROBLEM: You are given a list of non-negative integers, a1, a2, ..., an, and a target, S.
+            Now you have 2 symbols + and -. For each integer, you should choose one from + 
+            and - as its new symbol.
+            Find out how many ways to assign symbols to make sum of integers equal to 
+            target S.
+
+   Ref: https://www.youtube.com/watch?v=Hw6Ygp3JBYw&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=12
 */
+
+// NOTE: By keen observation it can be deduced that this problem is just a slight variation of 
+//       "Count All Subset Pairs With Given Difference.cpp"
 
 // METHOD - 1
 
@@ -28,11 +33,13 @@ typedef pair<ll, ll> pll;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
+typedef vector<bool> vb;
 typedef vector<pii> vpii;
 typedef vector<pll> vpll;
 typedef vector<vi> vvi;
 typedef vector<vll> vvll;
 typedef vector<vull> vvull;
+typedef vector<vb> vvb;
 
 /************************************************** DEBUGGER ******************************************************************/
 
@@ -115,16 +122,32 @@ int cnt_subset(vi &v, int sum, int n) {
     return exp(2, zer) * dp[n][sum];
 }
 
+int target_sum(vi &v, int n, int target) {
+	// sum is to store sum of all elements of v
+	int sum = 0;
+	for(int i = 0; i < n; i++) sum += v[i];
+	
+	// base case(s)
+	if(target > sum) return 0;
+	if((target + sum) % 2 != 0) return 0;
+	
+	// to avoid overflow
+	// (S1-S2) = target, (S1+S2) = sum ==> S1 = (target+sum) / 2
+	int x = target + (sum - target) / 2;
+	
+	dp.resize(n+1);
+	for(int i = 0; i <= n; i++) dp[i].resize(x+1);
+	
+	return cnt_subset(v, x, n);
+}
+
 void solve()
 {
-    int n, sum; cin >> n >> sum;
+  	int n, target; cin >> n >> target;
     vi v(n);
     for(int i = 0; i < n; i++) cin >> v[i];
     
-    dp.resize(n+1);
-    for(int i = 0; i <= n; i++) dp[i].resize(sum+1);
-    
-    cout << cnt_subset(v, sum, n) << "\n"; 
+    cout << target_sum(v, n, target) << "\n";
 }
 
 int main()
@@ -152,13 +175,8 @@ int main()
     return 0;
 }
 
-// dp[][] is a 2 D global matrix/vector of vectors, with size (n+1) x (sum+1), where n is the
-// size of v vector.
 
-// Time Complexity: O(n x sum) 
-// Auxiliary Space: O(n x sum) 
-
-/******************************************************************************************************/
+/*******************************************************************************************************/
 
 // METHOD - 2 (Space Optimization of METHOD - 1)
 
@@ -181,11 +199,13 @@ typedef pair<ll, ll> pll;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
+typedef vector<bool> vb;
 typedef vector<pii> vpii;
 typedef vector<pll> vpll;
 typedef vector<vi> vvi;
 typedef vector<vll> vvll;
 typedef vector<vull> vvull;
+typedef vector<vb> vvb;
 
 /************************************************** DEBUGGER ******************************************************************/
 
@@ -253,15 +273,30 @@ int cnt_subset(vi &v, int sum, int n) {
     return dp[sum];
 }
 
+int target_sum(vi &v, int n, int target) {
+	// sum is to store sum of all elements of v
+	int sum = 0;
+	for(int i = 0; i < n; i++) sum += v[i];
+	
+	// base case(s)
+	if(target > sum) return 0;
+	if((target + sum) % 2 != 0) return 0;
+	
+	// to avoid overflow
+	// (S1-S2) = target, (S1+S2) = sum ==> S1 = (target+sum) / 2
+	int x = target + (sum - target) / 2;
+	
+	dp.resize(x+1);
+	return cnt_subset(v, x, n);
+}
+
 void solve()
 {
-    int n, sum; cin >> n >> sum;
+  	int n, target; cin >> n >> target;
     vi v(n);
     for(int i = 0; i < n; i++) cin >> v[i];
     
-    dp.resize(sum+1);
-    
-    cout << cnt_subset(v, sum, n) << "\n"; 
+    cout << target_sum(v, n, target) << "\n";
 }
 
 int main()
@@ -288,10 +323,3 @@ int main()
 
     return 0;
 }
-
-// dp[] is a 1 D global matrix/vector, with size (sum + 1)
-
-// Time Complexity: O(n x sum) 
-// Auxiliary Space: O(sum) 
-
-// NOTE: This solution will not be feasible for arrays with big sum.

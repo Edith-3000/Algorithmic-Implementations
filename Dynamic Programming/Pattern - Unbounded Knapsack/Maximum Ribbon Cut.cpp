@@ -1,13 +1,7 @@
-/* Link: https://www.geeksforgeeks.org/count-of-subsets-with-sum-equal-to-x/
-   
-   PROBLEM: Given an array arr[] of length n and an integer sum, the task is to find the 
-            number of subsets with sum of their elements equal to sum.
-            All the elements of the array are non -ve.
+// Problem: https://www.geeksforgeeks.org/maximum-product-cutting-dp-36/
+/*****************************************************************************************************/
 
-   Ref: https://www.youtube.com/watch?v=F7wqWbqYn9g&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=9
-*/
-
-// METHOD - 1
+// METHOD - 1 (RECURSIVE)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -28,13 +22,17 @@ typedef pair<ll, ll> pll;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
+typedef vector<bool> vb;
+typedef vector<char> vc;
 typedef vector<pii> vpii;
 typedef vector<pll> vpll;
 typedef vector<vi> vvi;
 typedef vector<vll> vvll;
 typedef vector<vull> vvull;
+typedef vector<vb> vvb;
+typedef vector<vc> vvc;
 
-/************************************************** DEBUGGER ******************************************************************/
+/************************************************** DEBUGGER *******************************************************************************************************/
 
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
@@ -52,16 +50,18 @@ void _print(ull t) { cerr << t; }
 
 template <class T, class V> void _print(pair <T, V> p);
 template <class T> void _print(vector <T> v);
+template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
 
-/******************************************************************************************************************************/
+/*******************************************************************************************************************************************************************/
 
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
 int rng(int lim) {
@@ -80,51 +80,22 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-int exp(int a, int b) {
-    int res = 1;
-    while(b > 0) {
-        if(b & 1) res = (res * a);
-        a *= a;
-        b >>= 1;
-    }
-    
-    return res;
-}
-
-vvi dp;
-
-// NOTE: the case of 0 is to be handeled specially
-int cnt_subset(vi &v, int sum, int n) {
-    // initialisation of dp matrix
-    
-    // if sum is 0, then only 1 subset is possible(i.e. Ø) 
-    for(int i = 0; i <= n; i++) dp[i][0] = 1;
-    for(int j = 1; j <= sum; j++) dp[0][j] = 0;
-    
-    // choice diagram code iterative version
-    for(int i = 1; i <= n; i++) {
-        for(int j = 1; j <= sum; j++) {
-            if(v[i-1] > j or v[i-1] == 0) dp[i][j] = dp[i-1][j];
-            else dp[i][j] = dp[i-1][j - v[i-1]] + dp[i-1][j];
-        }
-    }
-    
-    int zer = 0;
-    for(int i = 0; i < n; i++) if(v[i] == 0) zer += 1;
-    
-    return exp(2, zer) * dp[n][sum];
+int max_ribbon(int len) {
+	// base case
+	if(len <= 0 or len == 1) return 0;
+	
+	int res = INT_MIN;
+	for(int i = 1; i < len; i++) {
+		res = max(res, max(i * (len - i), i * max_ribbon(len - i)));
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    int n, sum; cin >> n >> sum;
-    vi v(n);
-    for(int i = 0; i < n; i++) cin >> v[i];
-    
-    dp.resize(n+1);
-    for(int i = 0; i <= n; i++) dp[i].resize(sum+1);
-    
-    cout << cnt_subset(v, sum, n) << "\n"; 
+  	int len; cin >> len;
+  	cout << max_ribbon(len) << "\n";
 }
 
 int main()
@@ -145,22 +116,16 @@ int main()
     // int test = 1;
     // cin >> t;
     while(t--) {
-      // cout << "Case #" << test++ << ": ";
-      solve();
+        // cout << "Case #" << test++ << ": ";
+        solve();
     }
 
     return 0;
 }
 
-// dp[][] is a 2 D global matrix/vector of vectors, with size (n+1) x (sum+1), where n is the
-// size of v vector.
-
-// Time Complexity: O(n x sum) 
-// Auxiliary Space: O(n x sum) 
-
 /******************************************************************************************************/
 
-// METHOD - 2 (Space Optimization of METHOD - 1)
+// METHOD - 2
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -181,13 +146,17 @@ typedef pair<ll, ll> pll;
 typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
+typedef vector<bool> vb;
+typedef vector<char> vc;
 typedef vector<pii> vpii;
 typedef vector<pll> vpll;
 typedef vector<vi> vvi;
 typedef vector<vll> vvll;
 typedef vector<vull> vvull;
+typedef vector<vb> vvb;
+typedef vector<vc> vvc;
 
-/************************************************** DEBUGGER ******************************************************************/
+/************************************************** DEBUGGER *******************************************************************************************************/
 
 #ifndef ONLINE_JUDGE
 #define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
@@ -205,16 +174,18 @@ void _print(ull t) { cerr << t; }
 
 template <class T, class V> void _print(pair <T, V> p);
 template <class T> void _print(vector <T> v);
+template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
 
-/******************************************************************************************************************************/
+/*******************************************************************************************************************************************************************/
 
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
 int rng(int lim) {
@@ -235,33 +206,25 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 vi dp;
 
-// NOTE: here the case of 0 is being handeled automatically
-int cnt_subset(vi &v, int sum, int n) {
-    // initialisation of dp matrix
-    for(int i = 0; i <= sum; i++) dp[i] = 0;
-    
-    // if sum is 0, then only 1 subset is possible(i.e. Ø) 
-    dp[0] = 1;
-    
-    // choice diagram code iterative version
-    for(int i = 0; i < n; i++) {
-        for(int j = sum; j >= v[i]; j--) {
-            dp[j] += dp[j - v[i]];
-        }
-    }
-    
-    return dp[sum];
+int max_ribbon(int len) {
+	// initialisation of dp matrix
+	for(int i = 0; i <= len; i++) dp[i] = INT_MIN;
+	dp[0] = dp[1] = 0;
+	
+	for(int x = 2; x <= len; x++) {
+		for(int i = 1; i < x; i++) {
+			dp[x] = max(dp[x], max(i * (x - i), i * dp[x-i]));
+		}
+	}
+	
+	return dp[len];
 }
 
 void solve()
 {
-    int n, sum; cin >> n >> sum;
-    vi v(n);
-    for(int i = 0; i < n; i++) cin >> v[i];
-    
-    dp.resize(sum+1);
-    
-    cout << cnt_subset(v, sum, n) << "\n"; 
+  	int len; cin >> len;
+  	dp.resize(len + 1);
+  	cout << max_ribbon(len) << "\n";
 }
 
 int main()
@@ -282,16 +245,9 @@ int main()
     // int test = 1;
     // cin >> t;
     while(t--) {
-      // cout << "Case #" << test++ << ": ";
-      solve();
+        // cout << "Case #" << test++ << ": ";
+        solve();
     }
 
     return 0;
 }
-
-// dp[] is a 1 D global matrix/vector, with size (sum + 1)
-
-// Time Complexity: O(n x sum) 
-// Auxiliary Space: O(sum) 
-
-// NOTE: This solution will not be feasible for arrays with big sum.

@@ -152,6 +152,8 @@ int main()
 
 /*****************************************************************************************************/
 
+// METHOD - 2 (Space Optimization of METHOD - 1)
+
 #include<bits/stdc++.h>
 using namespace std;
 
