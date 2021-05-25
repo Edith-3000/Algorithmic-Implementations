@@ -1,18 +1,80 @@
-/* Reference(s) --->
-   https://www.geeksforgeeks.org/count-palindromic-subsequence-given-string/
-   https://medium.com/@shahareg98/finding-all-palindromic-subsequence-in-the-given-string-2317fb50a2d
+/* Link: https://www.geeksforgeeks.org/check-if-a-string-is-a-scrambled-form-of-another-string/
+         https://www.interviewbit.com/problems/scramble-string/
 
-   # Very detailed mathematical explanation given at --->
-   https://www.youtube.com/watch?v=YHSjvswCXC8
+   PROBLEM: Given two strings S1 and S2 of equal length, the task is to determine if S2 is a 
+            scrambled form of S1.
+
+           Scrambled string:
+           Given string str, we can represent it as a binary tree by partitioning it to two non-empty 
+           substrings recursively.
+           # Note: Srambled string is not same as an Anagram
+           Below is one possible representation of str = “coder”:
+
+                                    coder
+                                   /    \
+                                  co    der
+                                 / \    /  \
+                                c   o  d   er
+                                           / \
+                                          e   r
+           To scramble the string, we may choose any non-leaf node and swap its two children.
+           Suppose, we choose the node "co" and swap its two children, it produces a scrambled 
+           string "ocder". 0 or more swappings are allowed.
+
+                                    ocder
+                                   /    \
+                                  oc    der
+                                 / \    /  \
+                                o   c  d   er
+                                           / \
+                                          e   r
+           Thus, “ocder” is a scrambled string of “coder”.
+
+           Similarly, if we continue to swap the children of nodes “der” and “er”, it produces a scrambled 
+           string “ocred”.
+
+                                    ocred
+                                   /    \
+                                  oc    red
+                                 / \    /  \
+                                o   c  re  d
+                                       / \
+                                      r   e
+           Thus, “ocred” is a scrambled string of “coder”.
 */
 
-// NOTE: IN THE CODES BELOW AN EMPTY SUBSEQUENCE IS NOT BEEN CONSIDERED AS A PALINDROMIC SUBSEQUENCE, IF 
-//       YOU WANT TO JUST ADD 1 TO THE FINAL RESULT.
+/******************************************************************************************************/
 
+// RECURSIVE IMPLEMENTATION
+// Ref: https://www.youtube.com/watch?v=SqA0o-DGmEw&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=40
 
-/*************************************************************************************************************/
+/*Underlying concept: 
+  # In order to obtain scrambled string s2 from s1, we divide s1 at every character, so if
+    s1.length()=n, then we check for (n-1) times using iterator i.
+  # i goes from 1 ----> (n-1), ∴ loop runs for (n-1)-1+1=(n-1) times.
+  # for every iᵗʰ iteration:
+    • for the string s1[0....(n-1)] to be a scrambled string of s2
+      there are only 2 possibilities.
+      Case 1). if the child of s1 which are strings s1ₗ[0...(i-1)] and s1ᵣ[i...(n-1)]
+               were swapped, then just find out if -->
+               s1ₗ[0...(i-1)] is scrambled string of s2ᵣ[(n-i)...(n-1)] 
+                                      &&
+               s1ᵣ[i...(n-1)] is scrambled string of s2ₗ[0...(n-i-1)] 
+               * s1ₗ = s1(left)
+                 s1ᵣ = s2(right), similarly for s2
 
-// Method 1 (Recursive approach)
+      Case 2). if the child of s1 which are strings s1ₗ[0...(i-1)] and s1ᵣ[i...(n-1)]
+               were NOT swapped, then just find out if -->
+               s1ₗ[0...(i-1)] is scrambled string of s2ₗ[0...(i-1)] 
+                                      &&
+               s1ᵣ[i...(n-1)] is scrambled string of s2ᵣ[i...(n-1)] 
+
+      Now if(Case_1==true || Case_2==true) 
+             s1 ans s2 are scrambled strings;               
+      
+ * NOTE:# All the comparisons are to be done Recursively 
+        # if s2 is scrambled string of s1, then s1 is also scrambled string of s2 & vice versa.
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -91,24 +153,42 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-ll cnt_all_PSeq(string &s, int i, int j) {
-    // base case
-    if(i == j) return 1;
-    if(i > j) return 0;
+bool is_scramble(string &s1, string &s2) {
+    int n = sz(s1), m = sz(s2);
     
-    if(s[i] == s[j]) {
-        return cnt_all_PSeq(s, i, j - 1) + cnt_all_PSeq(s, i + 1, j) + 1;
+    // base case(s)
+    if(s1 == s2) return 1;
+    if(n != m) return 0;
+    if(n <= 1) return 0;
+    
+    // choice diagram code
+    // to return final result, initially assuming that strings are not scrambled
+    bool res = 0;
+    
+    for(int i = 1; i <= (n - 1); i++) {
+        string ss1 = s1.substr(0, i), ss2 = s2.substr(n-i, i);
+        string ss3 = s1.substr(i, n-i), ss4 = s2.substr(0, n-i);
+        
+        // possibility 1: if swapping was done
+        bool op1 = is_scramble(ss1, ss2) and is_scramble(ss3, ss4);
+        
+        ss1 = s1.substr(0, i), ss2 = s2.substr(0, i);
+        ss3 = s1.substr(i, n-i), ss4 = s2.substr(i, n-i);
+        
+        // possibility 2: if swapping was not done
+        bool op2 = is_scramble(ss1, ss2) and is_scramble(ss3, ss4);
+                   
+        if(op1 or op2) { res = 1; break; }
     }
     
-    else {
-        return cnt_all_PSeq(s, i, j - 1) + cnt_all_PSeq(s, i + 1, j) - cnt_all_PSeq(s, i + 1, j - 1);
-    }
+    return res;
 }
 
 void solve()
 {
-    string s; cin >> s;
-    cout << cnt_all_PSeq(s, 0, sz(s) - 1) << "\n";
+    string s1, s2; cin >> s1 >> s2;
+    if(is_scramble(s1, s2)) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 int main()
@@ -136,11 +216,20 @@ int main()
     return 0;
 }
 
-// Time complexity: Exponential
+// This algorithm can also be implemented by choosing extreme indices i and j and 
+// "k for loop scheme".
 
-/**********************************************************************************************************/
+// Time complexity of the above naive recursive approach is exponential.
 
-// Method 2 (Bottom Up DP)
+/******************************************************************************************************/
+
+// MEMOIZED IMPLEMENTATION
+// Ref: https://www.youtube.com/watch?v=VyHEglhbm-A&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=41
+
+/* # As matrix implementation is slightly difficult(though not impossible), we will 
+     we use a std::map for cache to avoid duplicated processing.
+   # The key of the map will be a string composed of "s1 s2"
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -219,38 +308,54 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// dp[i][j] = store the count of all palindromic subseq present
-// in the string s[i.....j]
-vvll dp;
+map<string, bool> dp;
 
-ll cnt_all_PSeq(string &s) {
-    int n = sz(s);
+bool is_scramble(string &s1, string &s2) {
+    int n = sz(s1), m = sz(s2);
+    
+    // base case(s)
+    if(s1 == s2) return 1;
+    if(n != m) return 0;
+    if(n <= 1) return 0;
+    
+    // forming a unique key(type: string) of the form: "s1 s2"
+    string key = s1;
+    key.pb(' ');
+    key.append(s2);
+    
+    // check if already calculated or not
+    if(dp.find(key) != dp.end()) return dp[key]; 
+    
+    // choice diagram code
+    // to return final result, initially assuming that strings are not scrambled
+    bool res = 0;
+    
+    for(int i = 1; i <= (n - 1); i++) {
+        string ss1 = s1.substr(0, i), ss2 = s2.substr(n-i, i);
+        string ss3 = s1.substr(i, n-i), ss4 = s2.substr(0, n-i);
+        
+        // possibility 1: if swapping was done
+        bool op1 = is_scramble(ss1, ss2) and is_scramble(ss3, ss4);
+        
+        ss1 = s1.substr(0, i), ss2 = s2.substr(0, i);
+        ss3 = s1.substr(i, n-i), ss4 = s2.substr(i, n-i);
+        
+        // possibility 2: if swapping was not done
+        bool op2 = is_scramble(ss1, ss2) and is_scramble(ss3, ss4);
+                   
+        if(op1 or op2) { res = 1; break; }
+    }
+    
+    return dp[key] = res;
+}
+
+void solve()
+{
+    string s1, s2; cin >> s1 >> s2;
+    
     dp.clear();
-    dp.resize(n, vll(n));
-    
-    for(int g = 0; g < n; g++) { 
-        for(int i = 0, j = g; j < n; i++, j++) {
-            if(g == 0) dp[i][j] = 1;
-            
-            else if(g == 1) {
-                if(s[i] == s[j]) dp[i][j] = 3;
-                else dp[i][j] = 2;  
-            }
-            
-            else {
-                if(s[i] == s[j]) dp[i][j] = dp[i][j-1] + dp[i+1][j] + 1;
-                else dp[i][j] = dp[i][j-1] + dp[i+1][j] - dp[i+1][j-1];
-            }
-        } 
-    }
-    
-    return dp[0][n-1];
-}
-
-void solve()
-{
-    string s; cin >> s;
-    cout << cnt_all_PSeq(s) << "\n";
+    if(is_scramble(s1, s2)) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 int main()
@@ -278,4 +383,9 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n^2)
+// Time complexity: ??
+
+/*****************************************************************************************************/
+
+// MEMOIZED IMPLEMENTATION USING DP MATRIX
+// Ref: Editorial of Interviewbit

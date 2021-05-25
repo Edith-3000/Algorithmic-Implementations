@@ -1,18 +1,8 @@
-/* Reference(s) --->
-   https://www.geeksforgeeks.org/count-palindromic-subsequence-given-string/
-   https://medium.com/@shahareg98/finding-all-palindromic-subsequence-in-the-given-string-2317fb50a2d
+// Problem: https://leetcode.com/problems/burst-balloons/
+// Ref: https://www.youtube.com/watch?v=YzvF8CqPafI&list=PL-Jc9J83PIiEZvXCn-c5UIBvfT8dA-8EG&index=38
+/****************************************************************************************************/
 
-   # Very detailed mathematical explanation given at --->
-   https://www.youtube.com/watch?v=YHSjvswCXC8
-*/
-
-// NOTE: IN THE CODES BELOW AN EMPTY SUBSEQUENCE IS NOT BEEN CONSIDERED AS A PALINDROMIC SUBSEQUENCE, IF 
-//       YOU WANT TO JUST ADD 1 TO THE FINAL RESULT.
-
-
-/*************************************************************************************************************/
-
-// Method 1 (Recursive approach)
+// RECURSIVE APPROACH
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -91,24 +81,35 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-ll cnt_all_PSeq(string &s, int i, int j) {
-    // base case
-    if(i == j) return 1;
-    if(i > j) return 0;
-    
-    if(s[i] == s[j]) {
-        return cnt_all_PSeq(s, i, j - 1) + cnt_all_PSeq(s, i + 1, j) + 1;
-    }
-    
-    else {
-        return cnt_all_PSeq(s, i, j - 1) + cnt_all_PSeq(s, i + 1, j) - cnt_all_PSeq(s, i + 1, j - 1);
-    }
+int burst_balloon(vi &v, int i, int j) {
+	// base condition
+	if(i > j) return 0;
+	
+	// to store the final result
+	int res = INT_MIN;
+	
+	// "k loop scheme"
+	// this scheme tells that if in the subarray v[i....j] if v[k] is the 
+	// last balloon to be busted then what maximum profit we can obtain from v[i....j]
+	for(int k = i; k <= j; k++) {
+		int left = (k == i) ? 0 : burst_balloon(v, i, k - 1);
+		int right = (k == j) ? 0 : burst_balloon(v, k + 1, j);
+		int val = ((i == 0) ? 1 : v[i-1]) * v[k] * ((j == sz(v) - 1) ? 1 : v[j+1]);
+		
+		int tmp = val + left + right;
+		res = max(res, tmp);
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    string s; cin >> s;
-    cout << cnt_all_PSeq(s, 0, sz(s) - 1) << "\n";
+  	int n; cin >> n;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	cout << burst_balloon(v, 0, sz(v) - 1) << "\n";
 }
 
 int main()
@@ -138,9 +139,10 @@ int main()
 
 // Time complexity: Exponential
 
-/**********************************************************************************************************/
+/*****************************************************************************************************/
 
-// Method 2 (Bottom Up DP)
+// TABULATION IMPLEMENTATION
+// Using Gap Method
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -219,38 +221,37 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// dp[i][j] = store the count of all palindromic subseq present
-// in the string s[i.....j]
-vvll dp;
-
-ll cnt_all_PSeq(string &s) {
-    int n = sz(s);
-    dp.clear();
-    dp.resize(n, vll(n));
-    
-    for(int g = 0; g < n; g++) { 
-        for(int i = 0, j = g; j < n; i++, j++) {
-            if(g == 0) dp[i][j] = 1;
-            
-            else if(g == 1) {
-                if(s[i] == s[j]) dp[i][j] = 3;
-                else dp[i][j] = 2;  
-            }
-            
-            else {
-                if(s[i] == s[j]) dp[i][j] = dp[i][j-1] + dp[i+1][j] + 1;
-                else dp[i][j] = dp[i][j-1] + dp[i+1][j] - dp[i+1][j-1];
-            }
-        } 
-    }
-    
-    return dp[0][n-1];
+int burst_balloon(vi &v) {
+	int n = sz(v);
+	vvi dp(n, vi(n));
+	
+	for(int g = 0; g < n; g++) {
+		for(int i = 0, j = g; j < n; i++, j++) {
+			int res = INT_MIN;
+			
+			for(int k = i; k <= j; k++) {
+				int left = (k == i) ? 0 : dp[i][k-1];
+				int right = (k == j) ? 0 : dp[k+1][j];
+				int val = ((i == 0) ? 1 : v[i-1]) * v[k] * ((j == n - 1) ? 1 : v[j+1]);
+				
+				int tmp = val + left + right;
+				res = max(res, tmp);
+			}
+			
+			dp[i][j] = res;
+		}
+	}
+	
+	return dp[0][n-1];
 }
 
 void solve()
 {
-    string s; cin >> s;
-    cout << cnt_all_PSeq(s) << "\n";
+  	int n; cin >> n;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	cout << burst_balloon(v) << "\n";
 }
 
 int main()
@@ -278,4 +279,5 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n^2)
+// Time complexity: O(n^3)
+// Space complexity: O(n^2)
