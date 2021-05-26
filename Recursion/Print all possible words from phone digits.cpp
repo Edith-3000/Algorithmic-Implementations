@@ -16,10 +16,11 @@ void generate_names(char *ip, char *op, int i, int j) {
 	
 	int digit = ip[i] - '0';
 	
-	// if digit is either 0 or 1, just skim them as no characters
+	// if digit is either 0 or 1, just skip them as no characters
 	// are associated with them in a mobile keypad
 	if(digit == 0 || digit == 1) {
 		generate_names(ip, op, i + 1, j);
+		return;
 	}
 	
 	for(int k = 0; keypad[digit][k] != '\0'; k++) {

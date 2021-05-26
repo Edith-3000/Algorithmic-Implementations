@@ -5,11 +5,11 @@ using namespace std;
 void permute(int i, string &s, int n)
 {
 	// base case
-	if(i == n){
-		cout << s <<"\n";
+	if(i == n) {
+		cout << s << "\n";
 	}
 	
-	for(int j = i; j < n; j++){
+	for(int j = i; j < n; j++) {
 		// swapping done 
 		swap(s[i], s[j]);
 
@@ -32,7 +32,7 @@ int main()
 
     cout<<"Enter string: ";
     string s; cin >> s;
-    cout << s<<"\n";
+    cout << s <<"\n";
     
     int n = s.length();
     
@@ -86,8 +86,8 @@ void permute(string s)
 	// keep printing next permutation while there
     // is next permutation
 	do{
-		cout << s <<"\n";
-	}while(next_permutation(s.begin(), s.end()));
+		cout << s << "\n";
+	} while(next_permutation(s.begin(), s.end()));
 }
 
 int main()
