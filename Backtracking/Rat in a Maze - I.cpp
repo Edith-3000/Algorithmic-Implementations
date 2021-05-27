@@ -10,32 +10,32 @@
 #include<bits/stdc++.h>
 using namespace std;
 
-bool rat_in_maze(vector<vector<int>> &maze, vector<vector<int>> &v, int i, int j, int m, int n, int &cnt)
-{
+bool rat_in_maze(vector<vector<int>> &maze, vector<vector<bool>> &v, int i, int j, int m, int n, int &cnt) {
 	// base case(s)
-	if(i == (m-1) && j == (n-1)){
+	if(i == (m-1) && j == (n-1)) {
+		if(maze[i][j] == 1) return false;
 		v[i][j] = 1;
 		// we've reached the last cell successfull, print the path
 		// and increment cnt variable
 		for(int i = 0; i < m; i++){
 			for(int j = 0; j < n; j++){
-				cout << v[i][j] <<" ";
+				cout << v[i][j] << " ";
 			}
 			
 			cout<<"\n";
 		}
 		
 		cnt++;
-		cout<<"\n";
+		cout << "\n";
 		return true;
 	}
 	
 	// bounds check(rat must be inside the grid)
-	if((i >= m) || (j >= n)){
+	if((i >= m) || (j >= n)) {
 		return false;
 	}
 	
-	if(maze[i][j] == 0){
+	if(maze[i][j] == 0) {
 		return false;
 	}
 	
@@ -49,7 +49,7 @@ bool rat_in_maze(vector<vector<int>> &maze, vector<vector<int>> &v, int i, int j
 	// every time so all the path can be found and printed
 	v[i][j] = 0;
 	
-	if(right_se_path_mila || down_se_path_mila){
+	if(right_se_path_mila || down_se_path_mila) {
 		return true;
 	}
 	
@@ -61,15 +61,15 @@ int main()
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-    cout<<"Enter the #rows & #cols in the MAZE: ";
+    cout << "Enter the #rows & #cols in the MAZE: ";
     int m, n; cin >> m >> n;
-    cout << m <<" "<< n<<"\n";
+    cout << m << " " << n << "\n";
     
-    cout<<"Enter the MAZE, 0 = blocked, 1 = open: "<<"\n";
+    cout << "Enter the MAZE, 0 = blocked, 1 = open: " << "\n";
     vector<vector<int>> maze(m, vector<int>(n));
     
-    for(int i = 0; i < m; i++){
-    	for(int j = 0; j < n; j++){
+    for(int i = 0; i < m; i++) {
+    	for(int j = 0; j < n; j++) {
     		cin >> maze[i][j];
     	}
     }
@@ -80,22 +80,23 @@ int main()
     // for retreving the path
     // v[i][j] = 0 if that cell is not included in the path &
     // it will be 1 if that cell is included in the path
-    vector<vector<int>> v(m, vector<int>(n, 0));
+    vector<vector<bool>> v(m, vector<bool>(n, 0));
     
-    cout<<"=========================================="<<"\n";
+    cout << "==========================================" << "\n";
     
     bool res = rat_in_maze(maze, v, 0, 0, m, n, cnt);
-    if(res == false){
-    	cout<<"Path doesn't exist";
+    if(res == false) {
+    	cout << "Path doesn't exist";
     }
 	
-	cout<<"Total #valid paths: "<<cnt;
+	cout << "Total #valid paths: " << cnt;
 	
     return 0;
 }
 
 // Time Complexity: O(2^(n^2)), as the recursion can run upperbound 2^(n^2) times.
 // Space Complexity: O(n^2), as o/p matrix is required so an extra space of size n*n is needed.
+// https://www.geeksforgeeks.org/rat-in-a-maze-backtracking-2/
 
 /*
 
