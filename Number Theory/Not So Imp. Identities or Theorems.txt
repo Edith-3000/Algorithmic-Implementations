@@ -1,0 +1,24 @@
+// Bezout's Identity
+
+// Source: https://brilliant.org/wiki/bezouts-identity/
+
+# For nonzero integers a and b, let d be the greatest common divisor d = gcd(a,b). 
+  Then, there exist integers x and y such that ax + by = d.
+
+# Problem on this theorem:
+  https://codeforces.com/contest/1478/problem/D
+  
+  Explanation of problem:
+  https://codeforces.com/blog/entry/87294?#comment-754722
+  https://www.youtube.com/watch?v=yYxQ9_EL69Q
+
+/*********************************************************************************************************/
+
+// Chicken McNugget Theorem
+
+// Source: https://artofproblemsolving.com/wiki/index.php/Chicken_McNugget_Theorem
+
+# Problem on this theorem:
+  https://codeforces.com/contest/1526/problem/B
+
+/*********************************************************************************************************/
