@@ -39,11 +39,17 @@
   
   * Ques. based on this concept: https://www.interviewbit.com/problems/rearrange-array/
 
-#  A number 'x' is divisible by (2^a) if the number produced by the last 'a' digits of 'x' is divisible 
-   by (2^a), 
-   * Same goes for (5^a) and (10^a).
+# A number 'x' is divisible by (2^a) if the number produced by the last 'a' digits of 'x' is divisible 
+  by (2^a), 
+  * Same goes for (5^a) and (10^a).
 
-   Ques. based on this concept: https://codeforces.com/contest/1511/problem/B
+  Ques. based on this concept: https://codeforces.com/contest/1511/problem/B
 
 # Imp points regarding 𝑷𝑬𝑹𝑴𝑼𝑻𝑨𝑻𝑰𝑶𝑵𝑺 & 𝑪𝑶𝑴𝑩𝑰𝑵𝑨𝑻𝑰𝑶𝑵𝑺 ===>
   https://www.cs.sfu.ca/~ggbaker/zju/math/perm-comb-more.html
+
+# gcd(a, b) = gcd(b, a % b) = gcd(a, |a-b|) = gcd(b, |a-b|)
+  Note: The same thing also goes for gcd for more than 2 numbers.
+        
+  For more info see this ques: https://codeforces.com/problemset/problem/1458/A
+  Editorial of the above ques: https://www.youtube.com/watch?v=yFw1N7El84Y 
