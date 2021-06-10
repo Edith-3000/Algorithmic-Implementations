@@ -53,3 +53,8 @@
         
   For more info see this ques: https://codeforces.com/problemset/problem/1458/A
   Editorial of the above ques: https://www.youtube.com/watch?v=yFw1N7El84Y 
+
+# If (a % b) > (b % a) implies (b > a)
+  If (a % b) == (b % a) implies (b == a)
+
+  Ques. based on this concept: https://codeforces.com/problemset/problem/1407/C
