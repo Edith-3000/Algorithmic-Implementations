@@ -58,3 +58,9 @@
   If (a % b) == (b % a) implies (b == a)
 
   Ques. based on this concept: https://codeforces.com/problemset/problem/1407/C
+
+# If gcd(a, n) == 1 and gcd(b, n) == 1 implies gcd(a * b, n) == 1
+  Vice versa is also true.
+
+  https://www.youtube.com/watch?v=SslPWR2N5jA
+  Ques. based on this concept: https://codeforces.com/problemset/problem/1514/C
