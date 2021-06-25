@@ -1,30 +1,28 @@
 // Reference: https://cp-algorithms.com/data_structures/disjoint_set_union.html
 
-====================================================================================================================
+/********************************************************************************************************/
 
 // NAIVE IMPLEMENTATION OF THE 3 OPERATIONS (make_set(v), find_set(v), union_sets(a, b)) 
 
-void make_set(int v){
+void make_set(int v) {
 	parent[v] = -1;
 }
 
-int find_set(int v)
-{
+int find_set(int v) {
 	// base condition
-	if(parent[v]==-1)
-		return v;
+	if(parent[v] == -1) return v;
 
+	// otherwise
 	return find_set(parent[v]);
 }
 
-void union_sets(int a, int b)
-{
-	a = find_set(a);
-	b = find_set(b);
+void union_sets(int a, int b) {
+	int s1 = find_set(a);
+	int s2 = find_set(b);
 
-	if(a!=b) parent[b]=a; // or parent[a]=b;
+	if(s1 != s2) parent[s2] = s1; // or parent[s1] = s2;
 }
 
 // Time complexity: O(n)
 
-====================================================================================================================
+/********************************************************************************************************/
