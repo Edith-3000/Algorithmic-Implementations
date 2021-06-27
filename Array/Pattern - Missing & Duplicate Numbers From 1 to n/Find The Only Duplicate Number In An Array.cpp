@@ -1,33 +1,9 @@
-// Problem: Given an array of n integers. Find the maximum sum of any contiguous sub-array.
-// Ref: https://www.techiedelight.com/maximum-subarray-problem-kadanes-algorithm/
-/****************************************************************************************************/
-
-// BRUTE FORCE APPROACH (O(n³))
-// Make use of 3 loops and find the maximum contiguous sum.
-
-/* # Time Complexity: O(n³)
-   # Space complexity: O(1)
-*/
-
+// Problem: https://leetcode.com/problems/find-the-duplicate-number/
+// Ref: https://www.youtube.com/watch?v=32Ll35mhWg0
 /*****************************************************************************************************/
 
-// BRUTE FORCE APPROACH (O(n²))
-// Make use of 2 loops and find the maximum contiguous sum.
-
-/* # Time Complexity: O(n²)
-   # Space complexity: O(1)
-*/
-
-/*****************************************************************************************************/
-
-// LINEAR TIME IMPLEMENTATION (USING KADANE’s ALGORITHM)
-// This implementation handles the case of -ve numbers as well.
-
-/* Because of the way this algorithm uses optimal substructures (the maximum subarray ending at 
-   each position is calculated in a simple way from a related but smaller and overlapping subproblem: 
-   the maximum subarray ending at the previous position) this algorithm can be viewed as a simple 
-   example of Dynamic Programming.
-*/
+// The method used is very much similar to the one used in "Linked List Cycle Detection Algorithm" using
+// Floyd Cycle Detection (Fast and Slow Pointers)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -50,6 +26,7 @@ typedef vector<ll> vll;
 typedef vector<ull> vull;
 typedef vector<bool> vb;
 typedef vector<char> vc;
+typedef vector<string> vs;
 typedef vector<pii> vpii;
 typedef vector<pll> vpll;
 typedef vector<vi> vvi;
@@ -57,6 +34,7 @@ typedef vector<vll> vvll;
 typedef vector<vull> vvull;
 typedef vector<vb> vvb;
 typedef vector<vc> vvc;
+typedef vector<vs> vvs;
 
 /************************************************** DEBUGGER *******************************************************************************************************/
 
@@ -106,38 +84,32 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-ll kadane_algo(vi &v) {
-	int n = sz(v);
-	if(n == 0) return 0LL;
+int find_duplicate(vi &v) {
+	int slow = v[0];
+	int fast = v[0];
 	
-	// to store the final result
-	ll res = v[0];
+	do {
+		slow = v[slow];
+		fast = v[v[fast]];
+	} while(slow != fast);
 	
-	// stores the maximum sum of subarray ending at the current position i
-	ll max_ending_here = v[0];
+	slow = v[0];
 	
-	for(int i = 1; i < n; i++) {
-		// update the maximum sum of subarray "ending" at index 'i' (by adding the
-      // current element to maximum sum ending at previous index 'i-1')
-		max_ending_here += v[i];
-		
-		// maximum sum should be more than the current element
-		max_ending_here = max(max_ending_here, (ll)v[i]);
-		
-		// update the result if the current subarray sum is found to be greater
-		res = max(res, max_ending_here);
+	while(slow != fast) {
+		slow = v[slow];
+		fast = v[fast];
 	}
 	
-	return res;
+	return slow; // or fast
 }
 
 void solve()
 {
   	int n; cin >> n;
-  	vi v(n);
-  	for(int i = 0; i < n; i++) cin >> v[i];
+  	vi v(n + 1);
+  	for(int i = 0; i <= n; i++) cin >> v[i];
   	
-  	cout << kadane_algo(v) << "\n";
+  	cout << find_duplicate(v) << "\n";
 }
 
 int main()
@@ -164,6 +136,3 @@ int main()
 
     return 0;
 }
-
-// Time Complexity: O(n)
-// Space Complexity: O(1)

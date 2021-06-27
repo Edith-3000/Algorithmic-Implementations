@@ -1,33 +1,7 @@
-// Problem: Given an array of n integers. Find the maximum sum of any contiguous sub-array.
-// Ref: https://www.techiedelight.com/maximum-subarray-problem-kadanes-algorithm/
-/****************************************************************************************************/
+// Problem: https://practice.geeksforgeeks.org/problems/minimize-the-heights3351/1#
+// ReF: https://www.youtube.com/watch?v=X2TufR5vY98
 
-// BRUTE FORCE APPROACH (O(n³))
-// Make use of 3 loops and find the maximum contiguous sum.
-
-/* # Time Complexity: O(n³)
-   # Space complexity: O(1)
-*/
-
-/*****************************************************************************************************/
-
-// BRUTE FORCE APPROACH (O(n²))
-// Make use of 2 loops and find the maximum contiguous sum.
-
-/* # Time Complexity: O(n²)
-   # Space complexity: O(1)
-*/
-
-/*****************************************************************************************************/
-
-// LINEAR TIME IMPLEMENTATION (USING KADANE’s ALGORITHM)
-// This implementation handles the case of -ve numbers as well.
-
-/* Because of the way this algorithm uses optimal substructures (the maximum subarray ending at 
-   each position is calculated in a simple way from a related but smaller and overlapping subproblem: 
-   the maximum subarray ending at the previous position) this algorithm can be viewed as a simple 
-   example of Dynamic Programming.
-*/
+/******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -50,6 +24,7 @@ typedef vector<ll> vll;
 typedef vector<ull> vull;
 typedef vector<bool> vb;
 typedef vector<char> vc;
+typedef vector<string> vs;
 typedef vector<pii> vpii;
 typedef vector<pll> vpll;
 typedef vector<vi> vvi;
@@ -57,6 +32,7 @@ typedef vector<vll> vvll;
 typedef vector<vull> vvull;
 typedef vector<vb> vvb;
 typedef vector<vc> vvc;
+typedef vector<vs> vvs;
 
 /************************************************** DEBUGGER *******************************************************************************************************/
 
@@ -106,26 +82,42 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-ll kadane_algo(vi &v) {
+int find_ans(vi &v, int k) {
 	int n = sz(v);
-	if(n == 0) return 0LL;
+	vpii tmp;
 	
-	// to store the final result
-	ll res = v[0];
+	for(int i = 0; i < n; i++) {
+		if(v[i] - k >= 0) tmp.pb({v[i] - k, i});
+		tmp.pb({v[i] + k, i});
+	}
 	
-	// stores the maximum sum of subarray ending at the current position i
-	ll max_ending_here = v[0];
+	sort(tmp.begin(), tmp.end());
 	
-	for(int i = 1; i < n; i++) {
-		// update the maximum sum of subarray "ending" at index 'i' (by adding the
-      // current element to maximum sum ending at previous index 'i-1')
-		max_ending_here += v[i];
+	int m = sz(tmp);
+	int i = 0, j = 0, ele = 0;
+	vi vis(n, 0);
+	
+	while(ele < n and j < m) {
+		if(vis[tmp[j].S] == 0) ele += 1;
+		vis[tmp[j].S] += 1;
+		j += 1;
+	}
+	
+	int res = tmp[j - 1].F - tmp[i].F;
+	
+	while(j < m) {
+		if(vis[tmp[i].S] == 1) ele -= 1;
+		vis[tmp[i].S] -= 1;
+		i += 1;
 		
-		// maximum sum should be more than the current element
-		max_ending_here = max(max_ending_here, (ll)v[i]);
+		while(ele < n and j < m) {
+			if(vis[tmp[j].S] == 0) ele += 1;
+			vis[tmp[j].S] += 1;
+			j += 1;
+		}
 		
-		// update the result if the current subarray sum is found to be greater
-		res = max(res, max_ending_here);
+		if(ele == n) res = min(res, tmp[j - 1].F - tmp[i].F);
+		else break;
 	}
 	
 	return res;
@@ -133,11 +125,11 @@ ll kadane_algo(vi &v) {
 
 void solve()
 {
-  	int n; cin >> n;
+  	int n, k; cin >> n >> k;
   	vi v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	cout << kadane_algo(v) << "\n";
+  	cout << find_ans(v, k) << "\n";
 }
 
 int main()
@@ -164,6 +156,3 @@ int main()
 
     return 0;
 }
-
-// Time Complexity: O(n)
-// Space Complexity: O(1)

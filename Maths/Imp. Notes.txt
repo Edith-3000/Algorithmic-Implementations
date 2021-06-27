@@ -64,3 +64,7 @@
 
   https://www.youtube.com/watch?v=SslPWR2N5jA
   Ques. based on this concept: https://codeforces.com/problemset/problem/1514/C
+
+# Every number can be represented uniquely in any integral base greater than 1. It will result in a 
+  unique representation.
+  https://codeforces.com/blog/entry/70898?#comment-554230
