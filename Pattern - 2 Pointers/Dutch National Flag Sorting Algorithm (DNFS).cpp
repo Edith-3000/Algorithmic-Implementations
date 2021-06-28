@@ -9,6 +9,9 @@
             NOTE - Do in a single scan of the array.
 */
 
+// Another problem based on similar concept --->
+// https://www.geeksforgeeks.org/three-way-partitioning-of-an-array-around-a-given-range/
+
 #include<bits/stdc++.h>
 using namespace std;
 
