@@ -1,3 +1,6 @@
+// Problem: https://www.geeksforgeeks.org/find-common-elements-three-sorted-arrays/
+/***************************************************************************************************/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -77,60 +80,44 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// Pass the vector v[] by reference
-void merge_procedure(vi &v, int start, int end, int n) {
-	// temporary vector to store the sorted result 
-	vi tmp(n);
-	int mid = start + (end - start)/2;
+vi find_common(vi &v1, vi &v2, vi &v3) {
+	int n1 = sz(v1), n2 = sz(v2), n3 = sz(v3);
+	int i = 0, j = 0, k = 0;
 	
-	// i = iterator for the first half
-	// j = iterator for the second half
-	// k = iterator fot the tmp[] vector
-	int i = start, j = mid + 1, k = start;
-	
-	while(i <= mid && j <= end) {
-		if(v[i] < v[j]) tmp[k++] = v[i++];
-		else tmp[k++] = v[j++];
+	vi res;
+	while(i < n1 and j < n2 and k < n3) {
+		while(i + 1 < n1 and v1[i] == v1[i+1]) i++;
+		while(j + 1 < n2 and v2[j] == v2[j+1]) j++;
+		while(k + 1 < n3 and v3[k] == v3[k+1]) k++;
+		
+		if(v1[i] == v2[j] and v2[j] == v3[k]) {
+			res.pb(v1[i]);
+			i++, j++, k++;
+		}
+		
+		else if(v1[i] < v2[j]) i++;
+		else if(v2[j] < v3[k]) j++;
+		else k++;
 	}
 	
-	// fill the array if some of the elements are still left
-	while(i <= mid) tmp[k++] = v[i++];
-	while(j <= end)	tmp[k++] = v[j++];
-	
-	// copying back the sorted elements of the 2 parts
-	// in the original array
-	for(int x = start; x <= end; x++) v[x] = tmp[x];
-}
-
-// Pass the vector v[] by reference
-void merge_sort(vi &v, int start, int end, int n) {
-	// Base case(s)
-	if(start >= end) return;
-	
-	// Step 1: divide the array
-	int mid = start + (end - start)/2;
-	
-	// Step 2: sort the array (recursively)
-	merge_sort(v, start, mid, n);
-	merge_sort(v, mid + 1, end, n);
-	
-	// Step 3: merge the sorted array back
-	merge_procedure(v, start, end, n);
+	return res;
 }
 
 void solve()
 {
-  	int n; cin >> n;
-  	vi v(n);
-  	for(int i = 0; i < n; i++) cin >> v[i];
+  	int n1, n2, n3;
+  	cin >> n1 >> n2 >> n3;
   	
-  	// IT IS A DIVIDE & CONQUER SORTING ALGORITHM.
-  	merge_sort(v, 0, n - 1, n);
+  	vi v1(n1), v2(n2), v3(n3);
   	
-	cout << "Sorted array: \n";
-	for(auto x: v) cout << x << " ";
-	
-	cout << "\n";
+  	for(int i = 0; i < n1; i++) cin >> v1[i];
+  	for(int j = 0; j < n2; j++) cin >> v2[j];
+  	for(int k = 0; k < n3; k++) cin >> v3[k];
+  	
+  	vi res = find_common(v1, v2, v3);
+  	
+  	for(auto x: res) cout << x << " ";
+  	cout << "\n";
 }
 
 int main()

@@ -36,7 +36,7 @@ const int mod = 1e9+7;
 
 // Function to print subarray with sum as given sum = k
 void find_subarr(vll &v, ll n, ll k) {
-	unordered_map<ll, ll> um;
+	map<ll, ll> m;
 	
 	// Maintains sum of elements so far 
 	ll cur_sum = 0;
@@ -54,12 +54,12 @@ void find_subarr(vll &v, ll n, ll k) {
 		
 		 // If curr_sum - sum already exists in map we have found a 
 		 // subarray with target sum 
-		if(um.find(cur_sum - k) != um.end()) {
-			for(ll j = um[cur_sum - k] + 1; j <= i; j++) cout << v[j] << " ";
+		if(m.find(cur_sum - k) != m.end()) {
+			for(ll j = m[cur_sum - k] + 1; j <= i; j++) cout << v[j] << " ";
 			return;
 		}
 		
-		um[cur_sum] = i;
+		m[cur_sum] = i;
 	}
 }
 
@@ -91,4 +91,4 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n)
+// Time complexity: O(n x log(n))

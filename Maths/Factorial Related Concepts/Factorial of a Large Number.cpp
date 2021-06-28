@@ -1,3 +1,6 @@
+// Problem: https://www.geeksforgeeks.org/factorial-large-number/
+/*******************************************************************************************************/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -77,60 +80,63 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// Pass the vector v[] by reference
-void merge_procedure(vi &v, int start, int end, int n) {
-	// temporary vector to store the sorted result 
-	vi tmp(n);
-	int mid = start + (end - start)/2;
+int multiply(vi &v, int x, int res_size) {
+	int carry = 0, prod;
 	
-	// i = iterator for the first half
-	// j = iterator for the second half
-	// k = iterator fot the tmp[] vector
-	int i = start, j = mid + 1, k = start;
-	
-	while(i <= mid && j <= end) {
-		if(v[i] < v[j]) tmp[k++] = v[i++];
-		else tmp[k++] = v[j++];
+	for(int i = 0; i < res_size; i++) {
+		prod = (v[i] * x) + carry;
+		
+		// store last digit of 'prod' in v[]  
+		v[i] = prod % 10;
+		
+		// put rest of the digits of prod in carry
+		carry = prod / 10;
 	}
 	
-	// fill the array if some of the elements are still left
-	while(i <= mid) tmp[k++] = v[i++];
-	while(j <= end)	tmp[k++] = v[j++];
+	// put remaining digits of carry in v[]
+	while(carry) {
+		v[res_size] = carry % 10;
+		carry /= 10;
+		res_size += 1;
+	}
 	
-	// copying back the sorted elements of the 2 parts
-	// in the original array
-	for(int x = start; x <= end; x++) v[x] = tmp[x];
+	return res_size;
 }
 
-// Pass the vector v[] by reference
-void merge_sort(vi &v, int start, int end, int n) {
-	// Base case(s)
-	if(start >= end) return;
+vi large_factorial(int n) {
+	// factorial of -ve nos. is undefined
+	if(n < 0) return vi();
 	
-	// Step 1: divide the array
-	int mid = start + (end - start)/2;
+	// change size of vector acc. to the requirements,
+    // v stores the current factorial & eventually final result
+    // in reverse order
+	vi v(1000000, 0);
 	
-	// Step 2: sort the array (recursively)
-	merge_sort(v, start, mid, n);
-	merge_sort(v, mid + 1, end, n);
+	// 0! = 1! = 1
+	v[0] = 1; 
 	
-	// Step 3: merge the sorted array back
-	merge_procedure(v, start, end, n);
+	// it stores the length of the current factorial
+	// and eventually stores the #digits in the ans
+    int res_size = 1; 
+    
+    for(int x = 2; x <= n; x++) {
+    	res_size = multiply(v, x, res_size);
+    }
+    
+    vi res;
+    for(int i = res_size - 1; i >= 0; i--) res.pb(v[i]);
+    
+    return res;                  
 }
 
 void solve()
 {
   	int n; cin >> n;
-  	vi v(n);
-  	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	// IT IS A DIVIDE & CONQUER SORTING ALGORITHM.
-  	merge_sort(v, 0, n - 1, n);
+  	vi res = large_factorial(n);
+  	for(auto x: res) cout << x;
   	
-	cout << "Sorted array: \n";
-	for(auto x: v) cout << x << " ";
-	
-	cout << "\n";
+  	cout << "\n";
 }
 
 int main()

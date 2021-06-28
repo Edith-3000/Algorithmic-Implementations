@@ -1,3 +1,6 @@
+// Ref: https://www.geeksforgeeks.org/count-pairs-with-given-sum/
+/****************************************************************************************************/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -77,60 +80,36 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// Pass the vector v[] by reference
-void merge_procedure(vi &v, int start, int end, int n) {
-	// temporary vector to store the sorted result 
-	vi tmp(n);
-	int mid = start + (end - start)/2;
+ll find_pairs(vi &v, int k) {
+	int n = sz(v);
 	
-	// i = iterator for the first half
-	// j = iterator for the second half
-	// k = iterator fot the tmp[] vector
-	int i = start, j = mid + 1, k = start;
-	
-	while(i <= mid && j <= end) {
-		if(v[i] < v[j]) tmp[k++] = v[i++];
-		else tmp[k++] = v[j++];
-	}
-	
-	// fill the array if some of the elements are still left
-	while(i <= mid) tmp[k++] = v[i++];
-	while(j <= end)	tmp[k++] = v[j++];
-	
-	// copying back the sorted elements of the 2 parts
-	// in the original array
-	for(int x = start; x <= end; x++) v[x] = tmp[x];
-}
+    // store count of all elements in map m
+    map<int, int> m;
+	for(int i = 0; i < n; i++) m[v[i]]++;
 
-// Pass the vector v[] by reference
-void merge_sort(vi &v, int start, int end, int n) {
-	// Base case(s)
-	if(start >= end) return;
-	
-	// Step 1: divide the array
-	int mid = start + (end - start)/2;
-	
-	// Step 2: sort the array (recursively)
-	merge_sort(v, start, mid, n);
-	merge_sort(v, mid + 1, end, n);
-	
-	// Step 3: merge the sorted array back
-	merge_procedure(v, start, end, n);
+	// to store the result
+	ll res = 0; 
+
+    // iterate through each element and increment the 
+    // count (Notice that every pair is counted twice) 
+	for(int i = 0; i < n; i++) {
+	   	res += m[k - v[i]];
+	   
+		// to ensure that the same element is not taken as a pair
+	    if((k - v[i]) == v[i]) res--;
+	}
+
+    // return the half of twice_count 
+	return res / 2;
 }
 
 void solve()
 {
-  	int n; cin >> n;
+  	int n, k; cin >> n >> k;
   	vi v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	// IT IS A DIVIDE & CONQUER SORTING ALGORITHM.
-  	merge_sort(v, 0, n - 1, n);
-  	
-	cout << "Sorted array: \n";
-	for(auto x: v) cout << x << " ";
-	
-	cout << "\n";
+  	cout << find_pairs(v, k) << "\n";
 }
 
 int main()
@@ -157,3 +136,11 @@ int main()
 
     return 0;
 }
+
+// Time Complexity : O(n x log(n))
+// Auxiliary Space : O(unique elements in the array)
+
+/***************************************************************************************************/
+
+// Another method with the help of sorting and 2 pointrs can be found here --->
+// https://www.geeksforgeeks.org/count-pairs-with-given-sum-set-2/

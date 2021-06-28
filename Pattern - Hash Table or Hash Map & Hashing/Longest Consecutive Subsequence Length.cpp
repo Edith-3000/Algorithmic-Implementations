@@ -1,3 +1,14 @@
+// Ref: https://www.geeksforgeeks.org/longest-consecutive-subsequence/
+//      https://www.youtube.com/watch?v=qgizvmgeyUM
+/*****************************************************************************************************/
+
+// METHOD - 1 
+// Using sorting the array.
+
+/****************************************************************************************************/
+
+// METHOD - 2
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -77,45 +88,28 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// Pass the vector v[] by reference
-void merge_procedure(vi &v, int start, int end, int n) {
-	// temporary vector to store the sorted result 
-	vi tmp(n);
-	int mid = start + (end - start)/2;
+int long_consec_seq(vi &v) {
+	int n = sz(v);
+	if(n <= 1) return n;
 	
-	// i = iterator for the first half
-	// j = iterator for the second half
-	// k = iterator fot the tmp[] vector
-	int i = start, j = mid + 1, k = start;
+	map<int, int> m;
+	for(int i = 0; i < n; i++) m[v[i]] = 1;
 	
-	while(i <= mid && j <= end) {
-		if(v[i] < v[j]) tmp[k++] = v[i++];
-		else tmp[k++] = v[j++];
+	int res = 1;
+	
+	for(int i = 0; i < n; i++) {
+		if(!m.count(v[i] - 1)) {
+			int num = v[i], len = 1;
+			while(m.count(num + 1)) {
+				num += 1;
+				len += 1;
+			}
+			
+			res = max(res, len);
+		}
 	}
 	
-	// fill the array if some of the elements are still left
-	while(i <= mid) tmp[k++] = v[i++];
-	while(j <= end)	tmp[k++] = v[j++];
-	
-	// copying back the sorted elements of the 2 parts
-	// in the original array
-	for(int x = start; x <= end; x++) v[x] = tmp[x];
-}
-
-// Pass the vector v[] by reference
-void merge_sort(vi &v, int start, int end, int n) {
-	// Base case(s)
-	if(start >= end) return;
-	
-	// Step 1: divide the array
-	int mid = start + (end - start)/2;
-	
-	// Step 2: sort the array (recursively)
-	merge_sort(v, start, mid, n);
-	merge_sort(v, mid + 1, end, n);
-	
-	// Step 3: merge the sorted array back
-	merge_procedure(v, start, end, n);
+	return res;
 }
 
 void solve()
@@ -124,13 +118,7 @@ void solve()
   	vi v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	// IT IS A DIVIDE & CONQUER SORTING ALGORITHM.
-  	merge_sort(v, 0, n - 1, n);
-  	
-	cout << "Sorted array: \n";
-	for(auto x: v) cout << x << " ";
-	
-	cout << "\n";
+  	cout << long_consec_seq(v) << "\n";
 }
 
 int main()

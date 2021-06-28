@@ -61,8 +61,7 @@ void find_pairs(vi &v, int n, int k) {
 		}
 	}
 	
-	cout << res.size() << "\n";
-	for(auto x: res) cout << x.F << " " << x.S << "\n";	
+	return res;
 }
 
 void solve()
@@ -71,7 +70,12 @@ void solve()
   	vi v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	find_pairs(v, n, k);
+  	vpii res = find_pairs(v, n, k);
+
+  	cout << res.size() << "\n";
+	for(auto x: res) cout << x.F << " " << x.S << "\n";	
+
+	cout << "\n";
 }
 
 int main()
