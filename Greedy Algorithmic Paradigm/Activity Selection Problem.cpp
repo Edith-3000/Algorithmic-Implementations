@@ -87,3 +87,8 @@ int main()
 
 // Time complexity: O(n x log(n)) (for 1 test case)
 // Space complexity: O(1)
+
+/****************************************************************************************************/
+
+// NOTE: Using similar concepts following can also be solved --->
+//       https://www.geeksforgeeks.org/maximum-trains-stoppage-can-provided/
