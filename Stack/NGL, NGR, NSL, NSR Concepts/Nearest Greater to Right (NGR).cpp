@@ -6,16 +6,16 @@
 
 // BRUTE FORCE APPROACH = O(n²)
 
-==================================================================================================================
+/******************************************************************************************************/
 
 // EFFICENT APPROACH
 
 /*UNDERLYING CONCEPT ----->
   # There are 3 conditions which are to be checked ->
-    1. If stack.size()==0, push -1 in the result vector res.
-    2. If stack.top()>v[i], push stack.top() in the resul vector rest.
-    3. If stack.top()<=v[i], perform stack.pop() until the stack is empty or stack.top()>v[i],
-       if stack.top()>v[i], push stack.top() in the result vector res
+    1. If stack.size() == 0, push -1 in the result vector res.
+    2. If stack.top() > v[i], push stack.top() in the resul vector rest.
+    3. If stack.top() <= v[i], perform stack.pop() until the stack is empty or stack.top()>v[i],
+       if stack.top() > v[i], push stack.top() in the result vector res
        else push -1 in the result vector res.
 */
 
@@ -26,8 +26,7 @@ using namespace std;
 #define S second
 
 // Function which return the NGR elements for every array element
-vector<int> ngr_elements(vector<int> &v)
-{
+vector<int> ngr_elements(vector<int> &v) {
 	int n = (int)v.size();
 	if(n <= 0) return v;
 
@@ -40,7 +39,7 @@ vector<int> ngr_elements(vector<int> &v)
 		if(st.empty()) res[i] = -1;
 		else if(st.top() > v[i]) res[i] = st.top();
 
-		else if(st.top() <= v[i]) {
+		else {
 			while(!st.empty() && st.top() <= v[i]) st.pop();
 
 			if(st.empty()) res[i] = -1;
@@ -106,30 +105,30 @@ using namespace std;
 // Function which return the 0-based indices of the NGR elements 
 // for every array element
 vector<int> ngr_indices(vector<int> &v) {
-  int n = (int)v.size();
-  if(n <= 0) return v;
+    int n = (int)v.size();
+    if(n <= 0) return v;
 
-  // to store the final result
-  vector<int> res(n);
+    // to store the final result
+    vector<int> res(n);
   
-  stack<pair<int, int>> st; 
+    stack<pair<int, int>> st; 
 
-  for(int i = n - 1; i >= 0; i--) {
-    if(st.empty()) res[i] = -1;
-    else if(st.top().F > v[i]) res[i] = st.top().S;
+    for(int i = n - 1; i >= 0; i--) {
+        if(st.empty()) res[i] = -1;
+        else if(st.top().F > v[i]) res[i] = st.top().S;
 
-    else if(st.top().F <= v[i]) {
-      while(!st.empty() && st.top().F <= v[i]) st.pop();
+        else {
+            while(!st.empty() && st.top().F <= v[i]) st.pop();
 
-      if(st.empty()) res[i] = -1;
-      else res[i] = st.top().S;
+            if(st.empty()) res[i] = -1;
+            else res[i] = st.top().S;
+        }
+
+        st.push({v[i], i});
     }
 
-    st.push({v[i], i});
-  }
-
-  // return the final res vector
-  return res;
+    // return the final res vector
+    return res;
 }
 
 void solve()
@@ -141,7 +140,7 @@ void solve()
     vector<int> res = ngr_indices(v);
     
     for(int i = 0; i < n; i++) {
-      cout << res[i] << " ";
+        cout << res[i] << " ";
     }
     
     cout << "\n";

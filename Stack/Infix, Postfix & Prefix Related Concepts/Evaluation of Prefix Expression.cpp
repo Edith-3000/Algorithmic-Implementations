@@ -1,6 +1,9 @@
 // Ref: https://www.geeksforgeeks.org/evaluation-prefix-expressions/
 /********************************************************************************************************/
 
+// Prefix notation is also known as Polish notation.
+// https://www.geeksforgeeks.org/arithmetic-expression-evalution/
+
 #include<bits/stdc++.h>
 using namespace std;
 

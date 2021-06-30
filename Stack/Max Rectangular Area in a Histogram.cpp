@@ -67,7 +67,7 @@ vector<int> nsl_indices(vector<int> &v) {
 		if(st.empty()) res[i] = pseudo_idx;
 		else if(st.top().F < v[i]) res[i] = st.top().S;
 
-		else if(st.top().F >= v[i]) {
+		else {
 			while(!st.empty() && st.top().F >= v[i]) st.pop();
 
 			if(st.empty()) res[i] = pseudo_idx;
@@ -97,7 +97,7 @@ vector<int> nsr_indices(vector<int> &v) {
 		if(st.empty()) res[i] = pseudo_idx;
 		else if(st.top().F < v[i]) res[i] = st.top().S;
 
-		else if(st.top().F >= v[i]) {
+		else {
 			while(!st.empty() && st.top().F >= v[i]) st.pop();
 
 			if(st.empty()) res[i] = pseudo_idx;
@@ -111,7 +111,7 @@ vector<int> nsr_indices(vector<int> &v) {
 	return res;
 }
 
-int max_rect(vi &v) {
+int max_rect_in_hist(vi &v) {
 	int n = (int)v.size();
 	if(n == 0) return 0;
 	
@@ -133,7 +133,7 @@ void solve()
   	vi v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	cout << max_rect(v) << "\n";
+  	cout << max_rect_in_hist(v) << "\n";
 }
 
 int main()
@@ -150,8 +150,8 @@ int main()
     // int test = 1;
     // cin >> t;
     while(t--) {
-      // cout << "Case #" << test++ << ": ";
-      solve();
+     	// cout << "Case #" << test++ << ": ";
+      	solve();
     }
 
     return 0;

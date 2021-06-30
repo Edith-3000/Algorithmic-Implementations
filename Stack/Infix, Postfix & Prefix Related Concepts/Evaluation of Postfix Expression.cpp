@@ -3,6 +3,9 @@
 //      https://www.youtube.com/watch?v=q6tj7yplRck
 /******************************************************************************************************/
 
+// Postfix notation is also known as Reverse polish notation.
+// https://www.geeksforgeeks.org/arithmetic-expression-evalution/
+
 #include<bits/stdc++.h>
 using namespace std;
 

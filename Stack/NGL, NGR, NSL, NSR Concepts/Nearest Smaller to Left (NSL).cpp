@@ -1,5 +1,5 @@
-/*PROBLEM STATEMENT: Given an array of integers, find the nearest smaller number for every element such that 
-                     the smaller element is on right side.
+/*PROBLEM STATEMENT: Given an array of integers, find the nearest smaller number for every element such 
+                     that the smaller element is on left side.
 */
 
 #include<bits/stdc++.h>
@@ -8,33 +8,32 @@ using namespace std;
 #define F first
 #define S second
 
-// Function which return the NSR elements for every array element
-vector<int> nsr_elements(vector<int> &v)
-{
-	int n = (int)v.size();
-	if(n <= 0) return v;
+// Function which return the NSL elements for every array element
+vector<int> nsl_elements(vector<int> &v) {
+    int n = (int)v.size();
+    if(n <= 0) return v;
 
-	// to store the final result
-	vector<int> res(n);
+    // to store the final result
+    vector<int> res(n);
 
-	stack<int> st; 
+    stack<int> st; 
 
-	for(int i = n - 1; i >= 0; i--) {
-		if(st.empty()) res[i] = -1;
-		else if(st.top() < v[i]) res[i] = st.top();
+    for(int i = 0; i < n; i++) {
+	    if(st.empty()) res[i] = -1;
+	    else if(st.top() < v[i]) res[i] = st.top();
 
-		else if(st.top() >= v[i]) {
-			while(!st.empty() && st.top() >= v[i]) st.pop();
+	    else {
+		    while(!st.empty() && st.top() >= v[i]) st.pop();
 
-			if(st.empty()) res[i] = -1;
-			else res[i] = st.top();
-		}
+		    if(st.empty()) res[i] = -1;
+		    else res[i] = st.top();
+	    }
 
-		st.push(v[i]);
-	}
+	    st.push(v[i]);
+    }
 
-	// return the final res vector
-	return res;
+    // return the final res vector
+    return res;
 }
 
 void solve()
@@ -43,10 +42,10 @@ void solve()
   	vector<int> v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	vector<int> res = nsr_elements(v);
+  	vector<int> res = nsl_elements(v);
   	
   	for(int i = 0; i < n; i++) {
-  		cout << res[i] << " ";
+  			cout << res[i] << " ";
   	}
   	
   	cout << "\n";
@@ -78,7 +77,7 @@ int main()
    						    as in this case the stack size will be 'n'.
 */
 
-/****************************************************************************************************/
+/********************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -86,33 +85,33 @@ using namespace std;
 #define F first
 #define S second
 
-// Function which return the 0-based indices of the NSR elements 
+// Function which return the 0-based indices of the NSL elements 
 // for every array element
-vector<int> nsr_indices(vector<int> &v) {
-	int n = (int)v.size();
-	if(n <= 0) return v;
+vector<int> nsl_indices(vector<int> &v) {
+    int n = (int)v.size();
+    if(n <= 0) return v;
 
-	// to store the final result
-	vector<int> res(n);
+    // to store the final result
+    vector<int> res(n);
 
-	stack<pair<int, int>> st; 
+    stack<pair<int, int>> st; 
 
-	for(int i = n - 1; i >= 0; i--) {
-		if(st.empty()) res[i] = -1;
-		else if(st.top().F < v[i]) res[i] = st.top().S;
+    for(int i = 0; i < n; i++) {
+	    if(st.empty()) res[i] = -1;
+	    else if(st.top().F < v[i]) res[i] = st.top().S;
 
-		else if(st.top().F >= v[i]) {
-			while(!st.empty() && st.top().F >= v[i]) st.pop();
+	    else {
+		    while(!st.empty() && st.top().F >= v[i]) st.pop();
 
-			if(st.empty()) res[i] = -1;
-			else res[i] = st.top().S;
-		}
+		    if(st.empty()) res[i] = -1;
+		    else res[i] = st.top().S;
+	   	}
 
-		st.push({v[i], i});
-	}
+	    st.push({v[i], i});
+    }
 
-	// return the final res vector
-	return res;
+    // return the final res vector
+    return res;
 }
 
 void solve()
@@ -121,10 +120,10 @@ void solve()
   	vector<int> v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	vector<int> res = nsr_indices(v);
+  	vector<int> res = nsl_indices(v);
   	
   	for(int i = 0; i < n; i++) {
-  		cout << res[i] << " ";
+  			cout << res[i] << " ";
   	}
   	
   	cout << "\n";

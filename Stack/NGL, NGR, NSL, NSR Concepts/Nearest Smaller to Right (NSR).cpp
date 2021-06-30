@@ -1,5 +1,5 @@
-/*PROBLEM STATEMENT: Given an array of integers, find the nearest smaller number for every element such that 
-                     the smaller element is on left side.
+/*PROBLEM STATEMENT: Given an array of integers, find the nearest smaller number for every element such 
+                     that the smaller element is on right side.
 */
 
 #include<bits/stdc++.h>
@@ -8,9 +8,8 @@ using namespace std;
 #define F first
 #define S second
 
-// Function which return the NSL elements for every array element
-vector<int> nsl_elements(vector<int> &v)
-{
+// Function which return the NSR elements for every array element
+vector<int> nsr_elements(vector<int> &v) {
 	int n = (int)v.size();
 	if(n <= 0) return v;
 
@@ -19,11 +18,11 @@ vector<int> nsl_elements(vector<int> &v)
 
 	stack<int> st; 
 
-	for(int i = 0; i < n; i++) {
+	for(int i = n - 1; i >= 0; i--) {
 		if(st.empty()) res[i] = -1;
 		else if(st.top() < v[i]) res[i] = st.top();
 
-		else if(st.top() >= v[i]) {
+		else {
 			while(!st.empty() && st.top() >= v[i]) st.pop();
 
 			if(st.empty()) res[i] = -1;
@@ -43,7 +42,7 @@ void solve()
   	vector<int> v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	vector<int> res = nsl_elements(v);
+  	vector<int> res = nsr_elements(v);
   	
   	for(int i = 0; i < n; i++) {
   		cout << res[i] << " ";
@@ -78,7 +77,7 @@ int main()
    						    as in this case the stack size will be 'n'.
 */
 
-/********************************************************************************************************/
+/****************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -86,9 +85,9 @@ using namespace std;
 #define F first
 #define S second
 
-// Function which return the 0-based indices of the NSL elements 
+// Function which return the 0-based indices of the NSR elements 
 // for every array element
-vector<int> nsl_indices(vector<int> &v) {
+vector<int> nsr_indices(vector<int> &v) {
 	int n = (int)v.size();
 	if(n <= 0) return v;
 
@@ -97,11 +96,11 @@ vector<int> nsl_indices(vector<int> &v) {
 
 	stack<pair<int, int>> st; 
 
-	for(int i = 0; i < n; i++) {
+	for(int i = n - 1; i >= 0; i--) {
 		if(st.empty()) res[i] = -1;
 		else if(st.top().F < v[i]) res[i] = st.top().S;
 
-		else if(st.top().F >= v[i]) {
+		else {
 			while(!st.empty() && st.top().F >= v[i]) st.pop();
 
 			if(st.empty()) res[i] = -1;
@@ -121,7 +120,7 @@ void solve()
   	vector<int> v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	vector<int> res = nsl_indices(v);
+  	vector<int> res = nsr_indices(v);
   	
   	for(int i = 0; i < n; i++) {
   		cout << res[i] << " ";

@@ -2,6 +2,13 @@
 //      https://www.youtube.com/watch?v=qC5DGX0CPFA
 /********************************************************************************************************/
 
+// METHOD - 1 (O(n^2))
+// Check every substring if it's valid and update the maximum length.
+
+/*******************************************************************************************************/
+
+// METHOD - 2 (O(n) time and space)
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -108,3 +115,8 @@ int main()
 
 // TC: O(n)
 // SC: O(n)
+
+/*****************************************************************************************************/
+
+// METHOD - 3 (O(n) time and space)
+// Refer GfG article.
