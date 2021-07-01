@@ -63,7 +63,7 @@ vector<int> nsl_indices(vector<int> &v) {
 	stack<pair<int, int>> st; 
 	int pseudo_idx = -1;
 
-	for(int i = 0; i < n; i++) {
+    for(int i = 0; i < n; i++) {
 		if(st.empty()) res[i] = pseudo_idx;
 		else if(st.top().F < v[i]) res[i] = st.top().S;
 
@@ -75,9 +75,9 @@ vector<int> nsl_indices(vector<int> &v) {
 		}
 
 		st.push({v[i], i});
-	}
+    }
 
-	// return the final res vector
+    // return the final res vector
 	return res;
 }
 
@@ -151,7 +151,7 @@ int main()
     // cin >> t;
     while(t--) {
      	// cout << "Case #" << test++ << ": ";
-      	solve();
+    	solve();
     }
 
     return 0;

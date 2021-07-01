@@ -38,7 +38,11 @@ const int mod = 1e9+7;
 
 string non_repeat_chars(string s) {
     int n = s.size();
+
+    // to store the frequency of each character
     vector<int> cnt(26, 0);
+
+    // to store the potential candidates which can be our answer
     queue<char> q;
     
     string res = "";
