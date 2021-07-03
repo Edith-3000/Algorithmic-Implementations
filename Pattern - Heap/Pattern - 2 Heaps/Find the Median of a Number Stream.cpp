@@ -1,4 +1,6 @@
 // Ref: https://www.geeksforgeeks.org/median-of-stream-of-integers-running-integers/
+//      https://www.geeksforgeeks.org/median-of-stream-of-running-integers-using-stl/
+/*****************************************************************************************************/
 
 /* PROBLEM STATEMENT: Design a class to calculate the median of a number stream. 
    The class should have the following two methods:
@@ -56,63 +58,63 @@ Example:
 using namespace std;
 
 class Median {
-	// data members
-	// contains first half of numbers
-	priority_queue<int> maxHeap;
-	
-	// contains second half of numbers
-	priority_queue<int, vector<int>, greater<int>> minHeap;
-	
-	public:
-		// member functions
-		void insertNum(int num) {
-			if(maxHeap.size() == 0 or maxHeap.top() >= num) maxHeap.push(num);
-			else minHeap.push(num);
-			
-			// either both the heaps will have equal number of elements or 
-			// max-heap will have one more element than the min-heap
-			if(maxHeap.size() > (minHeap.size()+1)) {
-				minHeap.push(maxHeap.top());
-				maxHeap.pop();
-			}
-			
-			else if(maxHeap.size() < minHeap.size()) {
-				maxHeap.push(minHeap.top());
-				minHeap.pop();
-			}
-		}
-		
-		double findMedian() {
-			// we have even number of elements take avg of middle 2 elements
-			if(maxHeap.size() == minHeap.size() && maxHeap.size() != 0)
-				return maxHeap.top()/2.0 + minHeap.top()/2.0;
-			
-			// because max-heap will have 1 one more element than the minHeap	
-			else return maxHeap.top();
-		}
+    // data members
+    // contains first half of numbers
+    priority_queue<int> maxHeap;
+    
+    // contains second half of numbers
+    priority_queue<int, vector<int>, greater<int>> minHeap;
+    
+    public:
+        // member functions
+        void insertNum(int num) {
+            if(maxHeap.size() == 0 or maxHeap.top() >= num) maxHeap.push(num);
+            else minHeap.push(num);
+            
+            // either both the heaps will have equal number of elements or 
+            // max-heap will have one more element than the min-heap
+            if(maxHeap.size() > (minHeap.size()+1)) {
+                minHeap.push(maxHeap.top());
+                maxHeap.pop();
+            }
+            
+            else if(maxHeap.size() < minHeap.size()) {
+                maxHeap.push(minHeap.top());
+                minHeap.pop();
+            }
+        }
+        
+        double findMedian() {
+            // we have even number of elements take avg of middle 2 elements
+            if(maxHeap.size() == minHeap.size() && maxHeap.size() != 0)
+                return maxHeap.top()/2.0 + minHeap.top()/2.0;
+            
+            // because max-heap will have 1 one more element than the minHeap   
+            else return maxHeap.top();
+        }
 };
 
 void solve()
 {
-  	Median m;
-  	
-  	// #queries
-  	int q; cin >> q;
-  	
-  	for(int i = 0; i < q; i++) {
-  		// 1. insertNum(), 2. findMedian()
-  		int type; cin >> type;
-  		
-  		if(type == 1) {
-  			int x; cin >> x;
-  			m.insertNum(x);
-  		}
-  		
-  		else {
-  			cout << "Median: " << m.findMedian();
-  			cout << "\n";
-  		}
-  	}
+    Median m;
+    
+    // #queries
+    int q; cin >> q;
+    
+    for(int i = 0; i < q; i++) {
+        // 1. insertNum(), 2. findMedian()
+        int type; cin >> type;
+        
+        if(type == 1) {
+            int x; cin >> x;
+            m.insertNum(x);
+        }
+        
+        else {
+            cout << "Median: " << m.findMedian();
+            cout << "\n";
+        }
+    }
 }
 
 int main()

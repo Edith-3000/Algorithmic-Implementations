@@ -1,13 +1,13 @@
-/*Problem Statement: Given a list of ‘K’ sorted arrays, merge them into one sorted list.
-*/
+// Problem Statement: Given a list of 'k' sorted arrays, merge them into one sorted list.
 
-/*UNDERLYING CONCEPT ------>
-  This problem is similar to Merge K Sorted Lists except that the input is a list of arrays compared 
-  to LinkedLists. To handle this, we can use a similar approach as discussed in our parent problem by 
-  keeping a track of the array and the element indices.
+/* UNDERLYING CONCEPT ------>
+   This problem is similar to Merge K Sorted Lists except that the input is a list of arrays compared 
+   to LinkedLists. To handle this, we can use a similar approach as discussed in our parent problem by 
+   keeping a track of the array and the element indices.
 */
 
 // Ref: https://www.geeksforgeeks.org/merge-k-sorted-arrays-set-2-different-sized-arrays/
+/******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -52,8 +52,8 @@ struct cmp {
 vi merge_k_sorted_arrays(vvi &v) {
 	int k = (int)v.size();
 	
-	 // Create a min heap with k heap nodes. Every heap node has first 
-	 // element of an array
+	// Create a min heap with k heap nodes. Every heap node has first 
+	// element of an array
 	priority_queue<pair<int, pii>, vector<pair<int, pii>>, cmp> q;
 	
 	for(int i = 0; i < k; i++) {
@@ -115,9 +115,11 @@ int main()
     // int test = 1;
     // cin >> t;
     while(t--) {
-      // cout << "Case #" << test++ << ": ";
-      solve();
+    	// cout << "Case #" << test++ << ": ";
+      	solve();
     }
 
     return 0;
 }
+
+// Time complexity: O(n x log(k)), where n = count of all elements in all the vectors.

@@ -1,0 +1,20 @@
+# A heap is a COMPLETE BINARY TREE, the reason being in most of the algorithms they are represented
+  using arrays and there must be no gap in array elements for space optimizations.
+  However, they can also be implemented using linked list.
+
+# A COMPLETE BINARY TREE is a binary tree in which every level, except possibly the last, is completely
+  filled, and all nodes are as far left as possible.
+
+# A FULL BINARY TREE (sometimes proper binary tree or 2-tree) is a tree in which every node other than 
+  the leaves has two children
+
+# More info: https://web.cecs.pdx.edu/~sheard/course/Cs163/Doc/FullvsComplete.html
+
+# Every number in the heap must be >= all its descendents in case of max heap and vice-versa for min heap.
+
+# As heap is a complete binary tree, therefore the height of the tree will always be O(log(n)), i.e.
+  it won't increase unnecessarily.
+
+# Heap is not used for searching purposes but for other causes.
+
+# From heap you can only delete the root element.

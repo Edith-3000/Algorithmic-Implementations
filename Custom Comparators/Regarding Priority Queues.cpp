@@ -1,5 +1,5 @@
 // If we want to sort a priority queue using custom comparator "class", then use below snippet --->
-// NOTE: It's onlt for reference, the value stored in priority queue can be changed acc. to the need.
+// NOTE: It's only for reference, the value stored in priority queue can be changed acc. to the need.
 
 // Here a "min heap" type priority queue is being implemented
 class cmp {
@@ -35,5 +35,8 @@ priority_queue<pair<int, pii>, vector<pair<int, pii>>, cmp> q;
 
 // One other way using Lambdas:
 // https://www.youtube.com/watch?v=WhIcVlkZ19s&t=542
+
+// https://www.includehelp.com/stl/user-defined-comparator-for-priority-queue-in-cpp-stl.aspx
+// https://www.geeksforgeeks.org/stl-priority-queue-for-structure-or-class/
 
 /*****************************************************************************************************/

@@ -1,4 +1,5 @@
-// PROBLEM STATEMENT: Given an unsorted array of numbers, find the 'K' largest numbers in it.
+// PROBLEM STATEMENT: Given an unsorted array of numbers, find the 'k' largest numbers in it.
+// Ref: https://www.youtube.com/watch?v=3DdP6Ef8YZM&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=3
 /**************************************************************************************************/
 
 #include<bits/stdc++.h>
@@ -34,20 +35,20 @@ const int mod = 1e9+7;
 
 vi top_k_nums(vi &v, int k) {
 	int n = (int)v.size();
-	if(n == 0) return vi();
+	if(k > n) return vi();
 	
-	priority_queue<int, vi, greater<int>> mn_heap;
+	priority_queue<int, vi, greater<int>> mnh;
 	
 	for(int i = 0; i < n; i++) {
-		mn_heap.push(v[i]);
-		if((int)mn_heap.size() > k) mn_heap.pop();
+		mnh.push(v[i]);
+		if((int)mnh.size() > k) mnh.pop();
 	}
 	
 	vi res;
 	
-	while(!mn_heap.empty()) {
-		res.pb(mn_heap.top());
-		mn_heap.pop();
+	while(!mnh.empty()) {
+		res.pb(mnh.top());
+		mnh.pop();
 	}
 	
 	return res;
