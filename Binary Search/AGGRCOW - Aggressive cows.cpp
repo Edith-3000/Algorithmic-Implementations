@@ -1,20 +1,18 @@
-// Prob: https://leetcode.com/problems/search-in-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU
-//      https://www.youtube.com/watch?v=r3pMQ8-Ad5s
-/****************************************************************************************************/
+// Prob: https://www.spoj.com/problems/AGGRCOW/
+// Ref: https://www.youtube.com/watch?v=wSOfYesTBRk&list=PLgUwDviBIf0qYbL4TBaEWgb-ljVdhkM7R&index=9
+/*******************************************************************************************************/
 
-/* # The main concept behind the algorithm is in an rotated sorted array -
-     * The subarray from start to min_index - 1 is sorted.
-     * The subarray from min_index - 1 to end is sorted.
-
-   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
-                 2. Find the element either in start to min_index-1 or min_index-1 to end.
-*/
-
-/***************************************************************************************************/
-
-// METHOD - 1 
-// Ref: https://www.youtube.com/watch?v=r3pMQ8-Ad5s
+// Problem: Aggressive cows
+// Contest: SPOJ - Classical
+// URL: https://www.spoj.com/problems/AGGRCOW/
+// Memory Limit: 1536 MB
+// Time Limit: 2000 ms
+// Parsed on: 04-07-2021 15:28:43 IST (UTC+05:30)
+// Author: Kapil Choudhary
+// ********************************************************************
+// कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
+// मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि || १.४७ ||
+// ********************************************************************
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -95,48 +93,41 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// returns 0-based index
-int bin_search(vi &v, int k) {
-	int n = sz(v);
-	if(n == 0) return -1;
+// check if a distance of d is possible b/w each cow
+bool good(vll &v, int k, ll d) {
+	// greedy approach, put each cow in the first place you can
+	int cnt = 1, prev = v[0];
 	
-	int lo = 0, hi = n - 1;
-	
-	while(lo <= hi) {
-		int m = lo + ((hi - lo) >> 1);
-		
-		// if target key found
-		if(v[m] == k) return m;
-		
-		// if left half of the array is sorted
-		if(v[lo] <= v[m]) {
-			if(k >= v[lo] and k <= v[m]) hi = m - 1;
-			else lo = m + 1;
+	for(int i = 1; i < sz(v); i++) {
+		if(v[i] - prev >= d) {
+			cnt += 1;
+			prev = v[i];
 		}
 		
-		// if right half of the array is sorted
-		else {
-			if(k >= v[m] and k <= v[hi]) lo = m + 1;
-			else hi = m - 1;
-		}
+		if(cnt == k) return 1;
 	}
 	
-	return -1;
+	return 0;
 }
 
-// input array must be sorted rotated array
 void solve()
 {
-	int n; cin >> n;
-    vi v(n);
-    for(int i = 0; i < n; i++) cin >> v[i];
-    
-    int q; cin >> q;
-    
-    while(q--) {
-    	int k; cin >> k;
-    	cout << bin_search(v, k) << "\n";
-    }
+  	int n, k; cin >> n >> k;
+  	vll v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	sort(v.begin(), v.end());
+  	
+  	ll lo = 1, hi = v[n-1] - v[0];
+  	ll res = -1;
+  	
+  	while(lo <= hi) {
+  		ll m = lo + ((hi - lo) >> 1);
+  		if(good(v, k, m)) res = m, lo = m + 1;
+  		else hi = m - 1;
+  	}
+  	
+  	cout << res << "\n";
 }
 
 int main()
@@ -155,7 +146,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) {
         // cout << "Case #" << test++ << ": ";
         solve();
@@ -163,11 +154,3 @@ int main()
 
     return 0;
 }
-
-/*****************************************************************************************************/
-
-// METHOD - 2 
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=8
-
-// This method is similar to METHOD - 1, but it first find the index of the minimum element and then
-// perfrom binary search on the 2 sorted array parts.

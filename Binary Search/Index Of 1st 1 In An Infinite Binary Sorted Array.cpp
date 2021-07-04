@@ -1,20 +1,12 @@
-// Prob: https://leetcode.com/problems/search-in-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU
-//      https://www.youtube.com/watch?v=r3pMQ8-Ad5s
-/****************************************************************************************************/
+// Prob: https://www.geeksforgeeks.org/find-index-first-1-infinite-sorted-array-0s-1s/
+// Ref: https://www.youtube.com/watch?v=8x6dmO6XW8k&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=14
+/*******************************************************************************************************/
 
-/* # The main concept behind the algorithm is in an rotated sorted array -
-     * The subarray from start to min_index - 1 is sorted.
-     * The subarray from min_index - 1 to end is sorted.
+// The problem is a combination of following 2 problems with key = 1 ==>
+// 1). Find position of an element in an infinite sorted array.
+// 2). First occurrence of an element in a sorted array.
 
-   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
-                 2. Find the element either in start to min_index-1 or min_index-1 to end.
-*/
-
-/***************************************************************************************************/
-
-// METHOD - 1 
-// Ref: https://www.youtube.com/watch?v=r3pMQ8-Ad5s
+/*******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -95,48 +87,35 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// returns 0-based index
+// it retunrns an index
 int bin_search(vi &v, int k) {
-	int n = sz(v);
-	if(n == 0) return -1;
-	
-	int lo = 0, hi = n - 1;
-	
-	while(lo <= hi) {
-		int m = lo + ((hi - lo) >> 1);
-		
-		// if target key found
-		if(v[m] == k) return m;
-		
-		// if left half of the array is sorted
-		if(v[lo] <= v[m]) {
-			if(k >= v[lo] and k <= v[m]) hi = m - 1;
-			else lo = m + 1;
-		}
-		
-		// if right half of the array is sorted
-		else {
-			if(k >= v[m] and k <= v[hi]) lo = m + 1;
-			else hi = m - 1;
-		}
-	}
-	
-	return -1;
+    int lo = 0, hi = 1;
+    
+    while(v[hi] == 0) {
+        lo = hi;
+        hi *= 2;
+    }
+    
+    int res = -1;   
+    
+    while(lo <= hi) {
+        int m = lo + ((hi - lo) >> 1);
+        
+        if(v[m] == k)  res = m, hi = m - 1;
+        else if(k > v[m]) lo = m + 1;
+        else hi = m - 1;
+    }
+    
+    return res;
 }
 
-// input array must be sorted rotated array
 void solve()
 {
-	int n; cin >> n;
+    int n; cin >> n;
     vi v(n);
     for(int i = 0; i < n; i++) cin >> v[i];
     
-    int q; cin >> q;
-    
-    while(q--) {
-    	int k; cin >> k;
-    	cout << bin_search(v, k) << "\n";
-    }
+    cout << bin_search(v, 1) << "\n";
 }
 
 int main()
@@ -164,10 +143,4 @@ int main()
     return 0;
 }
 
-/*****************************************************************************************************/
-
-// METHOD - 2 
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=8
-
-// This method is similar to METHOD - 1, but it first find the index of the minimum element and then
-// perfrom binary search on the 2 sorted array parts.
+// Time complexity: Refer GfG article.

@@ -1,20 +1,6 @@
-// Prob: https://leetcode.com/problems/search-in-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU
-//      https://www.youtube.com/watch?v=r3pMQ8-Ad5s
-/****************************************************************************************************/
-
-/* # The main concept behind the algorithm is in an rotated sorted array -
-     * The subarray from start to min_index - 1 is sorted.
-     * The subarray from min_index - 1 to end is sorted.
-
-   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
-                 2. Find the element either in start to min_index-1 or min_index-1 to end.
-*/
-
-/***************************************************************************************************/
-
-// METHOD - 1 
-// Ref: https://www.youtube.com/watch?v=r3pMQ8-Ad5s
+// Prob: https://www.geeksforgeeks.org/search-almost-sorted-array/
+// Ref: https://www.youtube.com/watch?v=W3-KgsCVH1U&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=9
+/*******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -108,23 +94,18 @@ int bin_search(vi &v, int k) {
 		// if target key found
 		if(v[m] == k) return m;
 		
-		// if left half of the array is sorted
-		if(v[lo] <= v[m]) {
-			if(k >= v[lo] and k <= v[m]) hi = m - 1;
-			else lo = m + 1;
-		}
+		// check for adjacent elements
+		if((m - 1) >= lo and v[m-1] == k) return m - 1;
+		else if((m + 1) <= hi and v[m+1] == k) return m + 1;
 		
-		// if right half of the array is sorted
-		else {
-			if(k >= v[m] and k <= v[hi]) lo = m + 1;
-			else hi = m - 1;
-		}
+		if(k > v[m]) lo = m + 2;
+		else hi = m - 2;
 	}
 	
 	return -1;
 }
 
-// input array must be sorted rotated array
+// input array must be nearly sorted array
 void solve()
 {
 	int n; cin >> n;
@@ -163,11 +144,3 @@ int main()
 
     return 0;
 }
-
-/*****************************************************************************************************/
-
-// METHOD - 2 
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=8
-
-// This method is similar to METHOD - 1, but it first find the index of the minimum element and then
-// perfrom binary search on the 2 sorted array parts.

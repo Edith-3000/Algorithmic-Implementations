@@ -1,20 +1,6 @@
-// Prob: https://leetcode.com/problems/search-in-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU
-//      https://www.youtube.com/watch?v=r3pMQ8-Ad5s
-/****************************************************************************************************/
-
-/* # The main concept behind the algorithm is in an rotated sorted array -
-     * The subarray from start to min_index - 1 is sorted.
-     * The subarray from min_index - 1 to end is sorted.
-
-   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
-                 2. Find the element either in start to min_index-1 or min_index-1 to end.
-*/
-
-/***************************************************************************************************/
-
-// METHOD - 1 
-// Ref: https://www.youtube.com/watch?v=r3pMQ8-Ad5s
+// Prob: https://www.geeksforgeeks.org/smallest-alphabet-greater-than-a-given-character/
+// Ref: https://www.youtube.com/watch?v=X45c37QMdX0&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=12
+/******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -95,47 +81,39 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// returns 0-based index
-int bin_search(vi &v, int k) {
-	int n = sz(v);
-	if(n == 0) return -1;
-	
-	int lo = 0, hi = n - 1;
-	
-	while(lo <= hi) {
-		int m = lo + ((hi - lo) >> 1);
-		
-		// if target key found
-		if(v[m] == k) return m;
-		
-		// if left half of the array is sorted
-		if(v[lo] <= v[m]) {
-			if(k >= v[lo] and k <= v[m]) hi = m - 1;
-			else lo = m + 1;
-		}
-		
-		// if right half of the array is sorted
-		else {
-			if(k >= v[m] and k <= v[hi]) lo = m + 1;
-			else hi = m - 1;
-		}
-	}
-	
-	return -1;
+// it returns a character, not an index
+char bin_search_nxt(vc &v, char k) {
+    int n = sz(v);
+    if(n == 0) return -1;
+    
+    if(k >= v[n-1]) return v[0];
+    
+    int lo = 0, hi = n - 1;
+    char res = '#';
+    
+    while(lo <= hi) {
+        int m = lo + ((hi - lo) >> 1);
+        
+        if(v[m] == k) lo = m + 1;       
+        else if(k > v[m]) lo = m + 1;
+        else res = v[m], hi = m - 1;
+    }
+    
+    return res;
 }
 
-// input array must be sorted rotated array
+// input character array must be sorted
 void solve()
 {
-	int n; cin >> n;
-    vi v(n);
+    int n; cin >> n;
+    vc v(n);
     for(int i = 0; i < n; i++) cin >> v[i];
     
     int q; cin >> q;
     
     while(q--) {
-    	int k; cin >> k;
-    	cout << bin_search(v, k) << "\n";
+        char k; cin >> k;
+        cout << bin_search_nxt(v, k) << "\n";
     }
 }
 
@@ -163,11 +141,3 @@ int main()
 
     return 0;
 }
-
-/*****************************************************************************************************/
-
-// METHOD - 2 
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=8
-
-// This method is similar to METHOD - 1, but it first find the index of the minimum element and then
-// perfrom binary search on the 2 sorted array parts.

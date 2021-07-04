@@ -1,20 +1,5 @@
-// Prob: https://leetcode.com/problems/search-in-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU
-//      https://www.youtube.com/watch?v=r3pMQ8-Ad5s
-/****************************************************************************************************/
-
-/* # The main concept behind the algorithm is in an rotated sorted array -
-     * The subarray from start to min_index - 1 is sorted.
-     * The subarray from min_index - 1 to end is sorted.
-
-   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
-                 2. Find the element either in start to min_index-1 or min_index-1 to end.
-*/
-
-/***************************************************************************************************/
-
-// METHOD - 1 
-// Ref: https://www.youtube.com/watch?v=r3pMQ8-Ad5s
+// Ref: https://www.youtube.com/watch?v=WjpswYrS2nY&list=PLgUwDviBIf0qYbL4TBaEWgb-ljVdhkM7R&index=2
+/********************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -95,48 +80,38 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// returns 0-based index
-int bin_search(vi &v, int k) {
-	int n = sz(v);
-	if(n == 0) return -1;
+double exp(double a, ll b) {
+	double res = 1.0;
 	
-	int lo = 0, hi = n - 1;
-	
-	while(lo <= hi) {
-		int m = lo + ((hi - lo) >> 1);
-		
-		// if target key found
-		if(v[m] == k) return m;
-		
-		// if left half of the array is sorted
-		if(v[lo] <= v[m]) {
-			if(k >= v[lo] and k <= v[m]) hi = m - 1;
-			else lo = m + 1;
-		}
-		
-		// if right half of the array is sorted
-		else {
-			if(k >= v[m] and k <= v[hi]) lo = m + 1;
-			else hi = m - 1;
-		}
+	while(b > 0) {
+		if(b & 1) res *= a;
+		a *= a;
+		b >>= 1;
 	}
 	
-	return -1;
+	return res;
 }
 
-// input array must be sorted rotated array
+double get_nth_root(ll n, ll m, ll places) {
+	double lo = 1.0;
+	double hi = m;
+	double eps = 1.0 / exp(10.0, places + 1);
+	
+	while((hi - lo) > eps) {
+		double mid = (lo + hi) / 2.0;
+		if(exp(mid, n) < m) lo = mid; 
+        else hi = mid; 
+	}
+	
+	return lo; // or hi
+}
+
 void solve()
 {
-	int n; cin >> n;
-    vi v(n);
-    for(int i = 0; i < n; i++) cin >> v[i];
-    
-    int q; cin >> q;
-    
-    while(q--) {
-    	int k; cin >> k;
-    	cout << bin_search(v, k) << "\n";
-    }
+  	ll n, m, places;
+  	cin >> n >> m >> places;
+  	
+  	cout << get_nth_root(n, m, places) << "\n";
 }
 
 int main()
@@ -164,10 +139,5 @@ int main()
     return 0;
 }
 
-/*****************************************************************************************************/
-
-// METHOD - 2 
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=8
-
-// This method is similar to METHOD - 1, but it first find the index of the minimum element and then
-// perfrom binary search on the 2 sorted array parts.
+// Time complexity: log(n) x O(log(m x (10^places)))
+// Explained in the reference video.

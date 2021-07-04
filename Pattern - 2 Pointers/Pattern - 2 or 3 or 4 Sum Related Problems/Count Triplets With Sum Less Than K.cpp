@@ -1,20 +1,6 @@
-// Prob: https://leetcode.com/problems/search-in-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU
-//      https://www.youtube.com/watch?v=r3pMQ8-Ad5s
-/****************************************************************************************************/
-
-/* # The main concept behind the algorithm is in an rotated sorted array -
-     * The subarray from start to min_index - 1 is sorted.
-     * The subarray from min_index - 1 to end is sorted.
-
-   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
-                 2. Find the element either in start to min_index-1 or min_index-1 to end.
-*/
-
-/***************************************************************************************************/
-
-// METHOD - 1 
-// Ref: https://www.youtube.com/watch?v=r3pMQ8-Ad5s
+// Prob: https://www.geeksforgeeks.org/count-triplets-with-sum-smaller-that-a-given-value/
+// Ref: https://www.youtube.com/watch?v=9455buJlb_k&list=PLDdcY4olLQk0s0bWkiDmSnDBrdCbqTXi7&index=10
+/*******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -95,48 +81,39 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// returns 0-based index
-int bin_search(vi &v, int k) {
-	int n = sz(v);
-	if(n == 0) return -1;
+ll less_sum(vi &v, ll k) {
+	int n = (int)v.size();
+	if(n == 0) return 0LL;
 	
-	int lo = 0, hi = n - 1;
+	ll res = 0LL;
 	
-	while(lo <= hi) {
-		int m = lo + ((hi - lo) >> 1);
+	sort(v.begin(), v.end());
+	
+	for(int i = 0; i + 2 < n; i++) {
+		int lo = i + 1, hi = n - 1;
 		
-		// if target key found
-		if(v[m] == k) return m;
-		
-		// if left half of the array is sorted
-		if(v[lo] <= v[m]) {
-			if(k >= v[lo] and k <= v[m]) hi = m - 1;
-			else lo = m + 1;
-		}
-		
-		// if right half of the array is sorted
-		else {
-			if(k >= v[m] and k <= v[hi]) lo = m + 1;
-			else hi = m - 1;
+		while(lo < hi) {
+			if(v[i] + v[lo] + v[hi] >= k) hi--;			
+			else {
+				res += (hi - lo);
+				lo++;
+			}
 		}
 	}
 	
-	return -1;
+	return res;
 }
 
-// input array must be sorted rotated array
 void solve()
 {
-	int n; cin >> n;
-    vi v(n);
-    for(int i = 0; i < n; i++) cin >> v[i];
-    
-    int q; cin >> q;
-    
-    while(q--) {
-    	int k; cin >> k;
-    	cout << bin_search(v, k) << "\n";
-    }
+  	int n; ll k;
+  	cin >> n >> k;
+  	
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	ll res = less_sum(v, k);
+  	cout << res << "\n";
 }
 
 int main()
@@ -163,11 +140,3 @@ int main()
 
     return 0;
 }
-
-/*****************************************************************************************************/
-
-// METHOD - 2 
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=8
-
-// This method is similar to METHOD - 1, but it first find the index of the minimum element and then
-// perfrom binary search on the 2 sorted array parts.

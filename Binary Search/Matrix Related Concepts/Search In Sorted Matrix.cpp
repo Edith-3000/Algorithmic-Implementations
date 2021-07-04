@@ -37,6 +37,7 @@ bool search_matrix(vvi &v, int k) {
 	int m = v[0].size();
 	
 	int L = 0, R = (n * m) - 1;
+	
 	while(L <= R) {
 		int mid = L + ((R - L) >> 1);
 		int x = mid / m;

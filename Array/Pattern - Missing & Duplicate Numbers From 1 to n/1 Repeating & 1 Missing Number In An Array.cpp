@@ -472,7 +472,7 @@ int main()
 
 // OTHER IMPLEMENTATIONS
 
-//OPTIMIZED IMPLEMENTATION USINIG Swap Sort
+// OPTIMIZED IMPLEMENTATION USINIG Swap Sort
 // REf: https://i.ytimg.com/vi/KOsS5-1q9rU/hq720.jpg?sqp=-oaymwEcCOgCEMoBSFXyq4qpAw4IARUAAIhCGAFwAcABBg==&rs=AOn4CLDK-vZ6OnFP4j8hUGXEmQVM6jV0lw
 
 /* # The method using maths is not scalable i.e. it will be very much complicated if multiple missing and 

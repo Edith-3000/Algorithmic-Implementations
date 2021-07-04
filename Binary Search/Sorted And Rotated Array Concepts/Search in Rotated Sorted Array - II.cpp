@@ -1,20 +1,8 @@
-// Prob: https://leetcode.com/problems/search-in-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU
-//      https://www.youtube.com/watch?v=r3pMQ8-Ad5s
-/****************************************************************************************************/
+// Problem: https://leetcode.com/problems/search-in-rotated-sorted-array-ii/
+// Ref: https://www.youtube.com/watch?v=WkihvY2rJjc
+/******************************************************************************************************/
 
-/* # The main concept behind the algorithm is in an rotated sorted array -
-     * The subarray from start to min_index - 1 is sorted.
-     * The subarray from min_index - 1 to end is sorted.
-
-   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
-                 2. Find the element either in start to min_index-1 or min_index-1 to end.
-*/
-
-/***************************************************************************************************/
-
-// METHOD - 1 
-// Ref: https://www.youtube.com/watch?v=r3pMQ8-Ad5s
+// NOTE: Don't know why not getting an AC verdict on leetcode, although running fine locally.
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -108,8 +96,11 @@ int bin_search(vi &v, int k) {
 		// if target key found
 		if(v[m] == k) return m;
 		
+		// edge case to be handled when there are duplicates
+		if(v[lo] == v[m] and v[m] == v[hi]) lo++, hi--;
+		
 		// if left half of the array is sorted
-		if(v[lo] <= v[m]) {
+		else if(v[lo] <= v[m]) {
 			if(k >= v[lo] and k <= v[m]) hi = m - 1;
 			else lo = m + 1;
 		}
@@ -163,11 +154,3 @@ int main()
 
     return 0;
 }
-
-/*****************************************************************************************************/
-
-// METHOD - 2 
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=8
-
-// This method is similar to METHOD - 1, but it first find the index of the minimum element and then
-// perfrom binary search on the 2 sorted array parts.

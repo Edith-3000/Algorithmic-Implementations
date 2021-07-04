@@ -1,20 +1,16 @@
-// Prob: https://leetcode.com/problems/search-in-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU
-//      https://www.youtube.com/watch?v=r3pMQ8-Ad5s
+// Prob: https://www.geeksforgeeks.org/find-element-bitonic-array/
+// Ref: https://www.youtube.com/watch?v=IjaP8qt1IYI
 /****************************************************************************************************/
 
-/* # The main concept behind the algorithm is in an rotated sorted array -
-     * The subarray from start to min_index - 1 is sorted.
-     * The subarray from min_index - 1 to end is sorted.
+/* # The main concept behind the algorithm is in a bitonic array ===>
+     * The subarray from start to (peak_index-1) is sorted.
+     * The subarray from (peak_index) to end is sorted.
 
-   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
-                 2. Find the element either in start to min_index-1 or min_index-1 to end.
+   # Therefore - 1. Find the index of peak element in the bitonic array.
+                 2. Find the element either in start to (peak_index-1) or (peak_index) to end.
+
+   # NOTE: This method works only for distinct numbers.
 */
-
-/***************************************************************************************************/
-
-// METHOD - 1 
-// Ref: https://www.youtube.com/watch?v=r3pMQ8-Ad5s
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -95,28 +91,51 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// returns 0-based index
-int bin_search(vi &v, int k) {
+// return 0-based index
+int bin_search(vi &v, int lo, int hi, int k, bool asc) {
+    if(lo > hi) return -1;
+    
+    while(lo <= hi) {
+        int m = lo + ((hi - lo) >> 1);
+        if(v[m] == k) return m;
+        else if(k > v[m]) {
+            if(asc) lo = m + 1;
+            else hi = m - 1;
+        }
+        
+        else {
+            if(asc) hi = m - 1;
+            else lo = m + 1;
+        }   
+    }
+    
+    return -1;
+}
+
+// it returns index of the peak element
+int peak_idx(vi &v) {
 	int n = sz(v);
 	if(n == 0) return -1;
+	if(n == 1) return v[0];
 	
 	int lo = 0, hi = n - 1;
 	
 	while(lo <= hi) {
 		int m = lo + ((hi - lo) >> 1);
 		
-		// if target key found
-		if(v[m] == k) return m;
-		
-		// if left half of the array is sorted
-		if(v[lo] <= v[m]) {
-			if(k >= v[lo] and k <= v[m]) hi = m - 1;
-			else lo = m + 1;
+		if(m == 0) {
+			if(v[m] > v[m+1]) return m;
+			else return m+1;
 		}
 		
-		// if right half of the array is sorted
+		else if(m == n - 1) {
+			if(v[m] > v[m-1]) return m;
+			else return m-1;
+		}
+		
 		else {
-			if(k >= v[m] and k <= v[hi]) lo = m + 1;
+			if(v[m] > v[m-1] and v[m] > v[m+1]) return m;
+			else if(v[m+1] > v[m]) lo = m + 1;
 			else hi = m - 1;
 		}
 	}
@@ -124,19 +143,27 @@ int bin_search(vi &v, int k) {
 	return -1;
 }
 
-// input array must be sorted rotated array
 void solve()
 {
 	int n; cin >> n;
     vi v(n);
     for(int i = 0; i < n; i++) cin >> v[i];
     
-    int q; cin >> q;
-    
-    while(q--) {
-    	int k; cin >> k;
-    	cout << bin_search(v, k) << "\n";
-    }
+   	int peak = peak_idx(v);
+   
+   	int q; cin >> q;
+   	while(q--) {
+   		int x; cin >> x;
+   		
+   		int a = bin_search(v, 0, peak - 1, x, 1);
+   		int b = bin_search(v, peak, n - 1, x, 0);
+   		
+   		if(a != -1) cout << a;
+   		else if(b != -1) cout << b;
+   		else cout << -1;
+   		
+   		cout << "\n";
+   	}
 }
 
 int main()
@@ -163,11 +190,3 @@ int main()
 
     return 0;
 }
-
-/*****************************************************************************************************/
-
-// METHOD - 2 
-// Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=8
-
-// This method is similar to METHOD - 1, but it first find the index of the minimum element and then
-// perfrom binary search on the 2 sorted array parts.

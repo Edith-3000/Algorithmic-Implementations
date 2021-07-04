@@ -8,10 +8,12 @@
                           2). Every student is to be assigned atleast one book.
                           3). No book can be left unassigned.
                           4). A student is to be assigned only those books which are consecutive.
+
+   # Ref: https://www.youtube.com/watch?v=2JSQIhPcHQg&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=21
 */
 
 /* # This problem is very famous & in it's variants you just have to modify the is_valid() function.
-      Here k are the #students among whom books are to be assigned.
+     Here k are the #students among whom books are to be assigned.
 */
 
 #include<bits/stdc++.h>
@@ -55,17 +57,17 @@ bool is_valid(vi &v, int k, ll mid) {
 	ll sum = 0LL; 
 
 	for(int i = 0; i < (int)v.size(); i++) {
-	   sum += v[i];
+		sum += v[i];
 	   
-	   // no student can be assigned pages > mid
-	   if(sum > mid) {
-	       students++; // start assigning pages to next student
-	       sum = v[i]; // 1st book assigned to the new student
-	   }
+	    // no student can be assigned pages > mid
+	    if(sum > mid) {
+	        students++; // start assigning pages to next student
+	        sum = v[i]; // 1st book assigned to the new student
+	    }
 	   
-	   // scheme of assigning pages to a student not more than mid 
-	   // fails bcoz under given scheme we require more #students
-	   if(students > k) return false; 
+	    // scheme of assigning pages to a student not more than mid 
+	    // fails bcoz under given scheme we require more #students
+	    if(students > k) return false; 
 	}
 	
 	return true; 
@@ -86,16 +88,16 @@ ll allocate_min_pages(vi &v, int k) {
 	ll res = -1; // for storing the result   
 
 	while(start <= end) {
-	   ll mid = start + (end - start) / 2;
+	    ll mid = start + (end - start) / 2;
 
-	   if(is_valid(v, k, mid)) {
-	      res = mid; // i.e. mid can be a possible answer
-	      end = mid - 1; // to search for a more minimum value, if possible
-	   }
+	    if(is_valid(v, k, mid)) {
+	       res = mid; // i.e. mid can be a possible answer
+	       end = mid - 1; // to search for a more minimum value, if possible
+	    }
 		
-	   // i.e. the mid found was much lower than required & burden on 
-	   // each student needs to be increased
-	   else start = mid + 1; 
+	    // i.e. the mid found was much lower than required & burden on 
+	    // each student needs to be increased
+	    else start = mid + 1; 
 	}
 	
 	// -1 is returned if scheme not possible
@@ -125,8 +127,8 @@ int main()
     // int test = 1;
     // cin >> t;
     while(t--) {
-      // cout << "Case #" << test++ << ": ";
-      solve();
+        // cout << "Case #" << test++ << ": ";
+        solve();
     }
 
     return 0;
