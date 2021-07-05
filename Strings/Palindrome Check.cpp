@@ -4,19 +4,20 @@
 using namespace std;
 
 bool is_palindrome(string &s) {
-	int n = (int)s.length();
-	for(int i = 0; i < (n / 2); i++) {
-		if(s[i] != s[n-1-i]) return 0;
-	}
-	
-	return 1;
+    int n = (int)s.size();
+    
+    for(int i = 0, j = n - 1; i < j; i++, j--) {
+        if(s[i] != s[j]) return 0;
+    }
+    
+    return 1;
 }
 
 void solve()
 {
-  	string s; cin >> s;
-  	if(is_palindrome(s)) cout << "YES\n";
-  	else cout << "NO\n";
+    string s; cin >> s;
+    if(is_palindrome(s)) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 int main()
@@ -32,7 +33,7 @@ int main()
     int t = 1;
     // cin >> t;
     while(t--) {
-      solve();
+        solve();
     }
 
     return 0;
@@ -46,8 +47,8 @@ int main()
 using namespace std;
 
 bool is_palindrome(int i, string &s, int n) {
-  if(i >= (n / 2)) return 1;
-  return (s[i] == s[n-1-i]) and is_palindrome(i+1, s, n);
+    if(i >= (n / 2)) return 1;
+    return (s[i] == s[n-1-i]) and is_palindrome(i+1, s, n);
 }
 
 void solve()
@@ -70,7 +71,7 @@ int main()
     int t = 1;
     // cin >> t;
     while(t--) {
-      solve();
+        solve();
     }
 
     return 0;

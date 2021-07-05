@@ -139,14 +139,14 @@ bool word_break(vector<string> &dict, string str) {
 		// prefix of length = i
 		string prefix = str.substr(0, i);
 		
-		 // if the prefix is present in the dictionary, recur 
-		 // for the remaining string str
+		// if the prefix is present in the dictionary, recur 
+		// for the remaining string str
 		if(find(dict.begin(), dict.end(), prefix) != dict.end()) {
 			if(word_break(dict, str.substr(i))) return true;
 		}
 	}
 	
-	 // return false if the string can't be segmented
+	// return false if the string can't be segmented
 	return false;
 }
 
@@ -273,8 +273,8 @@ int main()
 bool word_break(vector<string> &dict, string str) {
 	int len = str.length();
 	
-	// dp[i] = #ways the prefix of length (i+1) can be divided into space 
-	// separated sequences of dictionary words
+	// dp[i] = true if the prefix of length (i+1) can be divided into space 
+	// separated sequences of dictionary words, otherwise false.
 	// Therefore, final result lies in dp[len-1]
 	vector<bool> dp(len, 0);
 	

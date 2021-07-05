@@ -382,7 +382,8 @@ vvi dp;
 
 int edit_distance(string &s1, string &s2, int n, int m) {
 	// inintialisation of dp matrix
-	for(int i = 0; i <= n; i++) dp[i][0] = i;
+	dp[0][0] = 0;
+	for(int i = 1; i <= n; i++) dp[i][0] = i;
 	for(int j = 1; j <= m; j++) dp[0][j] = j;
 	
 	for(int i = 1; i <= n; i++) {
