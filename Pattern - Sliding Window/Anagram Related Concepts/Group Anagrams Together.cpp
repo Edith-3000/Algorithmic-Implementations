@@ -1,5 +1,7 @@
-// Ref: https://www.geeksforgeeks.org/naive-algorithm-for-pattern-searching/
-/********************************************************************************************************/
+/* # Problem: https://www.techiedelight.com/group-anagrams-together-given-list-words/
+   # Ref: https://www.youtube.com/watch?v=0I6IL3TnIZs
+   # Practice: https://leetcode.com/problems/group-anagrams/
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -80,39 +82,43 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// return 0-based indices
-vi naive_matcher(string &txt, string &pat) {
-    int n = sz(txt);
-    int m = sz(pat);
-    
-    if(n < m) return vi();
-    
-    vi res;
-    for(int i = 0; (i + m - 1) < n; i++) {
-        int j;
-        for(j = 0; j < m; j++) {
-            if(txt[i+j] != pat[j]) break;
-        }
-        
-        if(j == m) res.pb(i);
-    }
-    
-    return res;
+vector<vs> group_anagrams(vs &v, int n) {
+	// can also use std::unordered_map
+	map<string, vi> m;
+	
+	for(int i = 0; i < n; i++) {
+		string tmp = v[i];
+		sort(tmp.begin(), tmp.end());
+		m[tmp].pb(i);
+	}
+	
+	vector<vs> res;
+	map<string, vi>::iterator it;
+	
+	for(it = m.begin(); it != m.end(); it++) {
+		vs tmp;
+		for(int i = 0; i < (int)it->S.size(); i++) {
+			tmp.pb(v[it->S[i]]);
+		}
+		
+		res.pb(tmp);
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    string txt, pat;
-    cin >> txt >> pat;
-    
-    vi res = naive_matcher(txt, pat);
-    
-    if(sz(res) == 0) cout << "Not found.\n";
-    else {
-        cout << "Found at indices ===>\n";
-        for(auto x: res) cout << x << " ";
-        cout << "\n";
-    }
+  	int n; cin >> n;
+  	vs v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	vector<vs> res = group_anagrams(v, n);
+  	
+  	for(auto v: res) {
+  		for(auto s: v) cout << s << " ";
+  		cout << "\n";
+  	}
 }
 
 int main()
@@ -140,4 +146,5 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n x m)
+// TC: O(n x m x log2(m)), where n is the total number of words and m
+//     is the size of the longest word in the list of input words(strings).

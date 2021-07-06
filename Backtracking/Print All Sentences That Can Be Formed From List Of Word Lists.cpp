@@ -1,5 +1,6 @@
-// Ref: https://www.geeksforgeeks.org/naive-algorithm-for-pattern-searching/
-/********************************************************************************************************/
+// Ref: https://www.geeksforgeeks.org/recursively-print-all-sentences-that-can-be-formed-from-list-of-word-lists/
+//      https://www.techiedelight.com/combinations-phrases-formed-picking-words-lists/
+/****************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -80,39 +81,55 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// return 0-based indices
-vi naive_matcher(string &txt, string &pat) {
-    int n = sz(txt);
-    int m = sz(pat);
-    
-    if(n < m) return vi();
-    
-    vi res;
-    for(int i = 0; (i + m - 1) < n; i++) {
-        int j;
-        for(j = 0; j < m; j++) {
-            if(txt[i+j] != pat[j]) break;
-        }
-        
-        if(j == m) res.pb(i);
-    }
-    
-    return res;
+void util(vvs &res, vvs &v, vs &op, int row, int col, int n) {	
+	op.pb(v[row][col]);
+	
+	// base case(s)
+	if(row == n - 1) {
+		res.pb(op);
+		op.ppb(); // rolling back the changes
+		return;
+	}
+	
+	for(int j = 0; j < sz(v[row+1]); j++) {
+		util(res, v, op, row + 1, j, n);
+	}
+	
+	// rolling back the changes
+	op.ppb();
+}
+
+vvs find_sentences(vvs &v) {
+	int n = sz(v);
+	if(n == 0) return vvs();
+	
+	vvs res;
+	
+	for(int j = 0; j < sz(v[0]); j++) {
+		vs op;
+		util(res, v, op, 0, j, n);
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    string txt, pat;
-    cin >> txt >> pat;
-    
-    vi res = naive_matcher(txt, pat);
-    
-    if(sz(res) == 0) cout << "Not found.\n";
-    else {
-        cout << "Found at indices ===>\n";
-        for(auto x: res) cout << x << " ";
-        cout << "\n";
-    }
+  	int n; cin >> n;
+  	vvs v(n);
+  	
+  	for(int i = 0; i < n; i++) {
+  		int m; cin >> m;
+  		v[i].resize(m);
+  		for(int j = 0; j < m; j++) cin >> v[i][j];
+  	}
+  	
+  	vvs res = find_sentences(v);
+  	
+  	for(auto v: res) {
+  		for(auto x: v) cout << x << " ";
+  		cout << "\n";
+  	}
 }
 
 int main()
@@ -139,5 +156,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity: O(n x m)

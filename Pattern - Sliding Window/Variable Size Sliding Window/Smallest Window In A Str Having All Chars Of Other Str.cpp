@@ -1,5 +1,6 @@
-// Ref: https://www.geeksforgeeks.org/naive-algorithm-for-pattern-searching/
-/********************************************************************************************************/
+// Ref: https://www.geeksforgeeks.org/find-the-smallest-window-in-a-string-containing-all-characters-of-another-string/
+// Ques. based on this concept: https://codeforces.com/problemset/problem/701/C
+/**********************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -71,6 +72,7 @@ int rng(int lim) {
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
+const int max_chars = 256;
 
 ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
                          while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
@@ -80,39 +82,60 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// return 0-based indices
-vi naive_matcher(string &txt, string &pat) {
-    int n = sz(txt);
-    int m = sz(pat);
-    
-    if(n < m) return vi();
-    
-    vi res;
-    for(int i = 0; (i + m - 1) < n; i++) {
-        int j;
-        for(j = 0; j < m; j++) {
-            if(txt[i+j] != pat[j]) break;
-        }
-        
-        if(j == m) res.pb(i);
-    }
-    
-    return res;
+string find_window(string &txt, string &pat) {
+	int n = sz(txt), m = sz(pat);
+	
+	// check if txt length is less than pattern's length. 
+	// If yes then no such window can exist
+	if(n < m) return "";
+	
+	vi f(max_chars, 0);
+	int cnt = 0;
+	
+	for(int i = 0; i < m; i++) {
+		if(f[pat[i]] == 0) cnt += 1;
+		f[pat[i]] += 1;
+	}
+	
+	int i = 0, j = 0;
+	int st = -1, mn_len = INT_MAX;
+	
+	while(j < n) {
+		// calculations for current character
+		f[txt[j]] -= 1;
+		if(f[txt[j]] == 0) cnt -= 1;
+		
+		if(cnt != 0) j += 1;
+		else {
+			while(cnt == 0) {
+				if(mn_len > (j - i + 1)) {
+					mn_len = j - i + 1;
+					st = i;
+				}
+				
+				// sliding the window but before remove the calculations 'i'
+				f[txt[i]] += 1;
+				if(f[txt[i]] > 0) cnt += 1;
+				
+				i += 1;
+			}
+			
+			j += 1;
+		}
+	}
+		
+	if(mn_len == INT_MAX) return "";
+	else return txt.substr(st, mn_len);
 }
 
 void solve()
 {
-    string txt, pat;
-    cin >> txt >> pat;
-    
-    vi res = naive_matcher(txt, pat);
-    
-    if(sz(res) == 0) cout << "Not found.\n";
-    else {
-        cout << "Found at indices ===>\n";
-        for(auto x: res) cout << x << " ";
-        cout << "\n";
-    }
+  	string txt, pat;
+  	cin >> txt >> pat;
+  	
+  	string res = find_window(txt, pat);
+  	if(res.empty()) cout << "No such window.\n";
+  	else cout << res << "\n";
 }
 
 int main()
@@ -139,5 +162,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity: O(n x m)

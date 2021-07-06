@@ -1,19 +1,13 @@
-// PROBLEM STATEMENT: Given a text and a pattern, find all occurrences of pattern in text.
+// Prob: https://www.geeksforgeeks.org/minimum-swaps-bracket-balancing/
+/********************************************************************************************************/
 
-// Ref: https://www.geeksforgeeks.org/kmp-algorithm-for-pattern-searching/
-//      https://www.youtube.com/watch?v=ziteu2FpYsA
-//      https://cp-algorithms.com/string/prefix-function.html
-//      https://towardsdatascience.com/pattern-search-with-the-knuth-morris-pratt-kmp-algorithm-8562407dba5b
-/*************************************************************************************************************/
+// METHOD - 1
+// O(n^2) Refer GfG article.
 
-/*
-  # The most important difference between KMP & Rabin-Karp is how reliable they are in finding a match. 
-  # KMP guarantees 100% reliability. You cannot guarantee 100% with Rabin Karp because of a chance of collision 
-    during hash table lookup. 
-  # But with good hash generation algorithms that do exist today, it is possible that Rabin Karp can yield very 
-    close to 100% reliability in finding a match. And both have complexity of O(n + m). Also Rabin Karp is easier 
-    to implement than KMP it works based on a rolling hash whereas KMP works based on a failure function.
-*/
+/*******************************************************************************************************/
+
+// METHOD - 2
+// O(n) time and space.
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -94,82 +88,65 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-vi prefix_function_optimized(string &s) {
-	int n = sz(s);
+// function to check if brackets are balanced in the string s
+bool is_balanced(string &s) {
+	int n = (int)s.size();
+	int cnt = 0;
 	
-	// lps[i] = the length of the longest proper prefix which
-    //          is also a suffix of the string s[0...i]
-    vi lps(n);
-    
-    // since proper prefix of a string of length 1 can be of length 0
-    lps[0] = 0;
- 
-    // traverse the string
-    for (int i = 1; i < n; i++) {
-        int prev_ind = lps[i - 1];
- 
-        while (prev_ind > 0 and s[i] != s[prev_ind]) {
-            prev_ind = lps[prev_ind - 1];
+	for(int i = 0; i < n; i++) {
+        if(s[i] == '[') cnt++;
+        else {
+            if(cnt <= 0) return 0;
+            else cnt--;
         }
- 
-        // update the lps size for string [0....i]
-        lps[i] = prev_ind + (s[i] == s[prev_ind] ? 1 : 0);
     }
- 
-    // return lps array calculated
-    return lps;
+    
+    return cnt == 0;
 }
 
-// return 0-based indices
-vi KMP(string &txt, string &pat) {
-	int n = sz(txt);
-	int m = sz(pat);
+int min_swaps(string &s) {
+	int n = sz(s);
+	if(n == 0) return 0;
+	if(n & 1) return -1;
 	
-	// impossible case
-	if(n < m) return vi();
+	// to keep track of positions of '['
+	vi v;
+	for(int i = 0; i < n; i++) {
+		if(s[i] == '[') v.pb(i);
+	}
 	
-	// calculating the lps for pattern
-	vi lps = prefix_function_optimized(pat);
+	int open = 0, pos = 0;
+	int res = 0;
 	
-	// for storing the result
-	vi res;
-	
-	// i = iterator for the text, j = iterator for pattern
-	// such that i & j are indices of the next char to be matched with the each other 
-	int i = 0, j = 0;
-	
-	while(i < n) {
-		if(txt[i] == pat[j]) {
-			i++; j++;
+	for(int i = 0; i < n; i++) {
+		if(s[i] == '[') {
+			open += 1;
+			pos += 1;
 		}
 		
 		else {
-			if(j == 0) i++;
-			else j = lps[j-1];
-		}
-		
-		if(j == m) {
-			res.pb(i - m);
-			j = lps[j-1];
+			if(open > 0) open -= 1;
+			
+			// we have encountered an unbalanced part of string
+			else {
+				// increment sum by number of swaps required
+            	// i.e. position of next '[' - current position
+				res += (v[pos] - i);
+				swap(s[v[pos]], s[i]);
+				pos += 1;
+				open = 1;
+			}
 		}
 	}
 	
-	return res;
+	if(is_balanced(s)) return res;
+	else return -1;
 }
 
 void solve()
 {
-  	string txt, pat;
-  	cin >> txt >> pat;
-  	
-  	vi res = KMP(txt, pat);
-  	
-  	if(sz(res) == 0) cout << "Not found.\n";
-  	else {
-  		cout << "Found at indices ===>\n";
-  		for(auto x: res) cout << x << " ";
-  		cout << "\n";
-  	}
+  	string s; cin >> s;
+  	cout << min_swaps(s) << "\n";
 }
 
 int main()
@@ -197,13 +174,10 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n + m)
-// Space complexity: O(m)
+/*******************************************************************************************************/
 
-/***************************************************************************************************************/
-
-// Following is a very simple & short implementation of the above method by making use of prefix function
-// only on the concatenated string i.e. on text + "$" + pattern
+// METHOD - 3
+// O(n) time and O(1) space.
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -284,70 +258,43 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-vi prefix_function_optimized(string &s) {
+int min_swaps(string &s) {
 	int n = sz(s);
+	if(n == 0) return 0;
+	if(n & 1) return -1;
 	
-	// lps[i] = the length of the longest proper prefix which
-    //          is also a suffix of the string s[0...i]
-    vi lps(n);
-    
-    // since proper prefix of a string of length 1 can be of length 0
-    lps[0] = 0;
- 
-    // traverse the string
-    for (int i = 1; i < n; i++) {
-        int prev_ind = lps[i - 1];
- 
-        while (prev_ind > 0 and s[i] != s[prev_ind]) {
-            prev_ind = lps[prev_ind - 1];
-        }
- 
-        // update the lps size for string [0....i]
-        lps[i] = prev_ind + (s[i] == s[prev_ind] ? 1 : 0);
-    }
- 
-    // return lps array calculated
-    return lps;
-}
-
-// return 0-based indices
-vi KMP(string &txt, string &pat) {
-	int n = sz(txt);
-	int m = sz(pat);
+	int open = 0, close = 0, fault = 0;
+	int res = 0;
 	
-	// impossible case
-	if(n < m) return vi();
+	for(int i = 0; i < n; i++) {
+		if(s[i] == '[') {
+			open += 1;
+			
+			if(fault > 0) {
+				res += fault;
+				
+				// imbalance(fault) decremented by 1 as it solved only 
+				// one imbalance of open and close
+				fault -= 1;
+			}
+		}
+		
+		else {
+			close += 1;
+			
+			// imbalance(fault) is reset to current diff b/w open & close
+			fault = close - open;
+		}
+	}
 	
-	string good = pat + "$" + txt;
-	
-	// calculating the lps for string "good"
-	vi lps = prefix_function_optimized(good);
-	
-	// for storing the result
-	vi res;
-	
-	for(int i = (m + 1); i < sz(good); i++){
-    	if(lps[i] == m){
-    		res.pb((i - m + 1) - (m + 1));
-    	}
-    }
-	
-	return res;
+	if(fault == 0) return res;
+	else return -1;
 }
 
 void solve()
 {
-  	string txt, pat;
-  	cin >> txt >> pat;
-  	
-  	vi res = KMP(txt, pat);
-  	
-  	if(sz(res) == 0) cout << "Not found.\n";
-  	else {
-  		cout << "Found at indices ===>\n";
-  		for(auto x: res) cout << x << " ";
-  		cout << "\n";
-  	}
+  	string s; cin >> s;
+  	cout << min_swaps(s) << "\n";
 }
 
 int main()
@@ -374,7 +321,3 @@ int main()
 
     return 0;
 }
-
-// Reference: https://cp-algorithms.com/string/prefix-function.html
-// Time complexity: O(n + m)
-// Space complexity: O(m)

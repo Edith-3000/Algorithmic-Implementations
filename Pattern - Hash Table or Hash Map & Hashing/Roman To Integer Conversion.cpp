@@ -1,4 +1,5 @@
-// Ref: https://www.geeksforgeeks.org/naive-algorithm-for-pattern-searching/
+// Prob: https://leetcode.com/problems/roman-to-integer/
+// Ref: https://www.educative.io/edpresso/the-roman-to-integer-problem
 /********************************************************************************************************/
 
 #include<bits/stdc++.h>
@@ -80,39 +81,29 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// return 0-based indices
-vi naive_matcher(string &txt, string &pat) {
-    int n = sz(txt);
-    int m = sz(pat);
-    
-    if(n < m) return vi();
-    
-    vi res;
-    for(int i = 0; (i + m - 1) < n; i++) {
-        int j;
-        for(j = 0; j < m; j++) {
-            if(txt[i+j] != pat[j]) break;
-        }
-        
-        if(j == m) res.pb(i);
-    }
-    
-    return res;
+ll rom_to_int(string &s) {	
+	map<char, int> value = {{'I', 1}, {'V', 5},{'X', 10}, {'L', 50},
+  							{'C', 100}, {'D', 500}, {'M', 1000}};
+	
+	ll res = 0LL;
+	int n = sz(s);
+	
+	for(int i = 0; i < n; i++) {
+		if(i + 1 < n) {
+			if(value[s[i]] >= value[s[i+1]]) res += value[s[i]];
+			else res -= value[s[i]];
+		} 
+		
+		else res += value[s[i]];
+	}
+		
+	return res;
 }
 
 void solve()
 {
-    string txt, pat;
-    cin >> txt >> pat;
-    
-    vi res = naive_matcher(txt, pat);
-    
-    if(sz(res) == 0) cout << "Not found.\n";
-    else {
-        cout << "Found at indices ===>\n";
-        for(auto x: res) cout << x << " ";
-        cout << "\n";
-    }
+  	string s; cin >> s;
+  	cout << rom_to_int(s) << "\n";
 }
 
 int main()
@@ -139,5 +130,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity: O(n x m)

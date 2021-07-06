@@ -1,5 +1,5 @@
-// Ref: https://www.geeksforgeeks.org/naive-algorithm-for-pattern-searching/
-/********************************************************************************************************/
+// Prob: https://www.techiedelight.com/find-occurrences-given-string-character-matrix/
+/******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -80,39 +80,85 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// return 0-based indices
-vi naive_matcher(string &txt, string &pat) {
-    int n = sz(txt);
-    int m = sz(pat);
-    
-    if(n < m) return vi();
-    
-    vi res;
-    for(int i = 0; (i + m - 1) < n; i++) {
-        int j;
-        for(j = 0; j < m; j++) {
-            if(txt[i+j] != pat[j]) break;
-        }
-        
-        if(j == m) res.pb(i);
-    }
-    
-    return res;
+// vi dx = {-1, 0, 1, 0};
+// vi dy = {0, 1, 0, -1};
+
+vi dx = {-1, -1, -1, 0, 1, 1, 1, 0};
+vi dy = {-1, 0, 1, 1, 1, 0, -1, -1};
+
+bool is_valid(int x, int y, int n, int m) {
+	return x >= 0 and x < n and y >= 0 and y < m;
+}
+
+void dfs(vvc &v, string &s, int i, int j, int n, int m, int idx, vpii &path, vvb &vis, vector<vpii> &res) {
+	if(idx == sz(s) - 1) {
+		if(v[i][j] == s[idx]) {
+			path.pb({i, j});
+			res.pb(path);
+			path.ppb();
+		}
+		
+		return;
+	}
+	
+	if(v[i][j] == s[idx]) {
+		vis[i][j] = 1;
+		path.pb({i, j});
+		
+		for(int k = 0; k < 8; k++) {
+			int nx = i + dx[k], ny = j + dy[k];
+			if(is_valid(nx, ny, n, m) and !vis[nx][ny]) {
+				dfs(v, s, nx, ny, n, m, idx + 1, path, vis, res);
+			}
+		}
+		
+		vis[i][j] = 0;
+		path.ppb();
+	}
+	
+	else return;
+}
+
+vector<vpii> find_word(vvc &v, string &s) {
+	int n = sz(v);
+	if(n == 0) return vector<vpii>();
+	int m = sz(v[0]);
+	
+	vector<vpii> res;
+	vvb vis(n, vb(m, 0));
+	
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < m; j++) {
+			vpii path;
+			dfs(v, s, i, j, n, m, 0, path, vis, res);
+		}
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    string txt, pat;
-    cin >> txt >> pat;
-    
-    vi res = naive_matcher(txt, pat);
-    
-    if(sz(res) == 0) cout << "Not found.\n";
-    else {
-        cout << "Found at indices ===>\n";
-        for(auto x: res) cout << x << " ";
-        cout << "\n";
-    }
+  	int n, m; cin >> n >> m;
+  	vvc v(n, vc(m));
+  	
+  	for(int i = 0; i < n; i++) {
+  		for(int j = 0; j < m; j++) cin >> v[i][j];
+  	}
+
+  	// key to be searched
+  	string s; cin >> s;
+  	
+  	vector<vpii> res = find_word(v, s);
+  	
+  	for(int i = 0; i < sz(res); i++) {
+  		for(int j = 0; j < sz(s); j++) {
+  			cout << s[j];
+        	cout << "(" << res[i][j].F << ", " << res[i][j].S << ") ";
+  		}
+  		
+  		cout << "\n";
+  	}
 }
 
 int main()
@@ -140,4 +186,4 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n x m)
+// Time Complexity: O(n x m x (8^len)), where len = size of ip string.

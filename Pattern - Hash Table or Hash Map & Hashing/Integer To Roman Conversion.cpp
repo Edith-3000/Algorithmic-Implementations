@@ -1,5 +1,5 @@
-// Ref: https://www.geeksforgeeks.org/naive-algorithm-for-pattern-searching/
-/********************************************************************************************************/
+// Problem: https://leetcode.com/problems/integer-to-roman/
+/*****************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -80,39 +80,41 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// return 0-based indices
-vi naive_matcher(string &txt, string &pat) {
-    int n = sz(txt);
-    int m = sz(pat);
-    
-    if(n < m) return vi();
-    
-    vi res;
-    for(int i = 0; (i + m - 1) < n; i++) {
-        int j;
-        for(j = 0; j < m; j++) {
-            if(txt[i+j] != pat[j]) break;
-        }
-        
-        if(j == m) res.pb(i);
-    }
-    
-    return res;
+pair<string, ll> value(ll n) {
+	if(n >= 1000) return {"M", 1000};
+    if(n >= 900) return {"CM", 900};
+    if(n >= 500) return {"D", 500};
+    if(n >= 400) return {"CD", 400};
+    if(n >= 100) return {"C", 100};
+    if(n >= 90) return {"XC", 90};
+    if(n >= 50) return {"L", 50};
+    if(n >= 40) return {"XL", 40};
+    if(n >= 10) return {"X", 10};
+    if(n >= 9) return {"IX", 9};
+    if(n >= 5) return {"V", 5};
+    if(n >= 4) return {"IV", 4};
+    if(n >= 1) return {"I", 1};
+    else return {"?", -1000};
+}
+
+string int_to_rom(ll n) {
+	// to store the result
+	string res = "";
+	
+	while(n > 0) {
+		pair<string, ll> p = value(n);
+		if(p.F == "?") return "String invalid";
+		res += p.F;
+		n -= p.S;
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    string txt, pat;
-    cin >> txt >> pat;
-    
-    vi res = naive_matcher(txt, pat);
-    
-    if(sz(res) == 0) cout << "Not found.\n";
-    else {
-        cout << "Found at indices ===>\n";
-        for(auto x: res) cout << x << " ";
-        cout << "\n";
-    }
+  	ll n; cin >> n;
+  	cout << int_to_rom(n) << "\n";
 }
 
 int main()
@@ -139,5 +141,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity: O(n x m)
