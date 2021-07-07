@@ -1,3 +1,10 @@
+// Problem: https://leetcode.com/problems/intersection-of-two-linked-lists/
+// Ref: https://www.youtube.com/watch?v=u4FWXfgS8jw&list=PLgUwDviBIf0r47RKH7fdWN54AbWFgGuii&index=7
+/*******************************************************************************************************/
+
+// NOTE: Brute forces techniques have been discussed in the reference video, here the most optimal 
+//       approach is written.
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -80,33 +87,40 @@ class LinkedList {
 		}		
 };
 
-ListNode* find_mid(ListNode *head) {
-	ListNode *fast = head;
-	ListNode *slow = head;
+ListNode* intersect(ListNode *head1, ListNode *head2) {
+	if(head1 == NULL or head2 == NULL) return NULL;
 	
-	while(fast->next != NULL and fast->next->next != NULL) {
-		slow = slow->next;
-		fast = fast->next->next;
+	ListNode *h1 = head1, *h2 = head2;
+	
+	while(h1 != h2) {
+		h1 = (h1 == NULL) ? head2 : h1->next;
+		h2 = (h2 == NULL) ? head1 : h2->next;
 	}
 	
-	return slow;
+	return h1; // or h2
 }
 
 void solve()
 {
-  	int n; cin >> n;
-  	LinkedList l;
+  	int n, m; cin >> n >> m;
+  	LinkedList l1, l2;
   	
   	for(int i = 0; i < n; i++) {
   		int x; cin >> x;
-  		l.insert(x);
+  		l1.insert(x);
   	}
-  	  	
-  	l.display();
-  	ListNode *tmp = find_mid(l.head);
   	
-  	cout << tmp->val;
-	cout << "\n";
+  	for(int i = 0; i < m; i++) {
+  		int x; cin >> x;
+  		l2.insert(x);
+  	}
+  	
+  	l1.display();
+  	l2.display();
+  	
+  	ListNode *res = intersect(l1.head, l2.head);
+  	if(res == NULL) cout << "No intersetion.\n"; 
+  	else cout << res->val << "\n";
 }
 
 int main()

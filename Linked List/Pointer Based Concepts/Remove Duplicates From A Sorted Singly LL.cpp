@@ -106,7 +106,7 @@ ListNode* remove_duplicates(ListNode *head) {
 
 void solve()
 {
-  	int n, x; cin >> n >> x;
+  	int n; cin >> n;
   	LinkedList l;
   	
   	for(int i = 0; i < n; i++) {
@@ -243,7 +243,7 @@ ListNode* remove_duplicates(ListNode *head) {
 
 void solve()
 {
-  	int n, x; cin >> n >> x;
+  	int n; cin >> n;
   	LinkedList l;
   	
   	for(int i = 0; i < n; i++) {

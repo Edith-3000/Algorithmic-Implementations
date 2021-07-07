@@ -1,5 +1,9 @@
-// Problem: https://www.interviewbit.com/problems/rotate-list/
-/***************************************************************************************************/
+// Prob: Given a singly linked list, reverse the nodes of the linked list k at a time and return the head
+//       of the modified list. k is a positive integer and is less than or equal to the length of the 
+//       linked list. If, in the end, you are left with a sub-list with less than ‘k’ elements, DON'T 
+//       reverse it 
+// Link: https://leetcode.com/problems/reverse-nodes-in-k-group/
+/**********************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -83,36 +87,63 @@ class LinkedList {
         }       
 };
 
-ListNode* right_rotate(ListNode *head, int k) {
-	if(!head) return head;
+int cnt_nodes(ListNode *head) {
+	// base case
+	if(head == NULL) return 0;
 	
+	int res = 0;
 	ListNode *tmp = head;
-	int sz = 0;
-	while(tmp) {
-		sz += 1;
+	
+	while(tmp != NULL) {
+		res += 1;
 		tmp = tmp->next;
 	}
 	
-	k %= sz;
-	if(k == 0) return head;
+	return res;
+}
+
+ListNode* k_reverse_list(ListNode *head, int k) {
+    // base case(s)
+    if(head == NULL or k == 1) return head;
 	
-	k = sz - k;
-	k -= 1;
+	int len = cnt_nodes(head);
+	int grps = len / k;
 	
-	tmp = head;
-	while(k > 0) {
-		tmp = tmp->next;
-		k -= 1;
-	}
-	
-	ListNode *t2 = tmp->next, *t1 = head;
-	head = t2;
-	tmp->next = NULL;
-	
-	while(t2->next != NULL) t2 = t2->next;
-	t2->next = t1;
-	
-	return head;
+    ListNode *prevtail = head, *currhead = head;
+    ListNode *prv = NULL, *cur = head, *nxt = head;
+    bool is_start = true;
+  
+    while(nxt != NULL and grps > 0) {
+        currhead = nxt;
+        prv = NULL;
+        int cnt = 0;
+    
+        while(cnt < k and nxt) {
+            nxt = nxt->next;
+            cur->next = prv;
+            prv = cur;
+            cur = nxt;
+            cnt += 1;
+        }
+    
+        if(is_start) {
+            head = prv;
+            is_start = false;
+        }
+    
+        else {
+            prevtail->next = prv;
+            prevtail = currhead;
+        }
+        
+        grps -= 1;
+        
+        if(grps == 0) {
+        	prevtail->next = nxt;
+        }
+    }
+    
+    return head; 
 }
 
 void solve()
@@ -126,7 +157,7 @@ void solve()
     }
     
     l.display();
-    l.head = right_rotate(l.head, k); 
+    l.head = k_reverse_list(l.head, k); 
     l.display();
   
     cout << "\n";

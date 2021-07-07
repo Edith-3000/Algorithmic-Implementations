@@ -1,0 +1,6 @@
+// Problem Statement: Reverse the first ‘n’ elements of a given LinkedList.
+
+/* UNDERLYING CONCEPT: ---->
+   This problem can be easily converted to the parent problem of Reversing a sublist from 'k' to 'l'; 
+   to reverse the first ‘m’ nodes of the list, just pass k=1 and l=n.
+*/

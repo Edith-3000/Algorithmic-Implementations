@@ -248,6 +248,9 @@ class LinkedList {
 };
 
 ListNode* k_reverse_list(ListNode *head, int k) {
+    // base case(s)
+    if(head == NULL or k == 1) return head;
+
     ListNode *prevtail = head, *currhead = head;
     ListNode *prv = NULL, *cur = head, *nxt = head;
     bool is_start = true;

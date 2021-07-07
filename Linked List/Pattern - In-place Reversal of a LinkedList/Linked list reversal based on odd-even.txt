@@ -16,6 +16,6 @@ Problem Statement: Given a LinkedList with ‘n’ nodes, reverse it based on it
   # When ‘n’ is odd, our algorithm will look like:
     1). head = reverseSubList(head, 1, n/2)
     2). head = reverseSubList(head, n/2 + 2, n)
-    *NOTE: in the function call in 2ⁿᵈ step, we’re skipping two elements as we will be skipping 
+    * NOTE: in the function call in 2ⁿᵈ step, we’re skipping two elements as we will be skipping 
            the middle element.
 */

@@ -296,12 +296,18 @@ int cnt_nodes(ListNode *head) {
 }
 
 ListNode* add_2_numbers(ListNode *h1, ListNode *h2) {
-	ListNode *head = h1, *tmp = h1;
-	
 	int carry = 0;
 	int total = 0;
 	int cnt1 = cnt_nodes(h1);
 	int cnt2 = cnt_nodes(h2);
+	
+	// to use as less space as we can
+	if(cnt2 > cnt1) {
+		swap(cnt1, cnt2);
+		swap(h1, h2);
+	}
+	
+	ListNode *head = h1, *tmp = h1;
 	
 	while(cnt1 > 0 or cnt2 > 0 or carry) {
 		int num = 0;
