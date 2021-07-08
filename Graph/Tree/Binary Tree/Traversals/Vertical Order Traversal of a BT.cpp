@@ -48,8 +48,8 @@ vvi verticalOrderTraversal(TreeNode *root) {
 	
 	map<int, vi> m;
 	queue<pair<TreeNode*, int>> q;
-	
 	q.push({root, 0});
+	
 	while(!q.empty()) {
 		TreeNode *node = q.front().F;
 		int ver = q.front().S;
