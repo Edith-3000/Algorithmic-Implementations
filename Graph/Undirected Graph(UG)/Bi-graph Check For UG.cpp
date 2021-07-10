@@ -1,18 +1,34 @@
-/* # UNDERLYING CONCEPTS ===>
+/* # A bipartite graph also called a bi-graph, is a set of graph vertices, i.e, points where multiple 
+     lines meet, decomposed into two 𝒅𝒊𝒔𝒋𝒐𝒊𝒏𝒕 sets, meaning they have no element in common, such that no 
+     two graph vertices within the same set are 𝒂𝒅𝒋𝒂𝒄𝒆𝒏𝒕.
 
-   # Kruskal's algorithm to find the minimum cost spanning tree uses the greedy approach. 
-   # This algorithm treats the graph as a forest and every node it has as an individual tree
-     (i.e. n connected components initially). 
-   # A tree connects to another only and only if, it has the least cost among all available options and 
-     does not violate MST properties.
+   # Adjacent nodes are any two nodes that are connected by an edge.
+   # A bipartite graph is a special case of a 𝒌-𝒑𝒂𝒓𝒕𝒊𝒕𝒆 𝒈𝒓𝒂𝒑𝒉 with k = 2.
 
-   # Algorithm ---->
-     1. Remove all loops and Parallel Edges.
-        (In case of parallel edges, keep the one which has the least cost associated and remove all others.)
-     2. Sort all edges in their increasing order of weight.
-     3. Repeatedly add the first (n-1) edges which have the least weightage, iff it does not form a cycle
-        i.e. add the least cost edge one by one whose vertices are present in 2 different connected components.
+   # Bipartite graphs are equivalent to 𝒕𝒘𝒐-𝒄𝒐𝒍𝒐𝒓𝒂𝒃𝒍𝒆 𝒈𝒓𝒂𝒑𝒉𝒔 i.e., coloring of the vertices using two 
+     colors in such a way that vertices of the same color are never adjacent along an edge. 
+
+   # All 𝑨𝒄𝒚𝒄𝒍𝒊𝒄 𝒈𝒓𝒂𝒑𝒉𝒔 are bipartite. 
+     • As a tree is an acyclic graph, ∴ Bi-partite.
+       To put the vertices of a tree in 2 disjoint sets just put the vertices of the all the levels 
+       alternately in Set 1 and Set 2, no other possibility exist.
+
+   # A 𝑪𝒚𝒄𝒍𝒊𝒄 graph is bipartite iff all its cycles are of even length. 
+   # Some common examples of a bipartite graph include star graphs, grid graphs and gear graphs.
+
+   # Applications of bipartite graphs ⟶
+     • Bipartite graph can be used in the medical field in the detection of lung cancer, throat cancer etc.
+     • Used in search advertising and e-commerce for similarity ranking.
+     • Predict movie preferences of a person.
+     • Stable marriage6 and other matching problems.
+
+   # For more info visit: https://www.educative.io/edpresso/what-is-a-bipartite-graph
+
+   # So in conclusion, if a graph contains odd length cycle, then it is not bi-partite, else it is.
 */
+
+// METHOD - 1
+// USING DFS
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -93,84 +109,70 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// to store the input edges
-vvi edges;
+// to store the input graph
+vvi g;
+
+// to keep track of color of visited nodes,
+// works as a visited array as well
+vi color;
 
 int n, m;
 
-// for DSU operations
-vi parent, rnk;
-
-void make_set(int v) {
-    parent[v] = v;
-    rnk[v] = 1;
-}
-
-int find_set(int v) {
-    if(v == parent[v]) return v;
-    return parent[v] = find_set(parent[v]);
-}
-
-void union_sets(int a, int b) {
-    int s1 = find_set(a);
-    int s2 = find_set(b);
-    if(s1 != s2) {
-        if(rnk[s1] < rnk[s2]) swap(s1, s2);
-        parent[s2] = s1;
-        rnk[s1] += rnk[s2];
-    }
-}
-
-bool cmp(const vi &v1, const vi &v2) {
-    return v1[2] < v2[2];
-}
-
-// function to print and return the weight of MST
-ll kruskals_algo() {
-    parent.clear(); parent.resize(n);
-    rnk.clear(); rnk.resize(n);
+// function which returns whether the subtree rooted at the current node is
+// bipartite or not
+bool dfs(int cur, int col) {
+    // marking a node visited (color it) as soon as it is pushed in internal call stack
+    color[cur] = col;
     
-    for(int i = 0; i < n; i++) {
-        make_set(i);
-    }
+    // now there can be 2 cases ===>
+    // case 1. either the neighbour of the cur vertex is not visited yet, in 
+    //         such a case recursively visit the neighbours & check for bipartiteness
+    // case 2. the neighbour is visited and if color[nbr] == color[cur] ==> not bipartite
+    //         i.e. it contains an odd length cycle
     
-    // sorting on the basis of edge weight
-    sort(edges.begin(), edges.end(), cmp);
-    
-    // in case you need the actual MST
-    vvi MST;
-    
-    ll res = 0LL;  
-   
-    for(auto edg: edges) {
-        int s1 = find_set(edg[0]);
-        int s2 = find_set(edg[1]);
+    for(auto x: g[cur]) {
+        // case 1
+        if(color[x] == -1) {
+            if(!dfs(x, 1 - col)) return 0;
+        }
         
-        // include the edge in MST iff it does not form a cycle (i.e. include in
-        // MST if both the vertices of the edge belong to different sets)
-        if(s1 != s2) {
-            res += edg[2];
-            MST.pb(edg);
-            union_sets(s1, s2);
+        // case 2
+        else if(color[x] == color[cur]) return 0;
+    }
+    
+    // if the above 2 cases fails then bipartite
+    return 1;
+}
+
+bool is_bipartite() {
+    for(int i = 0; i < n; i++) color[i] = -1;
+    
+    // taking care of multiple components in the graph
+    for(int i = 0; i < n; i++) {
+        if(color[i] == -1) {
+            if(!dfs(i, 0)) return 0;
         }
     }
     
-    return res; 
+    return 1;
 }
 
 void solve()
 {
     cin >> n >> m;
-    edges.clear(); 
+    
+    g.clear(); g.resize(n);
+    color.clear(); color.resize(n, -1);
     
     // 0-based vertices
     for(int i = 0; i < m; i++) {
-        int x, y, wt; 
-        cin >> x >> y >> wt;
-        edges.pb({x, y, wt});
+        int x, y; cin >> x >> y;
+        g[x].pb(y);
+        g[y].pb(x);
     }
-    
-    cout << kruskals_algo() << "\n";
+        
+    if(is_bipartite()) cout << "YES\n";
+    else cout << "NO\n";
 }
 
 int main()
@@ -198,5 +200,10 @@ int main()
     return 0;
 }
 
-// Time Complexity: O(|E| x log|V|)
-// Refer: https://stackoverflow.com/questions/20432801/time-complexity-of-the-kruskal-algorithm
+// Time Complexity ≡ DFS traversal
+
+/*******************************************************************************************************/
+
+// METHOD - 2
+// USING BFS
+// Refer: https://www.youtube.com/watch?v=nbgaEu-pvkU&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=11

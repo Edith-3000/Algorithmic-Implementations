@@ -1,18 +1,13 @@
-/* # UNDERLYING CONCEPTS ===>
+// Prob: https://www.geeksforgeeks.org/check-binary-tree-contains-duplicate-subtrees-size-2/
+// Ref: https://www.youtube.com/watch?v=_j7yb_nWFO8&list=PLDdcY4olLQk1-yJxgljSQ4ykbI2Bw1CqS&index=18
+/*******************************************************************************************************/
 
-   # Kruskal's algorithm to find the minimum cost spanning tree uses the greedy approach. 
-   # This algorithm treats the graph as a forest and every node it has as an individual tree
-     (i.e. n connected components initially). 
-   # A tree connects to another only and only if, it has the least cost among all available options and 
-     does not violate MST properties.
+// METHOD - 1
+// Trivial, refer GfG article.
 
-   # Algorithm ---->
-     1. Remove all loops and Parallel Edges.
-        (In case of parallel edges, keep the one which has the least cost associated and remove all others.)
-     2. Sort all edges in their increasing order of weight.
-     3. Repeatedly add the first (n-1) edges which have the least weightage, iff it does not form a cycle
-        i.e. add the least cost edge one by one whose vertices are present in 2 different connected components.
-*/
+/******************************************************************************************************/
+
+// METHOD - 2
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -93,84 +88,60 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// to store the input edges
-vvi edges;
+class TreeNode {
+	public:
+		int val;
+		TreeNode *left;
+		TreeNode *right;
+		TreeNode(): val(0), left(NULL), right(NULL) {}
+		TreeNode(int data): val(data), left(NULL), right(NULL) {}
+		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
+};
 
-int n, m;
-
-// for DSU operations
-vi parent, rnk;
-
-void make_set(int v) {
-    parent[v] = v;
-    rnk[v] = 1;
+string util(TreeNode *root, map<string, int> &m) {
+	if(!root) return "$";
+	if(!root->left and !root->right) {
+		string s = to_string(root->val);
+		return s;
+	}
+	
+	string s = to_string(root->val);
+	s += util(root->left, m);
+	s += util(root->right, m);
+	
+	m[s] += 1;
+	
+	return s;
 }
 
-int find_set(int v) {
-    if(v == parent[v]) return v;
-    return parent[v] = find_set(parent[v]);
-}
-
-void union_sets(int a, int b) {
-    int s1 = find_set(a);
-    int s2 = find_set(b);
-    if(s1 != s2) {
-        if(rnk[s1] < rnk[s2]) swap(s1, s2);
-        parent[s2] = s1;
-        rnk[s1] += rnk[s2];
-    }
-}
-
-bool cmp(const vi &v1, const vi &v2) {
-    return v1[2] < v2[2];
-}
-
-// function to print and return the weight of MST
-ll kruskals_algo() {
-    parent.clear(); parent.resize(n);
-    rnk.clear(); rnk.resize(n);
-    
-    for(int i = 0; i < n; i++) {
-        make_set(i);
-    }
-    
-    // sorting on the basis of edge weight
-    sort(edges.begin(), edges.end(), cmp);
-    
-    // in case you need the actual MST
-    vvi MST;
-    
-    ll res = 0LL;  
-   
-    for(auto edg: edges) {
-        int s1 = find_set(edg[0]);
-        int s2 = find_set(edg[1]);
-        
-        // include the edge in MST iff it does not form a cycle (i.e. include in
-        // MST if both the vertices of the edge belong to different sets)
-        if(s1 != s2) {
-            res += edg[2];
-            MST.pb(edg);
-            union_sets(s1, s2);
-        }
-    }
-    
-    return res; 
+bool duplicate_subtree(TreeNode *root) {
+	if(!root) return 0;
+	if(!root->left and !root->right) return 0;
+	
+	map<string, int> m;
+	util(root, m);
+	
+	for(auto x: m) {
+		if(x.S >= 2) return 1;
+	}
+	
+	return 0;
 }
 
 void solve()
 {
-    cin >> n >> m;
-    edges.clear(); 
-    
-    // 0-based vertices
-    for(int i = 0; i < m; i++) {
-        int x, y, wt; 
-        cin >> x >> y >> wt;
-        edges.pb({x, y, wt});
-    }
-    
-    cout << kruskals_algo() << "\n";
+  	TreeNode* root = new TreeNode(1);
+	root->left = new TreeNode(2);
+	root->right = new TreeNode(3);
+	root->right->left = new TreeNode(4);
+	root->right->right = new TreeNode(5);
+	root->right->left->left = new TreeNode(6);
+	root->right->left->right = new TreeNode(7);
+	root->right->left->right->left = new TreeNode(8);
+	root->right->left->right->right = new TreeNode(9);
+	
+	if(duplicate_subtree(root)) cout << "YES\n";
+	else cout << "NO\n";
 }
 
 int main()
@@ -197,6 +168,3 @@ int main()
 
     return 0;
 }
-
-// Time Complexity: O(|E| x log|V|)
-// Refer: https://stackoverflow.com/questions/20432801/time-complexity-of-the-kruskal-algorithm

@@ -1,5 +1,6 @@
 // Problem: https://www.interviewbit.com/problems/least-common-ancestor/
 // Ref: https://www.youtube.com/watch?v=T6Jr-Q6bvSU&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=39
+//      https://www.educative.io/edpresso/how-to-find-the-lowest-common-ancestor-in-binary-tree
 /****************************************************************************************************/
 
 // METHOD - 1

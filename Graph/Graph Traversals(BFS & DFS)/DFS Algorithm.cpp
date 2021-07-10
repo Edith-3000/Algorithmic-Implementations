@@ -1,33 +1,27 @@
-// Ref: https://www.geeksforgeeks.org/detect-cycle-in-a-graph/
-/*****************************************************************************************************/
-
-// METHOD - 1 (USING DFS)
-
-/* USEFUL TIPs ⟶
-   # 𝑨𝒏 𝑼𝒏𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝑮𝒓𝒂𝒑𝒉(𝑼𝑮) 𝒄𝒐𝒏𝒕𝒂𝒊𝒏𝒔 𝒂 𝒄𝒚𝒄𝒍𝒆 𝒊𝒇 𝒕𝒉𝒆𝒓𝒆 𝒊𝒔 𝑴𝑶𝑹𝑬 𝑻𝑯𝑨𝑵 1 𝒘𝒂𝒚 𝒕𝒐 𝒗𝒊𝒔𝒊𝒕 𝒂 𝒏𝒐𝒅𝒆/𝒗𝒆𝒓𝒕𝒆𝒙, 
-     but the same is not the case with 𝑫𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝑮𝒓𝒂𝒑𝒉(𝑫𝑮), for eg. consider the following DG: 
-     							1 ----> 2
-     							1 ----> 3
-     							2 ----> 3
-     • in this graph there are 2 ways to visit vertex 3:
-       1). from 1 to 3
-       2). from 1 to 2 to 3
-
-       But it does not contain a cycle.
-   # ∴ the same algo used in "Cycle Detection in UG Using DFS.cpp" can't be used.
-
-   # 𝑨 𝑩𝑨𝑪𝑲𝑬𝑫𝑮𝑬 𝑰𝑺 𝑨𝑵 𝑬𝑫𝑮𝑬 𝑭𝑹𝑶𝑴 𝑨 𝑮𝑰𝑽𝑬𝑵 𝑵𝑶𝑫𝑬 𝑻𝑶 𝑨𝑵 𝑨𝑵𝑪𝑬𝑺𝑻𝑶𝑹 𝑶𝑭 𝑻𝑯𝑨𝑻 𝑵𝑶𝑫𝑬 𝑰𝑵 𝑻𝑯𝑬 𝑺𝑨𝑴𝑬 𝑷𝑨𝑻𝑯 
-     𝑰𝑵 𝑨 𝑫𝑮.
-
-   # So to check cycle in a DG we maintain a 𝒔𝒕𝒂𝒄𝒌 𝑨𝑹𝑹𝑨𝒀(it is also a bool array) in addition to 
-     the visited array.
-     • As we know visited[] array basically keeps a check abput whether a given vertex has already 
-       been visited at some poit of time or not.
-     • But here the extra data structure used which is the stack array (remember it is an array only, 
-       only the name name stack is used to convey the message that it will work almost similar to stack, 
-       but in order to have a constant lookup time for a vertex an array is used in place of stack).
-     • The stack[i] will be true for a vertex 'i' if the vertex is 𝒂 𝒑𝒂𝒓𝒕 𝒐𝒇 𝒕𝒉𝒆 𝒄𝒖𝒓𝒓𝒆𝒏𝒕 𝒑𝒂𝒕𝒉.
+/* # DFS is a recursive graph traversal technique (although it can be implemented iteratively as well).
+   # DFS utilizes the “go deep, head first” philosophy in its implementation.
+   # It is similar to preorder order traversal of a tree.
+   # Stack data structure is used to implement DFS (∵ recursion uses internal call stack).
+   # Depth-first search is used in topological sorting, scheduling problems, cycle detection in graphs, 
+     and solving puzzles with only one solution, such as a maze or a sudoku puzzle.
+   # Other applications involve analyzing networks, for example, testing if a graph is bipartite. 
+     Depth-first search is often used as a subroutine in network flow algorithms such as the Ford-Fulkerson algorithm.
+   # DFS is also used as a subroutine in matching algorithms in graph theory such as the Hopcroft–Karp 
+     algorithm.
+   # Depth First Traversal (or Search) for a graph is similar to Depth First Traversal of a tree. 
+     The only catch here is, unlike trees, graphs may contain cycles, a node may be visited twice. 
+     To avoid processing a node more than once, use a boolean visited array.
+   # Depth-first searches are used in mapping routes, scheduling, and finding spanning trees.
+   # It employs the following rules -----> 
+     Rule 1 − Visit the adjacent unvisited vertex. Push it in a stack. Mark it as visited. Display it.
+              (𝑻𝑯𝑰𝑺 𝑶𝑹𝑫𝑬𝑹 𝑰𝑵 𝑹𝑼𝑳𝑬 1 𝑰𝑺 𝑽𝑬𝑹𝒀 𝑰𝑴𝑷𝑶𝑹𝑻𝑨𝑵𝑻, 𝑺𝑳𝑰𝑮𝑯𝑻𝑳𝒀 𝑽𝑨𝑹𝑰𝑬𝑺 𝑭𝑹𝑶𝑴 𝑻𝑯𝑬 𝑹𝑼𝑳𝑬 1 𝑶𝑭
+               𝑩𝑭𝑺 𝑨𝑳𝑮𝑶𝑹𝑰𝑻𝑯𝑴)
+     Rule 2 − If no adjacent vertex is found, pop up a vertex from the stack. (It will pop up all the 
+              vertices from the stack, which do not have adjacent vertices.)
+     Rule 3 − Repeat Rule 1 and Rule 2 until the stack is empty.
 */
+
+// RECURSIVE IMPLEMENTATION OF DFS 
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -111,62 +105,38 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 // stores the input graph
 vvi g;
 
-// to keep track, whether any vertex 'i' is part of the current stack
-vb stk_flag;
-
 // to keep track of visited vertices
 vb vis;
 
 int n, m;
 
-// function which returns whether the subtree rooted at the current node contains 
-// cycle or not
-bool is_cycle(int cur) {
+void dfs_helper(int cur, vi &res) {
     // marking a node visited as soon as it is pushed in internal call stack
     vis[cur] = 1;
+
+    // push src in the result
+    res.pb(cur);
     
-    // cur now becomes a part of the current path
-    stk_flag[cur] = 1;
-    
-    // now there can be 2 cases ===>
-    // case 1. either the neighbour of the cur vertex is not visited yet, in 
-    //         such a case recursively visit the neighbours check for cycle.
-    // case 2. the neighbour is visited and is also a part of the current path,
-    //         then the graph contains cycle
-    
+    // go to all the unvisited nodes of the current node, but one by one
     for(auto x: g[cur]) {
-        // case 1
+        // check if already visited or not
         if(!vis[x]) {
-            if(is_cycle(x)) return 1;
+            // push it in the stack(internal call stack is used)
+            dfs_helper(x, res);
         }
-        
-        // case 2
-        else if(stk_flag[x]) return 1;
     }
-    
-    // removing the current vertex i.e. cur from the current path
-    // when recursion moves in backward direction
-    stk_flag[cur] = 0;
-    
-    // if the above 2 cases fails then no cycle present
-    return 0;
 }
 
-bool contains_cycle() {
-    for(int i = 0; i < n; i++) {
-        vis[i] = stk_flag[i] = 0;
-    }
+vi dfs(int src) {
+    // to store one of the many possible dfs traversal, using source(starting vertex) as src
+    vi res;
     
-    bool res = 0;
-    
-    // taking care of multiple components in the graph
-    for(int i = 0; i < n; i++) {
-        if(!vis[i]) {
-            bool tmp = is_cycle(i);
-            res |= tmp;
-        }
-    }
-    
+    // marking all nodes as unvisited initially
+    for(int i = 0; i < n; i++) vis[i] = 0;
+
+    dfs_helper(src, res);
+
+    // return the final result of traversal
     return res;
 }
 
@@ -176,16 +146,18 @@ void solve()
     
     g.clear(); g.resize(n);
     vis.clear(); vis.resize(n, 0);
-    stk_flag.clear(); stk_flag.resize(n, 0);
     
     // 0-based vertices
     for(int i = 0; i < m; i++) {
         int x, y; cin >> x >> y;
         g[x].pb(y);
+        g[y].pb(x);
     }
         
-    if(contains_cycle()) cout << "YES\n";
-    else cout << "NO\n";
+    vi res = dfs(0);
+    
+    for(auto x: res) cout << x << " ";
+    cout << "\n";
 }
 
 int main()
@@ -213,13 +185,15 @@ int main()
     return 0;
 }
 
-/*****************************************************************************************************/
+/***************************************************************************************************/
 
-// METHOD - 2 (USING BFS)
+// ITERATIVE IMPLEMENTATION OF DFS 
 
-/* UNDERLYING CONCEPT ------>
-   # If we can't determine the topological ordering of all the vertices of a DG, the graph has a cycle
-     in it i.e. for a directed cyclic graph : res.size() != #vertices.
+/* The non-recursive iterative implementation is similar to breadth-first search but differs from 
+   it in two ways:
+   1). It uses a stack instead of a queue.
+   2). 𝑰𝒕 𝒅𝒆𝒍𝒂𝒚𝒔 𝒄𝒉𝒆𝒄𝒌𝒊𝒏𝒈 𝒘𝒉𝒆𝒕𝒉𝒆𝒓 𝒂 𝒗𝒆𝒓𝒕𝒆𝒙 𝒉𝒂𝒔 𝒃𝒆𝒆𝒏 𝒅𝒊𝒔𝒄𝒐𝒗𝒆𝒓𝒆𝒅 (𝒂𝒍𝒓𝒆𝒂𝒅𝒚 𝒗𝒊𝒔𝒊𝒕𝒆𝒅 𝒐𝒓 𝒏𝒐𝒕) 𝒖𝒏𝒕𝒊𝒍 𝒕𝒉𝒆 
+       𝒗𝒆𝒓𝒕𝒆𝒙 𝒊𝒔 𝒑𝒐𝒑𝒑𝒆𝒅 𝒇𝒓𝒐𝒎 𝒕𝒉𝒆 𝒔𝒕𝒂𝒄𝒌 𝒓𝒂𝒕𝒉𝒆𝒓 𝒕𝒉𝒂𝒏 𝒎𝒂𝒌𝒊𝒏𝒈 𝒕𝒉𝒊𝒔 𝒄𝒉𝒆𝒄𝒌 𝒃𝒆𝒇𝒐𝒓𝒆 𝒂𝒅𝒅𝒊𝒏𝒈 𝒕𝒉𝒆 𝒗𝒆𝒓𝒕𝒆𝒙.
 */
 
 #include<bits/stdc++.h>
@@ -304,46 +278,50 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 // stores the input graph
 vvi g;
 
-// to store the indegree of vertices
-vi indegree;
+// to keep track of visited vertices
+vb vis;
 
 int n, m;
 
-// function which returns topological ordering of the graph
-vi top_sort() {
-    // to process nodes one by one
-    queue<int> q;
-    
-    // find all sources i.e., all vertices with 0 in-degrees
-    for(int i = 0; i < n; i++) {
-        if(indegree[i] == 0) q.push(i); 
-    }
-    
-    // to store the topological ordering
+vi dfs(int src) {
+    // to store one of the many possible bfs traversal, using source(starting vertex) as src
     vi res;
     
-    while(!q.empty()) {
-        int cur = q.front();
-        q.pop();
-        res.pb(cur);
-        
-        for(auto x: g[cur]) {
-            indegree[x] -= 1;
-            if(indegree[x] == 0) q.push(x);
-        }   
-    }
+    // marking all nodes as unvisited initially
+    for(int i = 0; i < n; i++) vis[i] = 0;
     
-    // topological sort is not possible if the graph has a cycle
-    if(sz(res) != n) res.clear();
-    
-    return res;
-}
+    // stack to remember which vertex to visit next in case of dead end in iteration
+    stack<int> s;
 
-bool contains_cycle() {
-    vi topo = top_sort();
-    
-    // if topological ordering not possible <===> cycle present
-    return (sz(topo) != n);
+    // initialisation of the dfs process pushing the src in stack
+    s.push(src);
+
+    // iterative process
+    while(!s.empty()) {
+        // taking out vertex from q
+        int cur = s.top();
+
+        // popping out this vertex from stack
+        s.pop();
+       
+        // stack may contain same vertex twice. So we need to
+        // print the popped item only if it is not visited.
+       if(!vis[cur]) {
+           vis[cur] = 1;  // mark it visited
+           res.pb(cur); // push cur in the result
+       }
+
+       // visiting all the adjacent vertices of cur
+       for(auto x: g[cur]) {
+            // check if already visited or not
+            if(!vis[x]) {
+                s.push(x); // push it in the stack
+            }
+        }
+    }
+
+    // return the final result of traversal
+    return res;
 }
 
 void solve()
@@ -351,17 +329,19 @@ void solve()
     cin >> n >> m;
     
     g.clear(); g.resize(n);
-    indegree.clear(); indegree.resize(n, 0);
+    vis.clear(); vis.resize(n, 0);
     
     // 0-based vertices
     for(int i = 0; i < m; i++) {
         int x, y; cin >> x >> y;
         g[x].pb(y);
-        indegree[y] += 1;
+        g[y].pb(x);
     }
-   
-    if(contains_cycle()) cout << "YES\n";
-    else cout << "NO\n";
+        
+    vi res = dfs(0);
+    
+    for(auto x: res) cout << x << " ";
+    cout << "\n";
 }
 
 int main()
@@ -388,3 +368,47 @@ int main()
 
     return 0;
 }
+
+/*******************************************************************************************************/
+
+/* # HANDLING DISCONNECTED GRAPH
+   • The above code traverses only the vertices reachable from a given source vertex. 
+   • All the vertices may not be reachable from a given vertex as in the case of a 𝑫𝒊𝒔𝒄𝒐𝒏𝒏𝒆𝒄𝒕𝒆𝒅 𝒈𝒓𝒂𝒑𝒉. 
+     To do complete DFS traversal of such graphs, run DFS from all unvisited nodes after a DFS.
+     i.e. Run a loop from through all the vertices and check if the vertex is unvisited in previous DFS then 
+     call the dfs fⁿ with current node.
+*/
+
+// The Analysis of depth-first search ≡ Analysis of breadth-first search
+
+/* # Iterative DFS v/s Recursive DFS and different elements order ------>
+   * Both are valid DFS algorithms. A DFS does not specify which node you see first. It is not important 
+     because the order between edges is not defined [remember: edges are a set usually]. The difference is 
+     due to the way you handle each node's children.
+
+   * In the iterative approach: You first insert all the elements into the stack of the current node
+     and then handle the head(top) of the stack [which is the last node inserted] - thus the first 
+     node you handle is the last child (last adjacent neighbour) of the current node.
+   * While in the recursive approach: You handle each node when you see it. Thus the first node you handle 
+     is the first child (first adjacent neighbour).
+   
+   * These two variations of DFS visit the neighbors of each vertex in the opposite order from each other: 
+     the first neighbor of v(current node) visited by the recursive variation is the first one in the list 
+     of adjacent edges, 
+     while in the iterative variation the first visited neighbor is the last one in the list of adjacent 
+     edges.
+
+   # To make the iterative DFS yield the same result as the recursive one - you need to add elements to 
+     the stack in reverse order [for each node, insert its last child first and its first child last]
+*/
+
+/* HOW DO YOU SOLVE A MAZE?
+
+Depth-first search is a common way that many people naturally approach solving problems like mazes. 
+First, we select a path in the maze (for the sake of the example, let's choose a path according to some 
+rule we lay out ahead of time) and we follow it until we hit a dead end or reach the finishing point of 
+the maze. If a given path doesn’t work, we backtrack and take an alternative path from a past junction, 
+and try that path. Below is an animation of a DFS approach to solving this maze.
+
+# Very nice pictorial representation given - https://brilliant.org/wiki/depth-first-search-dfs/
+*/

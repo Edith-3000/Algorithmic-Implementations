@@ -38,3 +38,5 @@
   traversal.
   
 • NOTE: As binary tree is one kind of tree; it has all properties of tree in graph theory.
+
+#  (Inorder & Preorder) OR (Inorder & Postorder) uniquely identify a binary tree.

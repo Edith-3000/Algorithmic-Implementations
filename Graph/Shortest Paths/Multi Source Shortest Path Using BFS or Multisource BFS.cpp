@@ -75,7 +75,7 @@ void add_edges() {
 		for(int j = 1; j <= m; j++) {
 			// to remove neighbors of previous test case
 			g[i][j].clear(); 
-			
+		
 			for(int d = 0; d < 8; d++) {
 				int nx = i + dx[d], ny = j + dy[d];
 				if(is_valid(nx, ny)) g[i][j].pb({nx, ny});
@@ -160,7 +160,7 @@ int main()
     int t = 1;
     cin >> t;
     while(t--) {
-      solve();
+        solve();
     }
 
     return 0;

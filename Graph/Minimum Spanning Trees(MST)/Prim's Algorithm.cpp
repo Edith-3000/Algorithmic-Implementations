@@ -1,7 +1,10 @@
-/*
-   # Like Kruskal’s algorithm, Prim’s algorithm is also a Greedy algorithm.
+/* # UNDERLYING CONCEPTS ===>
+
+   # Like Kruskal's algorithm, Prim's algorithm is also a Greedy algorithm.
+
    # Prim's algorithm is very similar to Kruskal's: whereas Kruskal's "grows" a forest of trees, Prim's algorithm 
      grows a single tree until it becomes the minimum spanning tree. 
+
    # Both algorithms use the greedy approach - they add the cheapest edge that will not cause a cycle. 
      But rather than choosing the cheapest edge that will connect any pair of trees together, Prim's algorithm 
      only adds edges that join nodes to the existing tree. (In this respect, Prim's algorithm is very similar to 
@@ -25,109 +28,170 @@
      4. Repeat step 3 until MST Set doesn't contain all the vertices or V set is empty.
 */
 
-// Problem: Minimum Spanning Tree
-// Contest: SPOJ - Partial
-// URL: https://www.spoj.com/problems/MST/
-// Memory Limit: 1536 MB
-// Time Limit: 2000 ms
-// Parsed on: 30-11-2020 23:27:24 IST (UTC+05:30)
-// Author: kapil_choudhary
+/*****************************************************************************************************/
+
+// METHOD - 1 O(n^2)
+// Ref: https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
+//      https://www.youtube.com/watch?v=oNTsS8lGDHw&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=21
 
 #include<bits/stdc++.h>
 using namespace std;
 
 #define ll long long
+#define ld long double
 #define ull unsigned long long
 #define pb push_back
+#define ppb pop_back
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
+#define sz(x) ((int)(x).size())
+
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
-typedef vector<int>	vi;
+typedef vector<int> vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
-typedef vector<pii>	vpii;
-typedef vector<pll>	vpll;
+typedef vector<bool> vb;
+typedef vector<char> vc;
+typedef vector<string> vs;
+typedef vector<pii> vpii;
+typedef vector<pll> vpll;
 typedef vector<vi> vvi;
-typedef vector<vll>	vvll;
+typedef vector<vll> vvll;
 typedef vector<vull> vvull;
+typedef vector<vb> vvb;
+typedef vector<vc> vvc;
+typedef vector<vs> vvs;
+
+/************************************************** DEBUGGER *******************************************************************************************************/
+
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
+
+void _print(ll t) { cerr << t; }
+void _print(int t) { cerr << t; }
+void _print(string t) { cerr << t; }
+void _print(char t) { cerr << t; }
+void _print(ld t) { cerr << t; }
+void _print(double t) { cerr << t; }
+void _print(ull t) { cerr << t; }
+
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(vector <vector<T>> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
+template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
+template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+
+/*******************************************************************************************************************************************************************/
+
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
 int rng(int lim) {
     uniform_int_distribution<int> uid(0,lim-1);
     return uid(rang);
 }
 
+const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
-// using adjacency list representation of graph
-class Graph{
-	ll n;
-	vpll *list;
-	
-	public:
-		Graph(ll n){
-			this->n = n;
-			list = new vpll[n];
-		}
-		
-		void addEdge(ll x, ll y, ll w){
-			list[x].pb({y, w});
-			list[y].pb({x, w});
-		}
-		
-		ll prim_algo(){
-			// minHeap to repeatedly find out the active edge with
-			// minimum weight  
-			priority_queue<pll, vpll, greater<pll>> q;
-			q.push({0, 0}); // {weight, vertex}
-			
-			// visited array to keep track of all the vertices
-			// which have been included in the MST Set so far
-			vector<bool> visited(n, false);
-			ll res = 0;
-			
-			while(!q.empty()){
-				// extract the edge with minimum weight among
-				// all the active edges
-				pll pair = q.top();
-				q.pop();
-				
-				ll wt = pair.F;
-				ll to = pair.S;
-				
-				if(visited[to]){
-					// discard this edge
-					continue;
-				}
-				
-				res += wt;
-				visited[to] = true;
-				
-				for(auto x: list[to]){
-					if(visited[x.F] == 0){
-						q.push({x.S, x.F});
-					}
-				}
-			}
-			
-			return res;
-		}
-};
+ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
+                         while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
+                         
+ll mod_inv(ll a) { return mod_exp(a, mod - 2); } // works only for prime value of "mod"
+ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
+
+/******************************************************************************************************************************/
+
+// to store the input graph
+vector<vpii> g;
+
+int n, m;
+
+// function to print and return the weight of MST
+ll prims_algo() {
+	// vector to store constructed MST 
+    vi parent(n); 
+      
+    // key values used to pick minimum weight edge every time 
+    vi key(n); 
+      
+    // to represent set of vertices included in MST so far 
+    vb mst(n); 
+  
+    // initialize all keys as INFINITE, not present in MST & no parents
+    for(int i = 0; i < n; i++) {
+    	key[i] = INT_MAX, mst[i] = 0, parent[i] = -1; 
+    }
+  
+    // always include first 1st vertex in MST. 
+    // make key 0 so that this vertex is picked as first vertex. 
+    key[0] = 0; 
+    parent[0] = -1; 
+    
+    // as MST will have (n - 1) edges so run loop for (n- 1) times
+	for(int count = 0; count < n - 1; count++) { 
+        // pick the minimum key vertex from the set of vertices not yet included in MST yet 
+        int mn = INT_MAX, u;
+        
+        for(int i = 0; i < n; i++) {
+        	if(mst[i] == 0 and key[i] < mn) {
+        		mn = key[i], u = i;
+        	}
+        }
+  
+        // add the picked vertex to the MST set 
+        mst[u] = 1; 
+  
+        // update key value and parent index of the adjacent vertices of the picked vertex, by 
+        // considering only those vertices which are not yet included in MST 
+     	for(auto x: g[u]) {
+     		int v = x.F, wt = x.S;
+     		if(mst[v] == 0 and wt < key[v]) {
+     			key[v] = wt;
+     			parent[v] = u;
+     		}
+     	}   
+    }
+    
+    // in case you need the actual MST
+    vvi MST; // {u, v, wt}
+    for(int i = 1; i < n; i++) {
+    	vi edg(3);
+    	edg[0] = parent[i], edg[1] = i, edg[2] = key[i];
+    	MST.pb(edg);
+    }
+   
+    ll res = 0LL;
+    for(int i = 0; i < n; i++) res += key[i];
+    
+    return res; 
+}
 
 void solve()
 {
-  	ll n, m; cin >> n >> m;
-  	Graph g(n);
-  	for(ll i = 1; i <= m; i++){
-  		ll x, y, w; cin >> x >> y >> w;
-  		// -1 is done bcoz the DSU data structure 
-  		// is formed on 0-based indexing
-  		g.addEdge(x - 1, y - 1, w);
-  	}
-  	
-  	cout << g.prim_algo();
+  	cin >> n >> m;
+    g.clear(); g.resize(n);
+    
+    // 0-based vertices
+    for(int i = 0; i < m; i++) {
+        int x, y, wt; 
+        cin >> x >> y >> wt;
+        g[x].pb({y, wt});
+        g[y].pb({x, wt});
+    }
+    
+    cout << prims_algo() << "\n";
 }
 
 int main()
@@ -135,10 +199,214 @@ int main()
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
+    
+    // #ifndef ONLINE_JUDGE
+    //      freopen("error.txt", "w", stderr);
+    // #endif
+    
     int t = 1;
+    // int test = 1;
     // cin >> t;
     while(t--) {
-      solve();
+        // cout << "Case #" << test++ << ": ";
+        solve();
+    }
+
+    return 0;
+}
+
+/*****************************************************************************************************/
+
+// METHOD - 2 
+// Ref: https://www.geeksforgeeks.org/prims-mst-for-adjacency-list-representation-greedy-algo-6/
+//      https://www.youtube.com/watch?v=oNTsS8lGDHw&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=21
+//      https://github.com/striver79/StriversGraphSeries/blob/main/primsAlgoCppEfficient
+
+// Time complexity is also discussed in the video.
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define pb push_back
+#define ppb pop_back
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+#define sz(x) ((int)(x).size())
+
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<bool> vb;
+typedef vector<char> vc;
+typedef vector<string> vs;
+typedef vector<pii> vpii;
+typedef vector<pll> vpll;
+typedef vector<vi> vvi;
+typedef vector<vll> vvll;
+typedef vector<vull> vvull;
+typedef vector<vb> vvb;
+typedef vector<vc> vvc;
+typedef vector<vs> vvs;
+
+/************************************************** DEBUGGER *******************************************************************************************************/
+
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
+
+void _print(ll t) { cerr << t; }
+void _print(int t) { cerr << t; }
+void _print(string t) { cerr << t; }
+void _print(char t) { cerr << t; }
+void _print(ld t) { cerr << t; }
+void _print(double t) { cerr << t; }
+void _print(ull t) { cerr << t; }
+
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(vector <vector<T>> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
+template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
+template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+
+/*******************************************************************************************************************************************************************/
+
+mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
+int rng(int lim) {
+    uniform_int_distribution<int> uid(0,lim-1);
+    return uid(rang);
+}
+
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9+7;
+
+ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
+                         while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
+                         
+ll mod_inv(ll a) { return mod_exp(a, mod - 2); } // works only for prime value of "mod"
+ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
+
+/******************************************************************************************************************************/
+
+// to store the input graph
+vector<vpii> g;
+
+int n, m;
+
+// function to print and return the weight of MST
+ll prims_algo() {
+    // vector to store constructed MST 
+    vi parent(n); 
+      
+    // key values used to pick minimum weight edge every time 
+    vi key(n); 
+      
+    // to represent set of vertices included in MST so far 
+    vb mst(n); 
+  
+    // initialize all keys as INFINITE, not present in MST & no parents
+    for(int i = 0; i < n; i++) {
+        key[i] = INT_MAX, mst[i] = 0, parent[i] = -1; 
+    }
+    
+    priority_queue<pii, vpii, greater<pii>> q;
+    
+    // always include first 1st vertex in MST. 
+    // make key 0 so that this vertex is picked as first vertex. 
+    key[0] = 0; 
+    parent[0] = -1; 
+    q.push({0, 0}); // {weight, vertex}
+    
+    while(!q.empty()) {
+        // pick the minimum key vertex from the set of vertices not yet included in MST yet 
+        int u = q.top().S;
+        q.pop();
+        
+        // add the picked vertex to the MST set 
+        mst[u] = 1; 
+        
+        // update key value and parent index of the adjacent vertices of the picked vertex, by 
+        // considering only those vertices which are not yet included in MST 
+        for(auto x: g[u]) {
+            int v = x.F, wt = x.S;
+            if(mst[v] == 0 and wt < key[v]) {
+                key[v] = wt;
+                parent[v] = u;
+                q.push({key[v], v});
+            }
+        }   
+    }
+    
+    // in case you need the actual MST
+    vvi MST; // {u, v, wt}
+    for(int i = 1; i < n; i++) {
+        vi edg(3);
+        edg[0] = parent[i], edg[1] = i, edg[2] = key[i];
+        MST.pb(edg);
+    }
+   
+    ll res = 0LL;
+    for(int i = 0; i < n; i++) res += key[i];
+    
+    return res; 
+}
+
+void solve()
+{
+    cin >> n >> m;
+    g.clear(); g.resize(n);
+    
+    // 0-based vertices
+    for(int i = 0; i < m; i++) {
+        int x, y, wt; 
+        cin >> x >> y >> wt;
+        x -= 1, y -= 1;
+        g[x].pb({y, wt});
+        g[y].pb({x, wt});
+    }
+    
+    cout << prims_algo() << "\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
+    
+    // #ifndef ONLINE_JUDGE
+    //      freopen("error.txt", "w", stderr);
+    // #endif
+    
+    int t = 1;
+    // int test = 1;
+    // cin >> t;
+    while(t--) {
+        // cout << "Case #" << test++ << ": ";
+        solve();
     }
 
     return 0;

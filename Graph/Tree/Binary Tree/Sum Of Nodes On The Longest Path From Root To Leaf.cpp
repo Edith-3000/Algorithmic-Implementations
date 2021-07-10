@@ -1,18 +1,6 @@
-/* # UNDERLYING CONCEPTS ===>
-
-   # Kruskal's algorithm to find the minimum cost spanning tree uses the greedy approach. 
-   # This algorithm treats the graph as a forest and every node it has as an individual tree
-     (i.e. n connected components initially). 
-   # A tree connects to another only and only if, it has the least cost among all available options and 
-     does not violate MST properties.
-
-   # Algorithm ---->
-     1. Remove all loops and Parallel Edges.
-        (In case of parallel edges, keep the one which has the least cost associated and remove all others.)
-     2. Sort all edges in their increasing order of weight.
-     3. Repeatedly add the first (n-1) edges which have the least weightage, iff it does not form a cycle
-        i.e. add the least cost edge one by one whose vertices are present in 2 different connected components.
-*/
+// Prob: https://practice.geeksforgeeks.org/problems/sum-of-the-longest-bloodline-of-a-tree/1#
+// Ref: https://www.youtube.com/watch?v=NazCRmhUsPc&list=PLDdcY4olLQk1-yJxgljSQ4ykbI2Bw1CqS&index=20
+/******************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -93,84 +81,42 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// to store the input edges
-vvi edges;
+class TreeNode {
+	public:
+		int val;
+		TreeNode *left;
+		TreeNode *right;
+		TreeNode(): val(0), left(NULL), right(NULL) {}
+		TreeNode(int data): val(data), left(NULL), right(NULL) {}
+		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
+};
 
-int n, m;
-
-// for DSU operations
-vi parent, rnk;
-
-void make_set(int v) {
-    parent[v] = v;
-    rnk[v] = 1;
-}
-
-int find_set(int v) {
-    if(v == parent[v]) return v;
-    return parent[v] = find_set(parent[v]);
-}
-
-void union_sets(int a, int b) {
-    int s1 = find_set(a);
-    int s2 = find_set(b);
-    if(s1 != s2) {
-        if(rnk[s1] < rnk[s2]) swap(s1, s2);
-        parent[s2] = s1;
-        rnk[s1] += rnk[s2];
-    }
-}
-
-bool cmp(const vi &v1, const vi &v2) {
-    return v1[2] < v2[2];
-}
-
-// function to print and return the weight of MST
-ll kruskals_algo() {
-    parent.clear(); parent.resize(n);
-    rnk.clear(); rnk.resize(n);
-    
-    for(int i = 0; i < n; i++) {
-        make_set(i);
-    }
-    
-    // sorting on the basis of edge weight
-    sort(edges.begin(), edges.end(), cmp);
-    
-    // in case you need the actual MST
-    vvi MST;
-    
-    ll res = 0LL;  
-   
-    for(auto edg: edges) {
-        int s1 = find_set(edg[0]);
-        int s2 = find_set(edg[1]);
-        
-        // include the edge in MST iff it does not form a cycle (i.e. include in
-        // MST if both the vertices of the edge belong to different sets)
-        if(s1 != s2) {
-            res += edg[2];
-            MST.pb(edg);
-            union_sets(s1, s2);
-        }
-    }
-    
-    return res; 
+pii sum_along_ht(TreeNode *root) {
+	// base case
+	if(!root) return {0, 0};
+	
+	pii L = sum_along_ht(root->left);
+	pii R = sum_along_ht(root->right);
+	
+	if(L.F > R.F) return {L.F + 1, L.S + root->val};
+	else if(L.F < R.F) return {R.F + 1, R.S + root->val};
+	else return {L.F + 1, max(L.S, R.S) + root->val};
 }
 
 void solve()
 {
-    cin >> n >> m;
-    edges.clear(); 
-    
-    // 0-based vertices
-    for(int i = 0; i < m; i++) {
-        int x, y, wt; 
-        cin >> x >> y >> wt;
-        edges.pb({x, y, wt});
-    }
-    
-    cout << kruskals_algo() << "\n";
+  	TreeNode* root = new TreeNode(1);
+	root->left = new TreeNode(2);
+	root->right = new TreeNode(3);
+	root->right->left = new TreeNode(4);
+	root->right->right = new TreeNode(5);
+	root->right->left->left = new TreeNode(6);
+	root->right->left->right = new TreeNode(7);
+	root->right->left->right->left = new TreeNode(8);
+	root->right->left->right->right = new TreeNode(9);
+	
+	pii p = sum_along_ht(root);
+	cout << p.S << "\n";
 }
 
 int main()
@@ -189,7 +135,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) {
         // cout << "Case #" << test++ << ": ";
         solve();
@@ -197,6 +143,3 @@ int main()
 
     return 0;
 }
-
-// Time Complexity: O(|E| x log|V|)
-// Refer: https://stackoverflow.com/questions/20432801/time-complexity-of-the-kruskal-algorithm
