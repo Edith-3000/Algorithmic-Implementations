@@ -42,7 +42,7 @@ const int mod = 1e9+7;
 
 // function to check whether the given input vector v is a valid
 // pre-order traversal of a BST or not.
-// If it return false, then it indicates tree either isn’t a BST or 
+// If it return false, then it indicates that the tree either isn’t a BST or 
 // it wasn’t traversed with pre-order traversal.
 bool is_preorder(vi &v, int start, int end) {
 	// Base case: Return true if there's one or no keys in the given range.
@@ -147,7 +147,7 @@ const int mod = 1e9+7;
 
 // function to check whether the given input vector v is a valid
 // pre-order traversal of a BST or not.
-// If it return false, then it indicates tree either isn’t a BST or 
+// If it return false, then it indicates that the tree either isn’t a BST or 
 // it wasn’t traversed with pre-order traversal.
 bool is_preorder(vi &v) {
 	// Create an empty stack
