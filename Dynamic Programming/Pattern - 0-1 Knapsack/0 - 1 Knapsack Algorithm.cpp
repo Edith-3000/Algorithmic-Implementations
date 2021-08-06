@@ -211,11 +211,11 @@ ll zero_one_knapsack(vi &wt, vi &val, ll w, int n) {
     if(dp[n][w] != -1) return dp[n][w];
 	
 	// choice diagram code
-	if(wt[n-1] <= w) return max(val[n-1] + zero_one_knapsack(wt, val, w - wt[n-1], n - 1),
-	                            zero_one_knapsack(wt, val, w, n - 1));
+	if(wt[n-1] <= w) return dp[n][w] = max(val[n-1] + zero_one_knapsack(wt, val, w - wt[n-1], n - 1),
+	                                   zero_one_knapsack(wt, val, w, n - 1));
 	
 	// when wt[n-1] > w                        
-	else return zero_one_knapsack(wt, val, w, n - 1);
+	else return dp[n][w] = zero_one_knapsack(wt, val, w, n - 1);
 }
 
 void solve()

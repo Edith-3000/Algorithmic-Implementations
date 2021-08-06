@@ -136,7 +136,7 @@ int main()
 
 // Time complexity: O(2^x) in worst case.
 // Worst case happens when all characters of s1 and s2 mismatch i.e., length of LCS is 0.
-// Here n = min(n, m)
+// Here x = min(n, m)
 
 /*******************************************************************************************************/
 
