@@ -1,15 +1,13 @@
 // Reference - https://cp-algorithms.com/data_structures/sparse-table.html
 
 # Sparse Table is a data structure, that allows answering range queries. 
-  It can answer most range queries in O(log(n) base 2), but its true power is answering range minimum queries 
+  It can answer most range queries in O(log(n) base 2), but its true power is answering range minimum queries
   (or equivalent range maximum queries) or for 𝒊𝒅𝒆𝒎𝒑𝒐𝒕𝒆𝒏𝒕 𝒇𝒖𝒏𝒄𝒕𝒊𝒐𝒏𝒔 (such as finding range min, range max, 
-  range gcd, etc). For those queries it can compute the answer in O(1) time.
+  range gcd, range lcm, bitwise AND, bitwise OR, etc). For those queries it can compute the answer in O(1) time.
 
 # The only drawback of this data structure is, that it can only be used on 𝑰𝑴𝑴𝑼𝑻𝑨𝑩𝑳𝑬 arrays. 
-  This means, that the array cannot be changed between two queries. If any element in the array changes, the 
-  complete data structure has to be recomputed.
-
-===================================================================================================================
+  This means, that the array cannot be changed between two queries. If any element in the array changes, 
+  the complete data structure has to be recomputed.
 
 # Most important thing to note down is that 𝒂𝒏𝒚 𝒊𝒏𝒕𝒆𝒈𝒆𝒓 𝒄𝒂𝒏 𝒃𝒆 𝒘𝒓𝒊𝒕𝒕𝒆𝒏 𝒂𝒔 𝒂 𝒑𝒐𝒘𝒆𝒓 𝒐𝒇 2.
 # And the number of powers of 2 required to write any integer "n" in powers of 2 can be 𝑨𝑻 𝑴𝑶𝑺𝑻 

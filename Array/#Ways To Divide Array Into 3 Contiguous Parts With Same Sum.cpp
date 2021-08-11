@@ -1,5 +1,17 @@
-// Explanation: https://www.youtube.com/watch?v=2EpX9LkO2T0
-/*********************************************************************************************************/
+// Ref: https://www.geeksforgeeks.org/count-the-number-of-ways-to-divide-an-array-into-three-contiguous-parts-having-equal-sum/
+/*******************************************************************************************************************************/
+
+// Problem: C. Number of Ways
+// Contest: Codeforces - Codeforces Round #266 (Div. 2)
+// URL: https://codeforces.com/problemset/problem/466/C
+// Memory Limit: 256 MB
+// Time Limit: 2000 ms
+// Parsed on: 10-08-2021 18:30:39 IST (UTC+05:30)
+// Author: Kapil Choudhary
+// ********************************************************************
+// कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
+// मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि || १.४७ ||
+// ********************************************************************
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -80,74 +92,42 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-struct sparse_table {
-	// data members
-	
-	// n = #rows, m = #columns
-	int n, m;
-	
-	// 2D matrix
-	vvi mat; 
-	
-	// to store the power of 2 such that (1 << p2[i]) <= i 
-	// log2 function could be used also but it's slow & could lead to TLE
-	vi p2; 
-	
-	// member functions
-	void init(int _n) {
-		n = _n;
-		m = ceil(log2(n)) + 1;
-		
-		mat.clear();
-		mat.resize(n);
-		for(int i = 0; i < n; i++) mat[i].resize(m);
-		
-		p2.clear();
-		p2.resize(n+1);
-		
-		for(int i = 2; i <= n; i++) {
-			// since log2(n) = log2(n/2) + 1
-			p2[i] = p2[i/2] + 1;
-		}
-	}
-	
-	void build(vi &v) {
-		for(int i = 0; i < n; i++) mat[i][0] = v[i];
-		
-		for(int j = 1; j < m; j++) {
-			for(int i = 0; i + (1 << j) <= n; i++) {
-				mat[i][j] = min(mat[i][j - 1], mat[i + (1 << (j - 1))][j - 1]);
-			}
-		}
-	}
-	
-	// l & r are 0-based indexed
-	int query(int l, int r) {
-		// finding the power of 2 just less than (r - l)
-		int pw = p2[r - l];
-		return min(mat[l][pw], mat[r - (1 << pw) + 1][pw]);
-	} 
-};
-
 void solve()
 {
   	int n; cin >> n;
-  	vi v(n);
+  	vll v(n);
+  	
   	for(int i = 0; i < n; i++) cin >> v[i];
+  	ll sum = accumulate(v.begin(), v.end(), 0LL);
   	
-  	sparse_table st;
-  	st.init(n);
-  	st.build(v);
+  	if(sum % 3 != 0) {
+  		cout << 0 << "\n";
+  		return;
+  	}
   	
-  	// #queries
-  	int q; cin >> q;
+  	sum /= 3;
   	
-  	while(q--) {
-  		// use 0-based indexing
-  		int l, r; cin >> l >> r; 
-  		cout << "Minimum element in the range [" << l << ", " << r << "] = ";
-  		cout << st.query(l, r) << "\n";
-  	} 
+  	vi cnt(n, 0);
+  	ll tmp = 0LL;
+  	
+  	for(int i = n - 1; i >= 0; i--) {
+  		tmp += v[i];
+  		if(tmp == sum) cnt[i] = 1;
+  	}
+  	
+  	for(int i = n - 2; i >= 0; i--) {
+  		cnt[i] += cnt[i+1];
+  	}
+  	
+  	ll res = 0;
+  	tmp = 0LL;
+  	
+  	for(int i = 0; i + 2 < n; i++) {
+  		tmp += v[i];
+  		if(tmp == sum) res += cnt[i+2];
+  	}
+  	
+  	cout << res << "\n";
 }
 
 int main()
@@ -174,30 +154,3 @@ int main()
 
     return 0;
 }
-
-/*
-
-Sample i/p ---->
-
-10
-1 2 3 4 5 6 7 8 9 10
-5
-4 8
-0 9
-3 7
-1 8
-5 5
-
-Sample o/p ---->
-
-Minimum element in the range [4, 8] = 5
-Minimum element in the range [0, 9] = 1
-Minimum element in the range [3, 7] = 4
-Minimum element in the range [1, 8] = 2
-Minimum element in the range [5, 5] = 6
-
-*/
-
-// Time complexity of build() = O(n x m) = O(n x log2(n))
-// Time complexity of query() = O(1), as it is Range Minimum Query (idempotent function).
-// where n = size of input array.
