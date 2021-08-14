@@ -1,0 +1,12 @@
+// Ref: https://www.youtube.com/watch?v=8cQryxznvwk&list=PLzVLIdIx9dQxCKaiktxELrtXtnItgAAIr&index=2
+/*********************************************************************************************************/
+
+# STEP 1: Find out what info you need to compute for each node.
+# STEP 2: Root the tree at any arbitrary node.
+# STEP 3: Properly formulate the base cases, normally they are for the leaves i.e. dp[leaf] = something
+# STEP 4: Recurrence i.e. dp[cur] = something
+
+/*********************************************************************************************************/
+
+# General way of implementation refer video :--->
+  https://www.youtube.com/watch?v=X0NdgO4KnVc&list=PLzVLIdIx9dQxCKaiktxELrtXtnItgAAIr&index=2
