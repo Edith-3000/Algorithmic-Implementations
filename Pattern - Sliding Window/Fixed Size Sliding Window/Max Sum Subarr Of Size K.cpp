@@ -1,3 +1,13 @@
+// Prob: Given an array of integers of size 'n'. Calculate the maximum sum of 'k' consecutive elements 
+//       in the array.
+// Ref: https://www.youtube.com/watch?v=KtpqeN0Goro
+/**********************************************************************************************************/
+
+// Ques. based on min sum subarray of size k: 
+// https://www.codechef.com/COOK127B/problems/CONDEL
+
+/**********************************************************************************************************/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -11,7 +21,6 @@ using namespace std;
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
-#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -78,9 +87,46 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
+// function which returns the maximum subarray sum of size = k
+ll max_subarr(int k, vi &v) {
+	int n = sz(v);
+	if(n == 0) return 0LL;
+	if(n < k) return -1;
+	
+	// to store the final result
+	ll res = LLONG_MIN;
+	
+	// to store the sum of elements in the sliding window at 
+	// any point of time
+	ll sum = 0LL;
+	
+	// i = start index of window, j = end index of window
+	int i = 0, j = 0;
+	
+	while(j < n) {
+		// process the current element
+		sum += v[j];
+
+		if((j - i + 1) < k) j += 1;
+		else {
+			res = max(res, sum);
+			sum -= v[i];
+			i += 1;
+			j += 1;
+		}
+	}
+	
+	// return final result
+	return res;
+}
+
 void solve()
 {
-  
+  	int n, k; cin >> n >> k;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	cout << max_subarr(k, v) << "\n";
 }
 
 int main()
@@ -99,7 +145,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) {
         // cout << "Case #" << test++ << ": ";
         solve();

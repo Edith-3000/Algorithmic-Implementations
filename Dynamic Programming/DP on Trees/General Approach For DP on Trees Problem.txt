@@ -8,5 +8,14 @@
 
 /*********************************************************************************************************/
 
-# General way of implementation refer video :--->
+# For a generalized way of implementation refer the video :--->
   https://www.youtube.com/watch?v=X0NdgO4KnVc&list=PLzVLIdIx9dQxCKaiktxELrtXtnItgAAIr&index=2
+
+  Few sample implementations : --->
+  https://pastebin.com/ULVvTKyT
+
+/*********************************************************************************************************/
+
+# Also see the "REROOTING THE ROOT" technique for solving many DP on Trees problems.
+  https://codeforces.com/blog/entry/68142?#comment-590195
+  https://codeforces.com/blog/entry/68139

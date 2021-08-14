@@ -1,0 +1,26 @@
+# In re-rooting, what we basically do is first calculate the required data by considering some node as the 
+  root of the tree.
+
+# In re-rooting type problems, it is required to calculate the same data by considering each and every node 
+  as the root, using naive approach would result in TLE.
+
+# So, what we try do is using the calculated values(say by considering 1 to be the root), we try to calculate
+  the answer for each node(if we assume that node to be the root) in O(1) time.
+
+# Consider a case in which "node" is the current root and "it" is one of it's child, so "it" would 
+  had contributed something in the answer of node, so now we try to make "it" as the new root, so first 
+  we remove the contribution of "it" from "node", then "node" is now a child for "it", so we add the
+  contribution of the subtree with root being "node" to the answer of "it" and now "it" has become the 
+  new root of the tree.
+  
+  But when we need to calculate the answer for say "it1" (second child of "node"), we have to rollback 
+  the changes we made.
+
+# Usually re-rooting idea is applied when we want to explore all the cases.
+
+# Refer the following links : --->
+
+  1. https://codeforces.com/blog/entry/68142?#comment-590195
+  2. https://codeforces.com/blog/entry/68139
+  3. https://codeforces.com/contest/219/submission/90670500
+  4. https://codeforces.com/contest/1324/submission/90631691

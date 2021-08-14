@@ -1,3 +1,20 @@
+// Ref: https://www.youtube.com/watch?v=3UXK0Mab5fM
+//      https://www.youtube.com/watch?v=-wUgqgClBIM
+//      https://codeforces.com/contest/1324/submission/90631691
+/********************************************************************************************************/
+
+// Problem: F. Maximum White Subtree
+// Contest: Codeforces - Codeforces Round #627 (Div. 3)
+// URL: https://codeforces.com/contest/1324/problem/F
+// Memory Limit: 256 MB
+// Time Limit: 2000 ms
+// Parsed on: 14-08-2021 20:38:46 IST (UTC+05:30)
+// Author: Kapil Choudhary
+// ********************************************************************
+// कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
+// मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि || १.४७ ||
+// ********************************************************************
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -78,9 +95,86 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
+// to store the i/p graph
+vvll g;
+
+// dp1[i] = answer for node 'i' if we consider only the subtree rooted at node 'i'
+//          and all the edges above this subtree are not taken into account
+
+// dp2[i] = final answer for node 'i' if we consider the tree rooted at node 'i'
+vll dp1, dp2;
+
+// to store the color for each vertex
+vll v;
+
+// n = #nodes
+int n;
+
+void dfs1(int cur, int par) {
+	// initialising value for cur node
+	dp1[cur] = (v[cur] == 1) ? 1 : -1;
+	
+	for(auto x: g[cur]) {
+		if(x == par) continue;
+		dfs1(x, cur);
+		dp1[cur] += max(0LL, dp1[x]);
+	}
+}
+
+void dfs2(int cur, int par) {
+	// value for cur node
+	dp2[cur] = dp1[cur];
+	
+	for(auto x: g[cur]) {
+		// if node already visited
+		if(x == par) continue;
+		
+		// shifting the root from cur root to it's child x, it involves 2 steps ===>
+		// 1. remove the contribution of x in answer of cur
+		// 2. so now x becomes parent of cur, so add contribution of cur in answer of x
+		dp1[cur] -= max(0LL, dp1[x]);
+		dp1[x] += max(0LL, dp1[cur]);
+		
+		// recursively calculating values for child nodes
+		dfs2(x, cur);
+		
+		// rolling back the changes done previously
+		// 1. remove the contribution of cur in answer of x
+		// 2. add contribution of x in answer of cur
+		dp1[x] -= max(0LL, dp1[cur]);
+		dp1[cur] += max(0LL, dp1[x]); 
+	}
+}
+
 void solve()
 {
-  
+  	cin >> n;
+  	
+  	vset(g, n + 1, vll(0));
+  	vset(dp1, n + 1, -INF);
+  	vset(dp2, n + 1, -INF);
+  	vset(v, n + 1, -INF);
+  	
+  	for(int i = 1; i <= n; i++) cin >> v[i];
+  	
+  	for(int i = 1; i < n; i++) {
+  		int x, y; cin >> x >> y;
+  		g[x].pb(y);
+  		g[y].pb(x);
+  	}
+  	
+  	// filling up dp1
+  	dfs1(1, 0);
+  	
+  	// re-rooting technique comes to picture, here we find answer
+  	// by considering every node as a root 
+  	dfs2(1, 0);
+  	
+  	for(int i = 1; i <= n; i++) {
+  		cout << dp2[i] << " ";
+  	}
+  	
+  	cout << "\n";
 }
 
 int main()
@@ -99,7 +193,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) {
         // cout << "Case #" << test++ << ": ";
         solve();
