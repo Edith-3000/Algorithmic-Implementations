@@ -232,6 +232,7 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
+// CAUTION : use 0-based indexing for the nodes
 struct dsu {
     vi parent, rnk;
     
