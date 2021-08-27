@@ -306,13 +306,13 @@ vi dfs(int src) {
        
         // stack may contain same vertex twice. So we need to
         // print the popped item only if it is not visited.
-       if(!vis[cur]) {
-           vis[cur] = 1;  // mark it visited
-           res.pb(cur); // push cur in the result
-       }
+        if(!vis[cur]) {
+            vis[cur] = 1;  // mark it visited
+            res.pb(cur); // push cur in the result
+        }
 
-       // visiting all the adjacent vertices of cur
-       for(auto x: g[cur]) {
+        // visiting all the adjacent vertices of cur
+        for(auto x: g[cur]) {
             // check if already visited or not
             if(!vis[x]) {
                 s.push(x); // push it in the stack
