@@ -101,7 +101,7 @@ void SPF(int n) {
 	
 	for(ll i = 3; i * i <= (ll)n; i += 2) {
 		// checking if i is prime or not as only a prime no. can be it's own spf
-		if(spf[i]) {
+		if(spf[i] == i) {
 			// marking spf for all numbers divisible by i as i 
 	    	for(ll j = i * i; j <= n; j += i)  {
 	         	if(spf[j] == j) spf[j] = i;
