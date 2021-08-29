@@ -1,7 +1,0 @@
-/*i is the bit number from RHS and 0-based indexing is present*/
-
-bool check_bit(long long i, long long n)
-{
-	if(n & (1<<i)) return true;
-	else return false;
-}

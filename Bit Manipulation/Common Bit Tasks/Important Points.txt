@@ -1,0 +1,27 @@
+• Bit operation which can be used to set iᵗʰ bit of a number N from 0 to 1 => N |= (1 << i)
+
+• Bit operation which can be used to set iᵗʰ bit of a number N from 1 to 0 => N &= ~(1 << i)
+
+• Bit operation which can be used to flip(toggle) the iᵗʰ bit of a number N => N ^= (1 << i )
+
+• Bit operation to get the index of 1ˢᵗ set bit(from LSB side) of a number N => log2(N & -N) "or" 
+																				log2(N ^ (N & (N - 1))) "or"
+                                                                                log2(N & ~(N - 1))
+
+• Bit operation which produces a number with only last set bit => (N & -N) "or" 
+                                                                  (N ^ (N & (N - 1))) "or" 
+                                                                  (N & ~(N - 1))
+
+• Bit operation to clear the right most set bit(from LSB side) of a number N => N -= (N & -N)
+
+• Bit operation which return "TRUE" if a number N is a power of 2 => return (N && !(N & (N - 1)))
+
+* NOTE => 0 - based indexing of bits from LSB to MSB (right to left) is used.
+
+# Some more bit tricks: https://www.interviewbit.com/tutorial/tricks-with-bits/#tricks-with-bits
+
+**************************************************************************************************************
+
+// SOME NOTES ======>
+
+• a += (1 << i) is same as a |= (1 << i)
