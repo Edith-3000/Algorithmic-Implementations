@@ -88,7 +88,7 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 vll v;
 
 // Change functions accordingly when needed, here functions are coded for
-// range sum queries
+// range sum queries & point update
 
 // NOTE: everything is 1-based indexed in fenwick_tree
 // Fenwick Tree structure for range queries & point updates
