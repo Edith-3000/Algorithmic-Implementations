@@ -1,232 +1,245 @@
-/* # Reference: https://brilliant.org/wiki/bellman-ford-algorithm/
-			    https://cp-algorithms.com/graph/bellman_ford.html
-			    https://cp-algorithms.com/graph/finding-negative-cycle-in-graph.html
+/* # Ref: https://brilliant.org/wiki/bellman-ford-algorithm/
+          https://cp-algorithms.com/graph/finding-negative-cycle-in-graph.html
+          https://www.geeksforgeeks.org/finding-shortest-path-between-any-two-nodes-using-floyd-warshall-algorithm/
+          https://www.youtube.com/watch?v=nV_wOZnhbog
 
-   # This algorithm is DP based as it breaks the problem down into smaller subproblems, then combines the 
-     answers to those subproblems to solve the big, initial problem.
-   
-   # The idea is this: either the quickest path from A to C is the quickest path found so far from A to C, or 
-     it's the quickest path from A to B plus the quickest path from B to C.
+   # This algorithm is DP based as it breaks the problem down into smaller subproblems, then combines 
+     the answers to those subproblems to solve the big, initial problem.
+	
+   # The idea is this: Either the quickest path from A to C is the quickest path found so far from 
+                       A to C, or it's the quickest path from A to B plus the quickest path from B to C.
 
    # Takes O(|V|^3) time.
 
    # All pairs shortest path algorithm.
    # Works with -ve edges as well.
+   # Works for both weighted DG and UG.
 
-   # Can detect -ve weight cycle, with one extra step in the main algorithm.
-     * The graph has a negative cycle if at the end of the algorithm, the 
-       distance from a vertex v to itself is -ve.
+   # Can detect -ve weight cycle, with one extra step in the main algorithm i.e. --->
+     * THE GRAPH HAS A NEGATIVE CYCLE IF AT THE END OF THE ALGORITHM, THE 
+       DISTANCE FROM A VERTEX 'v' TO ITSELF IS -VE.
 
-   # Works for weighted DG and UG.
-
-   # As we need to find the shortest path from each node to all other nodes, it is better to represent the graph
-     using adjacency matrix.
+   # As we need to find the shortest path from each node to all other nodes, it is better to represent 
+     the graph using adjacency matrix.
 */
 
 #include<bits/stdc++.h>
 using namespace std;
 
-template<typename T>
-class Graph
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define pb push_back
+#define ppb pop_back
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+#define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
+
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<bool> vb;
+typedef vector<char> vc;
+typedef vector<string> vs;
+typedef vector<pii> vpii;
+typedef vector<pll> vpll;
+typedef vector<vi> vvi;
+typedef vector<vll> vvll;
+typedef vector<vull> vvull;
+typedef vector<vb> vvb;
+typedef vector<vc> vvc;
+typedef vector<vs> vvs;
+
+/************************************************** DEBUGGER *******************************************************************************************************/
+
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
+
+void _print(ll t) { cerr << t; }
+void _print(int t) { cerr << t; }
+void _print(string t) { cerr << t; }
+void _print(char t) { cerr << t; }
+void _print(ld t) { cerr << t; }
+void _print(double t) { cerr << t; }
+void _print(ull t) { cerr << t; }
+
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(vector <vector<T>> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
+template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
+template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+
+/*******************************************************************************************************************************************************************/
+
+mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
+int rng(int lim) {
+    uniform_int_distribution<int> uid(0,lim-1);
+    return uid(rang);
+}
+
+// const int INF = 0x3f3f3f3f;
+const int INF = INT_MAX;
+const int mod = 1e9+7;
+
+ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
+                         while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
+                         
+ll mod_inv(ll a) { return mod_exp(a, mod - 2); } // works only for prime value of "mod"
+ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
+
+/******************************************************************************************************************************/
+
+// adjacency matrix representation of graph
+vvi g;
+
+// d[i][j] => shortest path length b/w vertices i & j
+vvi d; 
+
+// nxt[][] is used to retrieve the actual path
+// nxt[i][j] => vertex which is just next to vertex 'i' in the
+//              shortest path from i to j
+vvi nxt;
+
+// it will be true if there is -ve weight cycle in the graph
+bool neg_cycle;
+
+// #vertices
+int n;
+
+// function to retrive the shortest paths (if exist) betweeen each pair of vertices
+// ref: https://www.geeksforgeeks.org/finding-shortest-path-between-any-two-nodes-using-floyd-warshall-algorithm/
+void retrieve_paths() {	
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < n; j++) {
+			cout << "For " << i << " to " << j << ": \n";
+			// no shortest path exist if i and j part of -ve wt cycle 
+			if(d[i][j] == -INF) {
+				cout << "No shortest path exists\n\n";
+				continue;
+			}
+			
+			// if path exist retrieve it
+			int x = i, y = j;
+			cout << x;
+			if(x == y) {
+				cout << "\n\n";
+				continue;
+			}
+			
+			cout << " -> ";
+			
+			while(x != y) {
+				x = nxt[x][y];
+				cout << x;
+				if(x != y) cout << " -> ";
+			}
+			
+			cout << "\n\n";
+		}
+	}
+} 
+
+// If required use long long instead of int data type
+// 0-based indexing of vertices is used
+void floyd_warshall() {
+	// initialisation of d[][] and nxt[][] arrays
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < n; j++) {
+			if(i == j) d[i][j] = 0, nxt[i][j] = -1;
+			else {
+				if(g[i][j] == INF) d[i][j] = INF, nxt[i][j] = -1;
+				else d[i][j] = g[i][j], nxt[i][j] = j;
+			}
+		}
+	}
+	
+	// running main logic of the algorithm
+	for(int k = 0; k < n; k++) {
+    	for(int i = 0; i < n; i++) {
+        	for(int j = 0; j < n; j++) {
+        		if(d[i][k] == INF or d[k][j] == INF) continue;
+            	if(d[i][k] + d[k][j] < d[i][j]) {
+            		d[i][j] = d[i][k] + d[k][j];
+            		nxt[i][j] = nxt[i][k];
+            	}
+            }
+        }
+    }
+   
+    neg_cycle = 0;
+    
+    // to check if there is -ve weight cycle in the graph, 
+    // therefore if d[i][j] == -INF, then pairs [i][j] don't have a shortest path between them
+    // ref: https://cp-algorithms.com/graph/finding-negative-cycle-in-graph.html
+    for(int i = 0; i < n; i++) {
+    	for(int j = 0; j < n; j++) {
+        	for(int k = 0; k < n; k++) {
+            	if(d[i][k] < INF and d[k][k] < 0 and d[k][j] < INF) {
+            		d[i][j] = -INF; 
+            		neg_cycle = 1;
+            	}
+            }
+        }
+    }
+    
+    retrieve_paths();
+}
+
+void solve()
 {
-  // data member
-  int n;
-  vector<vector<T>> mp;
-  
-  public:
-  
-    // constructor
-    Graph(int n){
-    	this->n = n;
-    	mp.resize(n, vector<T>(n, 0));
-    }
-  
-    // memebr functions
-    void addEdge(T u, T v, int wt, bool isBidir)
-    {
-      mp[u][v] = wt;
-      if(isBidir) mp[v][u] = wt;
-    }
-    
-    void init()
-    {
-    	for(int i=0; i<n; i++){
-    		for(int j=0; j<n; j++){
-    			if((i != j) && (mp[i][j] == 0)){
-    				mp[i][j] = INT_MAX;
-    			}
-    		}
-    	}
-    }
-    
-    void printGraph()
-    {
-    	for(int i=0; i<n; i++){
-    		for(int j=0; j<n; j++){
-    			cout<<mp[i][j]<<" ";
-    		}
-    		
-    		cout<<"\n";
-    	}
-    }
-    
-    void floyd_warshall()
-    {      
-      // parent[key] stores the immediate parent of key
-      // in the shortest path from src to key
-      unordered_map<T, T> par;
-      
-      // initialising the parent of all nodes 
-      for(int i=0; i<n; i++){
-          par[i] = i;
-      }
-            
-      for(int k=0; k<n; k++){
-          for(int i=0; i<n; i++){
-              for(int j=0; j<n; j++){
-                  if(mp[i][k] < INT_MAX && mp[k][j] < INT_MAX){
-                      mp[i][j] = min(mp[i][j], mp[i][k] + mp[k][j]);
-                  }
-              }
-          }
-      }
-      
-      // to check if there is -ve weight cycle in the graph
-      bool flag = false;
-      set<pair<T, T>> noShortest;
-      
-      for(int i=0; i<n; i++){
-          for(int j=0; j<n; j++){
-              for(int t=0; t<n; t++){
-                  if(mp[i][t] < INT_MAX && mp[t][j] < INT_MAX && mp[t][t] < 0){
-                      flag = true;
-                      if(i != j) noShortest.insert({i, j});
-                      mp[i][j] = INT_MIN;
-                  }
-              }
-          }
-      }
-      
-      if(flag){
-          cout<<"Negative weight cycle exist in the input graph"<<"\n";
-          cout<<"Vertex pair b/w which there exist no shortest path are (due to presence of -ve wt cycle b/w them) --->"<<"\n";
-          
-          for(auto p: noShortest){
-              cout<<p.first<<" and "<<p.second<<"\n";
-          }
-          
-          // exit_success
-          exit(0);	
-      }
-      
-      // print length of shortest distances of all nodes from src
-      for(int i=0; i<n; i++){
-          for(int j=0; j<n; j++){
-              cout<<mp[i][j]<<" ";
-          }
-          
-          cout<<"\n";
-      }
-   }
-};
+  	cin >> n;
+  	vset(g, n, vi(n));
+  	vset(d, n, vi(n));
+  	vset(nxt, n, vi(n));
+  	
+  	// if g[i][j] == INF, then it denotes that there is no
+  	// direct edge b/w them
+  	for(int i = 0; i < n; i++) {
+  		for(int j = 0; j < n; j++) cin >> g[i][j];
+  	}
+  	
+  	floyd_warshall();
+}
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
-    cout<<"Enter the number of VERTICES in the graph: ";
-    int n; cin>>n; cout<<n<<"\n";
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
     
-    cout<<"Enter the number of EDGES in the graph: ";
-    int e; cin>>e; cout<<e<<"\n";
+    // #ifndef ONLINE_JUDGE
+    //      freopen("error.txt", "w", stderr);
+    // #endif
     
-    Graph<int> g(n);
-    for(int i=0; i<e; i++)
-    {
-      int u, v, wt; 
-      cin >> u >> v >> wt;
-      g.addEdge(u, v, wt, false);
+    int t = 1;
+    // int test = 1;
+    // cin >> t;
+    while(t--) {
+        // cout << "Case #" << test++ << ": ";
+        solve();
     }
-    
-    g.init();
-    
-    g.printGraph(); 
-    cout<<"\n";
-    g.floyd_warshall();
-    
+
     return 0;
 }
 
-/*
-
-Sample i/p 1:
-
-4
-5
-0 2 -2
-1 0 4
-1 2 3
-2 3 2
-3 1 -1
-
-Sample o/p 1:
-
-Enter the number of VERTICES in the graph: 4
-Enter the number of EDGES in the graph: 5
-0 2147483647 -2 2147483647 
-4 0 3 2147483647 
-2147483647 2147483647 0 2 
-2147483647 -1 2147483647 0 
-
-0 -1 -2 0 
-4 0 2 4 
-5 1 0 2 
-3 -1 1 0 
-
------------------------------------------------------------------------------------------------------------
-
-Sample i/p 2:
-
-6 6
-0 5 3
-0 1 1
-1 2 2
-2 3 1
-3 1 -4
-3 4 5
-
-Smaple o/p 2:
-
-Enter the number of VERTICES in the graph: 6
-Enter the number of EDGES in the graph: 6
-0 1 2147483647 2147483647 2147483647 3 
-2147483647 0 2 2147483647 2147483647 2147483647 
-2147483647 2147483647 0 1 2147483647 2147483647 
-2147483647 -4 2147483647 0 5 2147483647 
-2147483647 2147483647 2147483647 2147483647 0 2147483647 
-2147483647 2147483647 2147483647 2147483647 2147483647 0 
-
-Negative weight cycle exist in the input graph
-Vertex pair b/w which there exist no shortest path are (due to presence of -ve wt cycle b/w them) --->
-0 and 1
-0 and 2
-0 and 3
-0 and 4
-1 and 2
-1 and 3
-1 and 4
-2 and 1
-2 and 3
-2 and 4
-3 and 1
-3 and 2
-3 and 4
-0 -2147483648 -2147483648 -2147483648 -2147483648 3 
-2147483647 -2147483648 -2147483648 -2147483648 -2147483648 2147483647 
-2147483647 -2147483648 -2147483648 -2147483648 -2147483648 2147483647 
-2147483647 -2147483648 -2147483648 -2147483648 -2147483648 2147483647 
-2147483647 2147483647 2147483647 2147483647 0 2147483647 
-2147483647 2147483647 2147483647 2147483647 2147483647 0 
-
-*/
+// Time complexity: O(|V|^3)
+// Space complexity: O(|V|^2), where |V| = #vertices in graph
