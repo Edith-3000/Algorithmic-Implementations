@@ -89,44 +89,60 @@ vll v;
 
 // NOTE: everything is 1-based indexed in fenwick_tree
 
-// Fenwick Tree structure for range updates & point queries, here in the tree 
-// only the updates are stored. Original array entries are not stored. If the original 
-// array entries are non-zero, we can include v[idx] to the value returned by point_query(idx).
+// Fenwick Tree structure for range updates & range queries, here in the tree 
+// only the updates are stored. Original array entries are not stored.
 struct fenwick_tree {
 	// data members ==>
 	int n;
-	vll bit;
+	vll bit1, bit2;
 	
 	// member functions ===>
 	
 	// constructor
 	fenwick_tree(int n) {
 		this->n = n;
-		bit.clear();
-		bit.resize(n + 2);
+		bit1.clear();
+		bit1.resize(n + 2);
+		bit2.clear();
+		bit2.resize(n + 2);
 	}
 	
 	// to seed the bit[] array with some initial value
 	void init() {
-		bit[0] = 0LL;
-		for(int i = 1; i <= n; i++) bit[i] = 0LL;
+		bit1[0] = bit2[0] = 0LL;
+		for(int i = 1; i <= n; i++) bit1[i] = 0LL, bit2[i] = 0LL;
 	}
 	
-	// fn. to return total change at idx i of vector v[]
-	ll point_query(int i) {
+	// if y == 1, it returns the value at position i in the array, whose track is kept in bit1[]
+	// else if y == 2, it returns value to be subtracted from query(i, 1) * i
+	ll query(int i, int y) {
 		ll res = 0LL;
 		while(i > 0) {
-			res += bit[i];
+			if(y == 1) res += bit1[i];
+			else res += bit2[i];
 			i -= (i & (-i));
 		}
 		
 		return res;
+    }
+	
+	// returns the result for the range [1, i] (1 & i both inclusive)
+	ll query(int i) {
+    	return query(i, 1) * i - query(i, 2);
+    }
+	
+	// to compute the result for range [l, r] (l & r both inclusive)
+	// res[l, r] = fn(res[1, r], res[1, l-1])
+	ll range_query(int l, int r) {
+		return query(r) - query(l - 1);
 	}
 	
 	// fn. to change the value at idx i by delta in bit[] vector
-	void point_update(int i, ll delta) {
+	// if y == 1, change is to be done in bit1[], else in bit2[]
+	void point_update(int i, ll delta, int y) {
 		while(i <= n) {
-			bit[i] += delta;
+			if(y == 1) bit1[i] += delta;
+			else bit2[i] += delta;
 			i += (i & (-i));
 		}
 	}
@@ -134,8 +150,10 @@ struct fenwick_tree {
 	// fn. to change each element in [l, r] (l & r both inclusive) in the array
 	// by value delta
 	void range_update(int l, int r, ll delta) {
-		point_update(l, delta);
-		point_update(r + 1, -delta);
+		point_update(l, delta, 1);
+		point_update(r + 1, -delta, 1);
+		point_update(l, delta * (l - 1), 2);
+		point_update(r + 1, -delta * r, 2);
 	}
 };
 
@@ -154,18 +172,16 @@ void solve()
   	
   	// use 1-based indices for queries and updates
   	while(q--) {
-  		// typ == 1 : range update. typ == 2 : point query
-  		int typ; cin >> typ;
+  		// typ == 1 : range update. typ == 2 : range query
+  		int typ, l, r; cin >> typ >> l >> r;
   		
   		if(typ == 1) {
-  			int l, r; cin >> l >> r;
   			ll delta; cin >> delta;
   			ft.range_update(l, r, delta);
   		}
   		
   		else {
-  			int idx; cin >> idx;
-  			cout << ft.point_query(idx) + v[idx] << "\n";
+  			cout << ft.range_query(l, r) << "\n";
   		}
   	}
 }
