@@ -13,6 +13,7 @@
 
   Few sample implementations : --->
   https://pastebin.com/ULVvTKyT
+  https://cses.fi/paste/965778fa3ab202f72ac52f/
 
 /*********************************************************************************************************/
 
