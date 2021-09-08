@@ -1,36 +1,60 @@
 * With recent C/C++ versions, we can also declare an array during runtime also.
-* arr[3 / 2] = 2; this is same as arr[1] = 2 
-* There is no index out of bounds checking in C/C++ for e.g. a[-23] compiles fine but may produce unexpected output when run, without showing 
-  any error.
-* In C, it is not compiler error to initialize an array with more elements than the specified size, the program will compile
-  fine and shows just Warning. 
-  But in C++, the program won’t compile & will generate compiler error “error: too many initializers.
-* Arrays and pointer are two different things (we can check by applying sizeof). The confusion happens because array name indicates 
-  the address of first element of the array and arrays are always passed as pointers to functions (even if we use square bracket). 
-* Internally array elements are accessed using pointer arithmetic.
-* Like other variables, arrays can be allocated memory in any of the three segments, data, heap, and stack.
-  Dynamically allocated arrays are allocated memory on heap, static or global arrays are allocated memory on data segment and local 
-  arrays are allocated memory on stack segment.
 
-* In C/C++, we can define multidimensional arrays in simple words as array of arrays. Data in multidimensional arrays are stored in 
-  tabular form (in row major order). Two – dimensional array is the simplest form of a multidimensional array.
-* A 2 D array can also be initialised in the following form - int x[3][4] = {0, 1 ,2 ,3 ,4 , 5 , 6 , 7 , 8 , 9 , 10 , 11};
-* Initializing Three-Dimensional Array: Initialization in Three-Dimensional array is same as that of Two-dimensional arrays. 
-  The difference is as the number of dimension increases so the number of nested braces will also increase.
-* Accessing elements in Three-Dimensional Arrays: Accessing elements in Three-Dimensional Arrays is also similar to that of 
-  Two-Dimensional Arrays. The difference is we have to use three loops instead of two loops for one additional dimension in 
-  Three-dimensional Arrays.
+* arr[3 / 2] = 2; this is same as arr[1] = 2 
+
+* There is no index out of bounds checking in C/C++ for e.g. a[-23] compiles fine but may produce 
+  unexpected output when run, without showing any error.
+
+* In C, it is not compiler error to initialize an array with more elements than the specified size,
+  the program will compile fine and shows just Warning. 
+  But in C++, the program won’t compile & will generate compiler error “error: too many initializers.
+
+* Arrays and pointer are two different things (we can check by applying sizeof). 
+  The confusion happens because array name indicates the address of first element of the array and 
+  arrays are always passed as pointers to functions (even if we use square bracket).
+
+* Internally array elements are accessed using pointer arithmetic.
+
+* Like other variables, arrays can be allocated memory in any of the three segments, data, heap, and stack.
+  Dynamically allocated arrays are allocated memory on heap, static or global arrays are allocated memory 
+  on data segment and local arrays are allocated memory on stack segment.
+
+* In C/C++, we can define multidimensional arrays in simple words as array of arrays. Data in 
+  multidimensional arrays are stored in tabular form (in row major order). 
+  Two – dimensional array is the simplest form of a multidimensional array.
+
+* A 2 D array can also be initialised in the following form -> 
+  int x[3][4] = {0, 1 ,2 ,3 ,4 , 5 , 6 , 7 , 8 , 9 , 10 , 11};
+
+* Initializing Three-Dimensional Array: Initialization in Three-Dimensional array is same as that of 
+  Two-dimensional arrays. 
+  The difference is as the number of dimension increases so the number of nested braces will also 
+  increase.
+
+* Accessing elements in Three-Dimensional Arrays: Accessing elements in Three-Dimensional Arrays is 
+  also similar to that of Two-Dimensional Arrays. The difference is we have to use three loops instead of 
+  two loops for one additional dimension in Three-dimensional Arrays.
 
 * What is a multidimensional array? It is an array or arrays.
 
-  For the first example, array[3][6]: It is an array containing three other arrays. The three other arrays have six elements each. Consider 
-  three classes with six students each.
+  For the first example, array[3][6]: It is an array containing three other arrays. The three other 
+  arrays have six elements each. Consider three classes with six students each.
 
-  For the second example, array[3][6][2]: It is an array containing three other arrays. The three other arrays have six arrays each. 
+  For the second example, array[3][6][2]: It is an array containing three other arrays. The three other
+  arrays have six arrays each. 
   The six arrays have two elements each. Consider three classes with six students, each having two parents.
 
-  Similarly you can form an array[12][4][7][24]. This signifies 12 months with 4 weeks each. The four weeks have 7 days each, and each 
-  day in turn has 24 hours.
+  Similarly you can form an array[12][4][7][24]. This signifies 12 months with 4 weeks each. The four weeks 
+  have 7 days each, and each day in turn has 24 hours.
 
-* In C/C++, initialization of a multidimensional arrays can have left most dimension as optional. Except the left most dimension, 
-  all other dimensions must be specified.
+* In C/C++, initialization of a multidimensional arrays can have left most dimension as optional. 
+  Except the left most dimension, all other dimensions must be specified.
+
+************************************************************************************************************
+
+* In any sequence of at least (n^2 + 1) terms, there will be a non-increasing or non-decreasing 
+  subsequence of (n + 1) terms.
+  
+  Ref: https://math.stackexchange.com/questions/316006/creating-a-sequence-that-does-not-have-an-increasing-or-a-decreasing-sequence-of
+
+  Ques. based on it: https://codeforces.com/problemset/problem/1550/C
