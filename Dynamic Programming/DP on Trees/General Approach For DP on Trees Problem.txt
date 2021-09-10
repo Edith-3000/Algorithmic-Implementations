@@ -14,6 +14,8 @@
   Few sample implementations : --->
   https://pastebin.com/ULVvTKyT
   https://cses.fi/paste/965778fa3ab202f72ac52f/
+  https://pastebin.com/QNe4NPvV
+  https://pastebin.com/UkqXJDvC
 
 /*********************************************************************************************************/
 

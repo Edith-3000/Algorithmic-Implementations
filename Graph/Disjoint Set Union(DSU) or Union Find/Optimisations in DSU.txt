@@ -14,7 +14,7 @@
 		    return parent[v] = find_set(parent[v]);
     }
 
-// Time complexity: O(log(n) per call on average.
+// Time complexity: O(log(n)) per call on average.
 
 /********************************************************************************************************/
 
