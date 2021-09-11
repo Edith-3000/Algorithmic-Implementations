@@ -1,0 +1,40 @@
+# DFS Tree: Tree which is formed while doing DFS traversal of a graph.
+# Best blog on DFS Tree & it's use cases: --->
+  https://cp-algorithms.com/graph/bridge-searching.html
+
+# Classification of edges of a graph: --->
+  https://cp-algorithms.com/graph/depth-first-search.html
+
+# NOTE: • 𝙁𝙤𝙧𝙬𝙖𝙧𝙙 𝙚𝙙𝙜𝙚𝙨 𝙖𝙣𝙙 𝑪𝙧𝙤𝙨𝙨 𝙚𝙙𝙜𝙚𝙨 𝙤𝙣𝙡𝙮 𝙚𝙭𝙞𝙨𝙩 𝙞𝙣 𝙙𝙞𝙧𝙚𝙘𝙩𝙚𝙙 𝙜𝙧𝙖𝙥𝙝𝙨.
+        • 𝑾𝒉𝒊𝒍𝒆 𝑻𝒓𝒆𝒆 𝙖𝙣𝙙 𝑩𝒂𝒄𝒌𝒘𝒂𝒓𝒅 𝙚𝙙𝙜𝙚𝙨 𝒄𝒂𝒏 𝙚𝙭𝙞𝙨𝙩 𝙞𝙣 𝒃𝒐𝒕𝒉 𝙙𝙞𝙧𝙚𝙘𝙩𝙚𝙙 & 𝒖𝒏𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝙜𝙧𝙖𝙥𝙝𝙨.
+
+# At the beginning and end of each search call we remember the 𝒆𝒏𝒕𝒓𝒚/𝒅𝒊𝒔𝒄𝒐𝒗𝒆𝒓𝒚 and 𝒆𝒙𝒊𝒕 "𝒕𝒊𝒎𝒆" of each vertex. 
+  Now we can find the answer for any pair of vertices (i,j) in O(1): vertex i is an ancestor of vertex j if 
+  and only if 𝒆𝒏𝒕𝒓𝒚[𝒊] < 𝒆𝒏𝒕𝒓𝒚[𝒋] and 𝒆𝒙𝒊𝒕[𝒊] > 𝒆𝒙𝒊𝒕[𝒋].
+
+# Articulation Points (or Cut Vertices): a vertex in an UG is called an articulation point if removing it and 
+  all the edges associated with it results in the increase of the number of connected components in the graph.
+
+# Strong Articulation Points (or Strong Cut Vertices): a vertex in a DG is called an strong articulation point
+  if removing it and all the edges associated with it results in the increase of the number of strongly connected
+  components in the graph.
+
+# Articulation points(or Strong Articulation Points) represent vulnerabilities in a connected network – single
+  points whose failure would split the network into 2 or more components. They are useful for designing reliable 
+  networks.
+
+# Bridge: An edge (u,v)∈E is a bridge if its removal increases the number of connected components of an UG.
+          (Note: only the edge is removed not the 2 vertices associated with it).
+
+# Strong Bridge: An edge (u,v)∈E is a strong bridge if its removal increases the number of strongly connected
+                 components of a DG.
+                 (Note: only the edge is removed not the 2 vertices associated with it).
+
+# Fore more info just check out: --->
+  http://www.sofsem.cz/sofsem12/files/presentations/Thursday/GiuseppeItaliano.pdf
+
+# 𝑳𝒐𝒘𝒆𝒔𝒕 𝑻𝒊𝒎𝒆: for a vertex 'x' it is the minimum of entry(or discovery) times of all the vertices that are 
+                pointed by a backedge from any of the vertex present in the subtree (rooted at'x') of the vertex 
+                'x'.
+                If vertex 'x' has no children or there is no backedge present in the subtree, then 
+                lowestTime[x] = entryTime[x].

@@ -7,7 +7,9 @@
 
    # For an edge to be a bridge the following condition must hold(valid for all the vertices including
      the root of the DFS Tree formed by DFS traversal of the graph):
-     low[child] > entry[parent]
+     low[child] > tin[parent]
+		 
+		 NOTE: A BACK-EDGE IS NEVER A BRIDGE.
 
    # Here low[i] is the lowest time of vertex i(already discussed in "Introduction.txt")
 */
