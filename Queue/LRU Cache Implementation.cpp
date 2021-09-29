@@ -1,4 +1,4 @@
-// Ref: https://practice.geeksforgeeks.org/problems/lru-cache/1
+// Prob: https://practice.geeksforgeeks.org/problems/lru-cache/1
 /****************************************************************************************************/
 
 /* # LRU Cache is about removing the element that was accessed longest time ago if the size of the 
