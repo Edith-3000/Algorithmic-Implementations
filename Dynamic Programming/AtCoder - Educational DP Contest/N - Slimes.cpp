@@ -1,12 +1,14 @@
-// Ref: https://cp-algorithms.com/data_structures/fenwick.html
-//      https://github.com/kartikkukreja/blog-codes/blob/master/src/BIT%20or%20Fenwick%20Tree%20Data%20Structure.cpp
-/*********************************************************************************************************************/
-
-// Prob. based on this: https://codeforces.com/problemset/problem/459/D
-
-/********************************************************************************************************/
-
-// This Mode of BIT is just the ordinary Fenwick tree
+// Problem: N - Slimes
+// Contest: AtCoder - Educational DP Contest
+// URL: https://atcoder.jp/contests/dp/tasks/dp_n
+// Memory Limit: 1024 MB
+// Time Limit: 2000 ms
+// Parsed on: 30-09-2021 14:44:05 IST (UTC+05:30)
+// Author: Kapil Choudhary
+// ********************************************************************
+// कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
+// मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि || १.४७ ||
+// ********************************************************************
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -77,7 +79,7 @@ int rng(int lim) {
     return uid(rang);
 }
 
-const int INF = 0x3f3f3f3f;
+const ll INF = 9e18;
 const int mod = 1e9+7;
 
 ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
@@ -88,96 +90,39 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// input array[] for which Fenwick Tree will be build
-vll v;
-
-// Change functions accordingly when needed, here functions are coded for
-// range sum queries & point update
-
-// NOTE: everything is 1-based indexed in fenwick_tree
-// Fenwick Tree structure for range queries & point updates
-struct fenwick_tree {
-	// data members ==>
-	int n;
-	vll bit;
-	
-	// member functions ===>
-	
-	// constructor
-	fenwick_tree(int n) {
-		this->n = n;
-		bit.clear();
-		bit.resize(n + 1);
-	}
-	
-	// to seed the bit[] array with some initial value
-	void init() {
-		bit[0] = 0LL;
-		for(int i = 1; i <= n; i++) bit[i] = 0LL;
-	}
-	
-	// build bit[] using point_update() fn.
-	void build() {
-		for(int i = 1; i <= n; i++) {
-			point_update(i, v[i]);
-		}
-	}
-	
-	// fn. to change the value at idx i by delta
-	void point_update(int i, ll delta) {
-		while(i <= n) {
-			bit[i] += delta;
-			i += (i & (-i));
-		}
-	}
-	
-	// to compute the result for range [l, r] (l & r both inclusive)
-	// res[l, r] = fn(res[1, r], res[1, l-1])
-	ll range_query(int l, int r) {
-		return range_query(r) - range_query(l - 1);
-	}
-	
-	// computes result for range [1, i] (1 & i both inclusive)
-	ll range_query(int i) {
-		ll res = 0LL;
-		while(i > 0) {
-			res += bit[i];
-			i -= (i & (-i));
-		}
-		
-		return res;
-	}
-};
-
 void solve()
 {
   	int n; cin >> n;
-  	vset(v, n + 1, 0LL);
+  	vll v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	// use 1-based indexing, so as to reduce confusion(s)
-  	for(int i = 1; i <= n; i++) cin >> v[i];
+  	vvll dp(n, vll(n, 0LL));
+  	vvll sum(n, vll(n, 0LL));
   	
-  	fenwick_tree ft(n);
-  	ft.init();
-  	ft.build();
-  	
-  	int q; cin >> q;
-  	
-  	// use 1-based indices for queries and updates
-  	while(q--) {
-  		// typ == 1 : range query. typ == 2 : point update
-  		int typ; cin >> typ;
-  		
-  		if(typ == 1) {
-  			int l, r; cin >> l >> r;
-  			cout << ft.range_query(l, r) << "\n";
-  		}
-  		
-  		else {
-  			int idx; ll delta; cin >> idx >> delta;
-  			ft.point_update(idx, delta);
+  	for(int g = 0; g < n; g++) {
+  		for(int i = 0, j = g; j < n; i++, j++) {
+  			if(g == 0) sum[i][j] = v[i];
+  			else if(g == 1) sum[i][j] = v[i] + v[j];
+  			else sum[i][j] = sum[i][j-1] + sum[i+1][j] - sum[i+1][j-1];
   		}
   	}
+  	
+  	for(int g = 0; g < n; g++) {
+  		for(int i = 0, j = g; j < n; i++, j++) {
+  			if(g == 0) dp[i][j] = 0LL;
+  			else {
+  				dp[i][j] = INF;
+  				
+  				for(int k = i; k <= (j - 1); k++) {
+  					dp[i][j] = min(dp[i][j], dp[i][k] + dp[k+1][j]);
+  				}
+  				
+  				dp[i][j] += sum[i][j];
+  			}
+  		}
+  	}
+  	
+  	cout << dp[0][n-1] << "\n";
 }
 
 int main()
