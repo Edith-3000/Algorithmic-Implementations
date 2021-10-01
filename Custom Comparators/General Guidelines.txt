@@ -1,0 +1,18 @@
+// Ref: https://codeforces.com/blog/entry/77478
+//      https://codeforces.com/blog/entry/77478?#comment-623912
+/*******************************************************************************************************/
+
+# You need a class template only for set, map, priority_queue, multiset and multimap. All other STL 
+  containers works with a comparator function or lambda function. And as for comparator with class template 
+  you have to overload the () operator in the following way:
+
+struct comparator_name 
+{
+	bool operator()(const class_name &B,const class_name &A) const
+	{
+		//Your code..
+	}
+};
+
+Here class name is the name of the class which is in the container(set, map, etc). the const keyword 
+is essential as any call to non-const member functions by the container is prohibited.
