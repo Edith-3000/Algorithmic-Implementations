@@ -7,6 +7,8 @@
                   # All the elements of the set are non -ve.
 
    Ref: https://www.youtube.com/watch?v=UmMh7xp07kY&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=8
+
+   Prob. based on this: https://codeforces.com/problemset/problem/1382/D
 */
 
 // METHOD - 1
