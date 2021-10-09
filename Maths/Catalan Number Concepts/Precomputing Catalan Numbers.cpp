@@ -1,5 +1,5 @@
-// Prob. based on this concept: https://codeforces.com/contest/1420/problem/D
-/********************************************************************************************************/
+// Prob based on this concept: https://www.hackerrank.com/contests/codenite-2021-round-1/challenges/planning-trips
+/******************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -86,7 +86,7 @@ int rng(int lim) {
 }
 
 const int INF = 0x3f3f3f3f;
-const int mod = 1e9+7;
+const ll mod = 1e9+7;
 
 ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
                          while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
@@ -96,9 +96,11 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
+// N is the maximum s.t. Nth catalan number is to be computed 
 const int N = 2e5;
 
 vll fact;
+vll cat;
 
 void compute_factorials(int n) {
     fact.clear();
@@ -121,10 +123,24 @@ ll nCr(ll n, ll r) {
     return res;
 }
 
+// Catalan number sequence : 1, 1, 2, 5, 14, 42, 132, 429, 1430 ....
+void compute_catalans(int n) {
+	cat.clear();
+    cat.resize(n + 1);
+    
+    cat[0] = 1;
+    
+    for(ll i = 1; i <= n; i++) {
+		cat[i] = (nCr(2 * i, i) * mod_inv(i + 1)) % mod;
+	}
+}
+
 void solve()
-{   
-    int a, b; cin >> a >> b;
-    cout << "aCb % mod = " << nCr(a, b) << "\n";    
+{
+  	ll n; cin >> n;
+  	
+  	cout << n << "th catalan no. ->\n";
+  	cout << cat[n] << "\n";
 }
 
 int main()
@@ -141,7 +157,8 @@ int main()
     //      freopen("error.txt", "w", stderr);
     // #endif
     
-    compute_factorials(N);  
+    compute_factorials(2 * N);
+    compute_catalans(N);
     
     int t = 1;
     // int test = 1;
