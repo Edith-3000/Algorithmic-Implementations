@@ -5,6 +5,8 @@
 # A Segment Tree is a full binary tree data structure that allows answering range queries over an array 
   effectively, while still being flexible enough to allow modifying the array.
 
+# Full Binary Tree vs. Complete Binary Tree: https://www.javatpoint.com/full-binary-tree-vs-complete-binary-tree
+
 # It is a data structure based on divide and conquer strategy.
 
 # It is used for storing the intervals or segments. Each node in the Segment Tree represents an interval.
@@ -15,6 +17,9 @@
 # One important property of Segment Trees is, that they require only a linear amount of memory. 
   The standard Segment Tree requires (4 x n) vertices for working on an array of size n.
 
+# (4 * n) size is enough for an array of size n. Why?
+  https://medium.com/nybles/understanding-range-queries-and-updates-segment-tree-lazy-propagation-and-mos-algorithm-d2cd2f6586d8
+
 # It is, in principle, a static structure; that is, it's a structure that cannot be modified once it's built.
 
 # It's also known as statistic tree.
@@ -24,7 +29,10 @@
 
 # The segment tree can be generalized to higher dimension spaces.
 
-# Any operation that is associative in nature can be done using segment tree.
+# Any operation that is associative in nature can be used with segment tree.
+  An associative operation is a calculation that gives the same result regardless of the way the numbers 
+  are grouped. Addition and multiplication are both associative, while subtraction and division are not.
+  
   For details refer the video at time 58:00 --->
   https://unacademy.com/class/segment-tree-basics/G2S8BCUD 
 
