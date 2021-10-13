@@ -1,0 +1,7 @@
+# Lazy Propagation is basically optimization to perform 'range updates' in Segment Tree in O(log(n)) 
+  instead of O(n) worst case time.
+
+# Main idea behind Lazy Propagation is to postpone the updates to the descendents of a node until the 
+  descendents themselves need to be accessed.
+
+# More info visit: ---> https://rb.gy/tmx95c

@@ -93,94 +93,109 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// t[ind] is resposnible for storing the result of the segment v[tl......tr]
-void build_seg_tree(vi &v, vi &t, int tl, int tr, int ind) {
-	// base case
+void build_seg_tree(vi &t, vi &v, int tl, int tr, int ind) {
 	if(tl == tr){
 		t[ind] = v[tl];
 		return;
 	}
 	
-	// similar to postorder traversal
-	
-	// segment representing [tl....mid]
-	build_seg_tree(v, t, tl, (tl + tr) / 2, 2 * ind);
-	 
-	// segment representing [(mid+1)....tr]
-	build_seg_tree(v, t, (tl + tr) / 2 + 1, tr, 2 * ind + 1);
-	
-	t[ind] = min(t[2 * ind], t[2 * ind + 1]);
-	return;
-}
-
-// The overlaps are of [tl, tr] with respect to [ql, qr]
-// tl, tr, ql, qr are 0-based indexed
-int query_seg_tree(vi &t, int tl, int tr, int ql, int qr, int ind) {
-    // base cases
-  	// Case 1: complete overlap
-	if((tl >= ql) and (tr <= qr)) {
-		return t[ind];
-	}
-	
-	// Case 2: no overlap
-	if((tl > qr) or (tr < ql)){
-		return INT_MAX;
-	}
-	
-  	// Recursive case
-	// Case 3: partial overlap
 	int mid = (tl + tr)/2;
-	int left = query_seg_tree(t, tl, mid, ql, qr, 2 * ind);
-	int right = query_seg_tree(t, mid + 1, tr, ql, qr, 2 * ind + 1);
 	
-	return min(left, right);
-}
-
-void point_update_seg_tree(vi &t, int tl, int tr, int p, int change, int ind) {
-	// case to handle when p is out of bounds of the current segment
-	if((p < tl) or (p > tr)) {
-		return;
-	}
-	
-	// in leaf node, perform update 
-	if(tl == tr) {
-		t[ind] += change;
-		return;
-	}
-	
-	int mid = (tl + tr)/2;
-	point_update_seg_tree(t, tl, mid, p, change, 2 * ind);
-	point_update_seg_tree(t, mid + 1, tr, p, change, 2 * ind + 1);
+	build_seg_tree(t, v, tl, mid, 2 * ind);
+	build_seg_tree(t, v, mid + 1, tr, 2 * ind + 1);
 	t[ind] = min(t[2 * ind], t[2 * ind + 1]);
 	
 	return;
 }
 
-void range_update_seg_tree(vi &t, int tl, int tr, int l, int r, ll delta, int ind) {
-	// base case(s) (ordering of the 2 bases cases is imp)
+void lazy_range_update_seg_tree(vi &t, vi &lazy, int tl, int tr, int l, int r, int change, int ind) {
+	// before going down resolve the lazy value of the current node if it exists
+	if(lazy[ind] != 0) {
+		t[ind] += lazy[ind];
+		
+		// if this node is non-leaf node pass it's lazy value to it's children
+		if(tl != tr){
+			lazy[2 * ind] += lazy[ind];
+			lazy[2 * ind + 1] += lazy[ind];
+	    }
+	    
+	    // clear the lazy value of current node
+	    lazy[ind] = 0;
+	}
+		
+	// bases case(s)
 	
-	// if no overlapping
+	// Case 1: no overlap
 	if((tl > r) or (tr < l)) {
 		return;
 	}
 	
-	// if leaf node
-	if(tl == tr){
-		t[ind] += delta;
+	// Case 2: complete overlap (this is the case where code is being optimized as we are returning
+	//         from here w/o actually updating all the nodes in the subtree rooted at node
+	//         ind, instead their changed value is just being stored in the lazy array)
+	if((tl >= l) and (tr <= r)) {
+		t[ind] += change;
+		
+		// if children node(s) exist then create a new lazy value for the children
+		if(tl != tr){
+			lazy[2 * ind] += change;
+			lazy[2 * ind + 1] += change;
+		}
+		
 		return;
 	}
 	
+	// recursive case (Case 3: partial overlap)
 	int mid = (tl + tr)/2;
-	range_update_seg_tree(t, tl, mid, l, r, delta, 2 * ind);
-	range_update_seg_tree(t, mid + 1, tr, l, r, delta, 2 * ind + 1);
-	t[ind] = min(t[2 * ind], t[2 * ind + 1]);
 	
-	return;
+	lazy_range_update_seg_tree(t, lazy, tl, mid, l, r, change, 2 * ind);
+	lazy_range_update_seg_tree(t, lazy, mid + 1, tr, l, r, change, 2 * ind + 1);
+	
+	// update t[ind] in the returning phase
+	t[ind] = min(t[2 * ind], t[2 * ind + 1]);
+}
+
+int lazy_query_seg_tree(vi &t, vi &lazy, int tl, int tr, int ql, int qr, int ind) {
+	// before going down resolve the lazy value of the current node if it exists
+	if(lazy[ind] != 0){
+		t[ind] += lazy[ind];
+		
+		// if this node is non-leaf node pass it's lazy value to it's children
+		if(tl != tr){
+			lazy[2 * ind] += lazy[ind];
+			lazy[2 * ind + 1] +=lazy[ind];
+	    }
+	    
+	    // clear the lazy value of current node
+	    lazy[ind] = 0;
+	}
+	
+	// query logic
+	
+	// base cases
+	// Case 1: no overlap
+	if((tl > qr) or (tr < ql)) {
+		return INT_MAX;
+	}
+	
+	// Case 2: complete overlap
+	if((tl >= ql) and (tr <= qr)) {
+		return t[ind];
+	}
+	
+	// Recursive case
+	// Case 3: partial overlap
+	int mid = (tl + tr)/2;
+	
+	int left = lazy_query_seg_tree(t, lazy, tl, mid, ql, qr, 2 * ind);
+	int right = lazy_query_seg_tree(t, lazy, mid + 1, tr, ql, qr, 2 * ind + 1);
+	
+	return min(left, right);
 }
 
 void solve()
 {
-  	cout << "Enter the size of array for which Segment Tree is to be constructed: ---> ";
+    cout << "Enter the size of array for which Segment Tree is to be constructed: ---> ";
     int n; cin >> n; cout << n << "\n";
     
     vi v(n);
@@ -190,50 +205,23 @@ void solve()
     }
     
     for(auto x: v) cout << x << " ";
-    cout << "\n";
+    cout << "\n\n";
     
     // underlying vector used for representing segment tree in 
     // linear space. An array of size n can have approx. around
     // (4 * n + 1) nodes in the corresponding sement tree
     vi t(4 * n + 1);
     
-    // ind = the index of the current vertex (starting from 1 
-    //       & can go upto (4 * n + 1))
-    // tl = left boundary of the current segment
-    // tr = right boundary of the current segment
-    build_seg_tree(v, t, 0, n-1, 1);
+    build_seg_tree(t, v, 0, n - 1, 1);
     
-    cout << "\nLinear representation of Segment Tree --->\n";
-    for(auto x: t) cout << x << " ";
+    // vector to store the lazy values for all the Segment Tree nodes
+    vector<int> lazy(4 * n + 1, 0);
     
-    cout << "\n\nEnter the #queries ---> ";
-    int q; cin >> q; cout << q << "\n";
-    
-    cout << "Enter left and right indices for the queries(0-based indexing) --->\n";
-    while(q--){
-    	int ql, qr; cin >> ql >> qr;
-    	cout << "Min ele in the range [" << ql << ", " << qr << "] = ";
-    	cout << query_seg_tree(t, 0, n - 1, ql, qr, 1) << "\n";
-    }
-    
-    cout << "\nEnter the point(or index, 0-based indexing) to be updated ---> ";
-    int p; cin >> p; cout << p << "\n";
-    cout << "Value by which the increment/decrement to be done ---> ";
-    int change; cin >> change; cout << change << "\n";
-    
-    point_update_seg_tree(t, 0, n-1, p, change, 1);
-    cout << "\nUpdated linear representation of Segment Tree --->\n";
-    for(auto x: t) cout << x << " ";
-    
-    cout << "\nEnter the range i.e. l, r(0-based indexing) to be updated ---> ";
-    int l, r; cin >> l >> r; 
-    cout << "[" << l << ", " << r << "]" << "\n";
-    cout << "Value by which the increment/decrement to be done ---> ";
-    int change_in_range; cin >> change_in_range; cout << change_in_range << "\n";
-    
-    range_update_seg_tree(t, 0, n-1, l, r, change_in_range, 1);
-    cout << "\nUpdated linear representation of Segment Tree --->\n";
-    for(auto x: t) cout << x << " ";
+    lazy_range_update_seg_tree(t, lazy, 0, n - 1, 0, 2, 10, 1);
+    lazy_range_update_seg_tree(t, lazy, 0, n - 1, 0, 4, 10, 1);
+    cout << lazy_query_seg_tree(t, lazy, 0, n - 1, 1, 1, 1) << "\n";
+    lazy_range_update_seg_tree(t, lazy, 0, n - 1, 3, 4, 10, 1);
+    cout << lazy_query_seg_tree(t, lazy, 0, n - 1, 3, 5, 1) << "\n";
 }
 
 int main()
@@ -261,45 +249,14 @@ int main()
     return 0;
 }
 
-// Time Complexity of range_update_seg_tree(): O(n), since in the worst case we may be updating all 
-//                                             (4 x n) vertices of the Segment Tree, such as consider
-//                                             the case of range update from [0, n - 1]
+// Time Complexity of query_seg_tree(): O(log(n))
 
 /* Sample i/p: 6
                1 3 2 -5 6 4
-               5
-               0 5
-               1 3
-               4 4
-               2 4
-               4 5
-               2
-               -20
-               3 5
-               -26
 
    Sample o/p: Enter the size of array for which Segment Tree is to be constructed: ---> 6
                Enter the elements: ---> 1 3 2 -5 6 4 
 
-               Linear representation of Segment Tree --->
-               0 -5 1 -5 1 2 -5 4 1 3 0 0 -5 6 0 0 0 0 0 0 0 0 0 0 0 
-
-               Enter the #queries ---> 5
-               Enter left and right indices for the queries(0-based indexing) --->
-               Min ele in the range [0, 5] = -5
-               Min ele in the range [1, 3] = -5
-               Min ele in the range [4, 4] = 6
-               Min ele in the range [2, 4] = -5
-               Min ele in the range [4, 5] = 4
-
-               Enter the point(or index, 0-based indexing) to be updated ---> 2
-               Value by which the increment/decrement to be done ---> -20
-
-               Updated linear representation of Segment Tree --->
-               0 -18 -18 -5 1 -18 -5 4 1 3 0 0 -5 6 0 0 0 0 0 0 0 0 0 0 0 
-               Enter the range i.e. l, r(0-based indexing) to be updated ---> [3, 5]
-               Value by which the increment/decrement to be done ---> -26
-
-               Updated linear representation of Segment Tree --->
-               0 -31 -18 -31 1 -18 -31 -22 1 3 0 0 -31 -20 0 0 0 0 0 0 0 0 0 0 0 
+               23
+               4
 */
