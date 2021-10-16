@@ -134,13 +134,14 @@ void dijkstra(int src) {
         int mn = q.top().F;
         q.pop();
         
-        if(vis[v]) continue;
+        if(vis[v] or mn == INT_MAX) continue;
         vis[v] = true;
         
         for(auto x: g[v]) {
             if(mn + x.S < d[x.F]) {
                 d[x.F] = mn + x.S;
                 q.push({d[x.F], x.F});
+                parent[x.F] = v;
             }
         }
     }
@@ -166,6 +167,7 @@ void solve()
 {
     cin >> n >> m;
     g.clear(); 
+    g.resize(n);
     
     // 0-based vertices
     for(int i = 0; i < m; i++) {
