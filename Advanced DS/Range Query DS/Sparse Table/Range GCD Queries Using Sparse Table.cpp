@@ -1,5 +1,5 @@
-// Explanation: https://www.youtube.com/watch?v=2EpX9LkO2T0
-/*********************************************************************************************************/
+// Prob. based on this concept: https://codeforces.com/problemset/problem/1549/D
+/************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -9,11 +9,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -54,12 +57,25 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
 
@@ -103,7 +119,7 @@ struct sparse_table {
 		for(int i = 0; i < n; i++) mat[i].resize(m);
 		
 		p2.clear();
-		p2.resize(n+1);
+		p2.resize(n + 1);
 		
 		for(int i = 2; i <= n; i++) {
 			// since log2(n) = log2(n/2) + 1
@@ -111,12 +127,12 @@ struct sparse_table {
 		}
 	}
 	
-	void build(vi &v) {
+	void build(vll &v) {
 		for(int i = 0; i < n; i++) mat[i][0] = v[i];
 		
 		for(int j = 1; j < m; j++) {
 			for(int i = 0; i + (1 << j) <= n; i++) {
-				mat[i][j] = mat[i][j - 1] + mat[i + (1 << (j - 1))][j - 1];
+				mat[i][j] = GCD(mat[i][j - 1], mat[i + (1 << (j - 1))][j - 1]);
 			}
 		}
 	}
@@ -128,7 +144,7 @@ struct sparse_table {
 		
 		for(int j = m; j >= 0; j--) {
 			if((1 << j) <= (r - l + 1)) {
-				res += mat[l][j];
+				res = GCD(res, mat[l][j]);
 				l += (1 << j);
 			}
 		}
@@ -140,7 +156,7 @@ struct sparse_table {
 void solve()
 {
   	int n; cin >> n;
-  	vi v(n);
+  	vll v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
   	sparse_table st;
@@ -153,7 +169,7 @@ void solve()
   	while(q--) {
   		// use 0-based indexing
   		int l, r; cin >> l >> r; 
-  		cout << "Sum of element(s) in the range [" << l << ", " << r << "] = ";
+  		cout << "GCD of element(s) in the range [" << l << ", " << r << "] = ";
   		cout << st.query(l, r) << "\n";
   	} 
 }
@@ -182,30 +198,3 @@ int main()
 
     return 0;
 }
-
-/*
-
-Sample i/p ---->
-
-10
-1 2 3 4 5 6 7 8 9 10
-5
-4 8
-0 9
-3 7
-1 8
-5 5
-
-Sample o/p ---->
-
-Sum of element(s) in the range [4, 8] = 35
-Sum of element(s) in the range [0, 9] = 55
-Sum of element(s) in the range [3, 7] = 30
-Sum of element(s) in the range [1, 8] = 44
-Sum of element(s) in the range [5, 5] = 6
-
-*/
-
-// Time complexity of build() = O(n x m) = O(n x log2(n))
-// Time complexity of query() = O(m) = O(log2(n)), as it is Range Sum Query.
-// where n = size of input array.

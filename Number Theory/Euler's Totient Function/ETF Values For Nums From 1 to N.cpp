@@ -1,4 +1,10 @@
-// Explanation: https://www.youtube.com/watch?v=2EpX9LkO2T0
+// Problem statement --->
+// Find efficient way to find phi(n) for all the numbers from 1 to n.
+// Constraints: 1 <= n <= 10^6
+
+/*********************************************************************************************************/
+
+// Reference(s): https://www.geeksforgeeks.org/eulers-totient-function/
 /*********************************************************************************************************/
 
 #include<bits/stdc++.h>
@@ -9,11 +15,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -54,12 +63,25 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
 
@@ -80,74 +102,33 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-struct sparse_table {
-	// data members
+const int N = 1e6;
+
+// phi[i] = stores the Euler's Totient Function (ETF) value for i
+vll phi;
+
+// function to calculate ETF value for each number from [1, n]
+void compute_phi(int n) {
+	phi.clear();
+	phi.resize(n + 1);
 	
-	// n = #rows, m = #columns
-	int n, m;
+	// initialising result phi(i) for each number i
+	for(int i = 1; i <= n; i++) phi[i] = i;
 	
-	// 2D matrix
-	vvi mat; 
-	
-	// to store the power of 2 such that (1 << p2[i]) <= i 
-	// log2 function could be used also but it's slow & could lead to TLE
-	vi p2; 
-	
-	// member functions
-	void init(int _n) {
-		n = _n;
-		m = ceil(log2(n)) + 1;
-		
-		mat.clear();
-		mat.resize(n);
-		for(int i = 0; i < n; i++) mat[i].resize(m);
-		
-		p2.clear();
-		p2.resize(n+1);
-		
-		for(int i = 2; i <= n; i++) {
-			// since log2(n) = log2(n/2) + 1
-			p2[i] = p2[i/2] + 1;
-		}
-	}
-	
-	void build(vi &v) {
-		for(int i = 0; i < n; i++) mat[i][0] = v[i];
-		
-		for(int j = 1; j < m; j++) {
-			for(int i = 0; i + (1 << j) <= n; i++) {
-				mat[i][j] = min(mat[i][j - 1], mat[i + (1 << (j - 1))][j - 1]);
+	for(ll i = 2; i <= n; i++) {
+		if(phi[i] == i) {
+			for(ll j = i; j <= n; j += i) {
+				phi[j] /= i;
+				phi[j] *= (i - 1);
 			}
 		}
 	}
-	
-	// l & r are 0-based indexed
-	int query(int l, int r) {
-		// finding the power of 2 just less than (r - l)
-		int pw = p2[r - l];
-		return min(mat[l][pw], mat[r - (1 << pw) + 1][pw]);
-	} 
-};
+}
 
 void solve()
 {
   	int n; cin >> n;
-  	vi v(n);
-  	for(int i = 0; i < n; i++) cin >> v[i];
-  	
-  	sparse_table st;
-  	st.init(n);
-  	st.build(v);
-  	
-  	// #queries
-  	int q; cin >> q;
-  	
-  	while(q--) {
-  		// use 0-based indexing
-  		int l, r; cin >> l >> r; 
-  		cout << "Minimum element in the range [" << l << ", " << r << "] = ";
-  		cout << st.query(l, r) << "\n";
-  	} 
+  	cout << "ETF for " << n << ": " << phi[n] << "\n";
 }
 
 int main()
@@ -164,6 +145,8 @@ int main()
     //      freopen("error.txt", "w", stderr);
     // #endif
     
+    compute_phi(N);
+    
     int t = 1;
     // int test = 1;
     // cin >> t;
@@ -175,29 +158,7 @@ int main()
     return 0;
 }
 
-/*
+// Time complexity of the ETF() function = O(n x log(log(n)))
+// Time complexity for exch query = O(1)
 
-Sample i/p ---->
-
-10
-1 2 3 4 5 6 7 8 9 10
-5
-4 8
-0 9
-3 7
-1 8
-5 5
-
-Sample o/p ---->
-
-Minimum element in the range [4, 8] = 5
-Minimum element in the range [0, 9] = 1
-Minimum element in the range [3, 7] = 4
-Minimum element in the range [1, 8] = 2
-Minimum element in the range [5, 5] = 6
-
-*/
-
-// Time complexity of build() = O(n x m) = O(n x log2(n))
-// Time complexity of query() = O(1), as it is Range Minimum Query (idempotent function).
-// where n = size of input array.
+// Results are well tested and validated from the website: https://primefan.tripod.com/Phi500.html
