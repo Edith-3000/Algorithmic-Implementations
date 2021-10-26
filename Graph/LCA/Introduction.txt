@@ -1,0 +1,14 @@
+# Reference: https://www.hackerrank.com/topics/lowest-common-ancestor
+			       https://cp-algorithms.com/graph/lca.html
+
+# In Graph Theory and Computer Science, the Lowest or Least Common Ancestor(LCA) of two nodes u and v in a 
+  tree or a directed acyclic graph(DAG) is the lowest node that has both u and v as descendants, where we 
+  define each node to be a descendant of itself . 
+
+# Thus, The LCA of u and v is the ancestor of u and v such that it is located farthest from the root.
+
+# Computation of LCA has many applications such as finding distance between pair of nodes in a tree,
+  usage with Suffix trees for string processing and Computational Biology.
+
+# LCA only comes into picture when the tree is rooted, there is no point in talking about LCA if the 
+  tree is not rooted.
