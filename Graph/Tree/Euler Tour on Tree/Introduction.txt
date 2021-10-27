@@ -1,0 +1,18 @@
+# Euler tour on a Tree (also known as Flattening a Tree).
+
+# Euler tour is not unique it depends on the implementation, most commonly it is of 2 types :--->
+  1. Store the tree node every time you visit it.
+  2. Store every node twice :-
+     * When you visit it for the first time.
+     * When it's whole subtree is explored.
+
+# Euler tour only comes into picture when the tree is rooted, there is no point in talking about it if
+  the tree is not rooted.
+
+# Queries in a tree such as subtree queries or path queries can be solved many a times using binary lifting 
+  (or LCA) but it becomes inefficient to use them when there are updates on the tree, so in such a case
+  Euler Tour Representation of a Tree allows efficient updates and queries against a subtree of the tree.
+  
+  For more info visit: ---> 
+  https://www.youtube.com/watch?v=ifws-07jxcE&list=PL-Jc9J83PIiHymm1DHZBkac0_hhFBXryO&index=1
+  https://github.com/xirc/cp-algorithm/blob/main/lib/cpalgo/tree/README.md#Euler-Tour

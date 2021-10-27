@@ -1,5 +1,17 @@
-// Ref: https://www.youtube.com/watch?v=WXMnRa3NkTQ
-/***********************************************************************************************************/
+// Ref: https://www.youtube.com/watch?v=P8NHOmX5XGM&t=1850s
+/******************************************************************************************************/
+
+// Problem: Path Queries
+// Contest: CSES - CSES Problem Set
+// URL: https://cses.fi/problemset/task/1138
+// Memory Limit: 512 MB
+// Time Limit: 1000 ms
+// Parsed on: 27-10-2021 16:14:16 IST (UTC+05:30)
+// Author: Kapil Choudhary
+// ********************************************************************
+// कर्मण्येवाधिकारस्ते मा फलेषु कदाचन |
+// मा कर्मफलहेतुर्भूर्मा ते सङ्गोऽस्त्वकर्मणि || १.४७ ||
+// ********************************************************************
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -17,6 +29,7 @@ using namespace std;
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
 #define vset(v, n, val) v.clear(); v.resize(n, val)
+#define int ll
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -43,7 +56,7 @@ typedef vector<vs> vvs;
 #define debug(x)
 #endif
 
-void _print(ll t) { cerr << t; }
+// void _print(ll t) { cerr << t; }
 void _print(int t) { cerr << t; }
 void _print(string t) { cerr << t; }
 void _print(char t) { cerr << t; }
@@ -96,131 +109,163 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// to store the input tree
 vvi g;
+vi val;
+int n, q;
 
-// n = #nodes, m = #edges in tree
-int n, m;
-
-struct LCA {
+// structure for creating euler tour of a tree
+// NOTE: there are many ways to create en euler tour, in this way
+//       each node comes exactly twice in the tour
+struct euler_tour {
 	// data members
 	
-	// n = #rows, m = #columns in mat[][]
-	// NOTE: nodes are 0-based indexed
-	int n, m;
+	// n = #nodes in tree, timer is used to explore tree
+	int n, timer; 
 	
-	// 2D matrix s.t. mat[i][j] will store the (2^j)th parent of node i in the 
-	// dfs tree of the graph
-	vvi mat;
+	// tin[i] = in time of ith vertex, tout[i] = out time of ith vertex
+	vi tin, tout;
 	
-	// to store depth of each vertex (root being at depth = 0)
-	vi dep;
+	// et[i] stores the info of certain vertex at the ith time, the info to be stored depends 
+	// on the problem, also it's size depends on the type of implementation of euler tour
+	vi et;
 	
 	// member functions
-	void init(int _n) {
+	euler_tour(int _n) {
 		n = _n;
-		m = ceil(log2(n)) + 1;
 		
-		mat.clear(); mat.resize(n);
-		for(int i = 0; i < n; i++) mat[i].resize(m);
-		
-		dep.clear(); dep.resize(n);
+		// the below initializations depends on type of euler tour implemented
+		timer = 1;
+		tin.clear(); tin.resize(n + 1);
+		tout.clear(); tout.resize(n + 1);
+		et.clear(); et.resize(2 * n + 1);
 	}
 	
 	void build() {
-		// dfs function to store the immediate parent & level of every node in the tree,
-		// ASSUMING THE TREE TO BE ROOTED AT NODE 0 (IF REQUIRED CHANGE ROOT)
-		dep[0] = 0;
-		DFS(0, -1);
-		
-		// NOTE: do not make the parent of '0' as '-1', since it may lead to runtime error
-		//       while calculating mat[][]
-		mat[0][0] = 0;
-		
-		for(int j = 1; j < m; j++) { 
-			for(int i = 0; i < n; i++) {
-				// (2^j)th parent of node i = (2^(j-1))th parent of the (2^(j-1))th parent of i
-				//                            since (2^(j-1)) + (2^(j-1)) = (2^j)
-				int x = mat[i][j - 1];
-				mat[i][j] = mat[x][j - 1];
-			} 
-		} 
+		// assuming the tree to be rooted at node 1, change if required
+		DFS(1, -1);
 	}
 	
 	void DFS(int cur, int par) {
-		mat[cur][0] = par;
+		tin[cur] = timer;
+		et[timer] = val[cur]; // change the info to be stored as required
+		timer++;
+		
 		for(auto x: g[cur]) {
 			if(x == par) continue;
-			dep[x] = dep[cur] + 1;
 			DFS(x, cur);
 		}
+		
+		tout[cur] = timer;
+		et[timer] = -val[cur];
+		timer++;
+	}
+};
+
+// input array[] for which Fenwick Tree will be build
+vll v;
+
+// Change functions accordingly when needed, here functions are coded for
+// range sum queries & point update
+
+// NOTE: everything is 1-based indexed in fenwick_tree
+// Fenwick Tree structure for range queries & point updates
+struct fenwick_tree {
+	// data members ==>
+	int n;
+	vll bit;
+	
+	// member functions ===>
+	
+	// constructor
+	fenwick_tree(int n) {
+		this->n = n;
+		bit.clear();
+		bit.resize(n + 1);
 	}
 	
-	// returns the kth ancestor of node, if k is beyond the height of 
-	// tree it returns the root node
-	int lift_node(int node, int k) {
-		int j = 0;
-		while(k > 0) {
-			if(k & 1) node = mat[node][j];
-			k >>= 1;
-			j += 1;
-		}
-		
-		return node;
+	// to seed the bit[] array with some initial value
+	void init() {
+		bit[0] = 0LL;
+		for(int i = 1; i <= n; i++) bit[i] = 0LL;
 	}
 	
-	// finds the LCA of 2 nodes a & b
-	int find_lca(int a, int b) {
-		// considering b to be always at greater depth
-		if(dep[a] > dep[b]) swap(a, b);
-		
-		// bringing both the nodes at the same depth
-		int diff = dep[b] - dep[a];
-		b = lift_node(b, diff);
-		
-		// now a & b are at the same depth
-		// return if both at same node
-		if(a == b) return a;
-		
-		// try to move nodes a & b upwards s.t. both are JUST below their LCA
-		for(int i = m - 1; i >= 0; i--) {
-			if(mat[a][i] != mat[b][i]) {
-				a = mat[a][i];
-				b = mat[b][i];
-			}
+	// build bit[] using point_update() fn.
+	void build() {
+		for(int i = 1; i <= n; i++) {
+			point_update(i, v[i]);
+		}
+	}
+	
+	// fn. to change the value at idx i by delta
+	void point_update(int i, ll delta) {
+		while(i <= n) {
+			bit[i] += delta;
+			i += (i & (-i));
+		}
+	}
+	
+	// to compute the result for range [l, r] (l & r both inclusive)
+	// res[l, r] = fn(res[1, r], res[1, l-1])
+	ll range_query(int l, int r) {
+		return range_query(r) - range_query(l - 1);
+	}
+	
+	// computes result for range [1, i] (1 & i both inclusive)
+	ll range_query(int i) {
+		ll res = 0LL;
+		while(i > 0) {
+			res += bit[i];
+			i -= (i & (-i));
 		}
 		
-		return mat[a][0]; // or mat[b][0]
+		return res;
 	}
 };
 
 void solve()
 {
-  	cin >> n >> m;
-  	vset(g, n, vi(0));
+  	cin >> n >> q;
+  	vset(g, n + 1, vi(0));
+  	vset(val, n + 1, 0);
   	
-  	// 0-based indexing of nodes is used
-  	for(int i = 0; i < m; i++) {
+  	for(int i = 1; i <= n; i++) cin >> val[i];
+  	
+  	for(int i = 1; i < n; i++) {
   		int x, y; cin >> x >> y;
   		g[x].pb(y);
   		g[y].pb(x);
   	}
   	
-  	struct LCA lca;
-  	lca.init(n);
-  	lca.build();
+  	struct euler_tour e(n);
+  	e.build();
   	
-  	int q; cin >> q;
+  	v = e.et;
   	
-  	// use 0-based indexing of node
+  	struct fenwick_tree ft(e.timer);
+  	ft.init();
+  	ft.build();
+  	
   	while(q--) {
-  		int a, b; cin >> a >> b;
-  		int ans = lca.find_lca(a, b);
-  		cout << "LCA of " << a << " & " << b << ": " << ans << "\n";
+  		int tp, node; cin >> tp >> node;
+  		
+  		if(tp == 1) {
+  			int del; cin >> del;
+  			int idx1 = e.tin[node], idx2 = e.tout[node];
+  			int prev1 = ft.range_query(idx1, idx1);
+  			int prev2 = ft.range_query(idx2, idx2);
+  			ft.point_update(idx1, del - prev1);
+  			ft.point_update(idx2, -del - prev2);
+  		}
+  		
+  		else {
+  			int l = e.tin[1], r = e.tin[node];
+  			int ans = ft.range_query(l, r);
+  			cout << ans << "\n";
+  		}
   	}
 }
 
-int main()
+signed main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
     srand(chrono::high_resolution_clock::now().time_since_epoch().count());
@@ -244,11 +289,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity of find_lca() : O(log(n)), where n are the #nodes in the tree.
-
-// NOTE: However the find_lca() function could also be implemented s.t. it works in O(1) time with
-//       some precomputations making use of Euler Tour on a tree, RMQ using Sparse Table on the Euler
-//       Tour obtained & some other things, but it becomes quiet implementation heavy.
-//       The method's explanation can be found here :--->
-//       https://www.youtube.com/watch?v=P8NHOmX5XGM

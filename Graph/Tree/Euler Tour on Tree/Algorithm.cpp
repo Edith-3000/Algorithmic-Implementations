@@ -1,5 +1,15 @@
-// Ref: https://www.youtube.com/watch?v=WXMnRa3NkTQ
-/***********************************************************************************************************/
+/* # There are many ways to construct euler tour (or to flatten a tree), in this algorithm only one of 
+     them is used.
+
+   # The following way & other ways can be found in these videos :--->
+     https://www.youtube.com/watch?v=P8NHOmX5XGM
+     https://www.youtube.com/playlist?list=PL-Jc9J83PIiHymm1DHZBkac0_hhFBXryO
+     https://usaco.guide/gold/tree-euler
+
+   # Prob. based on this concpet :--->
+     https://cses.fi/problemset/task/1137
+     https://cses.fi/problemset/task/1138
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -96,127 +106,80 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// to store the input tree
+// to store the i/p tree
 vvi g;
 
-// n = #nodes, m = #edges in tree
-int n, m;
+// n = #nodes in the tree
+int n;
 
-struct LCA {
+// structure for creating euler tour of a tree
+// NOTE: there are many ways to create en euler tour, in this way
+//       each node comes exactly twice in the tour
+struct euler_tour {
 	// data members
 	
-	// n = #rows, m = #columns in mat[][]
-	// NOTE: nodes are 0-based indexed
-	int n, m;
+	// n = #nodes in tree, timer is used to explore tree
+	int n, timer; 
 	
-	// 2D matrix s.t. mat[i][j] will store the (2^j)th parent of node i in the 
-	// dfs tree of the graph
-	vvi mat;
+	// tin[i] = in time of ith vertex, tout[i] = out time of ith vertex
+	vi tin, tout;
 	
-	// to store depth of each vertex (root being at depth = 0)
-	vi dep;
+	// et[i] stores the info of certain vertex at the ith time, the info to be stored depends 
+	// on the problem, also it's size depends on the type of implementation of euler tour
+	vi et;
 	
 	// member functions
-	void init(int _n) {
+	euler_tour(int _n) {
 		n = _n;
-		m = ceil(log2(n)) + 1;
 		
-		mat.clear(); mat.resize(n);
-		for(int i = 0; i < n; i++) mat[i].resize(m);
-		
-		dep.clear(); dep.resize(n);
+		// the below initializations depends on type of euler tour implemented
+		timer = 0;
+		tin.clear(); tin.resize(n + 1);
+		tout.clear(); tout.resize(n + 1);
+		et.clear(); et.resize(2 * n);
 	}
 	
 	void build() {
-		// dfs function to store the immediate parent & level of every node in the tree,
-		// ASSUMING THE TREE TO BE ROOTED AT NODE 0 (IF REQUIRED CHANGE ROOT)
-		dep[0] = 0;
-		DFS(0, -1);
-		
-		// NOTE: do not make the parent of '0' as '-1', since it may lead to runtime error
-		//       while calculating mat[][]
-		mat[0][0] = 0;
-		
-		for(int j = 1; j < m; j++) { 
-			for(int i = 0; i < n; i++) {
-				// (2^j)th parent of node i = (2^(j-1))th parent of the (2^(j-1))th parent of i
-				//                            since (2^(j-1)) + (2^(j-1)) = (2^j)
-				int x = mat[i][j - 1];
-				mat[i][j] = mat[x][j - 1];
-			} 
-		} 
+		// assuming the tree to be rooted at node 1, change if required
+		DFS(1, -1);
 	}
 	
 	void DFS(int cur, int par) {
-		mat[cur][0] = par;
+		tin[cur] = timer;
+		et[timer] = cur; // change the info to be stored as required
+		timer++;
+		
 		for(auto x: g[cur]) {
 			if(x == par) continue;
-			dep[x] = dep[cur] + 1;
 			DFS(x, cur);
 		}
-	}
-	
-	// returns the kth ancestor of node, if k is beyond the height of 
-	// tree it returns the root node
-	int lift_node(int node, int k) {
-		int j = 0;
-		while(k > 0) {
-			if(k & 1) node = mat[node][j];
-			k >>= 1;
-			j += 1;
-		}
 		
-		return node;
-	}
-	
-	// finds the LCA of 2 nodes a & b
-	int find_lca(int a, int b) {
-		// considering b to be always at greater depth
-		if(dep[a] > dep[b]) swap(a, b);
-		
-		// bringing both the nodes at the same depth
-		int diff = dep[b] - dep[a];
-		b = lift_node(b, diff);
-		
-		// now a & b are at the same depth
-		// return if both at same node
-		if(a == b) return a;
-		
-		// try to move nodes a & b upwards s.t. both are JUST below their LCA
-		for(int i = m - 1; i >= 0; i--) {
-			if(mat[a][i] != mat[b][i]) {
-				a = mat[a][i];
-				b = mat[b][i];
-			}
-		}
-		
-		return mat[a][0]; // or mat[b][0]
+		tout[cur] = timer;
+		et[timer] = cur;
+		timer++;
 	}
 };
 
 void solve()
 {
-  	cin >> n >> m;
-  	vset(g, n, vi(0));
+  	cin >> n;
+  	vset(g, n + 1, vi(0));
   	
-  	// 0-based indexing of nodes is used
-  	for(int i = 0; i < m; i++) {
+  	// 1-based indexing of tree nodes is used
+  	for(int i = 1; i < n; i++) {
   		int x, y; cin >> x >> y;
   		g[x].pb(y);
   		g[y].pb(x);
   	}
   	
-  	struct LCA lca;
-  	lca.init(n);
-  	lca.build();
+  	struct euler_tour e(n);
+  	e.build();
   	
-  	int q; cin >> q;
+  	for(auto x: e.et) cout << x << " ";
+  	cout << "\n";
   	
-  	// use 0-based indexing of node
-  	while(q--) {
-  		int a, b; cin >> a >> b;
-  		int ans = lca.find_lca(a, b);
-  		cout << "LCA of " << a << " & " << b << ": " << ans << "\n";
+  	for(int i = 1; i <= n; i++) {
+  		cout << "For node " << i << ": " << e.tin[i] << " " << e.tout[i] << "\n";
   	}
 }
 
@@ -244,11 +207,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity of find_lca() : O(log(n)), where n are the #nodes in the tree.
-
-// NOTE: However the find_lca() function could also be implemented s.t. it works in O(1) time with
-//       some precomputations making use of Euler Tour on a tree, RMQ using Sparse Table on the Euler
-//       Tour obtained & some other things, but it becomes quiet implementation heavy.
-//       The method's explanation can be found here :--->
-//       https://www.youtube.com/watch?v=P8NHOmX5XGM
