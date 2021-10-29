@@ -1,7 +1,16 @@
-/* # Ref: https://cp-algorithms.com/graph/bridge-searching.html
-          https://www.youtube.com/watch?v=T1AhBniNIUk&list=PLb3g_Z8nEv1hr9Cf2wIQaHGOF5ROPLohd&index=4
-          https://www.youtube.com/watch?v=sqYozZ2Y_cM&list=PLb3g_Z8nEv1hr9Cf2wIQaHGOF5ROPLohd&index=5
-          https://codeforces.com/blog/entry/68138
+/* # Few noteworthy points :--->
+   1. For a vertex "parent" to be an articulation point the following condition must hold (valid for all 
+      the vertices excluding the root of the DFS Tree formed by DFS traversal of the graph): 
+      low[child] >= tin[parent]
+
+      • The root of the DFS is articulation point if it has >= 2 children in the DFS Tree representation
+        (not in the graph itself).
+
+   2. For an edge to be a bridge the following condition must hold (valid for all the vertices including
+      the root of the DFS Tree formed by DFS traversal of the graph): 
+      low[child] > tin[parent]
+		 
+	  NOTE: A BACK-EDGE IS NEVER A BRIDGE.
 */
 
 #include<bits/stdc++.h>
@@ -12,6 +21,8 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
@@ -58,12 +69,25 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
 
@@ -87,24 +111,38 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 vvi g;
 vi tin, low, vis;
 vpii bridges;
+set<int> points; // set is used so as to avoid putting same vertex as cut vertex multiple times
 int timer;
 int n, m;
 
 void dfs(int cur, int par) {
 	vis[cur] = 1;
 	tin[cur] = low[cur] = timer++;
+	int children = 0;
 	
 	for(auto x: g[cur]) {
 		if(vis[x] == 0) {
 			dfs(x, cur);
 			low[cur] = min(low[cur], low[x]);
+			
+			// condition for edge (curr --- x) to be a bridge
 			if(low[x] > tin[cur]) bridges.pb({cur, x});
+			
+			// condition for curr to be an articulation pt
+			if(low[x] >= tin[cur] and par != -1) points.insert(cur);
+			
+			children += 1;
 		}
 		
 		else {
 			if(x == par) continue;
 			else low[cur] = min(low[cur], tin[x]);
 		}
+	}
+	
+	// separate case for the root of the DFS TREE of the graph to be a cut vertex
+	if(par == -1 and children > 1) {
+		points.insert(cur);
 	}
 }
 
@@ -118,14 +156,12 @@ void dfs(int cur, int par) {
 
 // timer is used to store the running time, in last after dfs traversal timer will be = (2 * n + 1).
 
-// Function to find all the bridges in an undirected graph
-// NOTE: this implementation malfunctions if the graph has multiple edge(s), for details
-//       refer: https://cp-algorithms.com/graph/bridge-searching.html
-void find_bridges() {
+// Function to find all the bridges & articulation points (cut vertices) in an undirected graph
+void find_bridges_and_cutpoints() {
 	tin.clear(); tin.resize(n + 1, 0);
 	low.clear(); low.resize(n + 1, 0);
 	vis.clear(); vis.resize(n + 1, 0);
-	bridges.clear();
+	points.clear();
 	timer = 1;
 	
 	for(int i = 1; i <= n; i++) {
@@ -146,10 +182,13 @@ void solve()
         g[y].pb(x);
     }
     
-    find_bridges();
+    find_bridges_and_cutpoints();
     
     cout << "#bridges = " << sz(bridges) << "\n";
     for(auto x: bridges) cout << x.F << " " << x.S << "\n";
+    
+    cout << "#points = " << sz(points) << "\n";
+    for(auto x: points) cout << x << "\n";
 }
 
 int main()
@@ -176,5 +215,3 @@ int main()
 
     return 0;
 }
-
-// Time Complexity = O(|V| + |E|)
