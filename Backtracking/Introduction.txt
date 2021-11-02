@@ -27,21 +27,21 @@
 
 # For eg. the function for a sudoku solver may seem like this (crudely) ⟶
   
-  solve(row, col ….){
+  solve(row, col ….) {
 
     // base case(s)
-    if(col == board[row].length){
+    if(col == board[row].length) {
         // this is one of the base cases    
     }
     
     // taking decision
-    for(int value = 1; value <= 9; valur++{
+    for(int value = 1; value <= 9; value++) {
          board[row][col] = value;
-         if(validPlacement(row, col …)){
-             if(solve(row, col + 1, board)){
+         if(validPlacement(row, col …)) {
+             if(solve(row, col + 1, board)) {
                  return true;
              }
-          }
+         }
      }
      
      // rolling back the incorrect decision
