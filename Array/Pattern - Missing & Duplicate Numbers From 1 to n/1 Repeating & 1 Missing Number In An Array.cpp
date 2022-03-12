@@ -231,7 +231,7 @@ int main()
          vₒ = v(original)
      Note: a, b, c, d are integral values.
 
-   ● Now, ∑(vₒ) - ∑(vᵢ) = (a + b + c +d) - ( a + a + c + d)
+   ● Now, ∑(vₒ) - ∑(vᵢ) = (a + b + c + d) - ( a + a + c + d)
                      c1 = b - a -------------------------------------------- eqⁿ(1)
         
          Squaring each term of vₒ & adding them = a² + b ² + c² + d²

@@ -1,5 +1,6 @@
 // Problem: https://leetcode.com/problems/find-the-duplicate-number/
 // Ref: https://www.youtube.com/watch?v=32Ll35mhWg0
+//      https://www.geeksforgeeks.org/duplicates-array-using-o1-extra-space-set-3/
 /*****************************************************************************************************/
 
 // The method used is very much similar to the one used in "Linked List Cycle Detection Algorithm" using

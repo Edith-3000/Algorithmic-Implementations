@@ -198,6 +198,7 @@ int main()
 /*************************************************************************************************/
 
 // Ref: https://www.geeksforgeeks.org/efficiently-merging-two-sorted-arrays-with-o1-extra-space/
+//      https://medium.com/swlh/merge-two-sorted-arrays-without-extra-space-efficiently-o-1-gap-method-detailed-simplified-57a336146601
 //      https://www.youtube.com/watch?v=hVl2b3bLzBw
 // Method 3 (Using GAP method) (Time complexity: O((n + m) * log(n + m)))
 
@@ -302,7 +303,13 @@ int main()
 
 /**************************************************************************************************/
 
-// NOTE: A solution can also be viewed at: --->
+// NOTE1: A solution can also be viewed at: --->
 // https://www.interviewbit.com/problems/merge-two-sorted-lists-ii/
 
 // ALthough it is not O(1) space solution
+
+// NOTE2: For a similar kind of problem at LeetCode: --->
+// https://leetcode.com/problems/merge-sorted-array/
+
+// See the following approach:--->
+// https://www.youtube.com/watch?v=C4oBXLr3zos
