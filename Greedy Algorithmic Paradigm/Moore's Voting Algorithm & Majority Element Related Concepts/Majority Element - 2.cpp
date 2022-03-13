@@ -3,6 +3,7 @@
 /******************************************************************************************************/
 
 // NOTE: In this problem there can be maximum 2 and minimum 0 majority elements.
+// For more explanation on this see in the comment section of the above video link.
 
 #include<bits/stdc++.h>
 using namespace std;

@@ -1,3 +1,5 @@
+// METHOD - 1 (Using user defined functions)
+
 // Explanation source: https://www.youtube.com/watch?v=8RErc0VXAo8
 
 /* Problem description --->
@@ -55,6 +57,70 @@ void solve()
     for(ll i = 0; i < n; i++) cin >> v[i];
     
     rotate(v, k);
+    for(auto x: v) cout << x << " ";
+    cout << "\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
+
+    int t = 1;
+    // cin >> t;
+    while(t--) {
+      solve();
+    }
+
+    return 0;
+}
+
+/***********************************************************************************************************/
+
+// METHOD - 2 (Using inbuilt C++ STL function)
+// https://www.geeksforgeeks.org/rotate-in-cpp-stl/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+typedef vector<ll> vll;
+
+// function to right rotate vector v by k times
+// NOTE: vector should be passed by reference
+void right_rotate(vll &v, ll k) {
+    ll n = v.size();
+    k = k % n;
+    
+    rotate(v.begin(), v.begin() + n - k, v.end());
+}
+
+// function to right rotate vector v by k times
+// NOTE: vector should be passed by reference
+void left_rotate(vll &v, ll k) {
+    ll n = v.size();
+    k = k % n;
+    
+    rotate(v.begin(), v.begin() + k, v.end());
+}
+
+void solve()
+{
+    ll n, k; cin >> n >> k;
+    vll v(n);
+    for(ll i = 0; i < n; i++) cin >> v[i];
+    
+    // typ = 0 => left rotate, typ = 1 => right rotate
+    ll typ; cin >> typ;
+    
+    if(typ == 0) left_rotate(v, k);
+    else right_rotate(v, k);
+    
     for(auto x: v) cout << x << " ";
     cout << "\n";
 }
