@@ -95,8 +95,8 @@ int main()
     return 0;
 }
 
-// TC: O(n^3 x log(m))
-// SC: O(m), where m are the possible quadruplets.
+// TC: O(n^3 x log(n))
+// SC: O(n)
 
 /*****************************************************************************************************/
 
@@ -206,5 +206,5 @@ int main()
     return 0;
 }
 
-// TC: O(n^3)
+// TC: O(n x log(n)) + O(n^3)
 // SC: O(m), where m are the possible triplets
