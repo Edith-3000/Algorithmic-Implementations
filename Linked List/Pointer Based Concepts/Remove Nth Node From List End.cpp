@@ -164,7 +164,9 @@ int main()
 /******************************************************************************************************/
 
 // METHOD - 2 (Using Single Pass)
-// Ref: Editorial section of InterviewBit
+// Ref: Editorial section of InterviewBit OR
+//      Refer the comment section of the video: --->
+//      https://www.youtube.com/watch?v=Lhu3MsXZy-Q&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=31
 
 #include<bits/stdc++.h>
 using namespace std;
