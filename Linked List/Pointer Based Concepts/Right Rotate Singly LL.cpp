@@ -1,5 +1,6 @@
 // Problem: https://www.interviewbit.com/problems/rotate-list/
-// Ref: https://www.youtube.com/watch?v=9VPm6nEbVPA&list=PLgUwDviBIf0r47RKH7fdWN54AbWFgGuii&index=13
+//          https://leetcode.com/problems/rotate-list/
+// Ref: https://takeuforward.org/data-structure/rotate-a-linked-list/
 /***************************************************************************************************/
 
 #include<bits/stdc++.h>
