@@ -3,13 +3,13 @@
         https://www.youtube.com/watch?v=ZvaRHYYI0-4
 
    PROBLEM STATEMENT: Design a Data Structure MinStack that supports all the stack operation like push(),
-                     pop(), getMin() (which should return minimum element from the MinStack), the operations
-                     of MinStack can be O(n). To implement MinStack, you should only use standard stack data 
-                     structure and no other data structure like arrays, list, .. etc.
+                      pop(), getMin() (which should return minimum element from the MinStack), the operations
+                      of MinStack can be O(n). To implement MinStack, you should only use standard stack data 
+                      structure and no other data structure like arrays, list, .. etc.
 */
 
 // METHOD - 1 
-// In this method getMin() is implemented in O(n) time using O(n) space.
+// In this method getMin() is implemented in O(1) time using O(n) space.
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -95,6 +95,10 @@ int main()
 
 // METHOD - 2
 // In this method getMin() is implemented in O(1) time using O(1) space.
+
+// The intuition behind how the formula is being generated in the algorithm can be seen from the comment
+// by "Sherwin Dsouza" in the video :--->
+// https://www.youtube.com/watch?v=ZvaRHYYI0-4
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -216,3 +220,8 @@ int main()
             = 2*x - (2*x - prevMin)
             = prevMin // This is what we wanted
 */
+
+/*******************************************************************************************************/
+
+// ANOTHER APPROACH CAN ALSO BE FOUND OUT AT :--->
+// https://takeuforward.org/data-structure/implement-min-stack-o2n-and-on-space-complexity/
