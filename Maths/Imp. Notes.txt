@@ -70,7 +70,11 @@
   https://codeforces.com/blog/entry/70898?#comment-554230
 
 # If (x < y), then (x % y) = x
-  If(x >= y), then (x % y) <= (x / 2), when x is odd
-                   (x % y) < (x / 2), when x is even
+  If(x >= y), then (x % y) <= (x - 1) / 2
 
   Ques. based on this concept: https://codeforces.com/problemset/problem/1617/C
+
+# By the triangle inequality, for all real numbers x, y, z, we have:
+  |x − y| + |y − z| ≥ |x − z|, with equality if and only if min(x, z) ≤ y ≤ max(x, z).
+
+  Ques. based on this concept: https://codeforces.com/contest/1656/problem/A

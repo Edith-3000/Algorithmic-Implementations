@@ -48,14 +48,14 @@ sort(t.begin(), t.end(), cmp);
 /* # Sometimes while using a custom comparator function, en error may be thrown similar to this --->
      
      error: reference to non-static member function must be called
-        	sort(v.begin(), v.end(), cmp);
+        	  sort(v.begin(), v.end(), cmp);
                               ^~~
 
 	# In order to resolve this situation make the cmp function as static i.e.
 	  static bool cmp(const pair<int, pii> &p1, const pair<int, pii> &p2) {
-        if(p1.S.F == p2.S.F) return p1.F > p2.F;
-        return p1.S.F < p2.S.F;
-    }
+           if(p1.S.F == p2.S.F) return p1.F > p2.F;
+           return p1.S.F < p2.S.F;
+       }
 
     # Ref: https://www.programmersought.com/article/5922553195/
 */

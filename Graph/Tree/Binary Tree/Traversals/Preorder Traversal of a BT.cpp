@@ -204,7 +204,9 @@ int main()
 /*************************************************************************************************/
 
 // METHOD 3 (Using MORRIS TRAVERSAL)
-// Preorder traversal without recursion and without stack 
+// Preorder traversal without recursion and without stack
+// Morris Traversal uses the concept of Threaded Binary Tree.
+// https://takeuforward.org/data-structure/morris-inorder-traversal-of-a-binary-tree/
 
 #include<bits/stdc++.h>
 using namespace std;

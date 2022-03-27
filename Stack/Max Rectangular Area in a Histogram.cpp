@@ -54,7 +54,7 @@ const int mod = 1e9+7;
 // Function which return the 0-based indices of the NSL elements 
 // for every array element
 vector<int> nsl_indices(vector<int> &v) {
-	int n = (int)v.size();
+    int n = (int)v.size();
 	if(n <= 0) return v;
 
 	// to store the final result
@@ -64,17 +64,17 @@ vector<int> nsl_indices(vector<int> &v) {
 	int pseudo_idx = -1;
 
     for(int i = 0; i < n; i++) {
-		if(st.empty()) res[i] = pseudo_idx;
+	    if(st.empty()) res[i] = pseudo_idx;
 		else if(st.top().F < v[i]) res[i] = st.top().S;
 
 		else {
-			while(!st.empty() && st.top().F >= v[i]) st.pop();
+		    while(!st.empty() && st.top().F >= v[i]) st.pop();
 
-			if(st.empty()) res[i] = pseudo_idx;
-			else res[i] = st.top().S;
+		    if(st.empty()) res[i] = pseudo_idx;
+		    else res[i] = st.top().S;
 		}
 
-		st.push({v[i], i});
+	    st.push({v[i], i});
     }
 
     // return the final res vector
@@ -94,8 +94,8 @@ vector<int> nsr_indices(vector<int> &v) {
 	int pseudo_idx = n;
 
 	for(int i = n - 1; i >= 0; i--) {
-		if(st.empty()) res[i] = pseudo_idx;
-		else if(st.top().F < v[i]) res[i] = st.top().S;
+	    if(st.empty()) res[i] = pseudo_idx;
+		 else if(st.top().F < v[i]) res[i] = st.top().S;
 
 		else {
 			while(!st.empty() && st.top().F >= v[i]) st.pop();
@@ -159,3 +159,9 @@ int main()
 
 // Time Complexity: O(n)
 // Space Complexity: O(n), where n is v.size()
+
+/*******************************************************************************************************/
+
+// METHOD - 3
+// A single pass approach can be viewed at :--->
+// https://takeuforward.org/data-structure/area-of-largest-rectangle-in-histogram/

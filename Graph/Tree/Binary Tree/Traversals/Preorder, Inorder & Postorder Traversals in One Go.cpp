@@ -1,26 +1,14 @@
-/* Prob.: Suppose you are at a party with n people (labeled from 0 to n - 1) and among them, there may 
-          exist one celebrity. 
-          The definition of a celebrity is that all the other (n - 1) people know him/her but he/she 
-          does not know any of them.
-          Now you want to find out who the celebrity is or verify that there is not one. 
-          The only thing you are allowed to do is to ask questions like: "Hi, A. Do you know B?" to get 
-          information whether A knows B. 
-          You need to find out the celebrity (or verify there is not one) by asking as few questions 
-          as possible (in the asymptotic sense).
-          
-          You are given a 2 D matrix, v[][] of size (n x n), v[i][j] = 0 if i doesn't know j and 
-          v[i][j] = 1, if i knows j.
-          
-          # Note: There will be exactly one celebrity if he/she is in the party. 
-                  Return the celebrity's label if there is a celebrity in the party. 
-                  If there is no celebrity, return -1. 
-*/
+// Ref: https://takeuforward.org/data-structure/preorder-inorder-postorder-traversals-in-one-traversal/
+/*********************************************************************************************************/
 
-/*UNDERLYING CONCEPT ------->
-  # So basically, celebrity is the person who is: • known by everyone
-  												  • knows nobody.
-  # Ref: https://www.youtube.com/watch?v=CiiXBvrX-5A
-*/  
+/* Main concept behind algorithm :--->
+   # In preorder traversal, we print a node at the first visit itself. 
+
+   # Whereas, in inorder traversal at the first visit to a node, we simply traverse to the left child. 
+     It is only when we return from the left child and visit that node the second time, that we print it. 
+   
+   # Similarly, in postorder traversal, we print a node in its third visit after visiting both its children.
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -30,11 +18,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -75,12 +66,25 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
 
@@ -101,51 +105,84 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-int find_celebrity(vvi &v) {
-	int n = sz(v);
-	if(n == 0) return -1;
+class TreeNode {
+	public:
+		int val;
+		TreeNode *left;
+		TreeNode *right;
+		TreeNode(): val(0), left(NULL), right(NULL) {}
+		TreeNode(int data): val(data), left(NULL), right(NULL) {}
+		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
+};
+
+// Function to return preorder, inorder & postorder traversals of a binary 
+// tree in a single shot
+vvi all_traversals(TreeNode *root) {
+	// base case
+	if(root == NULL) return vvi();
 	
-	stack<int> st;
+	// res[0], res[1] & res[2] holds the preorder, inorder & postorder traversals resp.
+	vvi res(3);
 	
-	// pushing all the persons in the stack
-	for(int i = 0; i < n; i++) st.push(i);
-
-	while(sz(st) >= 2) {
-		// taking out 2 persons at a time
-		int i = st.top(); st.pop();
-		int j = st.top(); st.pop();
-
-		// if i knows j, then it implies i can't be a celebrity
-		// therefore pushed back j
-		if(v[i][j]) st.push(j);
-
-		// if i does not knows j, then it implies j can't be a celebrity
-		// therefore pushed back i
-		else st.push(i);
-	}
-
-    // stack top can be the potential celebrity but not guaranteed
-	int candidate = st.top();
-
-	for(int i = 0; i < n; i++) {
-		if(i != candidate) {
-			if(v[i][candidate] == 0 or v[candidate][i] == 1) return -1;
+	stack<pair<TreeNode*, int>> stk;
+	stk.push({root, 1});
+	
+	while(!stk.empty()) {
+		auto tmp = stk.top();
+		stk.pop();
+		
+		if(tmp.S == 1) {
+			res[0].pb(tmp.F->val);
+			tmp.S += 1;
+			stk.push(tmp);
+			
+			if(tmp.F->left != NULL) {
+				stk.push({tmp.F->left, 1});
+			}
+		}
+		
+		else if(tmp.S == 2) {
+			res[1].pb(tmp.F->val);
+			tmp.S += 1;
+			stk.push(tmp);
+			
+			if(tmp.F->right != NULL) {
+				stk.push({tmp.F->right, 1});
+			}
+		}
+		
+		else {
+			res[2].pb(tmp.F->val);
 		}
 	}
-
-	return candidate;
+	
+	return res;
 }
 
 void solve()
 {
-  	int n; cin >> n;
-  	vvi v(n, vi(n, 0));
-  	
-  	for(int i = 0; i < n; i++) {
-  		for(int j = 0; j < n; j++) cin >> v[i][j];
-  	}
-  	
-  	cout << find_celebrity(v) << "\n";
+  	TreeNode* root = new TreeNode(1);
+	root->left = new TreeNode(2);
+	root->right = new TreeNode(3);
+	root->right->left = new TreeNode(4);
+	root->right->right = new TreeNode(5);
+	root->right->left->left = new TreeNode(6);
+	root->right->left->right = new TreeNode(7);
+	root->right->left->right->left = new TreeNode(8);
+	root->right->left->right->right = new TreeNode(9);
+	
+	vvi res = all_traversals(root);
+	
+	cout << "Preorder - ";
+	for(auto x: res[0]) cout << x << " ";
+	
+	cout << "\nInorder - ";
+	for(auto x: res[1]) cout << x << " ";
+	
+	cout << "\nPostorder - ";
+	for(auto x: res[2]) cout << x << " ";
+	
+	cout << "\n";
 }
 
 int main()
@@ -173,5 +210,5 @@ int main()
     return 0;
 }
 
-// Time Complexity: O(n)
-// Space Complexity: O(n), where 'n' are the total #peope in the party.											 
+// TC: O(n), we are visiting each node 3 times i.e. (3 * n), which is asymptotically equal to O(n)
+// SC: O(n)

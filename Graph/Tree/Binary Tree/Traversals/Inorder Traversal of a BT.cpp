@@ -1,4 +1,5 @@
 // Problem: https://www.interviewbit.com/problems/inorder-traversal/
+// Ref: https://takeuforward.org/data-structure/inorder-traversal-of-binary-tree/
 /*******************************************************************************************************/
 
 // METHOD 1 (Using Recursion)
@@ -146,13 +147,14 @@ vi inorder(TreeNode *root) {
 	
 	stack<TreeNode*> stk;
 	
-	while(!stk.empty() or root != NULL) {
+	while(true) {
 		if(root != NULL) {
 			stk.push(root);
 			root = root->left;
 		}
 		
 		else {
+			if(stk.empty()) break;
 			root = stk.top();
 			stk.pop();
 			res.pb(root->val);
@@ -195,8 +197,8 @@ int main()
     // int test = 1;
     // cin >> t;
     while(t--) {
-      // cout << "Case #" << test++ << ": ";
-      solve();
+    	// cout << "Case #" << test++ << ": ";
+      	solve();
     }
 
     return 0;
@@ -209,7 +211,9 @@ int main()
 /*************************************************************************************************/
 
 // METHOD 3 (Using MORRIS TRAVERSAL)
-// Inorder traversal without recursion and without stack 
+// Inorder traversal without recursion and without stack
+// Morris Traversal uses the concept of Threaded Binary Tree.
+// https://takeuforward.org/data-structure/morris-inorder-traversal-of-a-binary-tree/
 
 #include<bits/stdc++.h>
 using namespace std;
