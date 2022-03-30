@@ -100,7 +100,7 @@ void right_rotate(vll &v, ll k) {
     rotate(v.begin(), v.begin() + n - k, v.end());
 }
 
-// function to right rotate vector v by k times
+// function to left rotate vector v by k times
 // NOTE: vector should be passed by reference
 void left_rotate(vll &v, ll k) {
     ll n = v.size();

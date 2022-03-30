@@ -204,3 +204,8 @@ int main()
 
     return 0;
 }
+
+/*******************************************************************************************************/
+
+// NOTE: A similar kind of method can be found here :--->
+// https://takeuforward.org/data-structure/check-if-the-binary-tree-is-balanced-binary-tree/

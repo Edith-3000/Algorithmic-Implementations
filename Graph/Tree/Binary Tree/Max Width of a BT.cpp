@@ -1,22 +1,6 @@
-/*PROBLEM: The diameter of a tree (sometimes called the width) is the number of nodes on the 
-           longest path between two end nodes OR the number of edges on the longest path between 
-           two end nodes (depends on what the question is asking).
-           This path may or may not pass through the root.
-           # NOTE: in the below algorithm we are considering the 1st definition for diameter
-                   of a binary tree.
-*/
-
-// METHOD - 1 O(n^2)
-// https://takeuforward.org/data-structure/calculate-the-diameter-of-a-binary-tree/
-
-/* # Consider every node as root node, find the height of it's left and right subtree.
-   # Add 1 to the answer to include the current node
-   # Update the final result in every iteration.
-*/
-
-/****************************************************************************************************/
-
-// METHOD - 2 O(n)
+// Prob: https://leetcode.com/problems/maximum-width-of-binary-tree/
+// Ref: https://takeuforward.org/data-structure/maximum-width-of-a-binary-tree/
+/*********************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -123,24 +107,43 @@ class TreeNode {
     TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
 };
 
-int diameter_of_BT(TreeNode *root, int &res) {
-    // base condition
+ll width_of_bt(TreeNode *root) {
+	// base case
     if(root == NULL) return 0;
-    
-    // hypothesis
-    int lf = diameter_of_BT(root->left, res);
-    int rg = diameter_of_BT(root->right, res);
-    
-    // induction
-    int tmp = 1 + lf + rg;
-    res = max(res, tmp);
-    
-    return 1 + max(lf, rg);
+
+    ll res = 0;
+
+    queue<pair<TreeNode*, ll>> q;
+    q.push({root, 0LL});
+
+    while(!q.empty()) {
+        ll sz = sz(q);
+        ll fst_id, lst_id, offset = q.front().S;
+
+        for(ll i = 0; i < sz; i++) {
+            TreeNode *node = q.front().F;
+            ll id = q.front().S - offset;
+            q.pop();
+            
+            if(i == 0) fst_id = id;
+            
+            // CAUTION: do not use else if here, because for the level containing only
+            //          1 node lst_id will remain uninitialized & give wrong results.
+            if(i == sz - 1) lst_id = id;
+
+            if(node->left) q.push({node->left, 2 * id + 1});
+            if(node->right) q.push({node->right, 2 * id + 2}); 
+        }
+
+        res = max(res, lst_id - fst_id + 1);
+    }
+
+    return res;
 }
 
 void solve()
 {
-    TreeNode* root = new TreeNode(1);
+  	TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
     root->right = new TreeNode(3);
     root->right->left = new TreeNode(4);
@@ -150,10 +153,7 @@ void solve()
     root->right->left->right->left = new TreeNode(8);
     root->right->left->right->right = new TreeNode(9);
     
-    int res = 0;
-    diameter_of_BT(root, res);
-    
-    cout << res << "\n";
+    cout << width_of_bt(root) << "\n";
 }
 
 int main()
@@ -180,12 +180,3 @@ int main()
 
     return 0;
 }
-
-/* # The final answer is stored in res variable, which is passed by reference in every fⁿ call.
-     In the main() fⁿ res is initialised as res = 0;
-   # Time Complexity: O(n), since we must visit each node, where n are the #nodes in binary tree.
-   # Auxiliary Space Complexity: O(1)
-   # Space complexity of the internal call stack: O(h), where h is the height of the binary tree,
-                                                  h may be O(log(n)), if a balanced tree or
-                                                  h maye be O(n), otherwise.
-*/
