@@ -7,12 +7,15 @@
 /* A brute approach to solve this problem is by iterating over the tree in pre-order fashion.
    While traversing, store the values of the nodes in a list.
    Create the required linked list using the stored values.
-   But this method is not in-place
+   But this method is not in-place.
+
+   Visit code: https://pastebin.com/eR6Xqajz
 */
 
 /********************************************************************************************************/
 
-// METHOD - 2 (RECURSIVE IN-PLACE) 
+// METHOD - 2 (RECURSIVE IN-PLACE)
+// https://www.youtube.com/watch?v=NOKVBiJwkD0
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -62,20 +65,21 @@ void inorder(TreeNode *root) {
 	inorder(root->right);
 }
 
-TreeNode* flatten(TreeNode *root) {
-	if(root == NULL) return root;
+void flatten(TreeNode *root) {
+	if(root == NULL) return;
 	
-	TreeNode *lft = flatten(root->left);
-	TreeNode *rgt = flatten(root->right);
+	flatten(root->left);
+	flatten(root->right);
 	
+	TreeNode *tmp_left = root->left;
+	TreeNode *tmp_right = root->right;
+
 	root->left = NULL;
-	root->right = lft;
+	root->right = tmp_left;
 	
 	TreeNode *tmp = root;
 	while(tmp->right != NULL) tmp = tmp->right;
-	tmp->right = rgt;
-	
-	return root;
+	tmp->right = tmp_right;
 }
 
 void solve()
@@ -90,7 +94,7 @@ void solve()
 	root->right->left->right->left = new TreeNode(8);
 	root->right->left->right->right = new TreeNode(9);
 	
-	root = flatten(root);
+	flatten(root);
 	inorder(root);
 	cout << "\n";
 }
@@ -116,7 +120,7 @@ int main()
     return 0;
 }
 
-// TC: O(n)
+// TC: O(n^2)
 // SC: O(n), due to internal call stack
 
 /********************************************************************************************************/

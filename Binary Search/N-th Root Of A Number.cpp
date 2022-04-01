@@ -1,4 +1,6 @@
 // Ref: https://www.youtube.com/watch?v=WjpswYrS2nY&list=PLgUwDviBIf0qYbL4TBaEWgb-ljVdhkM7R&index=2
+//      https://vv123433.medium.com/binary-search-c2db205a20e6
+//      https://www.geeksforgeeks.org/calculating-n-th-real-root-using-binary-search/
 /********************************************************************************************************/
 
 #include<bits/stdc++.h>

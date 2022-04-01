@@ -1,105 +1,7 @@
-// Ref: https://www.geeksforgeeks.org/find-median-row-wise-sorted-matrix/
-/***************************************************************************************************/
-
-// METHOD - 1
-
-#include<bits/stdc++.h>
-using namespace std;
-
-#define ll long long
-#define ull unsigned long long
-#define pb push_back
-#define mp make_pair
-#define F first
-#define S second
-#define PI 3.1415926535897932384626
-#define deb(x) cout << #x << "=" << x << endl
-#define deb2(x, y) cout << #x << "=" << x << ", " << #y << "=" << y << endl
-typedef pair<int, int> pii;
-typedef pair<ll, ll> pll;
-typedef vector<int>	vi;
-typedef vector<ll> vll;
-typedef vector<ull> vull;
-typedef vector<pii>	vpii;
-typedef vector<pll>	vpll;
-typedef vector<vi> vvi;
-typedef vector<vll>	vvll;
-typedef vector<vull> vvull;
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim) {
-    uniform_int_distribution<int> uid(0,lim-1);
-    return uid(rang);
-}
-
-const int INF = 0x3f3f3f3f;
-const int mod = 1e9+7;
-
-int find_median(vvi &v) {
-	int n = v.size();
-	int m = v[0].size();
-	
-	int mn = INT_MAX, mx = INT_MIN;
-	for(int i = 0; i < n; i++) {
-		mn = min(mn, v[i][0]);
-		mx = max(mx, v[i][m-1]);
-	}
-	
-	int desired = (n * m) / 2 + 1;
-	int L = mn - 1, R = mx;
-	
-	while(L + 1 < R) {
-		int mid = L + ((R - L) >> 1);
-		int cnt = 0;
-		
-		for(int i = 0; i < n; i++) {
-			cnt += upper_bound(v[i].begin(), v[i].end(), mid) - v[i].begin();
-		}
-		
-		if(cnt < desired) L = mid;
-		else R = mid;
-	}
-	
-	return R;
-}
-
-void solve()
-{
-  	int n, m; cin >> n >> m;
-  	vvi v(n, vi(m));
-  	
-  	for(int i = 0; i < n; i++) {
-  		for(int j = 0; j < m; j++) cin >> v[i][j];
-  	}
-  	
-  	cout << find_median(v) << "\n";
-}
-
-int main()
-{
-    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
-
-    // #ifndef ONLINE_JUDGE
-    //     freopen("input.txt", "r", stdin);
-    //     freopen("output.txt", "w", stdout);
-    // #endif
-
-    int t = 1;
-    // int test = 1;
-    // cin >> t;
-    while(t--) {
-      // cout << "Case #" << test++ << ": ";
-      solve();
-    }
-
-    return 0;
-}
-
-/*********************************************************************************************************/
-
-// METHOD - 2
-// Almost same as METHOD - 1, but in it the upper_bound() function is implemented from scratch.
-// https://www.youtube.com/watch?v=63fPPOdIr2c&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=63
+// Prob: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+// Ref: https://www.youtube.com/watch?v=Osz-Vwer6rw
+//      https://takeuforward.org/data-structure/maximum-sum-path-in-binary-tree/
+/***********************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -196,57 +98,49 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-int find_upper_bound(int num, vi &v) {
-	int n = v.size();	
-	
-	int L = 0, R = n - 1, res = n;
-	
-	while(L <= R) {
-		int mid = L + ((R - L) >> 1);
-		if(v[mid] <= num) L = mid + 1;
-		else res = mid, R = mid - 1;
-	}
-	
-	return res;
-}
+class TreeNode {
+  public:
+    ll val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode(): val(0), left(NULL), right(NULL) {}
+    TreeNode(ll data): val(data), left(NULL), right(NULL) {}
+    TreeNode(ll data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
+};
 
-int find_median(vvi &v) {
-	int n = v.size();
-	int m = v[0].size();
-		
-	int res;
+ll maxPathSumBwAnyTwoNodes(TreeNode *root, ll &res) {
+	// base condition
+	if(root == NULL) return 0LL;
 	
-	int desired = (n * m) / 2 + 1;
-
-	// the search space is [1, 1e9] because they are limit of element values which
-	// could be present in the matrix v[][] (mentioned in problem statement of InterviewBit)
-	int L = 1, R = 1e9;
-	
-	while(L <= R) {
-		int mid = L + ((R - L) >> 1);
-		
-		int cnt = 0;
-		for(int i = 0; i < n; i++) {
-			cnt += find_upper_bound(mid, v[i]);
-		}
-				
-		if(cnt < desired) L = mid + 1;
-		else res = mid, R = mid - 1;
-	}
-	
-	return res;
+	// hypothesis
+    ll lf = maxPathSumBwAnyTwoNodes(root->left, res);
+    ll rg = maxPathSumBwAnyTwoNodes(root->right, res);
+    
+    // induction
+    // taking the consideration the case when lf & rg both can be -ve
+    ll tmp = max({root->val, root->val + max(lf, rg), root->val + lf + rg});
+    res = max(res, tmp);
+    
+    // current node passing it's contribution to it's parent node
+    return max({0LL, root->val, root->val + max(lf, rg)});
 }
 
 void solve()
 {
-  	int n, m; cin >> n >> m;
-  	vvi v(n, vi(m));
-  	
-  	for(int i = 0; i < n; i++) {
-  		for(int j = 0; j < m; j++) cin >> v[i][j];
-  	}
-  	
-  	cout << find_median(v) << "\n";
+  	TreeNode* root = new TreeNode(1);
+    root->left = new TreeNode(2);
+    root->right = new TreeNode(3);
+    root->right->left = new TreeNode(4);
+    root->right->right = new TreeNode(5);
+    root->right->left->left = new TreeNode(6);
+    root->right->left->right = new TreeNode(7);
+    root->right->left->right->left = new TreeNode(8);
+    root->right->left->right->right = new TreeNode(9);
+    
+    ll res = LLONG_MIN;
+  	maxPathSumBwAnyTwoNodes(root, res);
+    
+    cout << res << "\n";
 }
 
 int main()
@@ -273,3 +167,16 @@ int main()
 
     return 0;
 }
+
+/* # The final answer is stored in res variable, which is passed by reference in every fⁿ call.
+     In the main() fⁿ res is initialised as res= LLONG_MIN;
+   # Time Complexity: O(n), since we must visit each node, where n are the #nodes in binary tree.
+   # Auxiliary Space Complexity: O(1)
+   # Space complexity of the internal call stack: O(h), where h is the height of the binary tree,
+                                                  h may be O(log(n)), if a balanced tree or
+                                                  h maye be O(n), otherwise.
+*/
+
+/*********************************************************************************************************/
+
+// LEGACY CONTENT: https://pastebin.com/pkN95NVt
