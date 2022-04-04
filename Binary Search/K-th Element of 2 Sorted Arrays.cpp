@@ -1,27 +1,15 @@
-// Problem: https://www.geeksforgeeks.org/find-rotation-count-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=4WmTRFZilj8&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=7
-//      https://www.techiedelight.com/find-number-rotations-circularly-sorted-array/
-//      https://youtu.be/4qjprDkJrjY
+// Prob: https://practice.geeksforgeeks.org/problems/k-th-element-of-two-sorted-array1317/1#
+// Ref: https://takeuforward.org/data-structure/k-th-element-of-two-sorted-arrays/
+/************************************************************************************************************/
 
-// THIS PROBLEM ASSUMES THERE ARE NO DUPLICATES IN THE ARRAY.
-/****************************************************************************************************/
+// METHOD - 1 (Naive Solution)
+// See for this method in the link provided.
 
-// For this problem: ===>
-// Number of times a sorted array is rotated = Index of the minimum element in the array.
-/****************************************************************************************************/
+/***********************************************************************************************************/
 
-// METHOD - 1 O(n)
-// Simply do linear search to find index of the minimum element.
-
-/****************************************************************************************************/
-
-// METHOD - 2 O(log(n))
-
-// Ref: https://www.youtube.com/watch?v=zr_AoTxzn0Y&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=5
-
-// Below code is for Array sorted in ASCENDING ORDER. For DESCENDING ORDER just modify it slightly.
-// k is the element to be searched.
-/****************************************************************************************************/
+// METHOD - 2
+// The idea of this method is just a slight tweak of the idea used in the following problem :--->
+// "Median of 2 Sorted Arrays in O(log(min(m, n)).cpp"
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -31,11 +19,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -76,12 +67,25 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
 
@@ -102,44 +106,45 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-int cnt_rotations(vi &v) {
-	int n = sz(v);
-	if(n <= 1) return 0;
+int find_kth_smallest(vi &v1, vi &v2, int k) {
+	int n = sz(v1);
+	int m = sz(v2);
 	
-	int lo = 0, hi = n - 1;
+	// Ensuring that v1.length() <= v2.length()
+	if(n > m) return find_kth_smallest(v2, v1, k);
 	
+	int lo = max(0, k - m), hi = min(n, k);
+		
 	while(lo <= hi) {
-		// if the search space is already sorted, we have found the minimum element
-        if(v[lo] <= v[hi]) return lo;
+		int partition1 = lo + ((hi - lo) >> 1);
+		int partition2 = k - partition1;
 		
-		// to avoid overflow
-		int m = lo + ((hi - lo) >> 1);
+		int max1 = (partition1 == 0) ? INT_MIN : v1[partition1 - 1];
+		int min1 = (partition1 == n) ? INT_MAX : v1[partition1];
 		
-		// find the next and previous element of the 'mid' element(in a circular manner)
-		int prev = v[(m - 1 + n) % n];
-		int next = v[(m + 1) % n];
-		
-		// index of minimm element found
-		if(v[m] < prev and v[m] < next) return m;
-		
-		// if the left subarray is sorted then move to the unsorted right subarray
-		else if(v[lo] <= v[m]) lo = m + 1;
-		
-		// if the right subarray is sorted then move to the unsorted left subarray
-		else hi = m - 1;
-	}
+		int max2 = (partition2 == 0) ? INT_MIN : v2[partition2 - 1];
+		int min2 = (partition2 == m) ? INT_MAX : v2[partition2];
+			
+		if((max1 <= min2) and (max2 <= min1)) {
+			return max(max1, max2);
+		}
+			
+		else if(max1 > min2) hi = partition1 - 1;
+		else lo = partition1 + 1;
+	} 
 	
-	// invalid input
-	return -1;
+	return -1; 
 }
 
 void solve()
 {
-    int n; cin >> n;
-    vi v(n);
-    for(int i = 0; i < n; i++) cin >> v[i];
-    
-    cout << cnt_rotations(v) << "\n";
+  	int n, m, k; cin >> n >> m >> k;
+  	vi v1(n), v2(m);
+  	
+  	for(int i = 0; i < n; i++) cin >> v1[i];
+  	for(int i = 0; i < m; i++) cin >> v2[i];
+  	
+  	cout << find_kth_smallest(v1, v2, k);
 }
 
 int main()
@@ -167,4 +172,5 @@ int main()
     return 0;
 }
 
-// Time Complexity: O(log(n)) for each query.
+// Time complexity: O(log(min(m, n))
+// Space complexity: O(1)

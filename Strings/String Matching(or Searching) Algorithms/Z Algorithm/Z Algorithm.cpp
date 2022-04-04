@@ -1,27 +1,5 @@
-// Problem: https://www.geeksforgeeks.org/find-rotation-count-rotated-sorted-array/
-// Ref: https://www.youtube.com/watch?v=4WmTRFZilj8&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=7
-//      https://www.techiedelight.com/find-number-rotations-circularly-sorted-array/
-//      https://youtu.be/4qjprDkJrjY
-
-// THIS PROBLEM ASSUMES THERE ARE NO DUPLICATES IN THE ARRAY.
-/****************************************************************************************************/
-
-// For this problem: ===>
-// Number of times a sorted array is rotated = Index of the minimum element in the array.
-/****************************************************************************************************/
-
-// METHOD - 1 O(n)
-// Simply do linear search to find index of the minimum element.
-
-/****************************************************************************************************/
-
-// METHOD - 2 O(log(n))
-
-// Ref: https://www.youtube.com/watch?v=zr_AoTxzn0Y&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=5
-
-// Below code is for Array sorted in ASCENDING ORDER. For DESCENDING ORDER just modify it slightly.
-// k is the element to be searched.
-/****************************************************************************************************/
+// Ref: https://cp-algorithms.com/string/z-function.html
+/*********************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -31,11 +9,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -76,12 +57,25 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
 
@@ -102,44 +96,38 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-int cnt_rotations(vi &v) {
-	int n = sz(v);
-	if(n <= 1) return 0;
-	
-	int lo = 0, hi = n - 1;
-	
-	while(lo <= hi) {
-		// if the search space is already sorted, we have found the minimum element
-        if(v[lo] <= v[hi]) return lo;
-		
-		// to avoid overflow
-		int m = lo + ((hi - lo) >> 1);
-		
-		// find the next and previous element of the 'mid' element(in a circular manner)
-		int prev = v[(m - 1 + n) % n];
-		int next = v[(m + 1) % n];
-		
-		// index of minimm element found
-		if(v[m] < prev and v[m] < next) return m;
-		
-		// if the left subarray is sorted then move to the unsorted right subarray
-		else if(v[lo] <= v[m]) lo = m + 1;
-		
-		// if the right subarray is sorted then move to the unsorted left subarray
-		else hi = m - 1;
-	}
-	
-	// invalid input
-	return -1;
+vector<int> z_function(string &s) {
+    int n = (int) s.length();
+    
+    // z[i] = length of the longest string that is, at the same time, a prefix of s
+    //        & a prefix of the suffix of s starting at i.
+    // The first element of Z-function, i.e. z[0], is generally not well defined. 
+    // In this algorithm we will assume it is zero (although it doesn't change anything
+    // in the algorithm implementation).
+    vector<int> z(n);
+    
+    for(int i = 1, l = 0, r = 0; i < n; i++) {
+        if(i <= r) z[i] = min(r - i + 1, z[i - l]);
+        
+        while(i + z[i] < n && s[z[i]] == s[i + z[i]]) {
+        	++z[i];
+        }
+        
+        if(i + z[i] - 1 > r) {
+        	l = i, r = i + z[i] - 1;
+        }
+    }
+    
+    return z;
 }
 
 void solve()
 {
-    int n; cin >> n;
-    vi v(n);
-    for(int i = 0; i < n; i++) cin >> v[i];
-    
-    cout << cnt_rotations(v) << "\n";
+  	string s; cin >> s;
+  	vi z = z_function(s);
+  	
+  	for(auto x: z) cout << x << " ";
+  	cout << "\n";
 }
 
 int main()
@@ -167,4 +155,4 @@ int main()
     return 0;
 }
 
-// Time Complexity: O(log(n)) for each query.
+// Time complexity: O(n)
