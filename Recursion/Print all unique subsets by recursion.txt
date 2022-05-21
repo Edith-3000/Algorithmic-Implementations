@@ -1,2 +1,0 @@
-// All things will remain similar to "Print all subsets or all subseq or powerset by recursion.txt", 
-// except make use of a std::set<string> to store the subsets.

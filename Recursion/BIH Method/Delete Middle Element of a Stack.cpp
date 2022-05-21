@@ -1,38 +1,22 @@
-// Ref: https://www.youtube.com/watch?v=8YXQ68oHjAs
-/*****************************************************************************************************/
-
 #include<bits/stdc++.h>
 using namespace std;
 
-void insert_last(stack<int> &s, int key) {
-	// base ondition
-	if(s.size() == 0) {
-		s.push(key);
+void del_mid(stack<int> &s, int k) {
+	// base condition
+	if(k == 0) return;
+	if(k == 1) {
+		s.pop();
 		return;
 	}
-	
-	int y = s.top();
-	s.pop();
-	
-	// hypothesis
-	insert_last(s, key);
-	
-	// induction
-	s.push(y);
-}
-
-void rev_stack(stack<int> &s) {
-	// base condition
-	if(s.size() <= 1) return;
 	
 	int x = s.top();
 	s.pop();
 	
 	// hypothesis
-	rev_stack(s);
+	del_mid(s, k - 1);
 	
 	// induction
-	insert_last(s, x);
+	s.push(x);
 }
 
 void solve()
@@ -45,9 +29,12 @@ void solve()
   		s.push(x);	
   	}
   	
-  	rev_stack(s);
+  	int k = (n & 1) ? (n / 2 + 1) : (n / 2);
   	
-  	cout << "Content of stack after reversing:-->\n";
+  	del_mid(s, k);
+  	
+  	cout << "Content of stack after deleting middle element :-->\n";
+  	
   	while(!s.empty()) {
   		cout << s.top() << " ";
   		s.pop();
@@ -78,5 +65,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity: O(n^2) (worst case)

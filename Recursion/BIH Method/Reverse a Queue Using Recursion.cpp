@@ -31,6 +31,7 @@ void solve()
   	rev_queue(q);
   	
   	cout << "Content of queue after sorting:-->\n";
+    
   	while(!q.empty()) {
   		cout << q.front() << " ";
   		q.pop();

@@ -93,8 +93,8 @@ void power_set(string op, string ip, vs &res) {
 	}
 	
 	// 2 options available ===>
-	// 1. to include the current character.
-	// 2. to exclude the current character.
+	// 1. to exclude the current character.
+	// 2. to include the current character.
 	string op1 = op;
 	string op2 = op;
 	op2.pb(ip[0]);
