@@ -4,6 +4,6 @@
 git status
 git add .
 git status
-git commit -m “UPD”
+git commit -m “Files UPD”
 git push
 git status
