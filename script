@@ -1,0 +1,7 @@
+# https://www.hastac.org/blogs/joe-cutajar/2015/04/21/how-make-simple-bash-script-mac
+
+#!/bin/bash
+git add .
+git commit -m “UPD”
+git push
+git status 
