@@ -1,15 +1,6 @@
-// Problem: https://leetcode.com/problems/permutation-sequence/
-// Ref: https://takeuforward.org/data-structure/find-k-th-permutation-sequence/
-//      https://www.youtube.com/watch?v=W9SIlE2jhBQ
-/******************************************************************************************************/
-
-// METHOD - 1
-// Generate all permutations and return the K-th one.
-// Time complexity: O(n! x n)
-
-/******************************************************************************************************/
-
-// METHOD - 2
+// Prob: https://leetcode.com/problems/palindrome-partitioning/
+// Ref: https://takeuforward.org/data-structure/palindrome-partitioning/
+/*************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -19,11 +10,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -32,6 +26,7 @@ typedef vector<ll> vll;
 typedef vector<ull> vull;
 typedef vector<bool> vb;
 typedef vector<char> vc;
+typedef vector<string> vs;
 typedef vector<pii> vpii;
 typedef vector<pll> vpll;
 typedef vector<vi> vvi;
@@ -39,6 +34,7 @@ typedef vector<vll> vvll;
 typedef vector<vull> vvull;
 typedef vector<vb> vvb;
 typedef vector<vc> vvc;
+typedef vector<vs> vvs;
 
 /************************************************** DEBUGGER *******************************************************************************************************/
 
@@ -62,20 +58,27 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
-
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim) {
-    uniform_int_distribution<int> uid(0,lim-1);
-    return uid(rang);
-}
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
@@ -88,41 +91,62 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-string Kth_permutation(int n, int k) {
-	int fact = 1;
-	vi v;
+bool is_palindrome(string &s) {
+    int n = (int)s.size();
+    
+    for(int i = 0, j = n - 1; i < j; i++, j--) {
+        if(s[i] != s[j]) return 0;
+    }
+    
+    return 1;
+}
 
-	for(int i = 1; i < n; i++) {
-		fact *= i;
-		v.pb(i);
+void helper(int idx, int n, string &s, vs &path, vvs &res) {
+	// base case
+	if(idx == n) {
+		res.pb(path);
+		return;
 	}
 	
-	v.pb(n);
-	k -= 1;
-
-	string res = "";
-	
-	while(true) {
-		res = res + to_string(v[k / fact]);
-		v.erase(v.begin() + (k / fact));
-		if(sz(v) == 0) break;
-		k %= fact;
-		fact /= sz(v);
+	for(int i = idx; i < n; i++) {
+		string tmp = s.substr(idx, i - idx + 1);
+		
+		if(is_palindrome(tmp)) {
+			path.pb(tmp);
+			helper(i + 1, n, s, path, res);
+			path.ppb();
+		}
 	}
+}
+
+vvs palindrome_partitioning(string s) {
+	int n = sz(s);
+	vs path;
+	vvs res;
+	
+	helper(0, n, s, path, res);
 	
 	return res;
 }
 
 void solve()
 {
-  	int n, k; cin >> n >> k;
-  	cout << Kth_permutation(n, k) << "\n";
+  	string s; cin >> s;
+  	
+  	vvs res = palindrome_partitioning(s);
+  	
+  	for(auto vec: res) {
+  		for(auto str: vec) {
+  			cout << str << " ";
+  		}
+  		
+  		cout << "\n";
+  	}
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
@@ -144,5 +168,4 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n^2)
-// Space complexity: O(n)
+// TC: O((2^n) * (n^2))

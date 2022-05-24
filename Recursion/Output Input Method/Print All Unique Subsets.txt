@@ -1,2 +1,0 @@
-// All things will remain similar to "All Subsets or Subseq. or Powerset.cpp", 
-// except make use of a std::set<string> to store the subsets.
