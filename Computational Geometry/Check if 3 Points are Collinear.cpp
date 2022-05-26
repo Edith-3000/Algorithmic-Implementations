@@ -1,17 +1,5 @@
-// Problem: https://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
-/*******************************************************************************************************/
-
-// NOTE: The below solutions prints duplicate permutations if there are repeating characters in input string.
-
-/******************************************************************************************************/
-
-// METHOD - 1
-// https://www.youtube.com/watch?v=YK78FU5Ffjw
-
-/******************************************************************************************************/
-
-// METHOD - 2
-// Ref: https://www.youtube.com/watch?v=f2ic2Rsc9pU&list=PLgUwDviBIf0rQ6cnlaHRMuOp4H_D-7hwP&index=8
+// Ref: https://www.geeksforgeeks.org/program-check-three-points-collinear/
+/***************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -21,11 +9,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -66,20 +57,27 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
-
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim) {
-    uniform_int_distribution<int> uid(0,lim-1);
-    return uid(rang);
-}
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
@@ -92,44 +90,29 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// here string must be passed by reference
-void permute(int i, string &s, vs &res) {
-	// base case
-	if(i == sz(s)) {
-		res.pb(s);
-		return;
-	}
+// Function to find out if 3 points (x1, y1), (x2, y2) and (x3, y3) are collinear or not
+bool is_collinear(ll x1, ll y1, ll x2, ll y2, ll x3, ll y3) {
+	// CAUTION: directly the slopes are not calculated using "double" division because it may
+	//          lead to precision errors, but if the coordinate values are very large then this
+	//          method may lead to overflow
+	ll lhs = (y2 - y1) * (x3 - x2);
+	ll rhs = (y3 - y2) * (x2 - x1);
 	
-	for(int j = i; j < sz(s); j++) {
-		// swapping done 
-		swap(s[i], s[j]);
-
-		// recurse for smaller subproblem
-		permute(i+1, s, res);
-
-		// as string is passed by reference therefore in 
-		// the returning phase again place back the swapped
-		// chars at their original position
-		// i.e. while backtracking we are restoring the 
-		// original string
-		swap(s[i], s[j]);
-	}
+	return (lhs == rhs);
 }
 
 void solve()
 {
-  	string s; cin >> s;
-    
-    vs res;
-    permute(0, s, res);
-    
-    for(auto x: res) cout << x << "\n";
+  	ll x1, y1, x2, y2, x3, y3;
+  	cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+  	
+  	if(is_collinear(x1, y1, x2, y2, x3, y3)) cout << "Yes\n";
+  	else cout << "No\n";
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
@@ -150,69 +133,3 @@ int main()
 
     return 0;
 }
-
-/* # Time Complexity: O(n * n!) 
-     As there are n! permutations and it requires O(n) time to print a a permutation.
-   # Note : The above solution prints duplicate permutations if there are repeating characters in input string. 
-   # Refer: https://www.geeksforgeeks.org/write-a-c-program-to-print-all-permutations-of-a-given-string/
-*/
-
-/* 
-Sample i/p:
-
-abc
-
-Sample o/p:
-
-Enter string: abc
-abc
-acb
-bac
-bca
-cba
-cab
-
-*/
-
-/****************************************************************************************************************/
-
-// CODE TO GENERATE ONLY UNIQUE PERMUTATION AND ALSO IN LEXOGRAPHICALLY SORTED ORDER
-
-// Just make use of a set to store the result
-
-/*****************************************************************************************************************/
-
-// USING C++ STL FUNCTION (next_permutation())
-
-#include<bits/stdc++.h>
-using namespace std;
-
-void permute(string s) {
-	// sort the string in lexicographically
-    // ascennding order
-	sort(s.begin(), s.end());
-	
-	// keep printing next permutation while there
-    // is next permutation
-	do{
-		cout << s << "\n";
-	} while(next_permutation(s.begin(), s.end()));
-}
-
-int main()
-{
-    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
-
-    cout << "Enter string: ";
-    string s; cin >> s;
-    cout << s<<"\n";
-    
-    permute(s);
-    
-    return 0;
-}
-
-// Time complexity: O(n * n!)
-// As there are n! permutations and next_permutation() requires O(n) time to find lexicographically
-// next permutation

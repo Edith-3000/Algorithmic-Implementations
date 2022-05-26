@@ -1,0 +1,4 @@
+# In an array for a strictly Longest Increasing Subsequence(LIS) and a strictly Longest Decreasing Subsequence(LDS)
+  there can be have no more than 1 common element.
+  
+  For reference see "Hint" of "1682C — LIS or Reverse LIS?" from https://codeforces.com/blog/entry/103097
