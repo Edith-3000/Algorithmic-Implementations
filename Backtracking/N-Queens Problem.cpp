@@ -222,6 +222,7 @@ int main()
 
 // Time Complexity: Exponential, for details ===>
 // Refer: https://medium.com/@jmohon1986/timeout-the-story-of-n-queens-time-complexity-c80636d92f8b#:~:text=The%20worst%20case%20%E2%80%9Cbrute,N%20times%2C%20for%20N%20queens.&text=However%2C%20if%20it%20is%20found,and%20try%20another%20safe%20position.
+//        https://www.youtube.com/watch?v=EYjmtxbRnns
 // In the description of the video: https://www.youtube.com/watch?v=wGbuCyNpxIg
 
 /* Optimizations: The exponential time complexity of above backtracking algorithm can be improved by using 

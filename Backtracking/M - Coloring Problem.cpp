@@ -1,5 +1,5 @@
 // Problem: https://practice.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1#
-// Ref: https://www.youtube.com/watch?v=wuVwUK25Rfc&list=PLgUwDviBIf0rQ6cnlaHRMuOp4H_D-7hwP&index=11
+// Ref: https://takeuforward.org/data-structure/m-coloring-problem/
 /****************************************************************************************************/
 
 #include<bits/stdc++.h>
