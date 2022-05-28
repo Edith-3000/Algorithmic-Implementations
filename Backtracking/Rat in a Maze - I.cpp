@@ -12,7 +12,7 @@ using namespace std;
 
 bool rat_in_maze(vector<vector<int>> &maze, vector<vector<bool>> &v, int i, int j, int m, int n, int &cnt) {
 	// base case(s)
-	if(i == (m-1) && j == (n-1)) {
+	if(i == (m - 1) && j == (n - 1)) {
 		if(maze[i][j] == 1) return false;
 		v[i][j] = 1;
 		// we've reached the last cell successfull, print the path
@@ -42,8 +42,8 @@ bool rat_in_maze(vector<vector<int>> &maze, vector<vector<bool>> &v, int i, int 
 	// assuming path exist through current pos(i, j)
 	v[i][j] = 1;
 	
-	bool right_se_path_mila = rat_in_maze(maze, v, i, j+1, m, n, cnt);
-	bool down_se_path_mila = rat_in_maze(maze, v, i+1, j, m, n, cnt);
+	bool right_se_path_mila = rat_in_maze(maze, v, i, j + 1, m, n, cnt);
+	bool down_se_path_mila = rat_in_maze(maze, v, i + 1, j, m, n, cnt);
 	
 	// making v[i][j] = 0 in the returning phase(while backtracking)
 	// every time so all the path can be found and printed
