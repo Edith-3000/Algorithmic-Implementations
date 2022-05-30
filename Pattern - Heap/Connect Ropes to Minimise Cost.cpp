@@ -1,12 +1,11 @@
-// PROBLEM: https://www.geeksforgeeks.org/find-the-k-closest-points-to-origin-using-priority-queue/
-//          https://leetcode.com/problems/k-closest-points-to-origin/
-// Ref: https://www.youtube.com/watch?v=XC4EotTewro&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=8
-/******************************************************************************************************/
+/* Problem: Given 'n' ropes with different lengths, we need to connect these ropes into one big 
+			rope with minimum cost. The cost of connecting two ropes is equal to the sum of their
+			lengths.
 
-// NOTE: this problem can also be solved by normal sorting technique.
-// https://www.geeksforgeeks.org/find-k-closest-points-to-the-origin/
+   Ref: https://www.youtube.com/watch?v=_k_c9nqzKN0
 
-/*****************************************************************************************************/
+   Intuition: https://www.geeksforgeeks.org/connect-n-ropes-minimum-cost/
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -87,43 +86,39 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-vpii find_ans(vpii &v, int k) {
+ll connect_ropes(vi &v) {
 	int n = sz(v);
-	if(n == 0) return vpii();
-		
-	priority_queue<pair<ll, pii>> mxh;
+	if(n <= 0) return 0LL;
+	
+	priority_queue<ll, vll, greater<ll>> mn_heap;
 	
 	for(int i = 0; i < n; i++) {
-		ll d = ((ll)v[i].F * v[i].F) + ((ll)v[i].S * v[i].S);
-		mxh.push({d, v[i]});
-		if(sz(mxh) > k) mxh.pop();
+		mn_heap.push(v[i]);
 	}
 	
-	vpii res;
-
-	while(!mxh.empty()) {
-		res.pb(mxh.top().S);
-		mxh.pop();
+	ll res = 0LL;
+	
+	while(sz(mn_heap) >= 2) {
+		ll rope1 = mn_heap.top(); 
+		mn_heap.pop();
+		
+		ll rope2 = mn_heap.top(); 
+		mn_heap.pop();
+		
+		res += (rope1 + rope2);
+		mn_heap.push(rope1 + rope2);
 	}
 	
 	return res;
-} 
+}
 
 void solve()
 {
-  	int n, k; 
-  	cin >> n >> k;
+  	int n; cin >> n;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	vpii v(n);
-  	for(int i = 0; i < n; i++) {
-  		cin >> v[i].F >> v[i].S;
-  	}
-  	
-  	vpii res = find_ans(v, k);
-  	
-  	for(auto x: res) {
-  		cout << x.F << " " << x.S << "\n";
-  	}
+  	cout << connect_ropes(v) << "\n";
 }
 
 int main()
@@ -151,5 +146,5 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n x log₂(k)), where n is v.size()
-// Space complexity: O(k), ∵ we need to store atmost ‘k’ pairs in the heap.
+// Time complexity: O(n x log₂(n))
+// Space complexity: O(n), where n is v.size()	

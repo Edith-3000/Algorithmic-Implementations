@@ -28,7 +28,7 @@ struct cmp {
 
 priority_queue<pair<int, pii>, vector<pair<int, pii>>, cmp> q;	
 
-// Remember to make the member function as "public"
+// Remember to keep the member function as "public"
 // NOTE: cmp is passed without brackets "()" in the declaration of the queue.
 
 /******************************************************************************************************/

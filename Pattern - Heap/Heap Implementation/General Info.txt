@@ -9,6 +9,7 @@
   the leaves has two children
 
 # More info: https://web.cecs.pdx.edu/~sheard/course/Cs163/Doc/FullvsComplete.html
+             https://www.programiz.com/dsa/complete-binary-tree#:~:text=A%20complete%20binary%20tree%20is,must%20lean%20towards%20the%20left.
 
 # Every number in the heap must be >= all its descendents in case of max heap and vice-versa for min heap.
 

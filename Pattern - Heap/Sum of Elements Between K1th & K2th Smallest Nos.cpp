@@ -1,12 +1,6 @@
-// PROBLEM: https://www.geeksforgeeks.org/find-the-k-closest-points-to-origin-using-priority-queue/
-//          https://leetcode.com/problems/k-closest-points-to-origin/
-// Ref: https://www.youtube.com/watch?v=XC4EotTewro&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=8
-/******************************************************************************************************/
-
-// NOTE: this problem can also be solved by normal sorting technique.
-// https://www.geeksforgeeks.org/find-k-closest-points-to-the-origin/
-
-/*****************************************************************************************************/
+// Prob: https://www.geeksforgeeks.org/sum-elements-k1th-k2th-smallest-elements/
+// Ref: https://www.youtube.com/watch?v=3ioQQQrnw4Q&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=10
+/****************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -16,11 +10,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -61,20 +58,27 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
-
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim) {
-    uniform_int_distribution<int> uid(0,lim-1);
-    return uid(rang);
-}
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
@@ -87,49 +91,51 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-vpii find_ans(vpii &v, int k) {
+int kth_smallest(vi &v, int k) {
+    int n = sz(v);
+    if(k > n) return INT_MIN;
+    
+    priority_queue<int> mxh;
+    
+    for(int i = 0; i < n; i++) {
+        mxh.push(v[i]);
+        if(sz(mxh) > k) mxh.pop();
+    }
+    
+    return mxh.top();
+}
+
+ll sum_between_k1_and_k2(vi &v, int k1, int k2) {
 	int n = sz(v);
-	if(n == 0) return vpii();
-		
-	priority_queue<pair<ll, pii>> mxh;
+	if(n == 0) return 0LL;
+	if(k1 > k2) swap(k1, k2);
+	
+	int num1 = kth_smallest(v, k1);
+	int num2 = kth_smallest(v, k2);
+	
+	ll res = 0LL;
 	
 	for(int i = 0; i < n; i++) {
-		ll d = ((ll)v[i].F * v[i].F) + ((ll)v[i].S * v[i].S);
-		mxh.push({d, v[i]});
-		if(sz(mxh) > k) mxh.pop();
-	}
-	
-	vpii res;
-
-	while(!mxh.empty()) {
-		res.pb(mxh.top().S);
-		mxh.pop();
+		if((v[i] > num1) and (v[i] < num2)) res += v[i];
 	}
 	
 	return res;
-} 
+}
 
 void solve()
 {
-  	int n, k; 
-  	cin >> n >> k;
+  	int n, k1, k2;
+  	cin >> n >> k1 >> k2;
   	
-  	vpii v(n);
-  	for(int i = 0; i < n; i++) {
-  		cin >> v[i].F >> v[i].S;
-  	}
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	vpii res = find_ans(v, k);
-  	
-  	for(auto x: res) {
-  		cout << x.F << " " << x.S << "\n";
-  	}
+  	cout << sum_between_k1_and_k2(v, k1, k2) << "\n";
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
@@ -151,5 +157,11 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n x log₂(k)), where n is v.size()
-// Space complexity: O(k), ∵ we need to store atmost ‘k’ pairs in the heap.
+/************************************************************************************************************/
+
+/* ALTERNATE APPROACH (using min heap)
+
+   # First, insert all numbers in a 𝑴𝑰𝑵 𝑯𝑬𝑨𝑷.
+   # Remove the first K1 smallest numbers from the min-heap.
+   # Now take the next (K2-K1-1) numbers out of the heap and add them. This sum will be our required output.
+*/

@@ -1,10 +1,6 @@
-/* Problem: Given 'n' ropes with different lengths, we need to connect these ropes into one big 
-			rope with minimum cost. The cost of connecting two ropes is equal to the sum of their
-			lengths.
-
-   Ref: https://www.youtube.com/watch?v=_k_c9nqzKN0
-   Intuition: https://www.geeksforgeeks.org/connect-n-ropes-minimum-cost/
-*/
+// PROBLEM: https://www.geeksforgeeks.org/nearly-sorted-algorithm/
+// Ref: https://www.youtube.com/watch?v=dYfM6J1y0mU&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=4
+/*****************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -85,38 +81,37 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-ll connect_ropes(vi &v) {
+void sort_k_sorted(vi &v, int k) {
 	int n = sz(v);
-	if(n <= 0) return 0LL;
+	if(n == 0) return;
 	
-	priority_queue<int, vi, greater<int>> mn_heap;
+	priority_queue<int, vi, greater<int>> mnh;
+	int idx = 0;
 	
 	for(int i = 0; i < n; i++) {
-		mn_heap.push(v[i]);
+		mnh.push(v[i]);
+		if(sz(mnh) > k) {
+			v[idx++] = mnh.top();
+			mnh.pop();
+		}
 	}
 	
-	ll res = 0LL;
-	while(sz(mn_heap) >= 2) {
-		ll rope1 = mn_heap.top(); 
-		mn_heap.pop();
-		
-		ll rope2 = mn_heap.top(); 
-		mn_heap.pop();
-		
-		res += (rope1 + rope2);
-		mn_heap.push(rope1 + rope2);
+	while(!mnh.empty()) {
+		v[idx++] = mnh.top();
+		mnh.pop();
 	}
-	
-	return res;
 }
 
 void solve()
 {
-  	int n; cin >> n;
+  	int n, k; cin >> n >> k;
   	vi v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	cout << connect_ropes(v) << "\n";
+  	sort_k_sorted(v, k);
+  	for(auto x: v) cout << x << " ";
+  	
+  	cout << "\n";
 }
 
 int main()
@@ -144,5 +139,5 @@ int main()
     return 0;
 }
 
-// Time complexity: O(n x log₂(n))
-// Space complexity: O(n), where n is v.size()	
+// Time complexity: O(n x log₂(k)), where n is v.size()
+// Space complexity: O(k), ∵ we need to store atmost 'k' elements in the heap.

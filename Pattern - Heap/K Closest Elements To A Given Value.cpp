@@ -1,4 +1,5 @@
 // PROBLEM: https://www.geeksforgeeks.org/find-k-closest-elements-given-value/
+//          https://leetcode.com/problems/find-k-closest-elements/
 // Ref: https://www.youtube.com/watch?v=J8yLD-x7fBI&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=5
 /********************************************************************************************************/
 

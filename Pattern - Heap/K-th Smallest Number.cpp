@@ -139,10 +139,10 @@ int main()
 
 /*********************************************************************************************************/
 
-/*An Alternate Approach 
-  # Alternatively, we can use a Min Heap to find the Kth smallest number. 
-  # We can insert all the numbers in the min-heap and then extract the top ‘K’ numbers from the heap to find 
-    the Kth smallest number. 
-  # Initializing the min-heap with all numbers will take O(n x log(n)) and extracting 'k' numbers will 
-    take O(k x log(n)). 
+/* An Alternate Approach :---> 
+   # Alternatively, we can use a Min Heap to find the Kth smallest number. 
+   # We can insert all the numbers in the min-heap and then extract the top ‘K’ numbers from the heap to find 
+     the Kth smallest number. 
+   # Initializing the min-heap with all numbers will take O(n x log(n)) and extracting 'k' numbers will 
+     take O(k x log(n)). 
 */
