@@ -8,8 +8,13 @@
 # A FULL BINARY TREE (sometimes proper binary tree or 2-tree) is a tree in which every node other than 
   the leaves has two children
 
+# A PERFECT BINARY TREE is a type of binary tree in which every internal node has exactly two child nodes 
+  and all the leaf nodes are at the same level.
+
+
 # More info: https://web.cecs.pdx.edu/~sheard/course/Cs163/Doc/FullvsComplete.html
              https://www.programiz.com/dsa/complete-binary-tree#:~:text=A%20complete%20binary%20tree%20is,must%20lean%20towards%20the%20left.
+             https://www.programiz.com/dsa/perfect-binary-tree#:~:text=A%20perfect%20binary%20tree%20is,are%20at%20the%20same%20level.
 
 # Every number in the heap must be >= all its descendents in case of max heap and vice-versa for min heap.
 

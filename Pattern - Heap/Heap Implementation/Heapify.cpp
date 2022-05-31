@@ -1,9 +1,9 @@
 /* # Heapify is a method related to creation of a heap.
      Basically it is a faster method for creating a heap.
 
-	OR
+	 OR
 
-   # The process of rearranging the heap by comparing the parent with it's left and right child recursively
+   # The process of rearranging the heap by comparing the parent with it's left and right child RECURSIVELY
      so as to maintain the heap property is called heapify.
 
    # We can heapify an index 'i' only if the all the elements in the left and right subtree are following 
@@ -22,3 +22,4 @@
 
 // Ref: https://www.youtube.com/watch?v=VkKmmwzfIG4
 //      https://www.youtube.com/watch?v=cuL8gXCSA58
+//      https://www.youtube.com/watch?v=qQkfUKer3LU&list=PLEJXowNB4kPyP2PdMhOUlTY6GrRIITx28&index=4
