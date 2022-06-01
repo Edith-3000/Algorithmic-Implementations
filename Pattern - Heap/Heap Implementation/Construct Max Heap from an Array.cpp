@@ -1,8 +1,14 @@
-// Ref: https://www.udemy.com/course/datastructurescncpp/
-/********************************************************************************************************/
+// Ref: https://www.youtube.com/watch?v=cuL8gXCSA58&list=PLEJXowNB4kPyP2PdMhOUlTY6GrRIITx28&index=4
+//      https://www.youtube.com/watch?v=VkKmmwzfIG4&list=PLEJXowNB4kPyP2PdMhOUlTY6GrRIITx28&index=5
+//      https://www.youtube.com/watch?v=YJa3GpNUrNs
+//      https://www.youtube.com/watch?v=VFLNBh0bK2A&list=PL-Jc9J83PIiHq5rMZasunIR19QG3E-PAA&index=24
+//      For some other general info also refer "Heapify.cpp"
+/*************************************************************************************************************/
 
 // In the below algorithm operations for binary max heap have been implemented, binary min heap can also
 // be created similarly.
+
+/*************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -12,11 +18,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -57,20 +66,27 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
-
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim) {
-    uniform_int_distribution<int> uid(0,lim-1);
-    return uid(rang);
-}
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
@@ -83,59 +99,42 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// it is the position where the last element in the heap is present
-int pos;
-
-int delete_heap(vi &v) {
-	if(pos == -1) {
-		cout << "Heap empty! ";
-		return INT_MAX;
-	}
-	
-	int x = v[0];
-	v[0] = v[pos];
-	pos -= 1;
-	
-	// i => to store the index of parent
-	// j => to store the index of left child of i
-	int i = 0, j = 1;	
-	
-	while(j <= pos) {
-		// compare the left and right childs of i
-		if(j + 1 <= pos and v[j+1] > v[j]) j += 1;
-		
-		// compare the parent i, with the max(left child, right child)
-		if(v[j] > v[i]) {
-			swap(v[j], v[i]);
-			i = j;
-			j = 2 * i + 1;
-		}
-		
-		else break;
-	}
-	
-	return x;
+// To heapify a subtree rooted with node i which is
+// an index in v[] and n is size of heap
+void heapify(vi &v, int n, int i) {
+    int largest = i; // Initialize largest as root
+    int l = 2 * i + 1; // left child = 2 * i + 1
+    int r = 2 * i + 2; // right = 2 * i + 2
+ 
+    // If left child is larger than root
+    if (l < n and v[l] > v[largest]) largest = l;
+ 
+    // If right child is larger than largest so far
+    if (r < n and v[r] > v[largest]) largest = r;
+ 
+    // If largest is not root
+    if (largest != i) {
+        swap(v[i], v[largest]);
+ 
+        // Recursively heapify the affected sub-tree
+        heapify(v, n, largest);
+    }
 }
 
-// insertion is being done in-place
-void insert_heap(vi &v, int n) {
-	int tmp = v[n], i = n;
-	
-	// the parent index can also be found by ceil(i/2) - 1
-	while(i > 0 and v[(i % 2 == 0) ? (i / 2 - 1) : (i / 2)] < tmp) {
-		v[i] = v[(i % 2 == 0) ? (i / 2 - 1) : (i / 2)];
-        i = (i % 2 == 0) ? (i / 2 - 1) : (i / 2);
-	}
-	
-	v[i] = tmp;
-}
-
-void create_heap(vi &v) {
+// Function to transfrom v[] into a max heap
+void construct_max_heap(vi &v) {
+	// size of heap 
 	int n = sz(v);
 	
-	for(int i = 0; i < n; i++) {
-		insert_heap(v, i);
-	}
+	// Considering 0-based indexing, if heap size is of 'n', the the leaf nodes will be in the range
+    // [floor(n/2), n - 1] and internal nodes will be in the range [0, floor(n/2) - 1].
+    
+    // We know to heapify a node it's left and right subtree must be a heap, so all the leaves
+    // are already a heap, therefore start heapifying from internal nodes.
+    
+    for (int i = (n / 2 - 1); i >= 0; i--) {
+    	heapify(v, n, i);
+    }
 }
 
 void solve()
@@ -144,23 +143,15 @@ void solve()
   	vi v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	pos = -1;
-  	create_heap(v);
-  	pos = n - 1;
-  
-  	cout << delete_heap(v) << "\n";
-  	cout << delete_heap(v) << "\n";
-  	cout << delete_heap(v) << "\n";
-  	cout << delete_heap(v) << "\n";
-  	cout << delete_heap(v) << "\n";
-  	cout << delete_heap(v) << "\n";
-  	cout << delete_heap(v) << "\n";
+  	construct_max_heap(v);
+  	
+  	for(auto x: v) cout << x << " ";
+  	cout << "\n";
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
@@ -181,3 +172,7 @@ int main()
 
     return 0;
 }
+
+// Time complexity to build heap from heapify() operation is O(n), not O(n * log(n)), for formal proof
+// refer: https://www.youtube.com/watch?v=VkKmmwzfIG4&list=PLEJXowNB4kPyP2PdMhOUlTY6GrRIITx28&index=5
+//        https://www.quora.com/How-do-you-evaluate-the-sum-of-n-2-n-from-n-1-to-infinity

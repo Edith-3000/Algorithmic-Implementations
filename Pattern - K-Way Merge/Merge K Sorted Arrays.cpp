@@ -40,8 +40,8 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
-// A pair of pairs, first element is going to store value, second element 
-// index of array and third element index in the array.
+// A pair of pairs, first element is going to store value, second element index 
+// of array to which the value belongs and third element index of value in the array.
 struct cmp {
 	bool operator()(const pair<int, pii> &p1, const pair<int, pii> &p2) {
 		if(p1.F == p2.F) return p1.S.F > p2.S.F;
@@ -89,7 +89,9 @@ vi merge_k_sorted_arrays(vvi &v) {
 void solve()
 {
   	int k; cin >> k;
+
   	vvi v(k);
+
   	for(int i = 0; i < k; i++) {
   		int n; cin >> n;
   		v[i].resize(n);
@@ -97,6 +99,7 @@ void solve()
   	}
   	
   	vi res = merge_k_sorted_arrays(v);
+
   	for(auto x: res) cout << x << " ";
   	cout << "\n";
 }
