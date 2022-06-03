@@ -90,7 +90,9 @@ ll zero_one_knapsack(vi &wt, vi &val, ll w, int n) {
 void solve()
 {
  	int n; ll w; cin >> n >> w;
+
   	vi wt(n), val(n);
+
   	for(int i = 0; i < n; i++) cin >> wt[i];
   	for(int i = 0; i < n; i++) cin >> val[i];
   	
@@ -221,7 +223,9 @@ ll zero_one_knapsack(vi &wt, vi &val, ll w, int n) {
 void solve()
 {
  	int n; ll w; cin >> n >> w;
+
   	vi wt(n), val(n);
+
   	for(int i = 0; i < n; i++) cin >> wt[i];
   	for(int i = 0; i < n; i++) cin >> val[i];
   	
@@ -359,7 +363,9 @@ ll zero_one_knapsack(vi &wt, vi &val, ll w, int n) {
 void solve()
 {
  	int n; ll w; cin >> n >> w;
+
   	vi wt(n), val(n);
+    
   	for(int i = 0; i < n; i++) cin >> wt[i];
   	for(int i = 0; i < n; i++) cin >> val[i];
   	
