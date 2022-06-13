@@ -227,6 +227,7 @@ int subset_sums(vi &v, int range, int n) {
     }
     
     int tmp = INT_MAX;
+    
     for(int j = range/2; j >= 0; j--) {
         if(dp[n][j]) {
             tmp = j;
