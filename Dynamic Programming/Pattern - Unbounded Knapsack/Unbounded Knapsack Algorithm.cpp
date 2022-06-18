@@ -94,8 +94,9 @@ ll ub_knapsack(vi &wt, vi &val, ll w, int n) {
 
 void solve()
 {
- 	  int n; ll w; cin >> n >> w;
+ 	int n; ll w; cin >> n >> w;
   	vi wt(n), val(n);
+
   	for(int i = 0; i < n; i++) cin >> wt[i];
   	for(int i = 0; i < n; i++) cin >> val[i];
   	
@@ -221,17 +222,18 @@ ll ub_knapsack(vi &wt, vi &val, ll w, int n) {
     if(dp[n][w] != -1) return dp[n][w];
 	
 	// choice diagram code
-	if(wt[n-1] <= w) return max(val[n-1] + ub_knapsack(wt, val, w - wt[n-1], n),
-	                            ub_knapsack(wt, val, w, n - 1));
+	if(wt[n-1] <= w) return dp[n][w] = max(val[n-1] + ub_knapsack(wt, val, w - wt[n-1], n),
+	                                   ub_knapsack(wt, val, w, n - 1));
 	
 	// when wt[n-1] > w                        
-	else return ub_knapsack(wt, val, w, n - 1);
+	else return dp[n][w] = ub_knapsack(wt, val, w, n - 1);
 }
 
 void solve()
 {
- 	  int n; ll w; cin >> n >> w;
+ 	int n; ll w; cin >> n >> w;
   	vi wt(n), val(n);
+
   	for(int i = 0; i < n; i++) cin >> wt[i];
   	for(int i = 0; i < n; i++) cin >> val[i];
   	
@@ -406,6 +408,7 @@ int main()
 /******************************************************************************************************/
 
 // METHOD - 4 (Space Optimization of Above Approach)
+
 // The reason why it can be accomplished using 1D array and how 1D array allows repetitions as well
 // can be found in this video ===>
 // https://www.youtube.com/watch?v=jgps7MXtKRQ&list=PL-Jc9J83PIiG8fE6rj9F5a6uyQ5WPdqKy&index=17
@@ -508,6 +511,7 @@ void solve()
 {
   	int n; ll w; cin >> n >> w;
   	vi wt(n), val(n);
+
   	for(int i = 0; i < n; i++) cin >> wt[i];
   	for(int i = 0; i < n; i++) cin >> val[i];
   	

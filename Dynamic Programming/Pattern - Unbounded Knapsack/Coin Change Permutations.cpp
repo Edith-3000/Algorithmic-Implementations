@@ -1,14 +1,15 @@
-/* Link: https://www.geeksforgeeks.org/coin-change-dp-7/
+/* Link: https://www.pepcoding.com/resources/online-java-foundation/dynamic-programming-and-greedy/coin-change-permutations-official/ojquestion
 
    PROBLEM: Given a value "sum", if we want to make change for "sum" cents, and we have INFINITE
-            supply of each of S = { S1, S2, .. , Sm} valued coins, find out in how many ways
+            supply of each of S = {S1, S2, .. , Sm} valued coins, find out in how many ways
             can we make the change? The order of coins does matter (i.e. find out the total 
             #permutations)
 */
 
 // Ref: https://www.youtube.com/watch?v=yc0LunmJA1A&list=PL-Jc9J83PIiG8fE6rj9F5a6uyQ5WPdqKy&index=14
+
 // The order of the nested loops in the cnt_ways() function is very important, in order to ensure to
-// aount all "PERMUTATIONS". For more info about it visit the reference link video.
+// count all "PERMUTATIONS". For more info about it visit the reference link video.
 
 #include<bits/stdc++.h>
 using namespace std;
