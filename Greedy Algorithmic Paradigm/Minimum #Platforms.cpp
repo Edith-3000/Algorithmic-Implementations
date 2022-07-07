@@ -1,6 +1,6 @@
 // Problem: https://practice.geeksforgeeks.org/problems/minimum-platforms-1587115620/1
 // Ref: https://www.geeksforgeeks.org/minimum-number-platforms-required-railwaybus-station/
-//      https://www.youtube.com/watch?v=dxVcMDI7vyI&list=PLgUwDviBIf0pmWCl2nepwGDO05a0-7EfJ&index=2
+//      https://takeuforward.org/data-structure/minimum-number-of-platforms-required-for-a-railway/
 /********************************************************************************************************/
 
 // METHOD - 1 O(n^2)
@@ -95,7 +95,7 @@ int min_platforms(vi &arr, vi &dep, int n) {
     sort(arr.begin(), arr.end());
     sort(dep.begin(), dep.end());
  
-    // plat_needed indicates number of platforms needed at a time
+    // plat_needed indicates number of platforms needed at any instant of time
     int plat_needed = 1, res = 1;
     int i = 1, j = 0;
  
@@ -116,8 +116,7 @@ int min_platforms(vi &arr, vi &dep, int n) {
         }
  
         // update result if needed
-        if (plat_needed > res)
-            res = plat_needed;
+        if (plat_needed > res) res = plat_needed;
     }
  
     return res;

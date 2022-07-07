@@ -89,6 +89,7 @@ bool cmp(const pii &p1, const pii &p2) {
 
 double fractional_knapsack(vi &wt, vi &val, ll w, int n) {
 	vpii tmp(n);
+
 	for(int i = 0; i < n; i++) {
 		tmp[i].F = wt[i];
 		tmp[i].S = val[i];
@@ -97,6 +98,7 @@ double fractional_knapsack(vi &wt, vi &val, ll w, int n) {
 	sort(tmp.begin(), tmp.end(), cmp);
 	
 	double res = 0.0;
+	
 	for(int i = 0; i < n; i++) {
 		if(w - tmp[i].F >= 0) {
 			res += tmp[i].S;
@@ -115,7 +117,9 @@ double fractional_knapsack(vi &wt, vi &val, ll w, int n) {
 void solve()
 {
  	int n; ll w; cin >> n >> w;
+
   	vi wt(n), val(n);
+
   	for(int i = 0; i < n; i++) cin >> wt[i];
   	for(int i = 0; i < n; i++) cin >> val[i];
   	

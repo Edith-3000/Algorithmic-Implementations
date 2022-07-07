@@ -96,6 +96,7 @@ bool cmp(const Job &j1, const Job &j2) {
 
 void job_sequencing(vector<Job> &v) {
 	int n = sz(v);
+
 	if(n == 0) {
 		cout << 0 << "\n";
 		return;
@@ -104,6 +105,7 @@ void job_sequencing(vector<Job> &v) {
 	sort(v.begin(), v.end(), cmp);
 	
 	int mx = v[0].dead;
+
 	for(int i = 1; i < n; i++) {
 		mx = max(mx, v[i].dead);
 	}
@@ -124,6 +126,7 @@ void job_sequencing(vector<Job> &v) {
 	}
 	
 	cout << "Max Profit = " << mx_prof << "\n";
+
 	cout << "Following jobs with IDs must be performed on incremental days --->\n";
 	for(int i = 1; i <= mx; i++) {
 		if(vis[i]) cout << vis[i] << " ";
@@ -170,7 +173,7 @@ int main()
 }
 
 // Time complexity: O(n x log(n)) + O(n x m)
-// Space complexity: O(m), where m = #unique deadlines
+// Space complexity: O(m), where m = maximum deadline present
 
 // NOTE: The time complexity of O(n x m) can be reduced by using the concept similar to the one used
 //       in this problem: https://www.spoj.com/problems/CLFLARR/

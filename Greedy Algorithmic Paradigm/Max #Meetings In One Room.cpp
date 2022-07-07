@@ -1,5 +1,5 @@
 // Problem: https://www.geeksforgeeks.org/find-maximum-meetings-in-one-room/
-// Ref: https://www.youtube.com/watch?v=II6ziNnub1Q
+// Ref: https://takeuforward.org/data-structure/n-meetings-in-one-room/
 /******************************************************************************************************/
 
 #include<bits/stdc++.h>
@@ -91,6 +91,7 @@ vi n_meetings(vpii &v) {
 	if(n == 0) return vi();
 	
 	vvi tmp(n, vi(3));
+	
 	for(int i = 0; i < n; i++) {
 		tmp[i][0] = v[i].F;
 		tmp[i][1] = v[i].S;

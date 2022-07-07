@@ -86,10 +86,12 @@ vvb dp;
 // NOTE: this function considers a string of length = 1, as palindromic
 ll cnt_all_PSS(string &s) {
 	int n = sz(s);
+	
 	dp.clear();
 	dp.resize(n, vb(n));
 	
 	ll res = 0;
+
 	for(int g = 0; g < n; g++) { 
 		for(int i = 0, j = g; j < n; i++, j++) {
 			if(g == 0) dp[i][j] = 1;

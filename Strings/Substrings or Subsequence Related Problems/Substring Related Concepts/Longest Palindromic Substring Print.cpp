@@ -92,6 +92,7 @@ vvb dp;
 // NOTE: this function considers a string of length = 1, as palindromic
 string print_LPSS(string &s) {
 	int n = sz(s);
+	
 	dp.clear();
 	dp.resize(n, vb(n));
 	
@@ -119,6 +120,7 @@ string print_LPSS(string &s) {
 	}
 	
 	string res = s.substr(start, len);
+
 	return res;
 }
 
@@ -274,6 +276,7 @@ string print_LPSS(string &s) {
 		
 	if(len == 0) res.pb(s[0]);
 	else res = s.substr(start, len);
+	
 	return res;
 }
 

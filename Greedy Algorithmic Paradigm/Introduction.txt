@@ -15,6 +15,6 @@
 
 # For a problem that can be solved using DP and Greedy ==>
   • O(memory) (DP) >= O(memory) (Greedy) 
-  • O(time) (DP)>= O(time) (Greedy)
+  • O(time) (DP) >= O(time) (Greedy)
 
 # For further explanation for the difference b/w Greedy and DP refer the pdf notes.

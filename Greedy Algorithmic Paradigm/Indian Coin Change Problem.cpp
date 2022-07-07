@@ -2,8 +2,8 @@
    denominations in Indian currency, i.e., we have an infinite supply of { 1, 2, 5, 10, 20, 50, 100, 200, 500, 1000} 
    valued coins/notes, what is the minimum number of coins and/or notes needed to make the change?
    Eg. Input: V = 121
-	   Output: 3
-	   We need a 100 Rs note, a 20 Rs note and a 1 Rs coin. 
+	    Output: 3
+	    We need a 100 Rs note, a 20 Rs note and a 1 Rs coin. 
 
    Reference: https://www.geeksforgeeks.org/greedy-algorithm-to-find-minimum-number-of-coins/
 */
