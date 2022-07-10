@@ -8,8 +8,10 @@
 
 /*
   # The most important difference between KMP & Rabin-Karp is how reliable they are in finding a match. 
+
   # KMP guarantees 100% reliability. You cannot guarantee 100% with Rabin Karp because of a chance of collision 
     during hash table lookup. 
+    
   # But with good hash generation algorithms that do exist today, it is possible that Rabin Karp can yield very 
     close to 100% reliability in finding a match. And both have complexity of O(n + m). Also Rabin Karp is easier 
     to implement than KMP it works based on a rolling hash whereas KMP works based on a failure function.
@@ -95,9 +97,9 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 /******************************************************************************************************************************/
 
 vi prefix_function_optimized(string &s) {
-	int n = sz(s);
-	
-	// lps[i] = the length of the longest proper prefix which
+    int n = sz(s);
+    
+    // lps[i] = the length of the longest proper prefix which
     //          is also a suffix of the string s[0...i]
     vi lps(n);
     
@@ -111,9 +113,11 @@ vi prefix_function_optimized(string &s) {
         while (prev_ind > 0 and s[i] != s[prev_ind]) {
             prev_ind = lps[prev_ind - 1];
         }
- 
+        
+        if(s[prev_ind] == s[i]) prev_ind += 1;
+
         // update the lps size for string [0....i]
-        lps[i] = prev_ind + (s[i] == s[prev_ind] ? 1 : 0);
+        lps[i] = prev_ind;
     }
  
     // return lps array calculated
@@ -203,7 +207,7 @@ int main()
 /***************************************************************************************************************/
 
 // Following is a very simple & short implementation of the above method by making use of prefix function
-// only on the concatenated string i.e. on text + "$" + pattern
+// only on the concatenated string i.e. on pattern + "$" + text
 
 #include<bits/stdc++.h>
 using namespace std;

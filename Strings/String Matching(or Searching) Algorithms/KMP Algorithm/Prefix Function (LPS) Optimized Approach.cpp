@@ -252,9 +252,11 @@ vi prefix_function_optimized(string &s) {
         while (prev_ind > 0 and s[i] != s[prev_ind]) {
             prev_ind = lps[prev_ind - 1];
         }
- 
+        
+        if(s[prev_ind] == s[i]) prev_ind += 1;
+
         // update the lps size for string [0....i]
-        lps[i] = prev_ind + (s[i] == s[prev_ind] ? 1 : 0);
+        lps[i] = prev_ind;
     }
  
     // return lps array calculated
