@@ -4,7 +4,9 @@
             matrix Aᵢ is of dimension arr[i-1] x arr[i]. We need to write a function MCM()
             that should return the minimum number of multiplications needed to multiply 
             the chain i.e. minimum cost of multiplying the matrices.
+
                                            OR
+
             Given a sequence of matrices, find the most efficient way to multiply these 
             matrices together. The problem is not actually to perform the multiplications,
             but merely to decide in which order to perform the multiplications, so that the
@@ -12,8 +14,10 @@
 */
 
 /* # The cost (i.e. #multiplications) of multiplying 2 matrices of order (a × b) & (b × c)
-     is equal to (a*b*c).
+     is equal to (a * b * c).
+
    # If n elements are given in array then there are (n-1) matrices. 😅
+
    # In the algorithm written below ->
      ■ i is initialised as 1 (∵ 1ˢᵗ matrix A₁ is of order v[0] × v[1] ≡ v[i-1] × v[i])
      ■ j is initialised as v.size()-1 
@@ -119,6 +123,7 @@ ll mcm(vi &v, int i, int j) {
         // (v[i-1] * v[k] * v[j]) is the cost of multiplying matrices from
         // (i to k) and (k+1 to j) 
         ll tmp = mcm(v, i, k) + mcm(v, k + 1, j) + ((ll)v[i-1] * v[k] * v[j]);
+
         res = min(res, tmp);
     }
     
@@ -266,6 +271,7 @@ ll mcm(vi &v, int i, int j) {
         // (v[i-1] * v[k] * v[j]) is the cost of multiplying matrices from
         // (i to k) and (k+1 to j) 
         ll tmp = mcm(v, i, k) + mcm(v, k + 1, j) + ((ll)v[i-1] * v[k] * v[j]);
+        
         res = min(res, tmp);
     }
     
@@ -313,7 +319,7 @@ int main()
 // dp[][] is a 2 D global matrix/vector of vectors, with size (v.size()) x (v.size()) 
 // and initialized with -1, memset(dp, -1, sizeof(dp));
 // It's dimensions are [v.size()] × [v.size()], as max values of the changing parameters
-// i.e. i and j can be v.size()-1
+// i.e. i and j can be v.size() - 1
 
 // Time complexity: O(n^3)
 // Space complexity: O(n^2)
@@ -409,9 +415,12 @@ ll mcm(vi &v) {
     for(int g = 0; g < sz(dp); g++) {
         for(int i = 0, j = g; j < sz(dp); i++, j++) {
             if(g == 0) dp[i][j] = 0;
+
             else if(g == 1) dp[i][j] = (ll)v[i] * v[j] * v[j+1];
+            
             else {
                 ll res = LLONG_MAX;
+
                 for(int k = i; k <= (j - 1); k++) {
                     ll tmp = dp[i][k] + dp[k+1][j] + ((ll)v[i] * v[k+1] * v[j+1]);
                     res = min(res, tmp);
