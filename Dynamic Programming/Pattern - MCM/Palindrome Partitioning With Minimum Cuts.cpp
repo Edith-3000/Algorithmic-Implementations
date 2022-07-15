@@ -126,6 +126,7 @@ int min_cuts(string &s, int i, int j) {
         // 1 palindrome partition is required to cut the string into the partitions
         // (i to k) and (k+1 to j) 
         int tmp = min_cuts(s, i, k) + min_cuts(s, k + 1, j) + 1;
+
         res = min(res, tmp);
     }
     
@@ -136,6 +137,7 @@ void solve()
 {
     string s; cin >> s;
     int n = sz(s);
+
     cout << min_cuts(s, 0, n - 1) << "\n";
 }
 
@@ -283,6 +285,7 @@ int min_cuts(string &s, int i, int j) {
         // 1 palindrome partition is required to cut the string into the partitions
         // (i to k) and (k+1 to j) 
         int tmp = min_cuts(s, i, k) + min_cuts(s, k + 1, j) + 1;
+
         res = min(res, tmp);
     }
     
@@ -614,7 +617,9 @@ void precompute(string &s) {
     for(int g = 0; g < sz(pal); g++) {
         for(int i = 0, j = g; j < sz(pal); i++, j++) {
             if(g == 0) pal[i][j] = true;
+
             else if(g == 1) pal[i][j] = (s[i] == s[j]);
+
             else {
                 if((s[i] == s[j]) and pal[i+1][j-1]) pal[i][j] = true;
                 else pal[i][j] = false;
@@ -629,6 +634,7 @@ int min_cuts(string &s) {
     for(int g = 0; g < sz(dp); g++) {
         for(int i = 0, j = g; j < sz(dp); i++, j++) {
             if(g == 0) dp[i][j] = 0;
+
             else if(g == 1) {
                 if(s[i] == s[j]) dp[i][j] = 0;
                 else dp[i][j] = 1;
@@ -636,8 +642,10 @@ int min_cuts(string &s) {
             
             else {
                 if(pal[i][j]) dp[i][j] = 0;
+
                 else {
                     int res = INT_MAX;
+
                     for(int k = i; k <= (j - 1); k++) {
                         int tmp = dp[i][k] + dp[k+1][j] + 1;
                         res = min(res, tmp);
@@ -790,7 +798,9 @@ void precompute(string &s) {
     for(int g = 0; g < sz(pal); g++) {
         for(int i = 0, j = g; j < sz(pal); i++, j++) {
             if(g == 0) pal[i][j] = true;
+
             else if(g == 1) pal[i][j] = (s[i] == s[j]);
+
             else {
                 if((s[i] == s[j]) and pal[i+1][j-1]) pal[i][j] = true;
                 else pal[i][j] = false;
@@ -811,6 +821,7 @@ int min_cuts(string &s) {
         }
          
         int res = INT_MAX;
+        
         for(int j = i; j >= 1; j--) {
             if(pal[j][i] == true) res = min(res, dp[j-1] + 1);
         }

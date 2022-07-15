@@ -228,9 +228,12 @@ int main()
 }
 
 /* # i is initialised to 0 in the main fⁿ
+
    # j is initialised to s.size()-1 in the main fⁿ
+
    # is_true is initialised to "true" in the main fⁿ, ∵ we need to count total #ways for 
      which s from 0 to s.size()-1 evaluates to be "true"
+
    # Here in the above algorithm i and j always points to the operands i.e. either 'T'
      or 'F', k always points to an operator i.e. s[k] ε {'&', '|', '^'}
 
@@ -247,8 +250,10 @@ int main()
     ∴ dp[n][n][2] ≡ 3D matrix, (as maximum value taken by i and j can be s.length()-1,
       for is_true 2 values are possible).
       Here n = s.size().
-  # As imagination of a 3D matrix is slightly difficult, we will we use an unordered_map
+
+  # As imagination of a 3D matrix is slightly difficult, we will we use a map
     for cache to avoid duplicated processing.
+
   # The key of the map will be a string composed of "val(i)+val(j)+val(is_true)"
 */
 
@@ -423,15 +428,19 @@ int main()
 }
 
 /* # i is initialised to 0 in the main fⁿ
+
    # j is initialised to s.size()-1 in the main fⁿ
+
    # is_true is initialised to "true" in the main fⁿ, ∵ we need to count total #ways for 
      which s from 0 to s.size()-1 evaluates to be "true"
+
    # Here in the above algorithm i and j always points to the operands i.e. either 'T'
      or 'F', k always points to an operator i.e. s[k] ε {'&', '|', '^'}
+
    # dp is a map declared globally, whose key is of type "string" & value is of 
      type "long long".
 
-   # Time complexity: O(n^3 x log(n^3))
+   # Time complexity: O(n^3 x log(n^2))
 */
 
 /*******************************************************************************************************/
@@ -536,6 +545,7 @@ ll bool_paren(string &s1, string &s2) {
             
             else {
                 ll res1 = 0LL, res2 = 0LL;
+
                 for(int k = i; k <= (j - 1); k++) {
                     ll lt = T[i][k];
                     ll lf = F[i][k];
@@ -572,6 +582,7 @@ void solve()
     // s1 is string of operands
     // s2 is string of operators
     string s1, s2; cin >> s1 >> s2;
+    
     int n = sz(s1);
     
     T.clear();

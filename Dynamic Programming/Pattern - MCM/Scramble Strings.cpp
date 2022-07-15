@@ -50,11 +50,14 @@
 
 /*Underlying concept: 
   # In order to obtain scrambled string s2 from s1, we divide s1 at every character, so if
-    s1.length()=n, then we check for (n-1) times using iterator i.
+    s1.length() = n, then we check for (n-1) times using iterator i.
+
   # i goes from 1 ----> (n-1), ∴ loop runs for (n-1)-1+1=(n-1) times.
+
   # for every iᵗʰ iteration:
     • for the string s1[0....(n-1)] to be a scrambled string of s2
       there are only 2 possibilities.
+
       Case 1). if the child of s1 which are strings s1ₗ[0...(i-1)] and s1ᵣ[i...(n-1)]
                were swapped, then just find out if -->
                s1ₗ[0...(i-1)] is scrambled string of s2ᵣ[(n-i)...(n-1)] 
@@ -72,8 +75,8 @@
       Now if(Case_1==true || Case_2==true) 
              s1 ans s2 are scrambled strings;               
       
- * NOTE:# All the comparisons are to be done Recursively 
-        # if s2 is scrambled string of s1, then s1 is also scrambled string of s2 & vice versa.
+ * NOTE: # All the comparisons are to be done Recursively 
+         # if s2 is scrambled string of s1, then s1 is also scrambled string of s2 & vice versa.
 */
 
 #include<bits/stdc++.h>
@@ -187,6 +190,7 @@ bool is_scramble(string &s1, string &s2) {
 void solve()
 {
     string s1, s2; cin >> s1 >> s2;
+
     if(is_scramble(s1, s2)) cout << "YES\n";
     else cout << "NO\n";
 }
@@ -228,6 +232,7 @@ int main()
 
 /* # As matrix implementation is slightly difficult(though not impossible), we will 
      we use a std::map for cache to avoid duplicated processing.
+     
    # The key of the map will be a string composed of "s1 s2"
 */
 
