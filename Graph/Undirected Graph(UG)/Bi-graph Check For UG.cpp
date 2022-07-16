@@ -5,7 +5,7 @@
    # Adjacent nodes are any two nodes that are connected by an edge.
    # A bipartite graph is a special case of a 𝒌-𝒑𝒂𝒓𝒕𝒊𝒕𝒆 𝒈𝒓𝒂𝒑𝒉 with k = 2.
 
-   # Bipartite graphs are equivalent to 𝒕𝒘𝒐-𝒄𝒐𝒍𝒐𝒓𝒂𝒃𝒍𝒆 𝒈𝒓𝒂𝒑𝒉𝒔 i.e., coloring of the vertices using two 
+   # Bipartite graphs are equivalent to 𝒕𝒘𝒐-𝒄𝒐𝒍𝒐𝒓𝒂𝒃𝒍𝒆 𝒈𝒓𝒂𝒑𝒉𝒔 i.e. coloring of the vertices using two 
      colors in such a way that vertices of the same color are never adjacent along an edge. 
 
    # All 𝑨𝒄𝒚𝒄𝒍𝒊𝒄 𝒈𝒓𝒂𝒑𝒉𝒔 are bipartite. 
@@ -20,7 +20,7 @@
      • Bipartite graph can be used in the medical field in the detection of lung cancer, throat cancer etc.
      • Used in search advertising and e-commerce for similarity ranking.
      • Predict movie preferences of a person.
-     • Stable marriage6 and other matching problems.
+     • Stable marriage and other matching problems.
 
    # For more info visit: https://www.educative.io/edpresso/what-is-a-bipartite-graph
 
@@ -118,8 +118,7 @@ vi color;
 
 int n, m;
 
-// function which returns whether the subtree rooted at the current node is
-// bipartite or not
+// function which returns whether the subtree rooted at the current node is bipartite or not
 bool dfs(int cur, int col) {
     // marking a node visited (color it) as soon as it is pushed in internal call stack
     color[cur] = col;
