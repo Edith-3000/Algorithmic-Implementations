@@ -223,7 +223,13 @@ int main()
 // This algorithm can also be implemented by choosing extreme indices i and j and 
 // "k for loop scheme".
 
-// Time complexity of the above naive recursive approach is exponential.
+/* # Time complexity of the above naive recursive approach is exponential --->
+     O(2^n), where n is the length of the strings.
+   
+   # For further details visit:--->
+     https://www.codingninjas.com/codestudio/library/scramble-string
+     https://www.geeksforgeeks.org/check-if-a-string-is-a-scrambled-form-of-another-string/
+*/
 
 /******************************************************************************************************/
 
@@ -389,7 +395,7 @@ int main()
     return 0;
 }
 
-// Time complexity: ??
+// Time complexity: SHOULD BE O(N^4) [BUT NOT SURE]
 
 /*****************************************************************************************************/
 
@@ -578,6 +584,8 @@ int main()
 
     return 0;
 }
+
+// Time complexity: SHOULD BE O(N^4) [BUT NOT SURE]
 
 /*****************************************************************************************************/
 
