@@ -130,6 +130,30 @@ int main()
     return 0;
 }
 
+/* # NOTE: Why the code in the function len_LCSS() can't be written in this manner:--->
+
+     int len_LCSS(string &s1, string &s2, int n, int m) {
+         // base case(s)
+         if(n == 0 or m == 0) return 0;
+        
+         int res = 0;
+        
+         // if last characters of both strings matches
+         if(s1[n-1] == s2[m-1]) res = 1 + len_LCSS(s1, s2, n - 1, m - 1);
+        
+         res =  max(res, max(len_LCSS(s1, s2, n, m - 1),
+                             len_LCSS(s1, s2, n - 1, m)));
+                            
+         return res;
+    }
+
+   # The above code will give wrong result (take the example of "abbbb" & "babab"), and the reason is 
+     explained slightly in this video:--->
+     https://www.youtube.com/watch?v=AO1wlMJoxBk&ab_channel=Codebix
+*/
+
+// Time complexity: O(3^x), where x = min(n, m)
+
 /******************************************************************************************************/
 
 // TABULATION IMPLEMENTATION
