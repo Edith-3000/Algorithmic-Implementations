@@ -1,51 +1,66 @@
 # 𝑻𝑹𝑰𝑬 𝒗/𝒔 𝑩𝑺𝑻
+
   * Looking up keys is faster. Looking up a key of length m takes worst case O(m) time in trie. A BST performs 
     O(log(n)) comparisons of keys, where n is the number of elements in the tree, because lookups depend on 
     the depth of the tree, which is logarithmic in the number of keys if the tree is balanced. Hence in the 
-    worst case, a BST takes O(m*log n) time. Moreover, in the worst case log(n) will approach m. Also, the 
+    worst case, a BST takes O(m * log n) time. Moreover, in the worst case log(n) will approach m. Also, the 
     simple operations tries use during lookup, such as array indexing using a character, are fast on real machines.
+
   * Tries are more space efficient when they contain a large number of short keys, because nodes are shared 
     between keys with common initial subsequences.
+
   * Tries facilitate longest-prefix matching, helping to find the key sharing the longest possible prefix of
     characters all unique.
+
   * The number of internal nodes from root to leaf equals the length of the key. Balancing the tree is 
     therefore no concern.
 
 # 𝑻𝑹𝑰𝑬 𝒗/𝒔 𝑯𝑨𝑺𝑯 𝑻𝑨𝑩𝑳𝑬
+
   * Tries support ordered iteration, whereas iteration over a hash table will result in a pseudorandom 
     order given by the hash function (also, the order of hash collisions is implementation defined), which 
     is usually meaningless.
+
   * Tries facilitate longest-prefix matching, but hashing does not, as a consequence of the above. 
     Performing such a “closest fit” find can, depending on implementation, be as quick as an exact find.
+
   * Tries tend to be faster on average at insertion than hash tables because hash tables must rebuild their 
     index when it becomes full – a very expensive operation. Tries therefore have much better bounded worst 
     case time costs, which is important for latency sensitive programs.
+
   * By avoiding the hash function, tries are generally faster than hash tables for small keys like integers 
     and pointers.
 
 # IN SHORT WE CAN SAY THAT -------->
-* Tries is a tree that stores strings. Maximum number of children of a node is equal to size of alphabet. 
-  Trie supports search, insert and delete operations in O(L) time where L is length of key.
 
-* Hashing:- In hashing, we convert key to a small value and the value is used to index data. Hashing 
-  supports search, insert and delete operations in O(L) time on average.
+  * Trie is a tree that stores strings. Maximum number of children of a node is equal to size of alphabet. 
+    Trie supports search, insert and delete operations in O(L) time where L is length of key.
 
-* Self Balancing BST : The time complexity of search, insert and delete operations in a self-balancing Binary
-  Search Tree (BST) (like Red-Black Tree, AVL Tree, Splay Tree, etc) is O(L Log n) where n is total number 
-  words and L is length of word. 
-  𝑻𝒉𝒆 𝒂𝒅𝒗𝒂𝒏𝒕𝒂𝒈𝒆 𝒐𝒇 𝑺𝒆𝒍𝒇 𝒃𝒂𝒍𝒂𝒏𝒄𝒊𝒏𝒈 𝑩𝑺𝑻𝒔 𝒊𝒔 𝒕𝒉𝒂𝒕 𝒕𝒉𝒆𝒚 𝒎𝒂𝒊𝒏𝒕𝒂𝒊𝒏 𝒐𝒓𝒅𝒆𝒓 𝒘𝒉𝒊𝒄𝒉 𝒎𝒂𝒌𝒆𝒔 𝒐𝒑𝒆𝒓𝒂𝒕𝒊𝒐𝒏𝒔 𝒍𝒊𝒌𝒆 𝒎𝒊𝒏𝒊𝒎𝒖𝒎, 𝒎𝒂𝒙𝒊𝒎𝒖𝒎, 𝒄𝒍𝒐𝒔𝒆𝒔𝒕 (𝒇𝒍𝒐𝒐𝒓 𝒐𝒓 𝒄𝒆𝒊𝒍𝒊𝒏𝒈) 𝒂𝒏𝒅 𝒌-𝒕𝒉 𝒍𝒂𝒓𝒈𝒆𝒔𝒕 𝒇𝒂𝒔𝒕𝒆𝒓. 
+  * Hashing:- In hashing, we convert key to a small value and the value is used to index data. Hashing 
+    supports search, insert and delete operations in O(L) time on average.
 
-* So Why Trie? :-
+  * Self Balancing BST : The time complexity of search, insert and delete operations in a self-balancing Binary
+    Search Tree (BST) (like Red-Black Tree, AVL Tree, Splay Tree, etc) is O(L Log n) where n is total number 
+    words and L is length of word. 
+    𝑻𝒉𝒆 𝒂𝒅𝒗𝒂𝒏𝒕𝒂𝒈𝒆 𝒐𝒇 𝑺𝒆𝒍𝒇 𝒃𝒂𝒍𝒂𝒏𝒄𝒊𝒏𝒈 𝑩𝑺𝑻𝒔 𝒊𝒔 𝒕𝒉𝒂𝒕 𝒕𝒉𝒆𝒚 𝒎𝒂𝒊𝒏𝒕𝒂𝒊𝒏 𝒐𝒓𝒅𝒆𝒓 𝒘𝒉𝒊𝒄𝒉 𝒎𝒂𝒌𝒆𝒔 𝒐𝒑𝒆𝒓𝒂𝒕𝒊𝒐𝒏𝒔 𝒍𝒊𝒌𝒆 𝒎𝒊𝒏𝒊𝒎𝒖𝒎, 𝒎𝒂𝒙𝒊𝒎𝒖𝒎, 𝒄𝒍𝒐𝒔𝒆𝒔𝒕 (𝒇𝒍𝒐𝒐𝒓 𝒐𝒓   𝒄𝒆𝒊𝒍𝒊𝒏𝒈) 𝒂𝒏𝒅 𝒌-𝒕𝒉 𝒍𝒂𝒓𝒈𝒆𝒔𝒕 𝒇𝒂𝒔𝒕𝒆𝒓. 
+
+# So Why Trie? :-
+
   * With Trie, we can insert and find strings in O(L) time where L represent the length of a single word. 
     This is obviously faster than BST. 
+
     This is also faster than Hashing because of the ways it is implemented. We do not need to compute any 
     hash function. No collision handling is required (like we do in open addressing and separate chaining)
+
   * Another advantage of Trie is, we can easily print all words in alphabetical order which is not easily 
     possible with hashing.
+
   * We can efficiently do prefix search (or auto-complete) with Trie.
 
-* Issues with Trie :-
+# Issues with Trie :-
+
   * The main disadvantage of tries is that they need a lot of memory for storing the strings. 
+
   * For each node we have too many node pointers(equal to number of characters of the alphabet), if space 
     is concerned, then Ternary Search Tree can be preferred for dictionary implementations. In Ternary Search 
     Tree, the time complexity of search operation is O(h) where h is the height of the tree. Ternary Search 

@@ -1,6 +1,7 @@
 // Ref: https://www.geeksforgeeks.org/trie-insert-and-search/
 //      https://www.geeksforgeeks.org/trie-delete/
-/********************************************************************************************************/
+//      https://www.youtube.com/watch?v=dBGUmUQhjaM&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&ab_channel=takeUforward
+/******************************************************************************************************************/
 
 // IMPLEMENTATION USING struct (TEMPLATED IMPLEMENTATION)
 
@@ -173,7 +174,8 @@ struct trie {
 	
 		if(dep == sz(s)) {
 			cur->freq -= 1;
-			if(cur->freq == 0) {
+
+			if(node_empty(cur) and cur->freq == 0) {
 				delete (cur);
 				cur = NULL;
 		    }
@@ -414,7 +416,8 @@ Trie* trie_delete(Trie *root, string &s, int dep = 0) {
 	
 	if(dep == sz(s)) {
 		root->end -= 1;
-		if(root->end == 0) {
+
+		if(node_empty(root) and root->end == 0) {
 			delete (root);
 			root = NULL;
 		}
