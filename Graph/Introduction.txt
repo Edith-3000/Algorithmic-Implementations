@@ -6,6 +6,7 @@
   for graph theory.
 
 # Difference b/w Explicit Graph & Implicit Graph ------>
+
   • Explicit Graph:
     – All vertices are identified individually and represented separately.
     – All edges are identified individually and represented separately.
@@ -20,14 +21,18 @@
   • For more info visit: https://courses.cs.washington.edu/courses/cse373/16wi/slides/18-Implicit-Graphs.pdf
 
 # 𝑪𝒐𝒎𝒑𝒍𝒆𝒕𝒆 𝒈𝒓𝒂𝒑𝒉: it is a simple undirected graph in which every pair of distinct vertices is connected by a 
-                   unique edge. 
+                unique edge.
+
 # 𝑪𝒐𝒎𝒑𝒍𝒆𝒕𝒆 𝒅𝒊𝒈𝒓𝒂𝒑𝒉: it is a directed graph in which every pair of distinct vertices is connected by a pair of
-                     unique edges (one in each direction i.e. bi-directional edges).
+                  unique edges (one in each direction i.e. bi-directional edges).
 
 # 𝑺𝒊𝒎𝒑𝒍𝒆 𝒈𝒓𝒂𝒑𝒉: A graph which has neither self loops nor multiple edges(parallel edges.) i.e. where each edge 
-                 connects two distinct vertices and no two edges connects the same pair of vertices is called a simple graph. 
+              connects two distinct vertices and no two edges connects the same pair of vertices is called a 
+              simple graph.
+
 # 𝑴𝒖𝒍𝒕𝒊𝒈𝒓𝒂𝒑𝒉: Any graph which contains some multiple edges is called a multigraph. In a multigraph, no self loops
-              are allowed.
+            are allowed.
+
 # 𝑷𝒔𝒆𝒖𝒅𝒐 𝒈𝒓𝒂𝒑𝒉: A graph in which self loops and multiple edges are allowed is called psuedograph.
 
 

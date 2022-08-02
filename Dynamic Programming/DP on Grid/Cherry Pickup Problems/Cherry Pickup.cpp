@@ -4,8 +4,6 @@
 //      https://www.youtube.com/watch?v=ZV0sUzfA7Eg&ab_channel=Pepcoding
 /******************************************************************************************************************/
 
-// NOTE: TILL NOW ALL THE BELOW ALGORITHMS ARE NOT COMPLETELY TESTED AND SUBMITTED ON ANY CODING PLATFORM.
-
 // METHOD - 1.1 (RECURSIVE APPROACH)
 
 #include<bits/stdc++.h>

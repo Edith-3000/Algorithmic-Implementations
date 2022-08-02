@@ -32,7 +32,7 @@ class graph{
 
 int main(int argc, char const *argv[])
 {
-	  graph g(4);
+	 graph g(4);
     g.addEdge(0, 1);
     g.addEdge(0, 2);
     g.addEdge(0, 3);

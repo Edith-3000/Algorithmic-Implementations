@@ -1,23 +1,36 @@
 /* # BFS is an iterative graph traversal technique.
+
    # It follows the “go wide, bird’s eye-view” philosophy.
+
    # It is similar to level order traversal of a tree.
+
    # Queue data structure is used to implement BFS.
+
    # The algorithm traverses the graph in the smallest number of iterations and the shortest possible 
      time.
+
    # BFS iterations are seamless, and there is no possibility of this algorithm getting caught up in 
      an infinite loop problem.
+
    # The result of the BFS algorithm holds a high level of accuracy in comparison to other algorithms.
+
    # Due to high precision and robust implementation, BFS is used in multiple real-life solutions like 
      P2P networks, Web Crawlers, and Network Broadcasting.
+
    # BREADTH-FIRST SEARCH CAN BE USED TO SOLVE GAMES WHERE A SERIES OF CHOICES RESULT IN EITHER A 
      WINNING OR LOSING STATE. FOR EXAMPLE, BFS CAN HELP A PLAYER DETERMINE A WINNING SEQUENCE OF MOVES 
      FOR SOLVING A RUBIK'S CUBE.
+
    # This algorithm traverses a graph in a breadthward motion and uses a queue to remember to get the 
      next vertex to start a search, when a dead end occurs in any iteration.
+
    # It employs the following rules ----->
+   
      Rule 1 − Visit the adjacent unvisited vertex. Mark it as visited. Insert it in a queue. Display it.
               (Remember as soon as a node is mark as visited push it into the queue).
+
      Rule 2 − If no adjacent vertex is found, remove the first vertex from the queue.
+
      Rule 3 − Repeat Rule 1 and Rule 2 until the queue is empty.
 */
 
@@ -195,6 +208,7 @@ int main()
 }
 
 /* 
+
 # Analysis of breadth-first search ---->
   * How long does breadth-first search take for a graph with vertex set V and edge set E? 
     The answer is O(|V|+|E|) time. 

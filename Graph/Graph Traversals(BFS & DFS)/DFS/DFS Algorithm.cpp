@@ -1,23 +1,36 @@
 /* # DFS is a recursive graph traversal technique (although it can be implemented iteratively as well).
+
    # DFS utilizes the “go deep, head first” philosophy in its implementation.
+
    # It is similar to preorder order traversal of a tree.
+
    # Stack data structure is used to implement DFS (∵ recursion uses internal call stack).
+
    # Depth-first search is used in topological sorting, scheduling problems, cycle detection in graphs, 
      and solving puzzles with only one solution, such as a maze or a sudoku puzzle.
+
    # Other applications involve analyzing networks, for example, testing if a graph is bipartite. 
-     Depth-first search is often used as a subroutine in network flow algorithms such as the Ford-Fulkerson algorithm.
+     Depth-first search is often used as a subroutine in network flow algorithms such as the Ford-Fulkerson 
+     algorithm.
+
    # DFS is also used as a subroutine in matching algorithms in graph theory such as the Hopcroft–Karp 
      algorithm.
+
    # Depth First Traversal (or Search) for a graph is similar to Depth First Traversal of a tree. 
      The only catch here is, unlike trees, graphs may contain cycles, a node may be visited twice. 
      To avoid processing a node more than once, use a boolean visited array.
+
    # Depth-first searches are used in mapping routes, scheduling, and finding spanning trees.
-   # It employs the following rules -----> 
+
+   # It employs the following rules ----->
+
      Rule 1 − Visit the adjacent unvisited vertex. Push it in a stack. Mark it as visited. Display it.
               (𝑻𝑯𝑰𝑺 𝑶𝑹𝑫𝑬𝑹 𝑰𝑵 𝑹𝑼𝑳𝑬 1 𝑰𝑺 𝑽𝑬𝑹𝒀 𝑰𝑴𝑷𝑶𝑹𝑻𝑨𝑵𝑻, 𝑺𝑳𝑰𝑮𝑯𝑻𝑳𝒀 𝑽𝑨𝑹𝑰𝑬𝑺 𝑭𝑹𝑶𝑴 𝑻𝑯𝑬 𝑹𝑼𝑳𝑬 1 𝑶𝑭
                𝑩𝑭𝑺 𝑨𝑳𝑮𝑶𝑹𝑰𝑻𝑯𝑴)
+
      Rule 2 − If no adjacent vertex is found, pop up a vertex from the stack. (It will pop up all the 
               vertices from the stack, which do not have adjacent vertices.)
+
      Rule 3 − Repeat Rule 1 and Rule 2 until the stack is empty.
 */
 
@@ -372,7 +385,8 @@ int main()
 /*******************************************************************************************************/
 
 /* # HANDLING DISCONNECTED GRAPH
-   • The above code traverses only the vertices reachable from a given source vertex. 
+   • The above code traverses only the vertices reachable from a given source vertex.
+
    • All the vertices may not be reachable from a given vertex as in the case of a 𝑫𝒊𝒔𝒄𝒐𝒏𝒏𝒆𝒄𝒕𝒆𝒅 𝒈𝒓𝒂𝒑𝒉. 
      To do complete DFS traversal of such graphs, run DFS from all unvisited nodes after a DFS.
      i.e. Run a loop from through all the vertices and check if the vertex is unvisited in previous DFS then 
@@ -382,6 +396,7 @@ int main()
 // The Analysis of depth-first search ≡ Analysis of breadth-first search
 
 /* # Iterative DFS v/s Recursive DFS and different elements order ------>
+
    * Both are valid DFS algorithms. A DFS does not specify which node you see first. It is not important 
      because the order between edges is not defined [remember: edges are a set usually]. The difference is 
      due to the way you handle each node's children.
@@ -411,4 +426,13 @@ the maze. If a given path doesn’t work, we backtrack and take an alternative p
 and try that path. Below is an animation of a DFS approach to solving this maze.
 
 # Very nice pictorial representation given - https://brilliant.org/wiki/depth-first-search-dfs/
+*/
+
+/* Difference b/w DFS and BACKTRACKING ---->
+
+   https://stackoverflow.com/questions/1294720/whats-the-difference-between-backtracking-and-depth-first-search
+
+   https://www.baeldung.com/cs/backtracking-vs-dfs
+
+   https://leetcode.com/discuss/general-discussion/136503/What-is-difference-between-backtracking-and-depth-first-search/601135
 */
