@@ -1,15 +1,6 @@
-// Prob: https://leetcode.com/problems/flood-fill/
-// Ref: https://www.youtube.com/watch?v=C-2_uSRli8o&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=9&ab_channel=takeUforward
+// Prob: https://leetcode.com/problems/number-of-islands/
+// Ref: https://www.youtube.com/watch?v=muncqlKJrH0&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=8&ab_channel=takeUforward
 /****************************************************************************************************************************/
-
-/* # Flood Fill Algorithm is a simple variant of BFS or DFS that can be used to label(colour) the various 
-     connected components present in a graph.
-
-   # It is generally performed on implicit graphs(2D matrices).
-
-   # Starting from a particular cell we call DFS on the neighbouring cells to colour them.
-     Neighbours can be '4' (up, down, left, right) or '8' if we include diagonals also.
-*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -104,58 +95,52 @@ vi dx = {-1, 0, 1, 0};
 vi dy = {0, 1, 0, -1};
 
 bool is_valid(int x, int y, int n, int m) {
-    return (x >= 0) and (x < n) and (y >= 0) and (y < m);
+	return (x >= 0) and (x < n) and (y >= 0) and (y < m);
 }
 
-void dfs(int row, int col, char old, char replacement, int n, int m, vvc &v) {
-    v[row][col] = replacement;
-    
-    for(int d = 0; d < 4; d++) {
-        int nx = row + dx[d], ny = col + dy[d];
-        if(is_valid(nx, ny, n, m) and (v[nx][ny] == old)) {
-            dfs(nx, ny, old, replacement, n, m, v);
-        }
-    }
+void dfs(int row, int col, int n, int m, vvb &vis, vvi &v) {
+	vis[row][col] = 1;
+	
+	for(int d = 0; d < 4; d++) {
+		int nx = row + dx[d], ny = col + dy[d];
+		if(is_valid(nx, ny, n, m) and (v[nx][ny] == 1) and !vis[nx][ny]) {
+			dfs(nx, ny, n, m, vis, v);
+		}
+	}
 }
 
-void flood_fill_algorithm(vvc &v, int sr, int sc, char replacement) {
-    int n = sz(v);
-    if(n == 0) return;
-    
-    int m = sz(v[0]);
-    
-    if(v[sr][sc] == replacement) return;
-    
-    char old = v[sr][sc];
-    
-    dfs(sr, sc, old, replacement, n, m, v);
-}
-
-void print_grid(vvc &v) {
-    for(int i = 0; i < sz(v); i++) {
-        for(int j = 0; j < sz(v[i]); j++) {
-            cout << v[i][j];
-        }
-        
-        cout << "\n";
-    }
+int count_islands(vvi &v) {
+	int n = sz(v);
+	if(n == 0) return 0;
+	
+	int m = sz(v[0]);
+	
+	vvb vis(n, vb(m, 0));
+	
+	int res = 0;
+	
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < m; j++) {
+			if((v[i][j] == 1) and !vis[i][j]) {
+				res += 1;
+				dfs(i, j, n, m, vis, v);
+			}
+		}
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    int n, m; cin >> n >> m;
-    vvc v(n, vc(m));
-    
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) cin >> v[i][j];
-    }
-    
-    int sr, sc; cin >> sr >> sc;
-    
-    char replacement; cin >> replacement;
-
-    flood_fill_algorithm(v, sr, sc, replacement);
-    print_grid(v);
+	int n, m; cin >> n >> m;
+	vvi v(n, vi(m));
+	
+	for(int i = 0; i < n; i++) {
+		for(int j = 0; j < m; j++) cin >> v[i][j];
+	}
+	
+	cout << count_islands(v) << "\n";
 }
 
 int main()
@@ -181,45 +166,3 @@ int main()
 
     return 0;
 }
-
-/*Sample I/P:
-  
-15 30
-..............................
-...............#####..........
-...............#...#..........
-.......#########...#######....
-......###......######....###..
-.....##....................##.
-....##......................##
-.....##....................##.
-......##..................##..
-.......##................##...
-........##..............##....
-.........###...........###....
-...........####......####.....
-.............##########.......
-.........A..P..P..L..E........
-8 20
-K
-
-SAMPLE O/P:
-..............................
-...............#####..........
-...............#...#..........
-.......#########...#######....
-......###KKKKKK######KKKK###..
-.....##KKKKKKKKKKKKKKKKKKKK##.
-....##KKKKKKKKKKKKKKKKKKKKKK##
-.....##KKKKKKKKKKKKKKKKKKKK##.
-......##KKKKKKKKKKKKKKKKKK##..
-.......##KKKKKKKKKKKKKKKK##...
-........##KKKKKKKKKKKKKK##....
-.........###KKKKKKKKKKK###....
-...........####KKKKKK####.....
-.............##########.......
-.........A..P..P..L..E........
-
-*/
-
-// FOR IMPLEMENTATION USING "BFS" REFER: https://www.geeksforgeeks.org/flood-fill-algorithm-implement-fill-paint/

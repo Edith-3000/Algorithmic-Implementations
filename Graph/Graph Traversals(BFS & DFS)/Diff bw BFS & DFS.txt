@@ -3,7 +3,7 @@
 * BFS finds the shortest path to the destination. | * DFS goes to the bottom of a subgraph, then backtracks.
 
 * It uses a queue to keep track of the next       | * It uses a stack to keep track of the 
-  location to visit                               |   next location to visit.
+  location to visit.                              |   next location to visit.
 
 * BFS traverses according to graph level.	        | * DFS traverses according to graph depth.
 

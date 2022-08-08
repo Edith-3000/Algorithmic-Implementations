@@ -34,6 +34,12 @@
      Rule 3 − Repeat Rule 1 and Rule 2 until the queue is empty.
 */
 
+/*************************************************************************************************************/
+
+// LEGACY CONTENT: https://pastebin.com/baRLV8dt
+
+/*************************************************************************************************************/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -121,13 +127,7 @@ vb vis;
 
 int n, m;
 
-vi bfs(int src) {
-    // to store one of the many possible bfs traversal, using source(starting vertex) as src
-    vi res;
-    
-    // marking all nodes as unvisited initially
-    for(int i = 0; i < n; i++) vis[i] = 0;
-    
+void bfs_helper(int src, vi &res) {    
     // queue to remember which vertex to visit next in case of dead end in iteration
     queue<int> q;
 
@@ -155,6 +155,20 @@ vi bfs(int src) {
                 vis[x] = 1; // mark it visited
                 q.push(x); // push it in the queue
             }
+        }
+    }
+}
+
+vi bfs(int src) {
+    // to store one of the many possible bfs traversal, using source(starting vertex) as src
+    vi res;
+    
+    // marking all nodes as unvisited initially
+    for(int i = 0; i < n; i++) vis[i] = 0;
+
+    for(int i = 0; i < n; i++) {
+        if(!vis[i]) {
+            bfs_helper(i, res);
         }
     }
 

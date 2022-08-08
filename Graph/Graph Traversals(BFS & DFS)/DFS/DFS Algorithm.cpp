@@ -34,6 +34,12 @@
      Rule 3 − Repeat Rule 1 and Rule 2 until the stack is empty.
 */
 
+/*************************************************************************************************************/
+
+// LEGACY CONTENT: https://pastebin.com/2kuhBdS7
+
+/*************************************************************************************************************/
+
 // RECURSIVE IMPLEMENTATION OF DFS 
 
 #include<bits/stdc++.h>
@@ -147,7 +153,11 @@ vi dfs(int src) {
     // marking all nodes as unvisited initially
     for(int i = 0; i < n; i++) vis[i] = 0;
 
-    dfs_helper(src, res);
+    for(int i = 0; i < n; i++) {
+        if(!vis[i]) {
+            dfs_helper(src, res);
+        }
+    }
 
     // return the final result of traversal
     return res;
@@ -296,13 +306,7 @@ vb vis;
 
 int n, m;
 
-vi dfs(int src) {
-    // to store one of the many possible bfs traversal, using source(starting vertex) as src
-    vi res;
-    
-    // marking all nodes as unvisited initially
-    for(int i = 0; i < n; i++) vis[i] = 0;
-    
+void dfs_helper(int src, vi &res) {
     // stack to remember which vertex to visit next in case of dead end in iteration
     stack<int> s;
 
@@ -330,6 +334,20 @@ vi dfs(int src) {
             if(!vis[x]) {
                 s.push(x); // push it in the stack
             }
+        }
+    }
+}
+
+vi dfs(int src) {
+    // to store one of the many possible dfs traversal, using source(starting vertex) as src
+    vi res;
+    
+    // marking all nodes as unvisited initially
+    for(int i = 0; i < n; i++) vis[i] = 0;
+
+    for(int i = 0; i < n; i++) {
+        if(!vis[i]) {
+            dfs_helper(i, res);
         }
     }
 
@@ -385,7 +403,7 @@ int main()
 /*******************************************************************************************************/
 
 /* # HANDLING DISCONNECTED GRAPH
-   • The above code traverses only the vertices reachable from a given source vertex.
+   • The above code handles disconnected graph as well.
 
    • All the vertices may not be reachable from a given vertex as in the case of a 𝑫𝒊𝒔𝒄𝒐𝒏𝒏𝒆𝒄𝒕𝒆𝒅 𝒈𝒓𝒂𝒑𝒉. 
      To do complete DFS traversal of such graphs, run DFS from all unvisited nodes after a DFS.
