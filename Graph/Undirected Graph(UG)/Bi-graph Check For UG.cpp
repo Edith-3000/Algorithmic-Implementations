@@ -3,6 +3,7 @@
      two graph vertices within the same set are 𝒂𝒅𝒋𝒂𝒄𝒆𝒏𝒕.
 
    # Adjacent nodes are any two nodes that are connected by an edge.
+   
    # A bipartite graph is a special case of a 𝒌-𝒑𝒂𝒓𝒕𝒊𝒕𝒆 𝒈𝒓𝒂𝒑𝒉 with k = 2.
 
    # Bipartite graphs are equivalent to 𝒕𝒘𝒐-𝒄𝒐𝒍𝒐𝒓𝒂𝒃𝒍𝒆 𝒈𝒓𝒂𝒑𝒉𝒔 i.e. coloring of the vertices using two 
@@ -27,8 +28,7 @@
    # So in conclusion, if a graph contains odd length cycle, then it is not bi-partite, else it is.
 */
 
-// METHOD - 1
-// USING DFS
+// METHOD - 1 (USING DFS)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -203,6 +203,5 @@ int main()
 
 /*******************************************************************************************************/
 
-// METHOD - 2
-// USING BFS
+// METHOD - 2 (USING BFS)
 // Refer: https://www.youtube.com/watch?v=nbgaEu-pvkU&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=11
