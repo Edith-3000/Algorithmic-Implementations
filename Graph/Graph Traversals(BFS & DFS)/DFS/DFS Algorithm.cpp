@@ -146,8 +146,8 @@ void dfs_helper(int cur, vi &res) {
     }
 }
 
-vi dfs(int src) {
-    // to store one of the many possible dfs traversal, using source(starting vertex) as src
+vi dfs() {
+    // to store one of the many possible dfs traversal
     vi res;
     
     // marking all nodes as unvisited initially
@@ -155,7 +155,7 @@ vi dfs(int src) {
 
     for(int i = 0; i < n; i++) {
         if(!vis[i]) {
-            dfs_helper(src, res);
+            dfs_helper(i, res);
         }
     }
 
@@ -177,7 +177,7 @@ void solve()
         g[y].pb(x);
     }
         
-    vi res = dfs(0);
+    vi res = dfs();
     
     for(auto x: res) cout << x << " ";
     cout << "\n";
@@ -338,8 +338,8 @@ void dfs_helper(int src, vi &res) {
     }
 }
 
-vi dfs(int src) {
-    // to store one of the many possible dfs traversal, using source(starting vertex) as src
+vi dfs() {
+    // to store one of the many possible dfs traversal
     vi res;
     
     // marking all nodes as unvisited initially
@@ -369,7 +369,7 @@ void solve()
         g[y].pb(x);
     }
         
-    vi res = dfs(0);
+    vi res = dfs();
     
     for(auto x: res) cout << x << " ";
     cout << "\n";

@@ -1,13 +1,5 @@
-// Problem: https://www.geeksforgeeks.org/minimum-time-required-so-that-all-oranges-become-rotten/
-//          https://www.youtube.com/watch?v=yf3oUhkvqA0&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=11&ab_channel=takeUforward
-/*******************************************************************************************************************************/
-
-// METHOD - 1
-// Naive method, refer GfG article.
-
-/***************************************************************************************************/
-
-// METHOD - 2
+// Legacy content: https://pastebin.com/8zd8gWi2
+/******************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -17,11 +9,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -62,20 +57,27 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
-
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim) {
-    uniform_int_distribution<int> uid(0,lim-1);
-    return uid(rang);
-}
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
@@ -88,77 +90,66 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-vi dx = {-1, 0, 1, 0};
-vi dy = {0, 1, 0, -1};
+// to store the input graph
+vvi g;
 
-bool is_valid(int x, int y, int n, int m) {
-	return x >= 0 and x < n and y >= 0 and y < m;
+// to keep track of visited nodes
+vi vis;
+
+int n, m;
+
+void dfs(int cur) {
+    // marking a node visited as soon as it is pushed in internal call stack
+    vis[cur] = 1;
+    
+    // go to all the unvisited nodes of the current node, but one by one
+    for(auto x: g[cur]) {
+        // check if already visited or not
+        if(!vis[x]) {
+            // push it in the stack(internal call stack is used)
+            dfs(x);
+        }
+    }
 }
 
-int rot_oranges(vvi &v) {
-	int n = sz(v);
-	if(n == 0) return 0;
-	int m = sz(v[0]);
-	
-	vvi t(n, vi(m, -1));
-	queue<pii> q;
-	
-	for(int i = 0; i < n; i++) {
-		for(int j = 0; j < m; j++) {
-			if(v[i][j] == 2) {
-				t[i][j] = 0;
-				q.push({i, j});
-			}
-		}
-	}
-	
-	while(!q.empty()) {
-		pii cur = q.front();
-		q.pop();
-		
-		for(int k = 0; k < 4; k++) {
-			int nx = cur.F + dx[k];
-			int ny = cur.S + dy[k];
+// function which returns the number of connected components in i/p graph
+int count_connected_components() {
+	// stores the #connected components	
+    int res = 0;
+    
+    // marking all nodes as unvisited initially
+    for(int i = 0; i < n; i++) vis[i] = 0;
 
-			if(is_valid(nx, ny, n, m) and (v[nx][ny] == 1) and (t[nx][ny] == -1)) {
-				t[nx][ny] = t[cur.F][cur.S] + 1;
-				q.push({nx, ny});
-			}
-		}
-	}
-	
-	int res = INT_MIN;
-	
-	for(int i = 0; i < n; i++) {
-		for(int j = 0; j < m; j++) {
-			if(v[i][j] == 1) {
-				if(t[i][j] == -1) return -1;
-				else res = max(res, t[i][j]);
-			}
-		}
-	}
-	
-	if(res == INT_MIN) res = 0;
+    for(int i = 0; i < n; i++) {
+        if(!vis[i]) {
+            dfs(i);
+            res += 1;
+        }
+    }
 
-	return res;
+    return res;
 }
 
 void solve()
 {
-  	int n, m; cin >> n >> m;
-  	vvi v(n, vi(m));
+  	cin >> n >> m;
   	
-  	for(int i = 0; i < n; i++) {
-  		for(int j = 0; j < m; j++) cin >> v[i][j];
+  	g.clear(); g.resize(n);
+  	vis.clear(); vis.resize(n, 0);
+  	
+  	// 0-based vertices
+  	for(int i = 0; i < m; i++) {
+  		int x, y; cin >> x >> y;
+  		g[x].pb(y);
+  		g[y].pb(x);
   	}
   	
-  	cout << rot_oranges(v) << "\n";
+  	cout << count_connected_components() << "\n";
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
@@ -179,6 +170,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity: O(n x m), since each element of the matrix can be inserted into the queue only 
-//                  once so the upper bound of iteration is O(n x m).

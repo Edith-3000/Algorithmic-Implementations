@@ -159,8 +159,8 @@ void bfs_helper(int src, vi &res) {
     }
 }
 
-vi bfs(int src) {
-    // to store one of the many possible bfs traversal, using source(starting vertex) as src
+vi bfs() {
+    // to store one of the many possible bfs traversal
     vi res;
     
     // marking all nodes as unvisited initially
@@ -190,7 +190,7 @@ void solve()
         g[y].pb(x);
     }
         
-    vi res = bfs(0);
+    vi res = bfs();
     
     for(auto x: res) cout << x << " ";
     cout << "\n";
