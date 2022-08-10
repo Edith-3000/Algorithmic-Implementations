@@ -1,7 +1,8 @@
 // Ref: https://www.geeksforgeeks.org/detect-cycle-in-a-graph/
-/*****************************************************************************************************/
+/**********************************************************************************************************************/
 
 // METHOD - 1 (USING DFS)
+// https://www.youtube.com/watch?v=uzVUw90ZFIg&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=12&ab_channel=takeUforward
 
 /* USEFUL TIPs ⟶
    # 𝑨𝒏 𝑼𝒏𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝑮𝒓𝒂𝒑𝒉(𝑼𝑮) 𝒄𝒐𝒏𝒕𝒂𝒊𝒏𝒔 𝒂 𝒄𝒚𝒄𝒍𝒆 𝒊𝒇 𝒕𝒉𝒆𝒓𝒆 𝒊𝒔 𝑴𝑶𝑹𝑬 𝑻𝑯𝑨𝑵 1 𝒘𝒂𝒚 𝒕𝒐 𝒗𝒊𝒔𝒊𝒕 𝒂 𝒏𝒐𝒅𝒆/𝒗𝒆𝒓𝒕𝒆𝒙, 
@@ -14,18 +15,21 @@
        2). from 1 to 2 to 3
 
        But it does not contain a cycle.
-   # ∴ the same algo used in "Cycle Detection in UG Using DFS.cpp" can't be used.
+   # ∴ the same algo used in "Cycle Detection in an UG.cpp" can't be used.
 
    # 𝑨 𝑩𝑨𝑪𝑲𝑬𝑫𝑮𝑬 𝑰𝑺 𝑨𝑵 𝑬𝑫𝑮𝑬 𝑭𝑹𝑶𝑴 𝑨 𝑮𝑰𝑽𝑬𝑵 𝑵𝑶𝑫𝑬 𝑻𝑶 𝑨𝑵 𝑨𝑵𝑪𝑬𝑺𝑻𝑶𝑹 𝑶𝑭 𝑻𝑯𝑨𝑻 𝑵𝑶𝑫𝑬 𝑰𝑵 𝑻𝑯𝑬 𝑺𝑨𝑴𝑬 𝑷𝑨𝑻𝑯 
      𝑰𝑵 𝑨 𝑫𝑮.
 
    # So to check cycle in a DG we maintain a 𝒔𝒕𝒂𝒄𝒌 𝑨𝑹𝑹𝑨𝒀(it is also a bool array) in addition to 
      the visited array.
+
      • As we know visited[] array basically keeps a check abput whether a given vertex has already 
        been visited at some poit of time or not.
+
      • But here the extra data structure used which is the stack array (remember it is an array only, 
-       only the name name stack is used to convey the message that it will work almost similar to stack, 
+       only the name stack is used to convey the message that it will work almost similar to stack, 
        but in order to have a constant lookup time for a vertex an array is used in place of stack).
+
      • The stack[i] will be true for a vertex 'i' if the vertex is 𝒂 𝒑𝒂𝒓𝒕 𝒐𝒇 𝒕𝒉𝒆 𝒄𝒖𝒓𝒓𝒆𝒏𝒕 𝒑𝒂𝒕𝒉.
 */
 
@@ -215,9 +219,10 @@ int main()
 
 /*****************************************************************************************************/
 
-// METHOD - 2 (USING BFS)
+// METHOD - 2 (USING BFS, by making use of Kahn's algorithm)
 
 /* UNDERLYING CONCEPT ------>
+
    # If we can't determine the topological ordering of all the vertices of a DG, the graph has a cycle
      in it i.e. for a directed cyclic graph : res.size() != #vertices.
 */

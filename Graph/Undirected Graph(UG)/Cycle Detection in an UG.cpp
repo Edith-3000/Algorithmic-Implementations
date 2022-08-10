@@ -293,7 +293,7 @@ bool is_cycle(int src) {
 
     // iterative process
     while(!q.empty()) {
-        // taking out vertex from q
+        // taking out vertex and it's parent from q
     	int cur = q.front().F;
     	int par = q.front().S;
 

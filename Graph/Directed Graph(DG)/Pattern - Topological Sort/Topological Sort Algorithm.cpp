@@ -1,4 +1,5 @@
 /*UNDERLYING CONCEPT ------>
+
   # The basic idea behind the topological sort is to provide a partial ordering among the vertices of the
     graph such that if there is an edge from U to V then U ≤ V i.e., U comes before V in the ordering. 
     Here are a few fundamental concepts related to topological sort:
@@ -15,9 +16,10 @@
     a linear ordering among vertices.
 */
 
-/********************************************************************************************************/
+/************************************************************************************************************/
 
 // METHOD - 1.1 (USING DFS)
+
 // First validating that the DG has no cycle.
 // Then finding the topological ordering.
 
@@ -247,6 +249,7 @@ int main()
 /******************************************************************************************************/
 
 // METHOD - 1.2 (USING DFS)
+
 // This method simultaneously validates if the graph has cycle or not and find the topological 
 // ordering as well.
 
@@ -385,6 +388,8 @@ vi top_sort() {
 	// reverse the result vector to obtain top sort in correct order
 	reverse(res.begin(), res.end());
 	
+    if(!possible) res.clear();
+
 	return res;
 }
 
@@ -439,6 +444,7 @@ int main()
 /*****************************************************************************************************/
 
 // METHOD - 2 (USING BFS)
+
 // Based on "Kahn’s algorithm"
 // Ref: https://www.youtube.com/watch?v=rZv_jHZva34&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=14
 
