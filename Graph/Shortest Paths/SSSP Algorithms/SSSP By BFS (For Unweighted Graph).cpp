@@ -159,8 +159,7 @@ void solve()
     
     // 0-based vertices
     for(int i = 0; i < m; i++) {
-        int x, y, wt; 
-        cin >> x >> y;
+        int x, y; cin >> x >> y;
         g[x].pb(y);
         g[y].pb(x);
     }
@@ -372,8 +371,7 @@ void solve()
     
     // 0-based vertices
     for(int i = 0; i < m; i++) {
-        int x, y, wt; 
-        cin >> x >> y;
+        int x, y; cin >> x >> y;
         g[x].pb(y);
         g[y].pb(x);
     }

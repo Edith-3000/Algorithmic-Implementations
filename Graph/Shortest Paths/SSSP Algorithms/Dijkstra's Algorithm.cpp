@@ -5,7 +5,7 @@
    # This algorithm is Greedy based.
    
    # This algorithm is used for finding the shortest path(as well as their costs) from a starting node to all 
-     other nodes in a weighted & UD/DG.
+     other nodes in a weighted & UG/DG.
    # The edges of the graph can be unidirectional/bidirectional.
 
    # Dijkstra’s algorithm doesn't work for graphs with -𝒗𝒆 𝒘𝒆𝒊𝒈𝒉𝒕 𝒄𝒚𝒄𝒍𝒆𝒔, it 𝑴𝑨𝒀 give correct results for a 
@@ -19,6 +19,22 @@
 /*********************************************************************************************************/
 
 // IMPLEMENTATION USING std::priority_queue
+
+/* FEW INSIGHTS :--->
+   
+   Que. Instead of using a std::priority_queue can the algorithm be implemented with a simple std::queue?
+   Ans. Yes, but it will make unnecessary computations, refer the "Highlighted comment" of :--->
+        https://www.youtube.com/watch?v=jbhuqIASjoM&lc=UgxjfXWwmeIUYm37Jwl4AaABAg
+
+   Que. Why can't we use the similar technique used in "SSSP By BFS (For Unweighted Graph).cpp"? 
+   Ans. It can be done but then the implementation becomes very difficult also the time complexity will be more 
+        because suppose you updated all neighbours of node 'x' using the distance of 'x, but later you find a 
+        better path to reach node 'x, so now you not only have to update distance of node 'x, but also all the 
+        nodes previously relaxed by node 'x.
+        For more info refer the "Highlighted comment" of :--->
+        https://www.youtube.com/watch?v=jbhuqIASjoM&lc=UgzrAoo_qEqds1ZvX8B4AaABAg
+        
+*/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -102,6 +118,7 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 // to store the input graph
 vector<vpii> g;
 
+// n = #vertices, m = #edges in the input graph
 int n, m;
 
 void dijkstra(int src) {
@@ -166,6 +183,7 @@ void dijkstra(int src) {
 void solve()
 {
     cin >> n >> m;
+
     g.clear(); 
     g.resize(n);
     
@@ -208,7 +226,7 @@ int main()
     return 0;
 }
 
-// Time complexity: O(|E| x log(|V|))
+// Time complexity: O(|V| + (|E| x log(|V|)))
 // https://cs.stackexchange.com/questions/104566/dijkstra-complexity-analysis-using-adjacency-list-and-priority-queue#:~:text=1%20Answer&text=Dijkstra's%20algorithm%20visits%20every%20node,in%20O(logV).
 
 // NOTE: Similar implementation ===>
@@ -223,21 +241,18 @@ int main()
 using namespace std;
 
 template<typename T>
-class Graph
-{
+class Graph {
     // data member
     unordered_map<T, list<pair<T, int>>> mp;
     
     public:
         // memebr functions
-        void addEdge(T u, T v, int wt, bool isBidir)
-        {
+        void addEdge(T u, T v, int wt, bool isBidir) {
             mp[u].push_back({v, wt});
             if(isBidir) mp[v].push_back({u, wt});
         }
         
-        void printGraph()
-        {
+        void printGraph() {
             for(auto p: mp)
             {
                 cout<<p.first<<" ---- ";
@@ -249,8 +264,7 @@ class Graph
             }
         }
         
-        void dijkstraSSSP(T src)
-        {
+        void dijkstraSSSP(T src) {
             // dist[key] stores the minimum distance 
             // of key from given src
             unordered_map<T, int> dist;
@@ -277,8 +291,7 @@ class Graph
             // inserting the src to initialise the process
             s.insert({0, src});
             
-            while(!s.empty())
-            {
+            while(!s.empty()) {
                 // extract the node which is currently at 
                 // minimum distance from src
                 auto p = *(s.begin());
@@ -291,12 +304,10 @@ class Graph
                 T curr = p.second;
                 
                 // iterate over the neighbours of the extracted node
-                for(auto nbr: mp[curr])
-                {
+                for(auto nbr: mp[curr]) {
                     // for edge(u, v) if dist[u] + edge_weight(u, v) < dist[v], 
                     // then update dist[v] to (dist[u] + edge_weight(u, v))
-                    if((d + nbr.second) < dist[nbr.first])
-                    {
+                    if((d + nbr.second) < dist[nbr.first]) {
                         // in std::set updation of a inserted value is not allowed
                         // therefore, we've to remove the old pair and insert the new 
                         // pair to simulate updation
@@ -318,7 +329,7 @@ class Graph
             }
             
             // print length of shortest distances of all nodes from src
-            for(auto p: dist){
+            for(auto p: dist) {
                 cout<<"Shortest distance of "<<p.first<<" from "<<src<<" = "<<p.second;
                 cout<<"\n"; 
             }
@@ -326,11 +337,10 @@ class Graph
             cout<<"\n";
             
             // print shortest path of all nodes from src
-            for(auto p: par){
+            for(auto p: par) {
                 T node = p.first;
                 
-                if(node != src)
-                {
+                if(node != src) {
                     cout<<node<<" <-- ";
                     while(par[node] != src){
                         cout<<par[node]<<" <-- ";
