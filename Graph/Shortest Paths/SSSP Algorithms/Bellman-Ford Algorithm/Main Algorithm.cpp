@@ -11,7 +11,7 @@
 
    # Like Dijkstra's shortest path algorithm, the Bellman-Ford algorithm is also guaranteed to find the 
      shortest path in a graph. 
-   # Though it is slower than Dijkstra's algorithm (Time Complexity: O(E x log(V))), Bellman-Ford 
+   # Though it is slower than Dijkstra's algorithm (Time Complexity: O(V + (E x log(V))), Bellman-Ford 
      (Time Complexity: O(V x E) is capable of handling graphs that contain negative edge weights, so it is 
      more versatile. 
 
@@ -29,6 +29,7 @@
      
      2. If we consider the #vertices = n and #edges = m
         then we just have to relax m edges (n-1) times for worst case.
+
         i.e. for(int i = 1; i <= n-1; i++) {
                  for(int j = 1; j <= m; j++) {
                      relax the jth edge
@@ -43,6 +44,7 @@
 
    # Bellman-Ford algorithm returns SSSP (Single Source Shortest Path) in ((|V| - 1) x |E|) operations,
      when no negative cycles present in graph.
+
    # Bellman-Ford algorithm resolves negative cycle SSSP (Single Source Shortest Path) in (2 x (|V| - 1) x |E|) 
      operations, when negative cycles are present in graph.
 */
@@ -129,6 +131,7 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 // to store the input edges
 vvi edges;
 
+// n = #nodes, m = #edges in the input graph
 int n, m;
 
 void bellman_ford(int src) {
@@ -197,6 +200,7 @@ void bellman_ford(int src) {
 void solve()
 {
     cin >> n >> m;
+    
     edges.clear(); 
     
     // 0-based vertices

@@ -1,0 +1,196 @@
+// Prob: https://leetcode.com/problems/path-with-maximum-probability/
+// Ref: https://www.youtube.com/watch?v=OHJpOGa_L34&t=289s
+/******************************************************************************************************************/
+
+/* # NOTE: Although this problem could have been done in this manner :--->
+           https://pastebin.com/YY60XvzG
+
+   # But the below algorithm gives one other implementation showing how beautifully Dijkstra's algorithm 
+     can be modified to solve problems.
+
+   # Several questions such as why the below algorithm takes -ve weighted path (even though it's not suggested 
+     to use Dijkstra when path cost is -ve) have been explained very elegantly in the reference video.
+*/
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define pb push_back
+#define ppb pop_back
+#define pf push_front
+#define ppf pop_front
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+#define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
+
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<bool> vb;
+typedef vector<char> vc;
+typedef vector<string> vs;
+typedef vector<pii> vpii;
+typedef vector<pll> vpll;
+typedef vector<vi> vvi;
+typedef vector<vll> vvll;
+typedef vector<vull> vvull;
+typedef vector<vb> vvb;
+typedef vector<vc> vvc;
+typedef vector<vs> vvs;
+
+/************************************************** DEBUGGER *******************************************************************************************************/
+
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
+
+void _print(ll t) { cerr << t; }
+void _print(int t) { cerr << t; }
+void _print(string t) { cerr << t; }
+void _print(char t) { cerr << t; }
+void _print(ld t) { cerr << t; }
+void _print(double t) { cerr << t; }
+void _print(ull t) { cerr << t; }
+
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(vector <vector<T>> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
+template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
+template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
+template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
+
+/*******************************************************************************************************************************************************************/
+
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9+7;
+
+ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
+                         while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
+                         
+ll mod_inv(ll a) { return mod_exp(a, mod - 2); } // works only for prime value of "mod"
+ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
+
+/******************************************************************************************************************************/
+
+// to store the input graph
+vector<vector<pair<int, double>>> g;
+
+// n = #vertices, m = #edges in the input graph
+int n, m;
+
+double modified_dijkstra(int src, int dst) {
+    // d[i] stores the minimum probability of ith node from given src
+    vector<double> d(n);
+        
+    // to keep track of visited nodes
+    vb vis(n, 0);
+    
+    // initialising the probabilities of all nodes from src as 0.0
+    for(int i = 0; i < n; i++) d[i] = 0.0;
+    
+    // the minimum probability of src from itself = -1.0
+    d[src] = -1.0;
+    
+    // priority queue (min heap) to repeatedly find out the node having 
+    // minimum probability from src
+    priority_queue<pair<double, int>, vector<pair<double, int>>, greater<pair<double, int>>> q;
+    
+    // inserting the src to initialise the process
+    q.push({-1.0, src});
+    
+    while(!q.empty()) {
+        // extract the node which is currently having minimum probability
+        int cur = q.top().S;
+        double mn = q.top().F;
+        q.pop();
+        
+        if(cur == dst) break;
+        if(vis[cur]) continue;
+        vis[cur] = true;
+        
+        for(auto x: g[cur]) {
+            if((mn * x.S) < d[x.F]) {
+                d[x.F] = mn * x.S;
+                q.push({d[x.F], x.F});
+            }
+        }
+    }
+        
+    double res = -1.0 * d[dst];
+   
+    return res;
+}
+
+void solve()
+{
+  	cin >> n >> m;
+
+    g.clear(); 
+    g.resize(n);
+    
+    // 0-based vertices
+    for(int i = 0; i < m; i++) {
+        int x, y; double wt; 
+        cin >> x >> y >> wt;
+        g[x].pb({y, wt});
+        g[y].pb({x, wt});
+    }
+    
+    // source from which shortest path to each node to be calculated
+    int src, dst; cin >> src >> dst;
+    
+    cout << modified_dijkstra(src, dst) << "\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
+    
+    // #ifndef ONLINE_JUDGE
+    //      freopen("error.txt", "w", stderr);
+    // #endif
+    
+    int t = 1;
+    // int test = 1;
+    // cin >> t;
+    while(t--) {
+        // cout << "Case #" << test++ << ": ";
+        solve();
+    }
+
+    return 0;
+}

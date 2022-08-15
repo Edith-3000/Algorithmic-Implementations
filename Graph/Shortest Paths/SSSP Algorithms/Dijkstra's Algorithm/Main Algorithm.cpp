@@ -16,6 +16,13 @@
      other points in the graph.
 */
 
+/* # THE ONLY RESTRICTION FOR USING DIJKSTRA'S ALGORITHM IS THAT THE COST HAS TO BE NON-DECREASING WHENEVER
+     WE ADD A NEW EDGE TO A PATH.
+
+   # FOR MORE INFORMATION ON THE ABOVE POINT, SEE THE BELOW VIDEO (EXPLAINED BEAUTIFULLY) :--->
+     https://www.youtube.com/watch?v=pLElbKBc4RU&ab_channel=ShiranAfergan
+*/
+
 /*********************************************************************************************************/
 
 // IMPLEMENTATION USING std::priority_queue

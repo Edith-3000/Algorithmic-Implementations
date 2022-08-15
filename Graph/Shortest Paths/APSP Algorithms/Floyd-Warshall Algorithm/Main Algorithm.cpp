@@ -1,4 +1,4 @@
-/* # Ref: https://brilliant.org/wiki/bellman-ford-algorithm/
+/* # Ref: https://cp-algorithms.com/graph/all-pair-shortest-path-floyd-warshall.html#description-of-the-algorithm
           https://cp-algorithms.com/graph/finding-negative-cycle-in-graph.html
           https://www.geeksforgeeks.org/finding-shortest-path-between-any-two-nodes-using-floyd-warshall-algorithm/
           https://www.youtube.com/watch?v=nV_wOZnhbog
@@ -154,7 +154,7 @@ void retrieve_paths() {
 	}
 } 
 
-// If required use long long instead of int data type
+// If required use long long instead of int data type,
 // 0-based indexing of vertices is used
 void floyd_warshall() {
 	// initialisation of d[][] and nxt[][] arrays
@@ -203,6 +203,7 @@ void floyd_warshall() {
 void solve()
 {
   	cin >> n;
+
   	vset(g, n, vi(n));
   	vset(d, n, vi(n));
   	vset(nxt, n, vi(n));
@@ -240,6 +241,17 @@ int main()
 
     return 0;
 }
+
+/* CAUTION: The 3 nested for() loops which form the main logic of the floyd_warshall() algorithm
+            cannot be executed in the following manner, as given in link :--->
+	        https://pastebin.com/e9QpaJ2i
+
+	        It gave WA while submission for the following problem :--->
+	        https://leetcode.com/problems/find-the-city-with-the-smallest-number-of-neighbors-at-a-threshold-distance/
+
+			WA verdict code :--->
+			https://pastebin.com/ZSUVLEiU
+*/
 
 // Time complexity: O(|V|^3)
 // Space complexity: O(|V|^2), where |V| = #vertices in graph
