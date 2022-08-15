@@ -1,3 +1,45 @@
+// Ref: https://cp-algorithms.com/data_structures/disjoint_set_union.html
+//      https://www.youtube.com/watch?v=3gbO7FDYNFQ&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=23&ab_channel=takeUforward
+/***************************************************************************************************************************/
+
+/* # Opmimization done :--->
+
+     1. PATH COMPRESSION OPTIMIZATION ===>
+
+        • This optimization is designed for speeding up find_set().
+        • Pseudocode of the optimisation:
+    
+          int find_set(int v) {
+              if(v == parent[v]) return v;
+              return parent[v] = find_set(parent[v]);
+          }
+
+        • Time complexity: O(log(n)) per call on average.
+
+     2. UNION BY RANK/SIZE ===>
+
+        • This optimization is designed for speeding up union_sets().
+        • Pseudocode of the optimisation:
+
+          void union_sets(int a, int b) {
+              int s1 = find_set(a);
+              int s2 = find_set(b);
+
+              if(s1 != s2) {
+                  if(siz[s1] < siz[s2]) swap(s1, s2);
+                  parent[s2] = s1;
+                  siz[s1] += siz[s2];
+              }
+          }          
+        
+        • DSU with union by size / rank, but without path compression works in O(log(n)) time per query.
+
+   # 𝑰𝒇 𝒘𝒆 𝒄𝒐𝒎𝒃𝒊𝒏𝒆 𝒃𝒐𝒕𝒉 𝒐𝒑𝒕𝒊𝒎𝒊𝒛𝒂𝒕𝒊𝒐𝒏𝒔 - 𝒑𝒂𝒕𝒉 𝒄𝒐𝒎𝒑𝒓𝒆𝒔𝒔𝒊𝒐𝒏 𝒘𝒊𝒕𝒉 𝒖𝒏𝒊𝒐𝒏 𝒃𝒚 𝒔𝒊𝒛𝒆 / 𝒓𝒂𝒏𝒌 - 𝒘𝒆 𝒘𝒊𝒍𝒍 𝒓𝒆𝒂𝒄𝒉 𝒏𝒆𝒂𝒓𝒍𝒚 𝑪𝑶𝑵𝑺𝑻𝑨𝑵𝑻 𝑶(1) 
+     𝒕𝒊𝒎𝒆 𝒒𝒖𝒆𝒓𝒊𝒆𝒔.
+*/
+
+// METHOD - 1 (IMPLEMENTATION WITHOUT MAKING struct for DSU)
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -77,11 +119,11 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-vi parent, rnk;
+vi parent, siz;
 
 void make_set(int v) {
     parent[v] = v;
-    rnk[v] = 1;
+    siz[v] = 1;
 }
 
 int find_set(int v) {
@@ -92,10 +134,11 @@ int find_set(int v) {
 void union_sets(int a, int b) {
     int s1 = find_set(a);
     int s2 = find_set(b);
+
     if(s1 != s2) {
-    	if(rnk[s1] < rnk[s2]) swap(s1, s2);
+    	if(siz[s1] < siz[s2]) swap(s1, s2);
         parent[s2] = s1;
-        rnk[s1] += rnk[s2];
+        siz[s1] += siz[s2];
     }
 }
 
@@ -104,13 +147,15 @@ void solve()
   	int n; cin >> n;
   	
   	parent.clear(); parent.resize(n + 1);
-  	rnk.clear(); rnk.resize(n + 1);
+  	siz.clear(); siz.resize(n + 1);
   	
   	for(int i = 1; i <= n; i++) make_set(i); 
   	
   	int q; cin >> q;
+
   	while(q--) {
   		int type; cin >> type;
+
   		if(type == 1) {
   			int x, y; cin >> x >> y;
   			union_sets(x, y);
@@ -150,7 +195,7 @@ int main()
 
 /*******************************************************************************************************/
 
-// IMPLEMENTATION BY MAKING struct for DSU
+// METHOD - 2 (IMPLEMENTATION BY MAKING struct for DSU)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -234,17 +279,17 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 // CAUTION : use 0-based indexing for the nodes
 struct dsu {
-    vi parent, rnk;
+    vi parent, siz;
     
     dsu(int n) {
         parent.clear(); parent.resize(n);
-        rnk.clear(); rnk.resize(n);
+        siz.clear(); siz.resize(n);
     }
     
     void make_set(int n) {
         for(int i = 0; i < n; i++) {
             parent[i] = i;
-            rnk[i] = 1; 
+            siz[i] = 1; 
         }
     }
 
@@ -256,10 +301,11 @@ struct dsu {
     void union_sets(int a, int b) {
         int s1 = find_set(a);
         int s2 = find_set(b);
+
         if(s1 != s2) {
-            if(rnk[s1] < rnk[s2]) swap(s1, s2);
+            if(siz[s1] < siz[s2]) swap(s1, s2);
             parent[s2] = s1;
-            rnk[s1] += rnk[s2];
+            siz[s1] += siz[s2];
         }
     }
 };
@@ -273,8 +319,10 @@ void solve()
     d.make_set(n);
     
     int q; cin >> q;
+
     while(q--) {
         int type; cin >> type;
+
         if(type == 1) {
             int x, y; cin >> x >> y;
             d.union_sets(x, y);
@@ -311,3 +359,44 @@ int main()
 
     return 0;
 }
+
+/* # In case there is a need to find the total count of sets in the DSU data structure :--->
+     Add a new member sets_count in the struct and use it in following manner :--->
+
+    // CAUTION : use 0-based indexing for the nodes
+    struct dsu {
+        vector<int> parent, siz;
+        int sets_count;
+
+        dsu(int n) {
+            parent.clear(); parent.resize(n);
+            siz.clear(); siz.resize(n);
+            sets_count = n;
+        }
+
+        void make_set(int n) {
+            for(int i = 0; i < n; i++) {
+                parent[i] = i;
+                siz[i] = 1; 
+            }
+        }
+
+        int find_set(int v) {
+            if(v == parent[v]) return v;
+            return parent[v] = find_set(parent[v]);
+        }
+
+        void union_sets(int a, int b) {
+            int s1 = find_set(a);
+            int s2 = find_set(b);
+
+            if(s1 != s2) {
+                sets_count -= 1;
+                if(siz[s1] < siz[s2]) swap(s1, s2);
+                parent[s2] = s1;
+                siz[s1] += siz[s2];
+            }
+        }
+    };
+
+*/
