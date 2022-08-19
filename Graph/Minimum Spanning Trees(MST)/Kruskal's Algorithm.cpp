@@ -1,15 +1,20 @@
 /* # UNDERLYING CONCEPTS ===>
 
    # Kruskal's algorithm to find the minimum cost spanning tree uses the greedy approach. 
+
    # This algorithm treats the graph as a forest and every node it has as an individual tree
      (i.e. n connected components initially). 
+
    # A tree connects to another only and only if, it has the least cost among all available options and 
      does not violate MST properties.
 
    # Algorithm ---->
+
      1. Remove all loops and Parallel Edges.
         (In case of parallel edges, keep the one which has the least cost associated and remove all others.)
+
      2. Sort all edges in their increasing order of weight.
+
      3. Repeatedly add the first (n-1) edges which have the least weightage, iff it does not form a cycle
         i.e. add the least cost edge one by one whose vertices are present in 2 different connected components.
 */
@@ -96,30 +101,41 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 // to store the input edges
 vvi edges;
 
+// n = #vertices, m = #edges in input graph
 int n, m;
 
-// for DSU operations
-vi parent, rnk;
-
-void make_set(int v) {
-    parent[v] = v;
-    rnk[v] = 1;
-}
-
-int find_set(int v) {
-    if(v == parent[v]) return v;
-    return parent[v] = find_set(parent[v]);
-}
-
-void union_sets(int a, int b) {
-    int s1 = find_set(a);
-    int s2 = find_set(b);
-    if(s1 != s2) {
-        if(rnk[s1] < rnk[s2]) swap(s1, s2);
-        parent[s2] = s1;
-        rnk[s1] += rnk[s2];
+// CAUTION : use 0-based indexing for the nodes
+struct dsu {
+    vi parent, siz;
+    
+    dsu(int n) {
+        parent.clear(); parent.resize(n);
+        siz.clear(); siz.resize(n);
     }
-}
+    
+    void make_set(int n) {
+        for(int i = 0; i < n; i++) {
+            parent[i] = i;
+            siz[i] = 1; 
+        }
+    }
+
+    int find_set(int v) {
+        if(v == parent[v]) return v;
+        return parent[v] = find_set(parent[v]);
+    }
+
+    void union_sets(int a, int b) {
+        int s1 = find_set(a);
+        int s2 = find_set(b);
+
+        if(s1 != s2) {
+            if(siz[s1] < siz[s2]) swap(s1, s2);
+            parent[s2] = s1;
+            siz[s1] += siz[s2];
+        }
+    }
+};
 
 bool cmp(const vi &v1, const vi &v2) {
     return v1[2] < v2[2];
@@ -127,12 +143,9 @@ bool cmp(const vi &v1, const vi &v2) {
 
 // function to print and return the weight of MST
 ll kruskals_algo() {
-    parent.clear(); parent.resize(n);
-    rnk.clear(); rnk.resize(n);
-    
-    for(int i = 0; i < n; i++) {
-        make_set(i);
-    }
+    // initialising DSU structure
+    struct dsu d(n);
+    d.make_set(n);
     
     // sorting on the basis of edge weight
     sort(edges.begin(), edges.end(), cmp);
@@ -143,15 +156,15 @@ ll kruskals_algo() {
     ll res = 0LL;  
    
     for(auto edg: edges) {
-        int s1 = find_set(edg[0]);
-        int s2 = find_set(edg[1]);
+        int s1 = d.find_set(edg[0]);
+        int s2 = d.find_set(edg[1]);
         
         // include the edge in MST iff it does not form a cycle (i.e. include in
         // MST if both the vertices of the edge belong to different sets)
         if(s1 != s2) {
             res += edg[2];
             MST.pb(edg);
-            union_sets(s1, s2);
+            d.union_sets(s1, s2);
         }
     }
     
@@ -161,6 +174,7 @@ ll kruskals_algo() {
 void solve()
 {
     cin >> n >> m;
+
     edges.clear(); 
     
     // 0-based vertices
@@ -198,5 +212,5 @@ int main()
     return 0;
 }
 
-// Time Complexity: O(|E| x log|V|)
+// Time Complexity: O(|E| x log|E|) which in turn = O(|E| x log|V|)
 // Refer: https://stackoverflow.com/questions/20432801/time-complexity-of-the-kruskal-algorithm
