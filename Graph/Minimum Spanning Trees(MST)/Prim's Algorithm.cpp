@@ -18,17 +18,21 @@
 	 * MST Edge = An edge which have been included in the MST so far.
 
    # Algorithm ---->
+
      1. Remove all loops and Parallel Edges.
         (In case of parallel edges, keep the one which has the least cost associated and remove all others.)
+
      2. Choose any vertex as the starting vertex and include it in MST Set and exclude it from V set.
+
      3. Out of all the active edges choose the one with minimum weight and add it to result.
         * Include the other vertex (say 'Y') of this active edge in MST Set & exclude it from V set.
         * Add edges starting from 'Y' in the Active Edge list.
-        * NOTE: No need to consider the edge between 'Y' and previously visited vertex. 
+        * NOTE: No need to consider the edge between 'Y' and previously visited vertex.
+
      4. Repeat step 3 until MST Set doesn't contain all the vertices or V set is empty.
 */
 
-/*****************************************************************************************************/
+/*****************************************************************************************************************/
 
 // METHOD - 1 O(n^2)
 // Ref: https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
@@ -116,6 +120,7 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 // to store the input graph
 vector<vpii> g;
 
+// n = #vertices, m = #edges in input graph
 int n, m;
 
 // function to print and return the weight of MST
@@ -134,7 +139,7 @@ ll prims_algo() {
     	key[i] = INT_MAX, mst[i] = 0, parent[i] = -1; 
     }
   
-    // always include first 1st vertex in MST. 
+    // starting the MST with a single vertex. 
     // make key 0 so that this vertex is picked as first vertex. 
     key[0] = 0; 
     parent[0] = -1; 
@@ -181,6 +186,7 @@ ll prims_algo() {
 void solve()
 {
   	cin >> n >> m;
+
     g.clear(); g.resize(n);
     
     // 0-based vertices
@@ -310,6 +316,7 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 // to store the input graph
 vector<vpii> g;
 
+// n = #vertices, m = #edges in input graph
 int n, m;
 
 // function to print and return the weight of MST
@@ -330,7 +337,7 @@ ll prims_algo() {
     
     priority_queue<pii, vpii, greater<pii>> q;
     
-    // always include first 1st vertex in MST. 
+    // starting the MST with a single vertex.
     // make key 0 so that this vertex is picked as first vertex. 
     key[0] = 0; 
     parent[0] = -1; 
