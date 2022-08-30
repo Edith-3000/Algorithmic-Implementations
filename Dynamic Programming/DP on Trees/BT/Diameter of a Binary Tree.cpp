@@ -1,7 +1,23 @@
-// Prob: https://leetcode.com/problems/binary-tree-maximum-path-sum/
-// Ref: https://www.youtube.com/watch?v=Osz-Vwer6rw
-//      https://takeuforward.org/data-structure/maximum-sum-path-in-binary-tree/
-/***********************************************************************************************************/
+/* PROBLEM: The diameter of a tree (sometimes called the width) is the number of nodes on the 
+            longest path between any two nodes OR the number of edges on the longest path between 
+            any two nodes (depends on what the question is asking).
+            This path may or may not pass through the root.
+
+            # NOTE: in the below algorithm we are considering the 1st definition for diameter
+                    of a binary tree.
+*/
+
+// METHOD - 1 O(n^2)
+// https://takeuforward.org/data-structure/calculate-the-diameter-of-a-binary-tree/
+
+/* # Consider every node as root node, find the height of it's left and right subtree.
+   # Add 1 to the answer to include the current node
+   # Update the final result in every iteration.
+*/
+
+/****************************************************************************************************/
+
+// METHOD - 2 O(n)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -100,34 +116,38 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 class TreeNode {
   public:
-    ll val;
+    int val;
     TreeNode *left;
     TreeNode *right;
     TreeNode(): val(0), left(NULL), right(NULL) {}
-    TreeNode(ll data): val(data), left(NULL), right(NULL) {}
-    TreeNode(ll data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
+    TreeNode(int data): val(data), left(NULL), right(NULL) {}
+    TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
 };
 
-ll maxPathSumBwAnyTwoNodes(TreeNode *root, ll &res) {
-	// base condition
-	if(root == NULL) return 0LL;
-	
-	// hypothesis
-    ll lf = maxPathSumBwAnyTwoNodes(root->left, res);
-    ll rg = maxPathSumBwAnyTwoNodes(root->right, res);
+int height(TreeNode *root, int &res) {
+    // base condition
+    if(root == NULL) return 0;
+    
+    // hypothesis
+    int lf = height(root->left, res);
+    int rg = height(root->right, res);
     
     // induction
-    // taking the consideration the case when lf & rg both can be -ve
-    ll tmp = max({root->val, root->val + max(lf, rg), root->val + lf + rg});
+    int tmp = 1 + lf + rg;
     res = max(res, tmp);
     
-    // current node passing it's contribution to it's parent node
-    return max({0LL, root->val, root->val + max(lf, rg)});
+    return 1 + max(lf, rg);
+}
+
+int diameter_of_BT(TreeNode* root) {
+    int res = 0;
+    height(root, res);
+    return res;
 }
 
 void solve()
 {
-  	TreeNode* root = new TreeNode(1);
+    TreeNode* root = new TreeNode(1);
     root->left = new TreeNode(2);
     root->right = new TreeNode(3);
     root->right->left = new TreeNode(4);
@@ -137,8 +157,7 @@ void solve()
     root->right->left->right->left = new TreeNode(8);
     root->right->left->right->right = new TreeNode(9);
     
-    ll res = LLONG_MIN;
-  	maxPathSumBwAnyTwoNodes(root, res);
+    int res = diameter_of_BT(root);
     
     cout << res << "\n";
 }
@@ -169,14 +188,13 @@ int main()
 }
 
 /* # The final answer is stored in res variable, which is passed by reference in every fⁿ call.
-     In the main() fⁿ res is initialised as res= LLONG_MIN;
+     In the main() fⁿ res is initialised as res = 0;
+
    # Time Complexity: O(n), since we must visit each node, where n are the #nodes in binary tree.
+
    # Auxiliary Space Complexity: O(1)
+
    # Space complexity of the internal call stack: O(h), where h is the height of the binary tree,
-                                                  h may be O(log(n)), if a balanced tree or
-                                                  h maye be O(n), otherwise.
+                                                  h may be O(log(n)), if a balanced binary tree or
+                                                  h maye be O(n) in a skewed binary tree.
 */
-
-/*********************************************************************************************************/
-
-// LEGACY CONTENT: https://pastebin.com/pkN95NVt

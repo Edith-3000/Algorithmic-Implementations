@@ -64,7 +64,7 @@ vvi zig_zag(TreeNode *root) {
 		// to store the current level
 		vi level;
 				
-		// fill the current level in correct order
+		// fill the current level
 		while(sz--) {
 			TreeNode *cur = q.front();
 			q.pop();
@@ -76,7 +76,9 @@ vvi zig_zag(TreeNode *root) {
 			if(cur->right) q.push(cur->right);
 		}
 		
+		// make the ordering of current level correct
 		if(!flag) reverse(level.begin(), level.end());
+		
 		res.pb(level);
 		
 		flag = !flag;
