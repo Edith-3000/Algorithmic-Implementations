@@ -1,9 +1,19 @@
 // Problem: https://www.interviewbit.com/problems/least-common-ancestor/
+
 // Ref: https://www.youtube.com/watch?v=T6Jr-Q6bvSU&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=39
 //      https://www.educative.io/edpresso/how-to-find-the-lowest-common-ancestor-in-binary-tree
-/****************************************************************************************************/
+//      https://www.youtube.com/watch?v=_-QHfMDde90&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=29&ab_channel=takeUforward
+/****************************************************************************************************************************/
 
 // METHOD - 1
+
+/* # Find root to node path for both the nodes whose LCA is to be found out.
+   # Compare both the paths obtained from start and the last matching node wile be LCA, if it exists. 
+*/
+
+/****************************************************************************************************************************/
+
+// METHOD - 2
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -46,18 +56,18 @@ class TreeNode {
 		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
 };
 
-bool is_present(TreeNode *root, int key) {
+bool is_present(TreeNode* root, int key) {
 	if(root == NULL) return 0;
 	if(root->val == key) return 1;
 	return is_present(root->left, key) or is_present(root->right, key);
 }
 
-TreeNode* LCA_helper(TreeNode *root, int x, int y) {
+TreeNode* LCA_helper(TreeNode* root, int x, int y) {
 	if(!root) return NULL;
 	if(root->val == x or root->val == y) return root;
 	
-	TreeNode *lft = LCA_helper(root->left, x, y);
-	TreeNode *rgt = LCA_helper(root->right, x, y);
+	TreeNode* lft = LCA_helper(root->left, x, y);
+	TreeNode* rgt = LCA_helper(root->right, x, y);
 	
 	if(lft and rgt) return root;
 	else if(lft) return lft;
@@ -65,7 +75,7 @@ TreeNode* LCA_helper(TreeNode *root, int x, int y) {
 	else return NULL; 
 }
 
-TreeNode* LCA(TreeNode *root, int x, int y) {
+TreeNode* LCA(TreeNode* root, int x, int y) {
 	if(!is_present(root, x) or !is_present(root, y)) {
 		return NULL;
 	}

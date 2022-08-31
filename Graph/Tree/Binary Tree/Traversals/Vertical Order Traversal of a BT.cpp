@@ -1,5 +1,6 @@
 // Ref: https://www.educative.io/edpresso/how-to-use-a-vertical-order-traversal-of-a-binary-tree
-/**************************************************************************************************/
+//      https://takeuforward.org/data-structure/vertical-order-traversal-of-binary-tree/
+/*********************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -111,9 +112,9 @@ int main()
 
 // NOTE: Time complexity can be made linear by using std::unordered_map instead of a map, as 
 //       given in the link --->
-// https://www.educative.io/edpresso/how-to-use-a-vertical-order-traversal-of-a-binary-tree
+//       https://www.educative.io/edpresso/how-to-use-a-vertical-order-traversal-of-a-binary-tree
 
-/*******************************************************************************************/
+/*******************************************************************************************************/
 
 // A very slight modification of the problem --->
 // https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/
@@ -175,6 +176,7 @@ vvi verticalOrderTraversal(TreeNode *root) {
 	queue<pair<TreeNode*, pii>> q;
 	
 	q.push({root, {0, 0}});
+	
 	while(!q.empty()) {
 		TreeNode *node = q.front().F;
 		int ver = q.front().S.F;

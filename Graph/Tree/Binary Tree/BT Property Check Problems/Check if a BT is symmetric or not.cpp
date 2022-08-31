@@ -1,5 +1,7 @@
 // Problem: https://www.interviewbit.com/problems/symmetric-binary-tree/
+
 // Ref: https://www.youtube.com/watch?v=oA1yAKTFFdk&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=15
+//      https://takeuforward.org/data-structure/check-for-symmetrical-binary-tree/
 /******************************************************************************************************/
 
 #include<bits/stdc++.h>
