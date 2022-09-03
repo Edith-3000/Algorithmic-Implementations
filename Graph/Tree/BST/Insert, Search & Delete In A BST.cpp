@@ -1,6 +1,17 @@
+// Problems: https://leetcode.com/problems/insert-into-a-binary-search-tree/
+//           https://leetcode.com/problems/search-in-a-binary-search-tree/
+//           https://leetcode.com/problems/delete-node-in-a-bst/
+
 // Ref: https://www.geeksforgeeks.org/binary-search-tree-set-1-search-and-insertion/
+//      https://www.youtube.com/watch?v=KcNt6v_56cc&ab_channel=takeUforward
+//      https://www.youtube.com/watch?v=FiFiNvM29ps&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=45&ab_channel=takeUforward
+//      https://www.youtube.com/watch?v=gcULXE7ViZw&ab_channel=mycodeschool
 //      https://www.techiedelight.com/deletion-from-bst/
-/***********************************************************************************************************/
+/***************************************************************************************************************************/
+
+// NOTE: 1. The deletion of a node concept has been explained very beautifully in the "mycodeschool" video.
+
+/***************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -100,7 +111,7 @@ class BinarySearchTree {
 		BinarySearchTree(): root(NULL) {}
 		TreeNode* insert(TreeNode*, int);
 		TreeNode* search(TreeNode*, int);
-		void delete_(TreeNode* &, int);
+		TreeNode* delete_(TreeNode*, int);
 		TreeNode* in_predecessor(TreeNode*);
 		void inorder(TreeNode*);
 };
@@ -150,28 +161,46 @@ TreeNode* BinarySearchTree::search(TreeNode *root, int key) {
 	else return search(root->left, key);
 }
 
+// LEGACY CONTENT for delete_() :---> https://pastebin.com/cWTLiKGh
+
 // A utility function to delete a given key in BST 
-// NOTE THAT ROOT IS PASSED BY REFERENCE TO THE FUNCTION
-void BinarySearchTree::delete_(TreeNode* &root, int key) {
-	// base case
-	if(root == NULL) return;
-	
-	// if the given key is greater than the root node, recur for the right subtree
-	if(key > root->val) delete_(root->right, key);
+TreeNode* BinarySearchTree::delete_(TreeNode* root, int key) {
+	// base case(s)
+	if(root == NULL) return NULL;
 	
 	// if the given key is less than the root node, recur for the left subtree
-	else if(key < root->val) delete_(root->left, key);
+	if(key < root->val) root->left = delete_(root->left, key);
 	
-	// key found
+	// if the given key is greater than the root node, recur for the right subtree
+	else if(key > root->val) root->right = delete_(root->right, key);
+	
+	// wohoo.....key found
 	else {
 		// Case 1: node to be deleted has no children (it is a leaf node)
-		if(root->left == NULL and root->right == NULL) {
-			delete (root);
+		if((root->left == NULL) and (root->right == NULL)) {
+			delete root;
 			root = NULL;
 		}
 		
-		// Case 2: node to be deleted has two children
-		else if(root->left and root->right) {
+		// Case 2.1: node to be deleted has only one child (i.e right child)
+		else if(root->left == NULL) {
+			TreeNode* tmp = root;
+			root = root->right;
+			delete tmp;
+			tmp = NULL;
+		}
+		
+		// Case 2.2: node to be deleted has only one child (i.e left child)
+		else if(root->right == NULL) {
+			TreeNode* tmp = root;
+			root = root->left;
+			delete tmp;
+			tmp = NULL;
+		}
+		
+		// Case 3: node to be deleted has two children
+		// whenever Case 3 occurs we try to reduce it to Case 1 or Case2
+		else {
 			// find its inorder predecessor node
 			TreeNode *pred = in_predecessor(root->left);
 			
@@ -180,20 +209,12 @@ void BinarySearchTree::delete_(TreeNode* &root, int key) {
 			
 			// recursively delete the predecessor. Note that the
             // predecessor will have at most one child (left child)
-			delete_(root->left, key);
-		}
-		
-		// Case 3: node to be deleted has only one child
-		else {
-			// choose the child node
-			TreeNode *child = (root->left) ? root->left : root->right;
-			TreeNode *tmp = root;
-			root = child;
-			
-			delete (tmp);
-			tmp = NULL;
+			root->left = delete_(root->left, key);
 		}
 	}
+	
+	// return the updated root in the end
+	return root;
 }
 
 void solve()
@@ -221,7 +242,7 @@ void solve()
   		}
   		
   		else {
-  			b.delete_(b.root, key);
+  			b.root = b.delete_(b.root, key);
   		}
   	}
   	
