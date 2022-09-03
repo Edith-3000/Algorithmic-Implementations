@@ -1,1 +1,15 @@
 # Refer the video: https://www.youtube.com/watch?v=9GMECGQgWrQ&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=34
+/******************************************************************************************************************/
+
+# IMPORTANT INSIGHTS :--->
+
+  1. We CANNOT construct a UNIQUE binary tree from PREORDER and POSTORDER traversals only.
+
+     EXCEPTION: However if only PREORDER and POSTORDER traversals are given, you can construct a UNIQUE 
+                FULL binary tree.
+
+  2. We CAN construct a UNIQUE binary tree from (INORDER and PREORDER) or (INORDER and POSTORDER) 
+     traversals.
+
+  3. Wherever it is mentioned in insight #1 and insight #2 that a unique binary tree can be constructed by
+     some traversals, it is assumed that all the node values in the tree are unique.
