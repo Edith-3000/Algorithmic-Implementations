@@ -105,6 +105,7 @@ void is_bst(TreeNode *root, TreeNode* &prev, bool &ok) {
 	}
 	
 	prev = root;
+
 	is_bst(root->right, prev, ok);
 }
 
@@ -267,12 +268,11 @@ class TreeNode {
 };
 
 struct info {
-	// sz = size of subtree rooted at the current root
-	// mn, mx = min & mx value resp. in the subtree rooted at the current root
-	// ans = size of largest BST in the subtree rooted at the current root
-	// is_bst = to check if the subtree rooted at the current root is BST or not
-	int sz, mn, mx, ans;
-	bool is_bst;
+	int sz; // size of subtree rooted at the current root
+	int mn; // minimum value in the subtree rooted at the current root
+	int mx; // maximum value in the subtree rooted at the current root
+	int ans; // size of largest BST in the subtree rooted at the current root
+	bool is_bst; // to check if the subtree rooted at the current root is BST or not
 };
 
 // type of postorder traversal
@@ -291,22 +291,24 @@ info largest_bst(TreeNode *root) {
 	info rg = largest_bst(root->right);
 	
 	info cur;
+
 	cur.sz = 1 + lf.sz + rg.sz;
 	
-	int x = lf.mn, y = rg.mx;
-	cur.mn = (x == INT_MIN) ? root->val : min(x, root->val);
-	cur.mx = (y == INT_MAX) ? root->val : max(y, root->val);
+	cur.mn = min({lf.mn, root->val, rg.mn});
+    cur.mx = max({lf.mx, root->val, rg.mx});
 	
-	if(lf.is_bst and rg.is_bst) {
-		if(root->val > lf.mx and root->val < rg.mn) {
-			cur.ans = 1 + lf.ans + rg.ans;
-			cur.is_bst = true;
-			return cur;
-		}	
+	if(cur.mn == INT_MIN) cur.mn = root->val;
+	if(cur.mx == INT_MAX) cur.mx = root->val;
+	
+	if(lf.is_bst and rg.is_bst and (root->val > lf.mx) and (root->val < rg.mn)) {
+		cur.ans = 1 + lf.ans + rg.ans;
+	    cur.is_bst = true;
 	}
 	
-	cur.ans = max(lf.ans, rg.ans);
-	cur.is_bst = false;
+	else {
+		cur.ans = max(lf.ans, rg.ans);
+		cur.is_bst = false;
+	}
 	
 	return cur;
 }
@@ -322,6 +324,7 @@ void solve()
 	root->right->right = new TreeNode(7);
 	
 	info x = largest_bst(root);
+
 	cout << x.ans << "\n";
 }
 

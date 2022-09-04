@@ -1,13 +1,15 @@
 // Prob: https://practice.geeksforgeeks.org/problems/predecessor-and-successor/1#
+
 // Ref: https://www.youtube.com/watch?v=lQIXz5NJYLs&list=PLDdcY4olLQk0NJOWhs4PB3DWpjnuUESbk&index=4
-/***********************************************************************************************************/
+//      https://www.youtube.com/watch?v=SXKAD2svfmI&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=51&ab_channel=takeUforward
+/***************************************************************************************************************************/
 
 /* # This code returns the inorder predecessor & successor even if the key is not present in the BST, 
      according to its relative position.
 
-   # This code handles all the case, it's not always true that the inorder predecessor is the rightmost 
+   # This code handles all the cases, it's not always true that the inorder predecessor is the rightmost 
      node in the left subtree and same the case for successor.
-     For more insight on this point refer the Youtube video.
+     For more insight on this point refer the Youtube video of the channel "CodeLibrary - by Yogesh & Shailesh"
 */
 
 #include<bits/stdc++.h>
@@ -181,4 +183,4 @@ int main()
     return 0;
 }
 
-// Time complexity: O(height of BST)
+// Time complexity: O(Height of BST)

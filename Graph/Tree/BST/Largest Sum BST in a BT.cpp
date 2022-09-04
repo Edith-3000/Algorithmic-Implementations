@@ -1,10 +1,8 @@
-// Prob: https://leetcode.com/problems/construct-binary-tree-from-preorder-and-postorder-traversal/
-// Ref: https://www.youtube.com/watch?v=xe6cLIhberQ&ab_channel=Pepcoding
+// Prob: https://leetcode.com/problems/maximum-sum-bst-in-binary-tree/
 /******************************************************************************************************************/
 
-// NOTE: The below algorithm will always generate a full binary tree.
-//       https://www.techiedelight.com/construct-full-binary-tree-from-preorder-postorder-sequence/
-//       https://www.geeksforgeeks.org/full-and-complete-binary-tree-from-given-preorder-and-postorder-traversals/
+// NOTE: Only slight tweaks have been done in the algorithm of problem "Largest Size BST in a BT.cpp", rest
+//       all are same things.
 
 /******************************************************************************************************************/
 
@@ -107,78 +105,88 @@ class TreeNode {
 		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
 };
 
-void preorder(TreeNode *root) {
-	if(root == NULL) return;
-	cout << root->val << " ";
-	preorder(root->left);
-	preorder(root->right);
-}
+struct info {
+	int sum; // to store the sum of all nodes in the subtree rooted at current root
+	int mn; // minimum value in the subtree rooted at the current root
+	int mx; // maximum value in the subtree rooted at the current root
+	int ans; // maximum sum BST in the subtree rooted at the current root
+	bool is_bst; // to check if the subtree rooted at the current root is BST or not
+};
 
-void postorder(TreeNode *root) {
-	if(root == NULL) return;
-	postorder(root->left);
-	postorder(root->right);
-	cout << root->val << " ";
-}
+ // type of postorder traversal
+info maxSum_bst(TreeNode *root) {
+    // base case(s)
 
-// Function to construct any binary tree from given preorder & postorder traversals
-// The function doesn't do any error checking for cases where preorder and postorder
-// do not form a tree
+    // for null node
+    if(!root) return {0, INT_MAX, INT_MIN, 0, true};
 
-// Here ps = preorder start, pe = preorder end
-//      pos = postorder start, poe = postorder end
-TreeNode* build_tree(unordered_map<int, int> &m, vi &pre, vi &post, int ps, int pe, int pos, int poe) {
-	if((ps > pe) or (pos > poe)) return NULL;
-	
-	int root_data = pre[ps];
-	TreeNode *root = new TreeNode(root_data);
-	
-	if(ps == pe) return root;
-	
-	int idx = m[pre[ps + 1]];
-	
-	int len_left = idx - pos + 1;
-	
-	root->left = build_tree(m, pre, post, ps + 1, ps + len_left, pos, idx);
-	root->right = build_tree(m, pre, post, ps + len_left + 1, pe, idx + 1, poe - 1);
-	
-	return root;
+    // for leaf node
+    if(!root->left and !root->right) {
+        return {root->val, root->val, root->val, root->val, true};
+    }
+
+    info lf = maxSum_bst(root->left);
+    info rg = maxSum_bst(root->right);
+
+    info cur;
+    
+    cur.sum = root->val + lf.sum + rg.sum;
+
+    cur.mn = min({lf.mn, root->val, rg.mn});
+    cur.mx = max({lf.mx, root->val, rg.mx});
+
+    if(cur.mn == INT_MIN) cur.mn = root->val;
+    if(cur.mx == INT_MAX) cur.mx = root->val;
+
+    if(lf.is_bst and rg.is_bst and (root->val > lf.mx) and (root->val < rg.mn)) {
+        cur.is_bst = true;
+    }
+
+    else {
+        cur.is_bst = false;
+    }
+    
+    cur.ans = max(lf.ans, rg.ans);
+    if(cur.is_bst) cur.ans = max(cur.ans, lf.sum + root->val + rg.sum);
+    
+    return cur;
 }
 
 void solve()
 {
-  	int n; cin >> n;
-  	vi pre(n), post(n);
-  	
-  	for(int i = 0; i < n; i++) cin >> pre[i];
-  	for(int i = 0; i < n; i++) cin >> post[i];
-  	
-  	unordered_map<int, int> m;
-  	for(int i = 0; i < n; i++) m[post[i]] = i;
-  	
-  	TreeNode *root = build_tree(m, pre, post, 0, n - 1, 0, n - 1);
-  	
-  	preorder(root); cout << "\n";
-  	postorder(root); cout << "\n";
+  	TreeNode* root = new TreeNode(4);
+	root->left = new TreeNode(2);
+	root->right = new TreeNode(6);
+	root->left->left = new TreeNode(1);
+	root->left->right = new TreeNode(3);
+	root->right->left = new TreeNode(5);
+	root->right->right = new TreeNode(7);
+	
+	info x = maxSum_bst(root);
+
+	cout << x.ans << "\n";
 }
 
 int main()
 {
-	ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-	srand(chrono::high_resolution_clock::now().time_since_epoch().count());
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
 
-	// #ifndef ONLINE_JUDGE
-	//     freopen("input.txt", "r", stdin);
-	//     freopen("output.txt", "w", stdout);
-	// #endif
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
+    
+    // #ifndef ONLINE_JUDGE
+    //      freopen("error.txt", "w", stderr);
+    // #endif
+    
+    int t = 1;
+    // int test = 1;
+    // cin >> t;
+    while(t--) {
+        // cout << "Case #" << test++ << ": ";
+        solve();
+    }
 
-	int t = 1;
-	// int test = 1;
-	// cin >> t;
-	while(t--) {
-	  // cout << "Case #" << test++ << ": ";
-	  solve();
-	}
-
-	return 0;
+    return 0;
 }

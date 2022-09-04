@@ -1,7 +1,10 @@
-// Similar Problem: https://www.interviewbit.com/problems/recover-binary-search-tree/
+// Problem: https://www.interviewbit.com/problems/recover-binary-search-tree/
+//          https://leetcode.com/problems/recover-binary-search-tree/
+
 // Ref: https://www.youtube.com/watch?v=HsSSUSckMns&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=7
 //      https://www.techiedelight.com/fix-binary-tree-one-swap-bst/
-/********************************************************************************************************/
+//      https://www.youtube.com/watch?v=ZWGW7FminDM&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=54&ab_channel=takeUforward
+/****************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -53,16 +56,15 @@ void inorder(TreeNode* root, TreeNode* &x, TreeNode* &y, TreeNode* &prev) {
 	inorder(root->left, x, y, prev);
 	
 	// if the current node is less than the previous node
-	if(prev->val > root->val) {
-		// if this is the first occurrence, update x
+	if((prev != NULL) and (root->val < prev->val)) {
 		if(x == NULL) x = prev;
-		
-		// if second occurrence update y
-		if(x) y = root;
+		y = root;
 	}
 	
-	// update the previous node and recur for the right subtree
+	// update the previous node
 	prev = root;
+
+	// recur for the right subtree
 	inorder(root->right, x, y, prev);
 }
 
@@ -72,8 +74,8 @@ void correctBST(TreeNode *root) {
 	TreeNode *x = NULL, *y = NULL;
 	
 	// stores previously processed node in the inorder traversal
-    // initialize it by -INFINITY
-	TreeNode *prev = new TreeNode(INT_MIN);
+    // initialize it to NULL
+	TreeNode *prev = NULL;
 	
 	inorder(root, x, y, prev);
 	
