@@ -159,7 +159,7 @@ int main()
 // Time Complexity: O(n x sum) 
 // Auxiliary Space: O(n x sum) 
 
-// NOTE: This solution will not be feasible for arrays with big sum.
+// NOTE: This solution will not be feasible for big sum value.
 
 /********************************************************************************************************/
 
@@ -238,6 +238,9 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 vector<bool> dp;
 
+// NOTE: the below function can also be implemented in the following manner :--->
+//       https://pastebin.com/wPRnQSL2
+
 bool is_subset(vi &v, int sum, int n) {
     // initialisation of dp matrix by false
     for(int i = 0; i <= sum; i++) dp[i] = false;
@@ -307,4 +310,4 @@ int main()
 // Time Complexity: O(n x sum) 
 // Auxiliary Space: O(sum) 
 
-// NOTE: This solution will not be feasible for arrays with big sum.
+// NOTE: This solution will not be feasible for big sum value.

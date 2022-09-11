@@ -132,7 +132,7 @@ int target_sum(vi &v, int n, int target) {
 	if((target + sum) % 2 != 0) return 0;
 	
 	// to avoid overflow
-	// (S1-S2) = target, (S1+S2) = sum ==> S1 = (target+sum) / 2
+	// (S1 - S2) = target, (S1 + S2) = sum ==> S1 = (target + sum) / 2
 	int x = target + (sum - target) / 2;
 	
 	dp.resize(n+1);
@@ -283,7 +283,7 @@ int target_sum(vi &v, int n, int target) {
 	if((target + sum) % 2 != 0) return 0;
 	
 	// to avoid overflow
-	// (S1-S2) = target, (S1+S2) = sum ==> S1 = (target+sum) / 2
+	// (S1 - S2) = target, (S1 + S2) = sum ==> S1 = (target + sum) / 2
 	int x = target + (sum - target) / 2;
 	
 	dp.resize(x+1);

@@ -2,6 +2,7 @@
 
    PROBLEM: Given a set of integers, the task is to divide it into two sets S1 and S2 such that
             the absolute difference between their sums is minimum.
+
             NOTE: # The intersection of both the subsets must be Ø.
                   # The union of both the subsets must be the original set.
                   # All the elements of the set are non -ve.
@@ -226,9 +227,9 @@ int subset_sums(vi &v, int range, int n) {
         }
     }
     
-    int tmp = INT_MAX;
+    int tmp = INT_MIN;
     
-    for(int j = range/2; j >= 0; j--) {
+    for(int j = range / 2; j >= 0; j--) {
         if(dp[n][j]) {
             tmp = j;
             break;
