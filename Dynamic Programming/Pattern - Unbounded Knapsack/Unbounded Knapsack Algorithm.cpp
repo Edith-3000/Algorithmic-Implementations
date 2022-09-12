@@ -1,7 +1,8 @@
 // Problem: https://www.geeksforgeeks.org/unbounded-knapsack-repetition-items-allowed/
-/********************************************************************************************************/
+// Ref: https://www.youtube.com/watch?v=aycn9KO8_Ls&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=14&ab_channel=AdityaVerma
+/***************************************************************************************************************************/
 
-// RECURSIVE IMPLEMENTATION
+// METHOD - 1 (RECURSIVE IMPLEMENTATION)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -128,12 +129,12 @@ int main()
     return 0;
 }
 
-// Time complexity: O(2^n)
-// Space complexity: O(1), except recursive call stack overhead
+// Time complexity: https://youtu.be/OgvOZ6OrJoY?list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&t=579
+// Space complexity: https://youtu.be/OgvOZ6OrJoY?list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&t=579
 
 /********************************************************************************************************/
 
-// MEMOIZED IMPLEMENTATION
+// METHOD - 2 (MEMOIZED IMPLEMENTATION)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -270,7 +271,7 @@ int main()
 
 /********************************************************************************************************/
 
-// TABULATION IMPLEMENTATION (Real DP ;))
+// METHOD - 3 (TABULATION IMPLEMENTATION) (Real DP ;))
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -371,6 +372,7 @@ void solve()
 {
   	int n; ll w; cin >> n >> w;
   	vi wt(n), val(n);
+
   	for(int i = 0; i < n; i++) cin >> wt[i];
   	for(int i = 0; i < n; i++) cin >> val[i];
   	

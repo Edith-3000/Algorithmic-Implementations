@@ -96,6 +96,7 @@ int cut_rod(vi &prices, int len) {
 	if(len <= 0) return 0;
 	
 	int res = INT_MIN;
+
 	for(int i = 0; i < len; i++){
 		int cut_len = i + 1;
 		int curr_res = prices[i] + cut_rod(prices, len - cut_len);
@@ -139,10 +140,12 @@ int main()
     return 0;
 }
 
+// Time & Space Complexity: https://youtu.be/mO8XpGoJwuo?list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&t=757
+
 /*********************************************************************************************************/
 
 // METHOD - 2
-// Above problem is very much similar to unbounded knapsack proble.
+// Above problem is very much similar to unbounded knapsack problem.
 // Here wt array is replaced by length array,
 //      val array is replaced by price array. 
 

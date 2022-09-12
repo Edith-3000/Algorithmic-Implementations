@@ -1,9 +1,10 @@
-/* Link: https://www.geeksforgeeks.org/coin-change-dp-7/
+/* Link(s): https://www.geeksforgeeks.org/coin-change-dp-7/
+            https://leetcode.com/problems/coin-change-ii/
 
    PROBLEM: Given a value "sum", if we want to make change for "sum" cents, and we have INFINITE
             supply of each of S = {S1, S2, .. , Sm} valued coins, in how many unique ways
-            can we make the change? The order of coins doesn’t matter (i.e. find out the total 
-            #combinations)
+            can we make the change? 
+            The order of coins doesn’t matter (i.e. find out the total #combinations)
 */
 
 // METHOD - 1 (RECURSIVE)
@@ -353,8 +354,6 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 vi dp;
 
-// CAUTION: if the given coin denominations in v[] are not sorted then sort them first, 
-//          this is done so as to get combinations instead of permutations.
 int cnt_ways(vi &v, int n, int sum) {
 	// initialisation of dp matrix
 	for(int i = 0; i <= sum; i++) dp[i] = 0;
@@ -364,7 +363,9 @@ int cnt_ways(vi &v, int n, int sum) {
 
 	// choice diagram code iterative version
 	for(int i = 0; i < n; i++) {
-		for(int j = v[i]; j <= sum; j++) dp[j] += dp[j - v[i]];
+		for(int j = v[i]; j <= sum; j++) {
+            dp[j] += dp[j - v[i]];
+        }
 	}
 
 	return dp[sum];
