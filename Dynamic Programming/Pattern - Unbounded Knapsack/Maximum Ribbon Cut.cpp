@@ -1,7 +1,8 @@
 // Problem: https://www.geeksforgeeks.org/maximum-product-cutting-dp-36/
+// Similar problem: https://leetcode.com/problems/integer-break/
 /*****************************************************************************************************/
 
-// METHOD - 1 (RECURSIVE)
+// METHOD - 1 (RECURSIVE IMPLEMENTATION)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -82,9 +83,10 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 int max_ribbon(int len) {
 	// base case
-	if(len <= 0 or len == 1) return 0;
+	if(len == 0 or len == 1) return 0;
 	
 	int res = INT_MIN;
+
 	for(int i = 1; i < len; i++) {
 		res = max(res, max(i * (len - i), i * max_ribbon(len - i)));
 	}
@@ -125,7 +127,7 @@ int main()
 
 /******************************************************************************************************/
 
-// METHOD - 2
+// METHOD - 2 (TABULATION IMPLEMENTATION)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -213,7 +215,7 @@ int max_ribbon(int len) {
 	
 	for(int x = 2; x <= len; x++) {
 		for(int i = 1; i < x; i++) {
-			dp[x] = max(dp[x], max(i * (x - i), i * dp[x-i]));
+			dp[x] = max(dp[x], max(i * (x - i), i * dp[x - i]));
 		}
 	}
 	
@@ -223,7 +225,10 @@ int max_ribbon(int len) {
 void solve()
 {
   	int len; cin >> len;
+
+    dp.clear();
   	dp.resize(len + 1);
+
   	cout << max_ribbon(len) << "\n";
 }
 
