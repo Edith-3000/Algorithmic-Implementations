@@ -1,8 +1,12 @@
 /* Link: https://www.geeksforgeeks.org/printing-longest-common-subsequence/
+
    PROBLEM: Given two sequences, print the longest subsequence present in both of them.
 */
 
 // Ref: https://www.youtube.com/watch?v=x5hQvnUcjiM&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=23
+//      https://www.youtube.com/watch?v=-zI4mrF2Pb4&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=28&ab_channel=takeUforward
+
+/************************************************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
