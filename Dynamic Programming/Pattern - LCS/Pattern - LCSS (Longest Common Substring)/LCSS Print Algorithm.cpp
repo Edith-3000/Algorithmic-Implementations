@@ -109,6 +109,7 @@ string print_LCSS(string &s1, string &s2, int n, int m) {
     int mx = len_LCSS(s1, s2, n, m);
     
     int x = -1, y = -1;
+
     for(int i = 1; i <= n; i++) {
     	for(int j = 1; j <= m; j++) {
     		if(dp[i][j] == mx) { x = i; y = j; break; }
@@ -121,12 +122,14 @@ string print_LCSS(string &s1, string &s2, int n, int m) {
     string res = "";
     
     int i = x, j = y;
+
     while(i > 0 and j > 0 and dp[i][j] != 0) {
     	res.pb(s1[i-1]);
     	i--; j--;
     }
     
     reverse(res.begin(), res.end());
+    
     return res;
 }
 

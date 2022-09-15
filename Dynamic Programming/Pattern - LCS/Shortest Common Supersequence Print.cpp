@@ -1,4 +1,5 @@
 /* Link: https://www.geeksforgeeks.org/shortest-possible-combination-two-strings/
+         https://leetcode.com/problems/shortest-common-supersequence/
 
    PROBLEM: Given two strings s1 and s2, print the shortest string that has both s1 and s2 as subsequences.
             If multiple shortest supersequence exists, print any one of them.
@@ -118,7 +119,7 @@ string print_SCS(string &s1, string &s2, int n, int m) {
     
     while(i > 0 and j > 0) {
         // if current character in s1 and s2 are same, then 
-        // current character is part of shortest supersequence 
+        // current character is part of shortest common subsequence 
         if(s1[i-1] == s2[j-1]) {
             res.pb(s1[i-1]);
             i--; j--;
@@ -139,6 +140,7 @@ string print_SCS(string &s1, string &s2, int n, int m) {
     while(i > 0) { res.pb(s1[i-1]); i--; }
     
     reverse(res.begin(), res.end());
+
     return res;
 }
 
