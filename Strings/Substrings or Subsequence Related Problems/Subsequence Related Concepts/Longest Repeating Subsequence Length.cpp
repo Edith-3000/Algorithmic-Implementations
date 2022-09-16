@@ -1,16 +1,20 @@
 /* Link: https://www.geeksforgeeks.org/longest-repeating-subsequence/
-
+    
+   Ref: https://www.youtube.com/watch?v=hbTaCmQGqLg&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=29
+        https://www.youtube.com/watch?v=oL7GCrcdaJI&ab_channel=Pepcoding
+   
    PROBLEM: Given a string, find length of the longest repeating subseequence such that the two 
             subsequence don’t have same string character at same position, i.e., any i’th character 
             in the two subsequences shouldn’t have the same index in the original string.
 */
 
-/* # This problem is just the modification of Longest Common Subsequence problem. 
+/*****************************************************************************************************************/
+
+/* # This problem is just the modification of Longest Common Subsequence problem.
+
    # The idea is to find the LCS(str, str) where str is the input string with the restriction that 
      when both the characters are same, they shouldn't be on the same index in the two strings.
 */
-
-// Ref: https://www.youtube.com/watch?v=hbTaCmQGqLg&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=29
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -104,7 +108,7 @@ int len_LRS(string &s1, string &s2, int n, int m) {
         	// if characters match and indices are not same 
             if(s1[i-1] == s2[j-1] and i != j) dp[i][j] = 1 + dp[i-1][j-1];
             
-            // if characters do not match
+            // if characters do not match or they match but indices are same
             else dp[i][j] = max(dp[i][j-1], dp[i-1][j]);
         }
     }

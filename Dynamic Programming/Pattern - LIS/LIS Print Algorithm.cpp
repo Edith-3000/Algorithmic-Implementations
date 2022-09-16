@@ -4,41 +4,50 @@
             subsequence). 
             For example --->
             the LIS for {10, 22, 9, 33, 21, 50, 41, 60, 80} is {10, 22, 33, 50, 60, 80}.
+   
+   Ref: https://www.youtube.com/watch?v=IFfYfonAFGc&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=44&ab_channel=takeUforward
 
    Problem based on this concept --->
    https://codeforces.com/problemset/problem/4/D
 */
 
+/*****************************************************************************************************************/
+
 // METHOD - 1 O(n^2) Time & Memory
 // https://www.techiedelight.com/longest-increasing-subsequence-using-dynamic-programming/
 
-/*Underlyring concept:
-  Let v[0...(n-1)] be the input array/vector. We define an array of vectors L that stores LIS of v 
-  that ends with v[i] for each 0 <= i <= (n-1). For example, for vector [3, 2, 6, 4, 5, 1],
+/* Underlyring concept:--->
 
-  L[0]: 3
-  L[1]: 2
-  L[2]: 2 6 (or) 3 6
-  L[3]: 2 4 (or) 3 4
-  L[4]: 2 4 5
-  L[5]: 1
+   Let v[0...(n-1)] be the input array/vector. We define an array of vectors L that stores LIS of v 
+   that ends with v[i] for each 0 <= i <= (n-1). For example, for vector [3, 2, 6, 4, 5, 1],
+
+   L[0]: 3
+   L[1]: 2
+   L[2]: 2 6 (or) 3 6
+   L[3]: 2 4 (or) 3 4
+   L[4]: 2 4 5
+   L[5]: 1
 */
 
-/*Some Extra Points ---->
-  Ques. What is the difference between vector<int>v1[] and vector<vector<int>>v2 ?
-  Ans. ● v1 is an array of vectors while v2 is a vector of vectors.
-       ● v1 can't grow. You cannot make v1.push_back(...) as its not a vector object. Its just an array. 
-         While v2 is dynamic. You can grow it as you please.
-       ● When you want to work with a fixed number of std::vector elements, you can use vector<int>v1[].
-         When you want to work with a dynamic array of std::vector, you can use vector<vector<int>>v2.
+/* Some Extra Points :---->
 
-       ● Although both can be initialized in the same way, e.g.
-         vector<int>v1[]        {{1,2,3}, {4,5,6}};
-         vector<vector<int>>v2  {{1,2,3}, {4,5,6}};
+   Ques. What is the difference between vector<int>v1[] and vector<vector<int>>v2 ?
+
+   Ans. ● v1 is an array of vectors while v2 is a vector of vectors.
+
+        ● v1 can't grow. You cannot make v1.push_back(...) as its not a vector object. Its just an array. 
+          While v2 is dynamic. You can grow it as you please.
+
+        ● When you want to work with a fixed number of std::vector elements, you can use vector<int>v1[].
+          When you want to work with a dynamic array of std::vector, you can use vector<vector<int>>v2.
+
+        ● Although both can be initialized in the same way, e.g.
+          vector<int>v1[]        {{1,2,3}, {4,5,6}};
+          vector<vector<int>>v2  {{1,2,3}, {4,5,6}};
          
-         Can also be printed in the same way, e.g.
-         cout << v1[0].back() << endl;
-         cout << v2[0].back() << endl;
+          Can also be printed in the same way, e.g.
+          cout << v1[0].back() << endl;
+          cout << v2[0].back() << endl;
 */
 
 #include<bits/stdc++.h>
@@ -183,7 +192,7 @@ int main()
 // Time Complexity: O(n^2)
 // Auxiliary Space: O(n^2)
 
-/*******************************************************************************************************/
+/***********************************************************************************************************/
 
 // METHOD - 2 O(n^2) Time & O(n) Memory
 

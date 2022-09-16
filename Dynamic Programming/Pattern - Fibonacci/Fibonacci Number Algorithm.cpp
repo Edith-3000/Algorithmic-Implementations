@@ -1,40 +1,8 @@
-/* PROBLEM: Given an array arr[0...(n-1)] containing n integers, a subsequence of arr[] is called 
-            Bitonic if it is first increasing, then decreasing. Write a function that takes an array 
-            as argument and returns the length of the longest bitonic subsequence.
-            
-            NOTE: A sequence, sorted in increasing order is considered Bitonic with the decreasing part 
-                  as empty. Similarly, decreasing order sequence is considered Bitonic with the increasing part 
-                  as empty.
+// Prob: https://leetcode.com/problems/fibonacci-number/
+// Ref: https://www.youtube.com/watch?v=tyB0ztf0DNY&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=3&ab_channel=takeUforward
+/***************************************************************************************************************************************/
 
-   Link: https://www.geeksforgeeks.org/longest-bitonic-subsequence-dp-15/
-
-   Problem based on similar concept: https://leetcode.com/problems/minimum-number-of-removals-to-make-mountain-array/
-*/
-
-/* UNDERLYING CONCEPT :----->
-
-   # This problem is a variation of standard Longest Increasing Subsequence (LIS) problem.
-   # We need to construct two arrays lis[] and lds[] using Dynamic Programming solution of LIS problem. 
-   # lis[i] stores the length of the Longest Increasing subsequence 𝑬𝒏𝒅𝒊𝒏𝒈 with arr[i]. 
-   # lds[i] stores the length of the longest Decreasing subsequence 𝑺𝒕𝒂𝒓𝒕𝒊𝒏𝒈 from arr[i]. 
-   # Finally, we need to return the max value of (lis[i] + lds[i] – 1) where i is from 0 to n-1.
-
-   # For example, consider sequence [4, 2, 5, 9, 7, 6, 10, 3, 1]. The contents of LIS and LDS array are
-
-             |lis[i] |lds[i] |
-    (i = 0)  |   1   |   3   |
-    (i = 1)  |   1   |   2   |
-    (i = 2)  |   2   |   3   |
-    (i = 3)  |   3   |   5   |
-    (i = 4)  |   3   |   4   |
-    (i = 5)  |   3   |   3   |
-    (i = 6)  |   4   |   3   |
-    (i = 7)  |   2   |   3   |
-    (i = 8)  |   1   |   1   |
-
-    Longest Bitonic Subsequence length is 7 [4, 5, 9, 7, 6, 3, 1]
-    Longest Bitonic Subsequence is formed by (lis[3] + lds[3] - 1)
-*/
+// METHOD - 1 (RECURSIVE IMPLEMENTATION)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -125,68 +93,22 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-int LBS_length(vi &v) {
-    int n = (int)v.size();
-    if(n == 0) return 0;
-    
-    vi lis(n), lds(n);
-    
-    // initialisation of dp matrices lis[] & lds[]
-    // longest increasing subsequence ending with v[0] has length 1
-    lis[0] = 1;
-    
-    // longest decreasing subsequence starting with v[n-1] has length 1
-    lds[n-1] = 1;
-
-    // choice diagram iterative code 
-    // for lis[]
-    // start from second element in the vector v[]
-    for (int i = 1; i < n; i++) {
-        // do for each element in subarray/subvector v[0...(i-1)]
-        for(int j = 0; j < i; j++) {
-            // find longest increasing subsequence that ends with v[j]
-            // where v[j] is less than the current element v[i]
-            if (v[i] > v[j] and lis[i] < lis[j]) lis[i] = lis[j];
-        }
-
-        // include v[i] in LIS, since for each i we are finding lisLength
-        // which ends with v[i]
-        lis[i]++;
-    }
-    
-    // for lds[]
-    // start from second last element in the vector v[]
-    for (int i = (n - 2); i >= 0; i--) {
-        // do for each element in subarray/subvector v[(i+1)....(n-1)]
-        for(int j = (n - 1); j > i; j--) {
-            // find longest decreasing subsequence that starts with v[j]
-            // where v[j] is less than the current element v[i]
-            if (v[i] > v[j] and lds[i] < lds[j]) lds[i] = lds[j];
-        }
-
-        // include v[i] in LDS, since for each i we are finding ldsLength
-        // which starts with v[i]
-        lds[i]++;
-    }
-
-    // find the maximum value of lis[i] + lds[i] - 1
-    int mx = lis[0] + lds[0] - 1; 
-   
-    for(int i = 1; i < n; i++) {
-        mx = max(mx, lis[i] + lds[i] - 1);
-    } 
-     
-    // return the final answer calculated
-    return mx;
+// function to return 0-based indexed n-th number of the 
+// fibonacci sequence ===> 0, 1, 1, 2, 3, 5, 8, 13, 21 .....
+int nth_fibonacci(int n) {
+	// base case(s)
+	if(n <= 1) return n;
+	
+	// fib(n) = fib(n - 1) + fib(n - 2) for n >= 2
+	int res = nth_fibonacci(n - 1) + nth_fibonacci(n - 2);
+	
+	return res;
 }
 
 void solve()
 {
-    int n; cin >> n;
-    vi v(n);
-    for(int i = 0; i < n; i++) cin >> v[i];
-    
-    cout << LBS_length(v) << "\n";
+  	int n; cin >> n;
+  	cout << nth_fibonacci(n) << "\n";
 }
 
 int main()
@@ -213,5 +135,15 @@ int main()
     return 0;
 }
 
-// Time Complexity: O(n^2)
-// Auxiliary Space: O(n)
+/***************************************************************************************************************************************/
+
+// METHOD - 2 (MEMOIZED IMPLEMENTATION)
+
+/***************************************************************************************************************************************/
+
+// METHOD - 3 (TABULATION IMPLEMENTATION)
+
+/***************************************************************************************************************************************/
+
+// METHOD - 4 (SPACE OPTIMIZED OF METHOD - 3)
+
