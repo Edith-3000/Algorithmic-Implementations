@@ -1,6 +1,8 @@
-// Prob: https://leetcode.com/problems/fibonacci-number/
-// Ref: https://www.youtube.com/watch?v=tyB0ztf0DNY&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=3&ab_channel=takeUforward
-/***************************************************************************************************************************************/
+// Prob: https://leetcode.com/problems/house-robber/
+
+// Ref: https://www.youtube.com/watch?v=GrMBfJNk_NY&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=7&ab_channel=takeUforward
+
+/*******************************************************************************************************************************/
 
 // METHOD - 1 (RECURSIVE IMPLEMENTATION)
 
@@ -93,22 +95,25 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// function to return 0-based indexed n-th number of the 
-// fibonacci sequence ===> 0, 1, 1, 2, 3, 5, 8, 13, 21 .....
-int nth_fibonacci(int n) {
+int max_sum_of_non_adjacent_elements(int n, vi &v) {
 	// base case(s)
-	if(n <= 1) return n;
-	
-	// fib(n) = fib(n - 1) + fib(n - 2) for n >= 2
-	int res = nth_fibonacci(n - 1) + nth_fibonacci(n - 2);
-	
-	return res;
+	if(n <= 0) return 0;
+    
+    int exc = max_sum_of_non_adjacent_elements(n - 1, v);
+    int inc = v[n - 1] + max_sum_of_non_adjacent_elements(n - 2, v);
+    
+    int res = max(inc, exc);
+    
+    return res;
 }
 
 void solve()
 {
   	int n; cin >> n;
-  	cout << nth_fibonacci(n) << "\n";
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	cout << max_sum_of_non_adjacent_elements(n, v) << "\n";
 }
 
 int main()
@@ -135,7 +140,7 @@ int main()
     return 0;
 }
 
-/***************************************************************************************************************************************/
+/*******************************************************************************************************************************/
 
 // METHOD - 2 (MEMOIZED IMPLEMENTATION)
 
@@ -230,29 +235,31 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 vi dp;
 
-// function to return 0-based indexed n-th number of the 
-// fibonacci sequence ===> 0, 1, 1, 2, 3, 5, 8, 13, 21 .....
-int nth_fibonacci(int n) {
+int max_sum_of_non_adjacent_elements(int n, vi &v) {
 	// base case(s)
-	if(n <= 1) return n;
-	
-	// check if already calculated
-	if(dp[n] != -1) return dp[n];
-	
-	// fib(n) = fib(n - 1) + fib(n - 2) for n >= 2
-	int res = nth_fibonacci(n - 1) + nth_fibonacci(n - 2);
-	
-	return dp[n] = res;
+	if(n <= 0) return 0;
+    
+    // check if already calculated
+    if(dp[n] != -1) return dp[n];
+    
+    int exc = max_sum_of_non_adjacent_elements(n - 1, v);
+    int inc = v[n - 1] + max_sum_of_non_adjacent_elements(n - 2, v);
+    
+    int res = max(inc, exc);
+    
+    return dp[n] = res;
 }
 
 void solve()
 {
   	int n; cin >> n;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
   	
   	dp.clear();
-  	dp.resize(n + 1, -1);
+    dp.resize(n + 1, -1);
   	
-  	cout << nth_fibonacci(n) << "\n";
+  	cout << max_sum_of_non_adjacent_elements(n, v) << "\n";
 }
 
 int main()
@@ -279,7 +286,7 @@ int main()
     return 0;
 }
 
-/***************************************************************************************************************************************/
+/*******************************************************************************************************************************/
 
 // METHOD - 3 (TABULATION IMPLEMENTATION)
 
@@ -372,27 +379,30 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// function to return 0-based indexed n-th number of the 
-// fibonacci sequence ===> 0, 1, 1, 2, 3, 5, 8, 13, 21 .....
-int nth_fibonacci(int n) {
+int max_sum_of_non_adjacent_elements(vi &v) {
+	int n = sz(v);
 	if(n == 0) return 0;
-		
-	vi dp(n + 1);
 	
-	dp[0] = 0;
-	dp[1] = 1;
+	vi dp(n, 0);
 	
-	for(int i = 2; i <= n; i++) {
-		dp[i] = dp[i - 1] + dp[i - 2];
+	dp[0] = v[0];
+	
+	for(int i = 1; i < n; i++) {
+		int exc = dp[i - 1];
+		int inc = v[i] + ((i > 1) ? dp[i - 2] : 0);
+		dp[i] = max(exc, inc);
 	}
 	
-	return dp[n];
+	return dp[n - 1];
 }
 
 void solve()
 {
-  	int n; cin >> n;  	
-  	cout << nth_fibonacci(n) << "\n";
+  	int n; cin >> n;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	cout << max_sum_of_non_adjacent_elements(v) << "\n";
 }
 
 int main()
@@ -419,9 +429,9 @@ int main()
     return 0;
 }
 
-/***************************************************************************************************************************************/
+/******************************************************************************************************************************************/
 
-// METHOD - 4 (SPACE OPTIMIZED OF METHOD - 3)
+// METHOD - 4 (SPACE OPTIMIZATION OF METHOD - 3)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -512,17 +522,21 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// function to return 0-based indexed n-th number of the 
-// fibonacci sequence ===> 0, 1, 1, 2, 3, 5, 8, 13, 21 .....
-int nth_fibonacci(int n) {
-	if(n <= 1) return n;
+int max_sum_of_non_adjacent_elements(vi &v) {
+	int n = sz(v);
+	if(n == 0) return 0;
+	if(n == 1) return v[0];
 	
-	int prev1 = 0, prev2 = 1;
-	
-	for(int i = 2; i <= n; i++) {
-		int cur = prev1 + prev2;
+	int prev1 = v[0];
+	int prev2 = max(v[1], v[0]);
+		
+	for(int i = 2; i < n; i++) {
+		int exc = prev2;
+		int inc = v[i] + prev1;
+		int current = max(exc, inc);
+		
 		prev1 = prev2;
-		prev2 = cur;
+		prev2 = current;
 	}
 	
 	return prev2;
@@ -530,8 +544,11 @@ int nth_fibonacci(int n) {
 
 void solve()
 {
-  	int n; cin >> n;  	
-  	cout << nth_fibonacci(n) << "\n";
+  	int n; cin >> n;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	cout << max_sum_of_non_adjacent_elements(v) << "\n";
 }
 
 int main()
