@@ -1,4 +1,5 @@
 // PROBLEM: Given an array of n integers. Print a contiguous sub-array with maximum sum.
+
 // Ref: https://www.geeksforgeeks.org/print-the-maximum-subarray-sum/
 /****************************************************************************************************/
 
@@ -111,6 +112,7 @@ pii kadane_algo(vi &v) {
 	}
 	
 	int start = end;
+	
 	while(start >= 0) {
 		mx -= v[start];
 		if(mx == 0) break;
