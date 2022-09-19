@@ -1,256 +1,490 @@
-// Useful Reference(s): --->
-// https://medium.com/algorithms-and-leetcode/best-time-to-buy-sell-stocks-on-leetcode-the-ultimate-guide-ce420259b323
-
 // Problem link: https://leetcode.com/problems/best-time-to-buy-and-sell-stock-with-cooldown/
 
-/************************************************************************************************************/
+// Useful Reference(s): --->
+// https://medium.com/algorithms-and-leetcode/best-time-to-buy-sell-stocks-on-leetcode-the-ultimate-guide-ce420259b323
+// https://www.youtube.com/watch?v=IGIe46xw3YY&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=40&ab_channel=takeUforward
 
-// Method 1 (Recursive Approach)
+/*************************************************************************************************************************/
+
+// LEGACY CONTENT: https://pastebin.com/7nYABqW8
+
+/*************************************************************************************************************************/
+
+// METHOD - 1 (RECURSIVE APPROACH)
 
 #include<bits/stdc++.h>
 using namespace std;
 
-int solve(int pos, int n, vector<int> &v) {
-	// base case for out of bounds
-	if(pos >= n) return 0;
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define pb push_back
+#define ppb pop_back
+#define pf push_front
+#define ppf pop_front
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+#define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
+
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<bool> vb;
+typedef vector<char> vc;
+typedef vector<string> vs;
+typedef vector<pii> vpii;
+typedef vector<pll> vpll;
+typedef vector<vi> vvi;
+typedef vector<vll> vvll;
+typedef vector<vull> vvull;
+typedef vector<vb> vvb;
+typedef vector<vc> vvc;
+typedef vector<vs> vvs;
+
+/************************************************** DEBUGGER *******************************************************************************************************/
+
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
+
+void _print(ll t) { cerr << t; }
+void _print(int t) { cerr << t; }
+void _print(string t) { cerr << t; }
+void _print(char t) { cerr << t; }
+void _print(ld t) { cerr << t; }
+void _print(double t) { cerr << t; }
+void _print(ull t) { cerr << t; }
+
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(vector <vector<T>> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
+template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
+template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
+template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
+
+/*******************************************************************************************************************************************************************/
+
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9+7;
+
+ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
+                         while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
+                         
+ll mod_inv(ll a) { return mod_exp(a, mod - 2); } // works only for prime value of "mod"
+ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
+
+/******************************************************************************************************************************/
+
+int max_profit(int idx, int canBuy, int n, vi &v) {
+	// base case(s)
+	if(idx >= n) return 0;
 	
-	// assuming that we are skipping the current day
-	int res = solve(pos + 1, n, v);
+	// to store the final result
+	int res;
 	
-	// assuming that we buy on pos find all the positions 
-	// where we can sell the stock
-	for(int i = pos + 1; i < n; i++) {
-		// to gain profit v[i] must > v[pos]
-		if(v[i] > v[pos]) {
-			// as we have sell the stock on ith day then there is a cooldown
-			// of 1 day, so we now start our subproblem from (i + 2)th day
-			res = max(res, v[i] - v[pos] + solve(i + 2, n, v));	
-		}
+	if(canBuy) {
+		int bought = -v[idx] + max_profit(idx + 1, 0, n, v);
+		int notBought = max_profit(idx + 1, 1, n, v);
+		
+		res = max(bought, notBought);
+	}
+	
+	else {
+		int sold = v[idx] + max_profit(idx + 2, 1, n, v);
+		int notSold = max_profit(idx + 1, 0, n, v);
+		
+		res = max(sold, notSold);
 	}
 	
 	return res;
 }
 
-int maxProfit(vector<int> &prices) {
-	vector<int> v = prices;
-	int n = v.size();
-	
-	if(n < 2) return 0;
-	if(n == 2) return max(0, v[1] - v[0]);
-	
-	return solve(0, n, v);	
+void solve()
+{
+  	int n; cin >> n;
+  	vi prices(n);
+  	for(int i = 0; i < n; i++) cin >> prices[i];
+  	
+  	cout << max_profit(0, 1, n, prices) << "\n";
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
     //     freopen("output.txt", "w", stdout);
     // #endif
-
-    vector<int> prices {1, 2, 3, 0, 2};
-    cout << maxProfit(prices);
+    
+    // #ifndef ONLINE_JUDGE
+    //      freopen("error.txt", "w", stderr);
+    // #endif
+    
+    int t = 1;
+    // int test = 1;
+    // cin >> t;
+    while(t--) {
+        // cout << "Case #" << test++ << ": ";
+        solve();
+    }
 
     return 0;
 }
 
-// Time complexity: O(n^n), where n = size of input array 
+// Time complexity: O(2^n),
+// Space complexity: O(n), [recursion call stack overhead]
+// where n = size of input array
 
-/******************************************************************************************************/
+/************************************************************************************************************/
 
-// Method 2 (Top Down DP)
+// METHOD - 2 (TOP DOWN DP)
 
 #include<bits/stdc++.h>
 using namespace std;
 
-int solve(int pos, int n, vector<int> &v, vector<int> &dp) {
-	// base case for out of bounds
-	if(pos >= n) return 0;
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define pb push_back
+#define ppb pop_back
+#define pf push_front
+#define ppf pop_front
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+#define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
+
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<bool> vb;
+typedef vector<char> vc;
+typedef vector<string> vs;
+typedef vector<pii> vpii;
+typedef vector<pll> vpll;
+typedef vector<vi> vvi;
+typedef vector<vll> vvll;
+typedef vector<vull> vvull;
+typedef vector<vb> vvb;
+typedef vector<vc> vvc;
+typedef vector<vs> vvs;
+
+/************************************************** DEBUGGER *******************************************************************************************************/
+
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
+
+void _print(ll t) { cerr << t; }
+void _print(int t) { cerr << t; }
+void _print(string t) { cerr << t; }
+void _print(char t) { cerr << t; }
+void _print(ld t) { cerr << t; }
+void _print(double t) { cerr << t; }
+void _print(ull t) { cerr << t; }
+
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(vector <vector<T>> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
+template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
+template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
+template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
+
+/*******************************************************************************************************************************************************************/
+
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9+7;
+
+ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
+                         while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
+                         
+ll mod_inv(ll a) { return mod_exp(a, mod - 2); } // works only for prime value of "mod"
+ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
+
+/******************************************************************************************************************************/
+
+vvi dp;
+
+int max_profit(int idx, int canBuy, int n, vi &v) {
+	// base case(s)
+	if(idx >= n) return 0;
 	
 	// check if already calculated or not
-	if(dp[pos] != -1) return dp[pos];
+	if(dp[idx][canBuy] != -1) return dp[idx][canBuy];
 	
-	// assuming that we are skipping the current day
-	int res = solve(pos + 1, n, v, dp);
+	// to store the final result
+	int res;
 	
-	// assuming that we buy on pos find all the positions 
-	// where we can sell the stock
-	for(int i = pos + 1; i < n; i++) {
-		// to gain profit v[i] must > v[pos]
-		if(v[i] > v[pos]) {
-			// as we have sell the stock on ith day then there is a cooldown
-			// of 1 day, so we now start our subproblem from (i + 2)th day
-			res = max(res, v[i] - v[pos] + solve(i + 2, n, v, dp));	
+	if(canBuy) {
+		int bought = -v[idx] + max_profit(idx + 1, 0, n, v);
+		int notBought = max_profit(idx + 1, 1, n, v);
+		
+		res = max(bought, notBought);
+	}
+	
+	else {
+		int sold = v[idx] + max_profit(idx + 2, 1, n, v);
+		int notSold = max_profit(idx + 1, 0, n, v);
+		
+		res = max(sold, notSold);
+	}
+	
+	return dp[idx][canBuy] = res;
+}
+
+void solve()
+{
+  	int n; cin >> n;
+  	vi prices(n);
+  	for(int i = 0; i < n; i++) cin >> prices[i];
+  	
+  	dp.clear();
+  	dp.resize(n, vi(2, -1));
+  	
+  	cout << max_profit(0, 1, n, prices) << "\n";
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
+
+    // #ifndef ONLINE_JUDGE
+    //     freopen("input.txt", "r", stdin);
+    //     freopen("output.txt", "w", stdout);
+    // #endif
+    
+    // #ifndef ONLINE_JUDGE
+    //      freopen("error.txt", "w", stderr);
+    // #endif
+    
+    int t = 1;
+    // int test = 1;
+    // cin >> t;
+    while(t--) {
+        // cout << "Case #" << test++ << ": ";
+        solve();
+    }
+
+    return 0;
+}
+
+// Time complexity: O(n)
+// Space complexity: O(n), where n = size of input array
+
+/*****************************************************************************************************************/
+
+// METHOD - 3 (BOTTOM UP DP)
+
+#include<bits/stdc++.h>
+using namespace std;
+
+#define ll long long
+#define ld long double
+#define ull unsigned long long
+#define pb push_back
+#define ppb pop_back
+#define pf push_front
+#define ppf pop_front
+#define mp make_pair
+#define F first
+#define S second
+#define PI 3.1415926535897932384626
+#define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
+
+typedef pair<int, int> pii;
+typedef pair<ll, ll> pll;
+typedef vector<int> vi;
+typedef vector<ll> vll;
+typedef vector<ull> vull;
+typedef vector<bool> vb;
+typedef vector<char> vc;
+typedef vector<string> vs;
+typedef vector<pii> vpii;
+typedef vector<pll> vpll;
+typedef vector<vi> vvi;
+typedef vector<vll> vvll;
+typedef vector<vull> vvull;
+typedef vector<vb> vvb;
+typedef vector<vc> vvc;
+typedef vector<vs> vvs;
+
+/************************************************** DEBUGGER *******************************************************************************************************/
+
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
+#else
+#define debug(x)
+#endif
+
+void _print(ll t) { cerr << t; }
+void _print(int t) { cerr << t; }
+void _print(string t) { cerr << t; }
+void _print(char t) { cerr << t; }
+void _print(ld t) { cerr << t; }
+void _print(double t) { cerr << t; }
+void _print(ull t) { cerr << t; }
+
+template <class T, class V> void _print(pair <T, V> p);
+template <class T> void _print(vector <T> v);
+template <class T> void _print(vector <vector<T>> v);
+template <class T> void _print(set <T> v);
+template <class T, class V> void _print(map <T, V> v);
+template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
+template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
+template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
+template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
+
+/*******************************************************************************************************************************************************************/
+
+const int INF = 0x3f3f3f3f;
+const int mod = 1e9+7;
+
+ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
+                         while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
+                         
+ll mod_inv(ll a) { return mod_exp(a, mod - 2); } // works only for prime value of "mod"
+ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
+
+/******************************************************************************************************************************/
+
+int max_profit(vi &v) {
+	int n = sz(v);
+	if(n == 0) return 0;
+	
+	vvi dp(n + 1, vi(2));
+	
+	dp[n][0] = dp[n][1] = 0;
+	
+	for(int i = n - 1; i >= 0; i--) {
+		for(int j = 0; j <= 1; j++) {
+			if(j == 1) {
+				int bought = -v[i] + dp[i + 1][0];
+				int notBought = dp[i + 1][1];
+				
+				dp[i][j] = max(bought, notBought);
+			}
+			
+			else {
+				int sold = v[i] + ((i + 2 <= n) ? dp[i + 2][1] : 0);
+				int notSold = dp[i + 1][0];
+				
+				dp[i][j] = max(sold, notSold);
+			}
 		}
 	}
 	
-	return dp[pos] = res;
+	int res = dp[0][1];
+	
+	return res;
 }
 
-int maxProfit(vector<int> &prices) {
-	vector<int> v = prices;
-	int n = v.size();
-	
-	if(n < 2) return 0;
-	if(n == 2) return max(0, v[1] - v[0]);
-	
-	vector<int> dp(n, -1);
-		
-	return solve(0, n, v, dp);	
+void solve()
+{
+  	int n; cin >> n;
+  	vi prices(n);
+  	for(int i = 0; i < n; i++) cin >> prices[i];
+  	
+  	cout << max_profit(prices) << "\n";
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
     //     freopen("output.txt", "w", stdout);
     // #endif
-
-    vector<int> prices {1, 2, 3, 0, 2};
-    cout << maxProfit(prices);
-
-    return 0;
-}
-
-// Time complexity: 
-
-/********************************************************************************************************/
-
-// NOTE: I DID NOT COMPLETELY UNDERSTAND HOW THIS APPROACH SATISFIES THE "COOLDOWN" CONSTRAINT.
-
-// Method 3 (STATE MACHINE DP)
-// Link for explanation of this approach --->
-// https://www.youtube.com/watch?v=4wNXkhAky3s
-
-#include<bits/stdc++.h>
-using namespace std;
-
-int solve(int n, vector<int> &v) {
-	vector<int> noStock(n);
-	vector<int> inHand(n);
-	vector<int> sold(n);
-	
-	noStock[0] = 0;
-	inHand[0] = -v[0];
-	sold[0] = 0;
-	
-	for(int i = 1; i < n; i++) {
-		noStock[i] = max(noStock[i - 1], sold[i - 1]);
-		inHand[i] = max(inHand[i - 1], -v[i] + noStock[i - 1]);
-		sold[i] = max(sold[i - 1], v[i] + inHand[i - 1]);
-	}
-	
-	return max(noStock[n - 1], sold[n - 1]);
-}
-
-int maxProfit(vector<int> &prices) {
-	vector<int> v = prices;
-	int n = v.size();
-	
-	if(n < 2) return 0;
-	if(n == 2) return max(0, v[1] - v[0]);
-	
-	return solve(n, v);	
-}
-
-int main()
-{
-    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
-
+    
     // #ifndef ONLINE_JUDGE
-    //     freopen("input.txt", "r", stdin);
-    //     freopen("output.txt", "w", stdout);
+    //      freopen("error.txt", "w", stderr);
     // #endif
-
-    vector<int> prices {1, 2, 3, 0, 2};
-    cout << maxProfit(prices);
-
-    return 0;
-}
-
-// Time complexity: O(n)
-// Space complexity: O(n), where n = size of input array 
-
-/*******************************************************************************************************/
-
-// NOTE: I DID NOT COMPLETELY UNDERSTAND HOW THIS APPROACH SATISFIES THE "COOLDOWN" CONSTRAINT.
-
-// Method 4 (SPACE OPTIMIZED STATE MACHINE DP)
-// Link for explanation of this approach --->
-// https://www.youtube.com/watch?v=4wNXkhAky3s
-
-#include<bits/stdc++.h>
-using namespace std;
-
-int solve(int n, vector<int> &v) {
-    int prevNoStock, prevInHand, prevSold;
-    int currNoStock, currInHand, currSold;
     
-    prevNoStock = 0;
-    prevInHand = -v[0]; // Here we buy a stock on the very first day and have not sold it, yet
-    prevSold = 0;
-    
-    for(int i = 1; i < n; i++) {
-    	// We have no stock today if we:
-        // 1. Had no stock yesterday also, and we didn't do anything about it
-        // 2. We sold a stock yesterday
-        currNoStock = max(prevNoStock, prevSold);
-        
-        // We have a stock in hand today if we:
-        // 1. Had a stock in hand yesterday as well, and we didn't do anything about it
-        // 2. Had no stock yesterday but we bought a stock today
-        currInHand = max(prevInHand, -v[i] + prevNoStock); // We subtract v[i] as we bought a stock
-        
-        // We have sold a stock today, if we:
-        // Only had a stock in hand yesterday and we sold it today
-        currSold = max(prevSold, v[i] + prevInHand);  // We add v[i] as we sold a stock
-		
-		// updating the values
-        prevNoStock = currNoStock;
-        prevInHand = currInHand;
-        prevSold = currSold;
+    int t = 1;
+    // int test = 1;
+    // cin >> t;
+    while(t--) {
+        // cout << "Case #" << test++ << ": ";
+        solve();
     }
-    
-    return max(prevNoStock, prevSold);
-}
-
-int maxProfit(vector<int> &prices) {
-    vector<int> v = prices;
-    int n = v.size();
-    
-     // There are only 1 or fewer days to trade stocks, so then we cannot make a
-     // profit by buying and selling stocks, so we don't buy or sell
-     // so we return 0
-    if(n < 2) return 0;
-    
-    // self explanatory
-    if(n == 2) return max(0, v[1] - v[0]);
-    
-    return solve(n, v); 
-}
-
-int main()
-{
-    ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
-
-    // #ifndef ONLINE_JUDGE
-    //     freopen("input.txt", "r", stdin);
-    //     freopen("output.txt", "w", stdout);
-    // #endif
-
-    vector<int> prices {1, 2, 3, 0, 2};
-    cout << maxProfit(prices);
 
     return 0;
 }
 
 // Time complexity: O(n)
-// Space complexity: O(1), where n = size of input array 
+// Space complexity: O(n), where n = size of input array
+
+/*****************************************************************************************************************/
+
+// METHOD - 4 (SPACE OPTIMIZATION OF METHOD - 3)
+// Follow the link :--->
+// https://youtu.be/IGIe46xw3YY?list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&t=737
