@@ -1,3 +1,6 @@
+// LEGACY CONTENT: https://pastebin.com/mM4xWQS4
+// https://usaco.guide/silver/more-prefix-sums?lang=cpp#2d-prefix-sums
+
 /*PROBLEM: Sayan's friend has left a gamefield organized as an N∗N grid. Each square in the grid either has
            or does not have a gold coin. He has to divide the gamefield with his three other friends as 
            follows: 
