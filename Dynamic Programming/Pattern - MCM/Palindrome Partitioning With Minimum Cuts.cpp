@@ -118,9 +118,10 @@ int min_cuts(string &s, int i, int j) {
     int res = INT_MAX;
     
     // choice diagram code
-    // place parenthesis at different places by help of the suitable "k loop scheme" 
+    // place cuts at different places by help of the suitable "k loop scheme" 
     // b/w first and last indices, recursively calculate min #palindrome partitions 
-    // for each parenthesis placement and return the minimum count
+    // for each independent subproblem and return the minimum count result for the 
+    // larger problem
     
     for(int k = i; k <= (j - 1); k++) {
         // 1 palindrome partition is required to cut the string into the partitions
