@@ -16,6 +16,13 @@
                 Min #cuts required = 3
 */
 
+/******************************************************************************************************************************/
+
+// NOTE: Apart from the below implementations another approach to solve this problem can be found at :--->
+//       https://www.youtube.com/watch?v=_H8V5hJUGd0&list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&index=55&ab_channel=takeUforward
+
+/******************************************************************************************************************************/
+
 // RECURSIVE IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=szKVpQtBHh8&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=35
 
@@ -169,7 +176,7 @@ int main()
 
 // Time complexity of the above naive recursive approach is exponential.
 
-/*******************************************************************************************************/
+/******************************************************************************************************************************/
 
 // MEMOIZED IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=9h10fqkI7Nk&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=37
@@ -278,9 +285,10 @@ int min_cuts(string &s, int i, int j) {
     int res = INT_MAX;
     
     // choice diagram code
-    // place parenthesis at different places by help of the suitable "k loop scheme" 
+    // place cuts at different places by help of the suitable "k loop scheme" 
     // b/w first and last indices, recursively calculate min #palindrome partitions 
-    // for each parenthesis placement and return the minimum count
+    // for each independent subproblem and return the minimum count result for the 
+    // larger problem
     
     for(int k = i; k <= (j - 1); k++) {
         // 1 palindrome partition is required to cut the string into the partitions
@@ -338,7 +346,7 @@ int main()
 // Time complexity: O(n^3)
 // Space complexity: O(n^2)
 
-/********************************************************************************************************/
+/******************************************************************************************************************************/
 
 // SLIGHTLY OPTIMIZED MEMOIZED IMPLEMENTATION
 // NOTE: Although the asymptotic complexity of this and above approach is same.
@@ -447,9 +455,10 @@ int min_cuts(string &s, int i, int j) {
     int res = INT_MAX;
     
     // choice diagram code
-    // place parenthesis at different places by help of the suitable "k loop scheme" 
+    // place cuts at different places by help of the suitable "k loop scheme" 
     // b/w first and last indices, recursively calculate min #palindrome partitions 
-    // for each parenthesis placement and return the minimum count
+    // for each independent subproblem and return the minimum count result for the 
+    // larger problem
     
     for(int k = i; k <= (j - 1); k++) {
         // if left cut is found already 
@@ -524,7 +533,7 @@ int main()
 // Time complexity: O(n^3)
 // Space complexity: O(n^2)
 
-/*******************************************************************************************************/
+/******************************************************************************************************************************/
 
 // TABULATION IMPLEMENTATION (Real DP ;))
 // Ref: https://www.youtube.com/watch?v=qmTtAbOTqcg&list=PL-Jc9J83PIiEZvXCn-c5UIBvfT8dA-8EG&index=29
@@ -608,13 +617,7 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// dp[i][j] = store the result for substring s[i....j]
-vvi dp;
-
-// pal[i][j] = store if substring s[i....j] is palindrome or not 
-vvb pal;
-
-void precompute(string &s) {
+void precompute(string &s, vvb &pal) {
     for(int g = 0; g < sz(pal); g++) {
         for(int i = 0, j = g; j < sz(pal); i++, j++) {
             if(g == 0) pal[i][j] = true;
@@ -630,7 +633,16 @@ void precompute(string &s) {
 }
 
 int min_cuts(string &s) {
-    precompute(s);
+    int n = sz(s);
+    if(n == 0) return 0;
+
+    // dp[i][j] = store the result for substring s[i....j]
+    vvi dp(n, vi(n));
+
+    // pal[i][j] = store if substring s[i....j] is palindrome or not 
+    vvb pal(n, vb(n));
+
+    precompute(s, pal);
     
     for(int g = 0; g < sz(dp); g++) {
         for(int i = 0, j = g; j < sz(dp); i++, j++) {
@@ -666,14 +678,6 @@ void solve()
     string s; cin >> s;
     int n = sz(s);
     
-    dp.clear();
-    dp.resize(n);
-    for(int i = 0; i < n; i++) dp[i].resize(n);
-    
-    pal.clear();
-    pal.resize(n);
-    for(int i = 0; i < n; i++) pal[i].resize(n);
-    
     cout << min_cuts(s) << "\n";
 }
 
@@ -705,7 +709,7 @@ int main()
 // Time complexity: O(n^3)
 // Space complexity: O(n^2)
 
-/*******************************************************************************************************/
+/******************************************************************************************************************************/
 
 // TABULATION IMPLEMENTATION (Real DP ;))
 // OPTIMIZATION OF THE ABOVE APPROACH
@@ -789,13 +793,7 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// dp[i] = store the result for substring s[0....i]
-vi dp;
-
-// pal[i][j] = store if substring s[i....j] is palindrome or not 
-vvb pal;
-
-void precompute(string &s) {
+void precompute(string &s, vvb &pal) {
     for(int g = 0; g < sz(pal); g++) {
         for(int i = 0, j = g; j < sz(pal); i++, j++) {
             if(g == 0) pal[i][j] = true;
@@ -811,7 +809,16 @@ void precompute(string &s) {
 }
 
 int min_cuts(string &s) {
-    precompute(s);
+    int n = sz(s);
+    if(n == 0) return 0;
+
+    // dp[i] = store the result for substring s[0....i]
+    vi dp(n);
+
+    // pal[i][j] = store if substring s[i....j] is palindrome or not 
+    vvb pal(n, vb(n));
+
+    precompute(s, pal);
     
     // for string length = 1, no cuts required
     dp[0] = 0;
@@ -837,13 +844,6 @@ void solve()
 {
     string s; cin >> s;
     int n = sz(s);
-    
-    dp.clear();
-    dp.resize(n);
-    
-    pal.clear();
-    pal.resize(n);
-    for(int i = 0; i < n; i++) pal[i].resize(n);
     
     cout << min_cuts(s) << "\n";
 }
@@ -876,7 +876,7 @@ int main()
 // Time Complexity: O(n^2)
 // Space Complexity: O(n^2)   
 
-/*******************************************************************************************************/
+/******************************************************************************************************************************/
 
 // TABULATION IMPLEMENTATION (Real DP ;))
 // Slightly different variation from the above one, but the above with "Gap Method" & it's 
@@ -976,4 +976,6 @@ ll minPalinPartitionsTabu(string s) {
 }
 
 // Time Complexity: O(n^3)
-// Space Complexity: O(n^2)   
+// Space Complexity: O(n^2)
+
+/******************************************************************************************************************************/ 

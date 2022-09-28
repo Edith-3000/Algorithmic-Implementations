@@ -1,5 +1,6 @@
 /* Link: https://www.geeksforgeeks.org/check-if-a-string-is-a-scrambled-form-of-another-string/
          https://www.interviewbit.com/problems/scramble-string/
+         https://leetcode.com/problems/scramble-string/
 
    PROBLEM: Given two strings S1 and S2 of equal length, the task is to determine if S2 is a 
             scrambled form of S1.
@@ -43,40 +44,40 @@
            Thus, “ocred” is a scrambled string of “coder”.
 */
 
-/******************************************************************************************************/
+/************************************************************************************************************************/
 
 // RECURSIVE IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=SqA0o-DGmEw&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=40
 
-/*Underlying concept: 
-  # In order to obtain scrambled string s2 from s1, we divide s1 at every character, so if
-    s1.length() = n, then we check for (n-1) times using iterator i.
+/* Underlying concept: 
+   # In order to obtain scrambled string s2 from s1, we divide s1 at every character, so if
+     s1.length() = n, then we check for (n-1) times using iterator i.
 
-  # i goes from 1 ----> (n-1), ∴ loop runs for (n-1)-1+1=(n-1) times.
+   # i goes from 1 ----> (n-1), ∴ loop runs for (n-1)-1+1=(n-1) times.
 
-  # for every iᵗʰ iteration:
-    • for the string s1[0....(n-1)] to be a scrambled string of s2
-      there are only 2 possibilities.
+   # for every iᵗʰ iteration:
+     • for the string s1[0....(n-1)] to be a scrambled string of s2
+       there are only 2 possibilities.
 
-      Case 1). if the child of s1 which are strings s1ₗ[0...(i-1)] and s1ᵣ[i...(n-1)]
-               were swapped, then just find out if -->
-               s1ₗ[0...(i-1)] is scrambled string of s2ᵣ[(n-i)...(n-1)] 
+       Case 1). if the child of s1 which are strings s1ₗ[0...(i-1)] and s1ᵣ[i...(n-1)]
+                were swapped, then just find out if -->
+                s1ₗ[0...(i-1)] is scrambled string of s2ᵣ[(n-i)...(n-1)] 
                                       &&
-               s1ᵣ[i...(n-1)] is scrambled string of s2ₗ[0...(n-i-1)] 
-               * s1ₗ = s1(left)
-                 s1ᵣ = s2(right), similarly for s2
+                s1ᵣ[i...(n-1)] is scrambled string of s2ₗ[0...(n-i-1)] 
+                * s1ₗ = s1(left)
+                  s1ᵣ = s2(right), similarly for s2
 
-      Case 2). if the child of s1 which are strings s1ₗ[0...(i-1)] and s1ᵣ[i...(n-1)]
-               were NOT swapped, then just find out if -->
-               s1ₗ[0...(i-1)] is scrambled string of s2ₗ[0...(i-1)] 
+       Case 2). if the child of s1 which are strings s1ₗ[0...(i-1)] and s1ᵣ[i...(n-1)]
+                were NOT swapped, then just find out if -->
+                s1ₗ[0...(i-1)] is scrambled string of s2ₗ[0...(i-1)] 
                                       &&
-               s1ᵣ[i...(n-1)] is scrambled string of s2ᵣ[i...(n-1)] 
+                s1ᵣ[i...(n-1)] is scrambled string of s2ᵣ[i...(n-1)] 
 
-      Now if(Case_1==true || Case_2==true) 
-             s1 ans s2 are scrambled strings;               
+       Now if(Case_1==true || Case_2==true) 
+              s1 ans s2 are scrambled strings;               
       
- * NOTE: # All the comparisons are to be done Recursively 
-         # if s2 is scrambled string of s1, then s1 is also scrambled string of s2 & vice versa.
+ *  NOTE: # All the comparisons are to be done Recursively 
+          # if s2 is scrambled string of s1, then s1 is also scrambled string of s2 & vice versa.
 */
 
 #include<bits/stdc++.h>
@@ -224,14 +225,13 @@ int main()
 // "k for loop scheme".
 
 /* # Time complexity of the above naive recursive approach is exponential --->
-     O(2^n), where n is the length of the strings.
-   
+     
    # For further details visit:--->
      https://www.codingninjas.com/codestudio/library/scramble-string
      https://www.geeksforgeeks.org/check-if-a-string-is-a-scrambled-form-of-another-string/
 */
 
-/******************************************************************************************************/
+/***************************************************************************************************************************/
 
 // MEMOIZED IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=VyHEglhbm-A&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=41
@@ -397,7 +397,7 @@ int main()
 
 // Time complexity: SHOULD BE O(N^4) [BUT NOT SURE]
 
-/*****************************************************************************************************/
+/*************************************************************************************************************************/
 
 // OPTIMIZATION OF ABOVE METHOD
 
@@ -587,7 +587,14 @@ int main()
 
 // Time complexity: SHOULD BE O(N^4) [BUT NOT SURE]
 
-/*****************************************************************************************************/
+/**************************************************************************************************************************************/
 
 // MEMOIZED IMPLEMENTATION USING DP MATRIX
 // Ref: Editorial of Interviewbit
+
+/**************************************************************************************************************************************/
+
+// TABULATION IMPLEMENTATION (USING 4D DP)
+// Ref: https://www.youtube.com/watch?v=lUeg6M8_BEo&list=PL-Jc9J83PIiEZvXCn-c5UIBvfT8dA-8EG&index=42&ab_channel=Pepcoding
+
+/**************************************************************************************************************************************/
