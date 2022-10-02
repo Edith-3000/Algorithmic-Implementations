@@ -566,10 +566,12 @@ int main()
 // Time Complexity: O(floors^2 x eggs) 
 // Auxiliary Space : O(floors x eggs) 
 
-/*******************************************************************************************************/
+/*********************************************************************************************************************************************/
 
 // TABULATION IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=UvksR0hR9nA&list=PL-Jc9J83PIiEZvXCn-c5UIBvfT8dA-8EG&index=43
+
+// LEGACY CONTENT: https://pastebin.com/j525Nxrf
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -648,9 +650,9 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-vvi dp;
-
 int egg_drop(int floors, int eggs) {
+    vvi dp(eggs + 1, vi(floors + 1));
+
     // initialisation of dp matrix
     
     // if eggs = 0, then no answer
@@ -663,14 +665,14 @@ int egg_drop(int floors, int eggs) {
     
     for(int i = 2; i <= eggs; i++) {
         for(int j = 2; j <= floors; j++) {
-            int res = INT_MAX;
+            int ans = INT_MAX;
 
-            for(int rj = j - 1, lj = 0; rj >= 0 and lj < j; rj--, lj++) {
-                int tmp = 1 + max(dp[i][rj], dp[i-1][lj]);
-                res = min(res, tmp);
+            for(int k = 1; k <= j; k++) {
+                int tmp = 1 + max(dp[i][j - k], dp[i - 1][k - 1]);
+                ans = min(ans, tmp);
             }
             
-            dp[i][j] = res;
+            dp[i][j] = ans;
         }
     }
     
@@ -681,10 +683,6 @@ void solve()
 {
     int floors, eggs; 
     cin >> floors >> eggs;
-    
-    dp.clear();
-    dp.resize(eggs + 1);
-    for(int i = 0; i <= eggs; i++) dp[i].resize(floors + 1);
     
     if(eggs == 0 and floors != 0) cout << -1 << "\n";
     else cout << egg_drop(floors, eggs) << "\n";
@@ -714,15 +712,6 @@ int main()
 
     return 0;
 }
-
-/* NOTE: The 3rd for() loop in the function egg_drop() can also be used in this manner:--->
-
-   for(int k = 1; k <= j; k++) {
-       int tmp = 1 + max(dp[i - 1][k - 1], dp[i][j - k]);
-       res = min(res, tmp);
-   }
-*/
-
 
 // dp[][] is a 2 D global matrix/vector of vectors, with size (eggs + 1) x (floors + 1)
 
