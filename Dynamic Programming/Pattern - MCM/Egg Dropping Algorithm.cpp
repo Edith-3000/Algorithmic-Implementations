@@ -718,7 +718,7 @@ int main()
 // Time Complexity: O(floors^2 x eggs) 
 // Auxiliary Space : O(floors x eggs) 
 
-/****************************************************************************************************/
+/***************************************************************************************************************************************************************************************/
 
 // BINARY SEARCH OPTIMIZATIONS OF ABOVE APPROACHES
 
@@ -727,6 +727,9 @@ int main()
     
    So, the below approach uses binary search for the "K loop scheme"
 */
+
+// Ref: https://leetcode.com/problems/super-egg-drop/discuss/792736/CPP-Explained-Recursive-greatermemoization-greateroptimization-greaterDP-oror-Well-Explained-oror-Easy-to-unserstand
+//      https://www.youtube.com/watch?v=dakViFo0CM0&ab_channel=ForAllEpsilon
 
 #include<bits/stdc++.h>
 using namespace std;
