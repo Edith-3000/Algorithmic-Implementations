@@ -298,4 +298,11 @@ int main()
     return 0;
 }
 
+/* Sample i/p :--->
+   ACABACACD
+
+   Sample o/p :--->
+   0 0 1 0 1 2 3 2 0
+*/
+
 // Time complexity: O(n), where n = string length
