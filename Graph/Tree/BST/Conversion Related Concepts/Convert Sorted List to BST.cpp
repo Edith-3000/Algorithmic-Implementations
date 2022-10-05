@@ -1,11 +1,11 @@
-// Problem: https://www.interviewbit.com/problems/populate-next-right-pointers-tree/
-//          https://leetcode.com/problems/populating-next-right-pointers-in-each-node/
-//          https://leetcode.com/problems/populating-next-right-pointers-in-each-node-ii/
+// Prob: https://leetcode.com/problems/convert-sorted-list-to-binary-search-tree/
 
-/**************************************************************************************************************************************************************/
+/************************************************************************************************************************************************/
 
-// METHOD - 1 (Using extra space)
-// Ref: https://www.youtube.com/watch?v=FYvqyXYnDHo&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=26
+// METHOD - 1
+// Ref: https://www.youtube.com/watch?v=K5cVk6yN4yA&ab_channel=CodewithAlisha
+
+// Place all the elements of linked list in a vector and use the same technique used in "Convert Sorted Array to BST.cpp"
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -101,59 +101,99 @@ class TreeNode {
 		int val;
 		TreeNode *left;
 		TreeNode *right;
-		TreeNode *next;
-		TreeNode(): val(0), left(NULL), right(NULL), next(NULL) {}
-		TreeNode(int data): val(data), left(NULL), right(NULL), next(NULL) {}
-		TreeNode(int data, TreeNode *left, TreeNode *right, TreeNode *next): val(data), left(left), right(right), next(next) {}
+		TreeNode(): val(0), left(NULL), right(NULL) {}
+		TreeNode(int data): val(data), left(NULL), right(NULL) {}
+		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
 };
 
-TreeNode* lvl_order(TreeNode *root) {
-	if(!root or (!root->left and !root->right)) {
-		return root;
-	} 
-	
-	queue<TreeNode*> q;
-	q.push(root);
-	
-	while(!q.empty()) {
-		int sz = q.size();
+// Making a node class containing the value and a pointer
+// to next available node
+class ListNode {
+	public:
+		int val;
+		ListNode *next;
+};
+
+class LinkedList {
+	public:
+		// head and tail pointers
+		ListNode *head, *tail;
 		
-		while(sz--) {
-			TreeNode *x = q.front();
-			q.pop();
-			
-			if(x->left) q.push(x->left);
-			if(x->right) q.push(x->right);
-			
-			TreeNode *y = NULL;
-			if(sz != 0) y = q.front();
-			x->next = y;
+		// default constructor. Initializing head and tail pointers
+		LinkedList() {
+			head = NULL;
+			tail = NULL;
 		}
-	}
+		
+		// inserting elements (at the end of the list)
+		void insert(int data) {
+			// make a new node
+			ListNode *new_node = new ListNode;
+			new_node->val = data;
+			new_node->next = NULL;
+			
+			// If list is empty, make the new node, the head
+			// initialise tail also as new node
+			if(head == NULL) {
+				head = new_node;
+				tail = new_node;
+			}
+			
+			else {
+				tail->next = new_node;
+				tail = tail->next;
+			}
+		}
+		
+		void display() {
+			ListNode *tmp = head;
+			while(tmp != NULL) {
+				cout << tmp->val;
+				tmp = tmp->next;
+				if(tmp != NULL) cout << "->";
+			}
+			
+			cout << "\n";
+		}		
+};
+
+TreeNode* build_tree(vi &v, int L, int R) {
+	if(L > R) return NULL;
+	if(L == R) return new TreeNode(v[L]);
+	
+	int mid = L + ((R - L) >> 1);
+	TreeNode *root = new TreeNode(v[mid]);
+	
+	root->left = build_tree(v, L, mid - 1);
+	root->right = build_tree(v, mid + 1, R);
 	
 	return root;
 }
 
-TreeNode* populate(TreeNode *root) {
-	return lvl_order(root);
+TreeNode* sorted_list_to_bst(ListNode* head) {
+	if(head == nullptr) return nullptr;
+    
+    vector<int> v;
+    
+    while(head != nullptr) {
+        v.push_back(head->val);
+        head = head->next;
+    }
+    
+    return build_tree(v, 0, v.size() - 1);
 }
 
 void solve()
 {
-  	TreeNode* root = new TreeNode(2);
-	root->left = new TreeNode(1);
-	root->right = new TreeNode(15);
-	root->right->left = new TreeNode(7);
-	root->right->right = new TreeNode(26);
-	root->right->left->left = new TreeNode(5);
-	root->right->left->right = new TreeNode(10);
-	root->right->left->right->left = new TreeNode(8);
-	root->right->left->right->right = new TreeNode(9);
-	
-	root = populate(root);
-
-	cout << root->right->left->right->left->next << "\n";
-	cout << root->right->left->right->left->next->val;
+  	int n; cin >> n;
+  	LinkedList l;
+  	
+  	for(int i = 0; i < n; i++) {
+  		int x; cin >> x;
+  		l.insert(x);
+  	}
+  	
+  	TreeNode *root = sorted_list_to_bst(l.head);
 }
 
 int main()
@@ -180,10 +220,13 @@ int main()
     return 0;
 }
 
-/*******************************************************************************************************************************************************/
+// TC: O(n)
+// SC: O(n)
 
-// METHOD - 2 (Using constant space)
-// Ref: https://www.geeksforgeeks.org/connect-nodes-at-same-level-with-o1-extra-space/
+/*************************************************************************************************************************************************************/
+
+// METHOD - 2
+// Ref: https://www.youtube.com/watch?v=XsWPrkDqmtM&ab_channel=KnowledgeCenter
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -279,66 +322,101 @@ class TreeNode {
 		int val;
 		TreeNode *left;
 		TreeNode *right;
-		TreeNode *next;
-		TreeNode(): val(0), left(NULL), right(NULL), next(NULL) {}
-		TreeNode(int data): val(data), left(NULL), right(NULL), next(NULL) {}
-		TreeNode(int data, TreeNode *left, TreeNode *right, TreeNode *next): val(data), left(left), right(right), next(next) {}
+		TreeNode(): val(0), left(NULL), right(NULL) {}
+		TreeNode(int data): val(data), left(NULL), right(NULL) {}
+		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
 };
 
-TreeNode* get_next_right(TreeNode *p) {
-	TreeNode *res = p->next;
-	
-	while(res != NULL) {
-		if(res->left) return res->left;
-		if(res->right) return res->right;
-		res = res->next;
-	}
-	
-	return res;
-} 
+// Making a node class containing the value and a pointer
+// to next available node
+class ListNode {
+	public:
+		int val;
+		ListNode *next;
+};
 
-TreeNode* populate(TreeNode *root) {
-	if(!root) return NULL;
-	root->next = NULL;
-	
-	TreeNode* tmp_root = root;
-	
-	while(root != NULL) {
-		TreeNode *tmp = root;
-		while(tmp != NULL) {
-			if(tmp->left) {
-				if(tmp->right) tmp->left->next = tmp->right;
-				else tmp->left->next = get_next_right(tmp);
-			}
-			
-			if(tmp->right) tmp->right->next = get_next_right(tmp);
-			tmp = tmp->next;
+class LinkedList {
+	public:
+		// head and tail pointers
+		ListNode *head, *tail;
+		
+		// default constructor. Initializing head and tail pointers
+		LinkedList() {
+			head = NULL;
+			tail = NULL;
 		}
 		
-		if(root->left) root = root->left;
-		else if(root->right) root = root->right;
-		else root = get_next_right(root); 
+		// inserting elements (at the end of the list)
+		void insert(int data) {
+			// make a new node
+			ListNode *new_node = new ListNode;
+			new_node->val = data;
+			new_node->next = NULL;
+			
+			// If list is empty, make the new node, the head
+			// initialise tail also as new node
+			if(head == NULL) {
+				head = new_node;
+				tail = new_node;
+			}
+			
+			else {
+				tail->next = new_node;
+				tail = tail->next;
+			}
+		}
+		
+		void display() {
+			ListNode *tmp = head;
+			while(tmp != NULL) {
+				cout << tmp->val;
+				tmp = tmp->next;
+				if(tmp != NULL) cout << "->";
+			}
+			
+			cout << "\n";
+		}		
+};
+
+TreeNode* sorted_list_to_bst(ListNode* head) {
+	if(head == nullptr) return nullptr;
+	if(head->next == nullptr) return new TreeNode(head->val);
+	
+	// slight modification of finding the mid element algorithm so that
+	// mid element liest next to slow pointer
+	ListNode *fast = head->next;
+	ListNode *slow = head;
+	
+	while(fast->next != NULL and fast->next->next != NULL) {
+		slow = slow->next;
+		fast = fast->next->next;
 	}
 	
-	return tmp_root;
+	// kind of mid element
+	ListNode* mid = slow->next;
+    
+    // segregating the left and right segments such that they can become 
+    // independent subproblems which can be solved by recursion
+    slow->next = nullptr;
+    
+    TreeNode* root = new TreeNode(mid->val);
+    root->left = sorted_list_to_bst(head);
+    root->right = sorted_list_to_bst(mid->next);
+    
+	return root;
 }
 
 void solve()
 {
-  	TreeNode* root = new TreeNode(2);
-	root->left = new TreeNode(1);
-	root->right = new TreeNode(15);
-	root->right->left = new TreeNode(7);
-	root->right->right = new TreeNode(26);
-	root->right->left->left = new TreeNode(5);
-	root->right->left->right = new TreeNode(10);
-	root->right->left->right->left = new TreeNode(8);
-	root->right->left->right->right = new TreeNode(9);
-	
-	root = populate(root);
-
-	cout << root->right->left->right->left->next << "\n";
-	cout << root->right->left->right->left->next->val;
+  	int n; cin >> n;
+  	LinkedList l;
+  	
+  	for(int i = 0; i < n; i++) {
+  		int x; cin >> x;
+  		l.insert(x);
+  	}
+  	
+  	TreeNode *root = sorted_list_to_bst(l.head);
 }
 
 int main()
@@ -364,3 +442,8 @@ int main()
 
     return 0;
 }
+
+// TC: O(n x log₂(n)), since there can be log₂(n) levels in a height balanced BST and for 
+//     each level mid is being found in O(n) time.
+
+// SC: O(1)

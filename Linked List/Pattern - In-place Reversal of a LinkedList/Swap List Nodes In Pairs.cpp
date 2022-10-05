@@ -1,6 +1,8 @@
 // Problem: https://www.interviewbit.com/problems/swap-list-nodes-in-pairs/
+//          https://leetcode.com/problems/swap-nodes-in-pairs/
+
 // Ref: https://www.youtube.com/watch?v=QzsHZoGbczQ&list=PL7JyMDSI2BfbQZQIFfD7Hep2e6kzUZd7L&index=8
-/********************************************************************************************************/
+/***********************************************************************************************************************************/
 
 // NOTE: It is same problem as "Reverse Every K-Element Sub-List.cpp" where k is replaced by 2.
 
