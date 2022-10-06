@@ -1,12 +1,19 @@
 // Problem: https://www.interviewbit.com/problems/reorder-list/
+//          https://leetcode.com/problems/reorder-list/
+
 // Ref: https://www.youtube.com/watch?v=ZD8jW0mM8Iw&list=PL7JyMDSI2BfbQZQIFfD7Hep2e6kzUZd7L&index=19
-/******************************************************************************************************/
+
+/**************************************************************************************************************************************************/
 
 /* # ALGORITHM --->
      1) Break the list from middle into 2 lists.
 	 2) Reverse the latter half of the list.
  	 3) Now merge the lists so that the nodes alternate.
 */
+
+/**************************************************************************************************************************************************/
+
+// METHOD - 1
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -193,3 +200,9 @@ int main()
 
     return 0;
 }
+
+/**************************************************************************************************************************************************/
+
+// METHOD - 2
+
+// https://pastebin.com/n7cbcKvg
