@@ -1,8 +1,11 @@
 // Problem: https://www.interviewbit.com/problems/sort-list/
-// Ref: https://www.youtube.com/watch?v=KEoYzfOUF3o&list=PL7JyMDSI2BfbQZQIFfD7Hep2e6kzUZd7L&index=16
-/*******************************************************************************************************/
+//          https://leetcode.com/problems/sort-list/
 
-/* # NOTE: The below algorithm is similar to the Merge Sort
+// Ref: https://www.youtube.com/watch?v=KEoYzfOUF3o&list=PL7JyMDSI2BfbQZQIFfD7Hep2e6kzUZd7L&index=16
+/***************************************************************************************************************************************************/
+
+/* # NOTE: The below algorithm is similar to the Merge Sort.
+
    # Lets look at merge sort. Traverse the linked list to find the mid point of the list. 
      Now sort the first half and second half separatly by calling the function on them. 
      Then merge the 2 sorted lists into a single list.
@@ -107,6 +110,7 @@ ListNode* merge_2_sorted_lists(ListNode *t1, ListNode *t2) {
 	if(t2 == NULL) return t1;
 	
 	ListNode *head;
+	
 	if(t1->val <= t2->val) {
 		head = t1;
 		t1 = t1->next;
