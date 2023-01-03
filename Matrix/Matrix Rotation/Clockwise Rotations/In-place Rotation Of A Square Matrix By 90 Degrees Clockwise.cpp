@@ -206,16 +206,16 @@ void rotate_clock(vvi &v) {
             // store current cell in tmp variable
             int tmp = v[i][j];
             
-            // move value from bottom to top
+            // move value from left to top
             v[i][j] = v[n - j - 1][i];
             
-            // move value from right to bottom
+            // move value from bottom to left
             v[n - j - 1][i] = v[n - i - 1][n - j - 1];
             
-            // move value from top to bottom
+            // move value from right to bottom
             v[n - i - 1][n - j - 1] = v[j][n - i - 1];
             
-            // assign tmp to right
+            // move value from top to right
             v[j][n - i - 1] = tmp;
         }
     }
