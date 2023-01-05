@@ -1,6 +1,8 @@
 // Problem: https://www.interviewbit.com/problems/n3-repeat-number/
+//          https://leetcode.com/problems/majority-element-ii/description/
+
 // Ref: https://www.youtube.com/watch?v=yDbkQd9t2ig
-/******************************************************************************************************/
+/****************************************************************************************************************************/
 
 // NOTE: In this problem there can be maximum 2 and minimum 0 majority elements.
 // For more explanation on this see in the comment section of the above video link.

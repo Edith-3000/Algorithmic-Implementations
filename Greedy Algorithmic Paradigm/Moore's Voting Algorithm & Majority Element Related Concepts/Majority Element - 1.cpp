@@ -1,6 +1,8 @@
 // Problem: https://www.interviewbit.com/problems/majority-element/
+//          https://leetcode.com/problems/majority-element/
+
 // Ref: https://www.youtube.com/watch?v=bg6r_fgtpMQ
-/******************************************************************************************************/
+/***********************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
