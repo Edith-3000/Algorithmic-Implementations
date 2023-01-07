@@ -1,6 +1,7 @@
 // Problem: https://www.interviewbit.com/problems/subarray-with-given-xor/
+
 // Ref: https://www.youtube.com/watch?v=lO9R5CaGRPY
-/*******************************************************************************************************/
+/******************************************************************************************************************************************/
 
 // NOTE: The below algorithm is very much similar to "Longest Subarray With Sum K.cpp"
 

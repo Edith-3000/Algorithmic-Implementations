@@ -1,7 +1,9 @@
 // Problem: https://www.interviewbit.com/problems/longest-substring-without-repeat/
+//          https://leetcode.com/problems/longest-substring-without-repeating-characters/
+
 // Ref: https://www.youtube.com/watch?v=L6cffskouPQ
 //      https://takeuforward.org/data-structure/length-of-longest-substring-without-any-repeating-character/
-/***********************************************************************************************************/
+/*********************************************************************************************************************************************/
 
 // METHOD - 1
 
@@ -96,7 +98,7 @@ int main()
 // NOTE: This complexity can be reduced to O(n), by taking a MAX_CHAR vector of size 256. See METHOD - 2
 //       for more details on implementation.
 
-/*************************************************************************************************************/
+/******************************************************************************************************************************************/
 
 // METHOD - 2
 
@@ -271,7 +273,7 @@ int main()
 //       last occurrences of each elemets in some vector and can make direct jumps for 'i'. 
 //       For more clarity refer METHOD - 3 and visit the video mentioned in it.
 
-/**********************************************************************************************************/
+/******************************************************************************************************************************************/
 
 // METHOD - 3
 // For main concept of this method and why it's slightly better than METHOD - 1 refer below video @ 12:10

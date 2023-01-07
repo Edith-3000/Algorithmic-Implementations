@@ -1,6 +1,8 @@
 // Problem: https://www.interviewbit.com/problems/4-sum/
+//          https://leetcode.com/problems/4sum/description/
+
 // Ref: https://www.youtube.com/watch?v=4ggF3tXIAp0
-/****************************************************************************************************/
+/********************************************************************************************************************************/
 
 // METHOD - 1 (Using Hashing)
 
@@ -208,3 +210,6 @@ int main()
 
 // TC: O(n x log(n)) + O(n^3)
 // SC: O(m), where m are the possible triplets
+
+// The same can also be implemented in this manner ===>
+// https://pastebin.com/cQqjyaUe
