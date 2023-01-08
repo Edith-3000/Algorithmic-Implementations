@@ -1,5 +1,5 @@
 // Ref: https://www.geeksforgeeks.org/find-median-row-wise-sorted-matrix/
-/***************************************************************************************************/
+/*************************************************************************************************************************************/
 
 // METHOD - 1
 
@@ -95,7 +95,7 @@ int main()
     return 0;
 }
 
-/*********************************************************************************************************/
+/*************************************************************************************************************************************/
 
 // METHOD - 2
 // Almost same as METHOD - 1, but in it the upper_bound() function is implemented from scratch.
@@ -216,6 +216,9 @@ int find_median(vvi &v) {
 		
 	int res;
 	
+	// if (n * m) is odd, then there will be exactly ((n * m) / 2) numbers to the left of median,
+	// which basically implies that ((n * m) / 2 + 1) is the total number of elements which 
+	// are smaller or equal to our median
 	int desired = (n * m) / 2 + 1;
 
 	// the search space is [1, 1e9] because they are limit of element values which

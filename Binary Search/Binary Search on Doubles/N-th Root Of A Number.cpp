@@ -97,6 +97,8 @@ double exp(double a, ll b) {
 double get_nth_root(ll n, ll m, ll places) {
 	double lo = 1.0;
 	double hi = m;
+
+	// since we require precision upto "places" digits after decimal
 	double eps = 1.0 / exp(10.0, places + 1);
 	
 	while((hi - lo) > eps) {

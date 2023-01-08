@@ -1,17 +1,8 @@
 // Prob: https://leetcode.com/problems/search-in-rotated-sorted-array/
+
 // Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU
 //      https://www.youtube.com/watch?v=r3pMQ8-Ad5s
-/****************************************************************************************************/
-
-/* # The main concept behind the algorithm is that in an rotated sorted array -
-     * The subarray from start to min_index - 1 is sorted.
-     * The subarray from min_index to end is sorted.
-
-   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
-                 2. Find the element either in start to min_index - 1 or min_index to end.
-*/
-
-/***************************************************************************************************/
+/*************************************************************************************************************************************************************/
 
 // METHOD - 1 
 // Ref: https://www.youtube.com/watch?v=r3pMQ8-Ad5s
@@ -164,10 +155,18 @@ int main()
     return 0;
 }
 
-/*****************************************************************************************************/
+/***********************************************************************************************************************************************************/
 
 // METHOD - 2 
 // Ref: https://www.youtube.com/watch?v=Id-DdcWb5AU&list=PL_z_8CaSLPWeYfhtuKHj-9MpYb6XQJ_f2&index=8
+
+/* # The main concept behind the algorithm is that in an rotated sorted array -
+     * The subarray from start to min_index - 1 is sorted.
+     * The subarray from min_index to end is sorted.
+
+   # Therefore - 1. Find the index of minimum element in the rotated sorted array.
+                 2. Find the element either in start to min_index - 1 or min_index to end.
+*/
 
 // This method is similar to METHOD - 1, but it first find the index of the minimum element and then
 // perfrom binary search on the 2 sorted array parts.
