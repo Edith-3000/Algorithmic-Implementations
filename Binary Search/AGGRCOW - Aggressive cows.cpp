@@ -1,6 +1,7 @@
 // Prob: https://www.spoj.com/problems/AGGRCOW/
+
 // Ref: https://www.youtube.com/watch?v=wSOfYesTBRk&list=PLgUwDviBIf0qYbL4TBaEWgb-ljVdhkM7R&index=9
-/*******************************************************************************************************/
+/***************************************************************************************************************************************************************/
 
 // Problem: Aggressive cows
 // Contest: SPOJ - Classical

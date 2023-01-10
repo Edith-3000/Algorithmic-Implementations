@@ -1,6 +1,6 @@
 // Ref: https://www.geeksforgeeks.org/stack-data-structure-introduction-program/
 //      https://www.youtube.com/watch?v=GYptUgnIM_I&list=PLgUwDviBIf0oSO572kQ7KCSvCUh1AdILj&index=1
-/*******************************************************************************************************/
+/**********************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
