@@ -1,6 +1,6 @@
 // Ref: https://www.geeksforgeeks.org/implement-a-stack-using-single-queue/
 //      https://www.youtube.com/watch?v=jDZQKzEtbYQ&list=PLgUwDviBIf0oSO572kQ7KCSvCUh1AdILj&index=3
-/*****************************************************************************************************/
+/*********************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

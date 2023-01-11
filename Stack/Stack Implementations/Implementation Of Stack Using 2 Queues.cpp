@@ -1,7 +1,7 @@
 // Ref: https://www.geeksforgeeks.org/implement-stack-using-queue/
 //      http://stackoverflow.com/questions/688276/implement-stack-using-two-queues
 //      https://www.youtube.com/watch?v=jDZQKzEtbYQ&list=PLgUwDviBIf0oSO572kQ7KCSvCUh1AdILj&index=3
-/***************************************************************************************************/
+/************************************************************************************************************************************************/
 
 // BY MAKING THE push() OPERATION COSTLY
 

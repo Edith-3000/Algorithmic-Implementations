@@ -1,7 +1,7 @@
 // Ref: https://www.geeksforgeeks.org/queue-using-stacks/
 //      https://leetcode.com/problems/implement-queue-using-stacks/
 //      https://www.youtube.com/watch?v=3Et9MrMc02A&list=PLgUwDviBIf0oSO572kQ7KCSvCUh1AdILj&index=4
-/***************************************************************************************************/
+/*****************************************************************************************************************************************************/
 
 // METHOD - 1
 // BY MAKING THE enqueue() OPERATION COSTLY
