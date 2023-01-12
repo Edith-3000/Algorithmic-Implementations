@@ -107,10 +107,10 @@ int main()
     return 0;
 }
 
-/**************************************************************************************************/
+/***************************************************************************************************************************************************************/
 
-// NOTE: This can also be implemented BY MAKING THE dequeue() OPERATION COSTLY in which the 
-//       time complexity of enqueue() is O(1) and AMORTIZED time complexity of dequeue is O(1).
+// NOTE: This can also be implemented BY MAKING THE enqueue() OPERATION COSTLY in which the 
+//       time complexity of dequeue() is O(1) and AMORTIZED time complexity of enqueue is O(1).
 //       For more details refer GfG article & check the video link at the top.
 
 // METHOD - 2
@@ -219,3 +219,10 @@ int main()
 
     return 0;
 }
+
+/* For dequeue() ===> TC is O(n) in general and O(1) amortized time complexity. In the worst case we have to empty the whole of stack 1 into stack 2 
+                      so its O(n). Amortized time is the way to express the time complexity when an algorithm has the very bad time complexity only 
+                      once in a while besides the time complexity that happens most of time. 
+                      So its O(1) amortized time complexity, since we have to empty whole of stack 1 only when stack 2 is empty, rest of the times 
+                      the pop operation takes O(1) time.
+*/

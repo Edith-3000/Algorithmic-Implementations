@@ -1,22 +1,22 @@
-/*PROBLEM STATEMENT: Given an array, print the Next Greater Element (NGE) for every element. The Next
-                     greater Element for an element x is the first greater element on the right side of x 
-                     in array. Elements for which no greater element exist, consider next greater element 
-                     as -1. 
+/* PROBLEM STATEMENT: Given an array, print the Next Greater Element (NGE) for every element. The Next
+                      greater Element for an element x is the first greater element on the right side of x 
+                      in array. Elements for which no greater element exist, consider next greater element 
+                      as -1. 
 */
 
 // BRUTE FORCE APPROACH = O(n²)
 
-/******************************************************************************************************/
+/******************************************************************************************************************************************************/
 
 // EFFICENT APPROACH
 
-/*UNDERLYING CONCEPT ----->
-  # There are 3 conditions which are to be checked ->
-    1. If stack.size() == 0, push -1 in the result vector res.
-    2. If stack.top() > v[i], push stack.top() in the resul vector rest.
-    3. If stack.top() <= v[i], perform stack.pop() until the stack is empty or stack.top()>v[i],
-       if stack.top() > v[i], push stack.top() in the result vector res
-       else push -1 in the result vector res.
+/* UNDERLYING CONCEPT ----->
+   # There are 3 conditions which are to be checked ->
+       1. If stack.size() == 0, push -1 in the result vector res.
+       2. If stack.top() > v[i], push stack.top() in the resul vector res.
+       3. If stack.top() <= v[i], perform stack.pop() until the stack is empty or stack.top()>v[i],
+           if stack.top() > v[i], push stack.top() in the result vector res
+           else push -1 in the result vector res.
 */
 
 #include<bits/stdc++.h>
@@ -94,7 +94,7 @@ int main()
    						    as in this case the stack size will be 'n'.
 */
 
-/***************************************************************************************************/
+/******************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

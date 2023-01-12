@@ -1,6 +1,6 @@
 // Problem: https://leetcode.com/problems/valid-parentheses/
 // Ref: https://www.geeksforgeeks.org/check-for-balanced-parentheses-in-an-expression/
-/*****************************************************************************************************/
+/*****************************************************************************************************************************************/
 
 // If there are only 1 type of brackets in the input string just use this short code below --->
 
@@ -83,7 +83,7 @@ int main()
 
 // TC: O(n)
 
-/*****************************************************************************************************/
+/*****************************************************************************************************************************************************/
 
 // However if the types of brackets in the input string are more use the code below --->
 
