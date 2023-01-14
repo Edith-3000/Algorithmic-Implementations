@@ -176,3 +176,19 @@ int main()
 // Time complexity to build heap from heapify() operation is O(n), not O(n * log(n)), for formal proof
 // refer: https://www.youtube.com/watch?v=VkKmmwzfIG4&list=PLEJXowNB4kPyP2PdMhOUlTY6GrRIITx28&index=5
 //        https://www.quora.com/How-do-you-evaluate-the-sum-of-n-2-n-from-n-1-to-infinity
+
+/* # Proof which has been explained in the video ===>
+     https://www.youtube.com/watch?v=VkKmmwzfIG4&list=PLEJXowNB4kPyP2PdMhOUlTY6GrRIITx28&index=5
+
+     can also be found here ===> 
+     https://gist.github.com/Edith-3000/40b1c16d85340e712218ab177d264266?permalink_comment_id=4436653#gistcomment-4436653
+
+   # Another variation of proof according to this highlighted comment ===>
+     https://www.youtube.com/watch?v=VkKmmwzfIG4&lc=UgzNaRD2xKhskc_B22F4AaABAg&ab_channel=TECHDOSE
+
+     or somewhat according to this video ===>
+     https://youtu.be/VFLNBh0bK2A?list=PL-Jc9J83PIiHq5rMZasunIR19QG3E-PAA&t=578
+
+     can be found here ===>
+     https://gist.github.com/Edith-3000/40b1c16d85340e712218ab177d264266?permalink_comment_id=4436654#gistcomment-4436654
+*/

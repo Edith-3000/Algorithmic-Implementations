@@ -293,7 +293,7 @@ int main()
     return 0;
 }
 
-// The time complexities have been thoroughly been discussed in the reference videos.
+// The time complexities have been thoroughly discussed in the reference videos.
 
 /* 
 

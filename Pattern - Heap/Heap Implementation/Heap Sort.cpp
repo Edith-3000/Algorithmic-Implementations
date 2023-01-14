@@ -1,4 +1,5 @@
 /* Ref: https://www.geeksforgeeks.org/heap-sort/
+        https://www.youtube.com/watch?v=kU4KBD4NFtw
 
    # Heap Sort algorithm (for sorting in ascending order)--->
      * Create a binary max heap of n elements.
@@ -12,10 +13,8 @@
 */
 
 // In the below algorithm heap can also be created by the operations mentioned in the file, 
-// "Creation, Insertion And Deletion Of A Heap.cpp" but here heapify() method has been used to create heap.
+// "Max Heap Algorithm.cpp" but here heapify() method has been used to create heap.
 
-// Ref: https://www.youtube.com/watch?v=kU4KBD4NFtw
-//      https://www.geeksforgeeks.org/heap-sort/
 /**********************************************************************************************************/
 
 // NOTE: Building a heap from the heapify() concept doesn't take O(n x log(n)) time but O(n) time.

@@ -15,7 +15,7 @@
    # Considering 0-based indexing, if parent at index 'i', the left and right child will be at indices
      (2 * i + 1) and (2 * i + 2) respectively.
 
-     If a child (either left or right) then it's parent will be at index ceil(i/2) - 1.
+     If a child (either left or right) is at index 'i', then it's parent will be at index ceil(i/2) - 1.
 
    # Heapify algorithm takes O(log(n)), where n are the #nodes in the heap.
 */
