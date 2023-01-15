@@ -1,6 +1,8 @@
 // Problem: https://www.interviewbit.com/problems/n-max-pair-combinations/
+// Similar problem: https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/
+
 // Ref: https://www.geeksforgeeks.org/k-maximum-sum-combinations-two-arrays/
-/*********************************************************************************************************/
+/***************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

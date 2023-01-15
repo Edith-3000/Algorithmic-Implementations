@@ -1,13 +1,14 @@
 // Problem Statement: Given a list of 'k' sorted arrays, merge them into one sorted list.
 
 /* UNDERLYING CONCEPT ------>
+
    This problem is similar to Merge K Sorted Lists except that the input is a list of arrays compared 
    to LinkedLists. To handle this, we can use a similar approach as discussed in our parent problem by 
    keeping a track of the array and the element indices.
 */
 
 // Ref: https://www.geeksforgeeks.org/merge-k-sorted-arrays-set-2-different-sized-arrays/
-/******************************************************************************************************/
+/******************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

@@ -1,7 +1,10 @@
 // PROBLEM: https://www.geeksforgeeks.org/find-k-numbers-occurrences-given-array/
 //          https://leetcode.com/problems/top-k-frequent-elements/
+
 // Ref: https://www.youtube.com/watch?v=7VoJn544QrM&list=PL_z_8CaSLPWdtY9W22VjnPxG30CXNZpI9&index=6
-/******************************************************************************************************/
+//      https://www.youtube.com/watch?v=YPTqKIgVk-k&ab_channel=NeetCode
+//      https://www.youtube.com/watch?v=Wh3A29psE_Y
+/****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

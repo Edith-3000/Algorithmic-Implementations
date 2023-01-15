@@ -1,7 +1,7 @@
 // Ref: https://www.geeksforgeeks.org/median-of-stream-of-integers-running-integers/
 //      https://www.geeksforgeeks.org/median-of-stream-of-running-integers-using-stl/
 //      https://leetcode.com/problems/find-median-from-data-stream/
-/*****************************************************************************************************/
+/********************************************************************************************************************************************/
 
 /* PROBLEM STATEMENT: Design a class to calculate the median of a number stream. 
    The class should have the following two methods:
@@ -22,7 +22,8 @@ Example:
 */
 
 /*
-UNDERLYING CONCEPT ---->
+
+UNDERLYING CONCEPT(s) ---->
   # As we know, the median is the middle value in an ordered integer list. 
 
   # So a brute force solution could be to maintain a sorted list of all numbers inserted in the class so that 
@@ -65,6 +66,7 @@ UNDERLYING CONCEPT ---->
     both heaps, so that they have an equal number of elements. 
 
     IF THE COUNT OF NUMBERS IS ODD, LET’S DECIDE TO HAVE MORE NUMBERS IN MAX-HEAP THAN THE MIN HEAP.
+    
 */
 
 #include<bits/stdc++.h>
