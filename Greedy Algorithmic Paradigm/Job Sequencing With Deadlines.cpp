@@ -1,6 +1,8 @@
 // Problem: https://www.geeksforgeeks.org/job-sequencing-problem/
+
 // Ref: https://www.youtube.com/watch?v=LjPx4wQaRIs&list=PLgUwDviBIf0pmWCl2nepwGDO05a0-7EfJ&index=3
-/*****************************************************************************************************/
+
+/*****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

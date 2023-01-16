@@ -1,16 +1,8 @@
-// Problem: https://practice.geeksforgeeks.org/problems/minimum-platforms-1587115620/1
+// Prob: https://leetcode.com/problems/count-the-number-of-good-subarrays/description/
 
-// Ref: https://www.geeksforgeeks.org/minimum-number-platforms-required-railwaybus-station/
-//      https://takeuforward.org/data-structure/minimum-number-of-platforms-required-for-a-railway/
+// Ref: https://www.youtube.com/watch?v=k3ctPuOQJr4&ab_channel=codingMohan
 
-/**************************************************************************************************************************************************************/
-
-// METHOD - 1 O(n^2)
-// Refer GfG article for this.
-
-/*************************************************************************************************************************************************************/
-
-// METHOD - 2
+/****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -20,11 +12,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -65,20 +60,27 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
-
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim) {
-    uniform_int_distribution<int> uid(0,lim-1);
-    return uid(rang);
-}
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
@@ -91,54 +93,61 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// Returns minimum number of platforms required so that no train waits
-int min_platforms(vi &arr, vi &dep, int n) {
-    // sort arrival and departure arrays
-    sort(arr.begin(), arr.end());
-    sort(dep.begin(), dep.end());
- 
-    // plat_needed indicates number of platforms needed at any instant of time
-    int plat_needed = 1, res = 1;
-    int i = 1, j = 0;
- 
-    // similar to merge in merge sort to process all events in sorted order
-    while (i < n && j < n) {
-        // if the arrival train arrives on or before the departure train, 
-        // increment count of platforms needed
-        if (arr[i] <= dep[j]) {
-            plat_needed++;
-            i++;
+ll count_good(vi &v, int k) {
+    int n = sz(v);
+
+    ll res = 0LL;
+
+    map<int, int> cnt;
+    cnt[v[0]] += 1;
+
+    ll pairs = 0;
+
+    int i = 0, j = 0;
+
+    while(i < n) {
+        while((pairs < k) and (j + 1 < n)) {
+            j += 1;
+
+            if(cnt[v[j]] != 0) {
+                pairs -= ((long long)cnt[v[j]] * (cnt[v[j]] - 1)) / 2LL;
+            }
+
+            cnt[v[j]] += 1;
+
+            pairs += ((long long)cnt[v[j]] * (cnt[v[j]] - 1)) / 2LL;
         }
- 
-        // else if the departure train leaves before the arrival train,
-        // decrement count of platforms needed
-        else if (arr[i] > dep[j]) {
-            plat_needed--;
-            j++;
+
+        if(pairs >= k) {
+            res += (n - j);
         }
- 
-        // update result if needed
-        if (plat_needed > res) res = plat_needed;
+
+        pairs -= ((long long)cnt[v[i]] * (cnt[v[i]] - 1)) / 2LL;
+
+        cnt[v[i]] -= 1;
+
+        if(cnt[v[i]] != 0) {
+            pairs += ((long long)cnt[v[i]] * (cnt[v[i]] - 1)) / 2LL;
+        }
+
+        i += 1;
     }
- 
+
     return res;
 }
 
 void solve()
 {
-    int n; cin >> n;
-    vi arr(n), dep(n);
-    
-    for(int i = 0; i < n; i++) cin >> arr[i];
-    for(int i = 0; i < n; i++) cin >> dep[i];
-    
-    cout << min_platforms(arr, dep, n);
+  	int n, k; cin >> n >> k;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	cout << count_good(v, k) << "\n";
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
