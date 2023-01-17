@@ -1,8 +1,8 @@
-// Problem: https://www.geeksforgeeks.org/fractional-knapsack-problem/
+// Prob: https://leetcode.com/problems/difference-between-maximum-and-minimum-price-sum/description/
 
-// Ref: https://www.youtube.com/watch?v=F_DDzYnxO14&list=PLgUwDviBIf0pmWCl2nepwGDO05a0-7EfJ&index=4
+// Ref: https://www.youtube.com/watch?v=OxAKNGSfbjg&ab_channel=codingMohan
 
-/**************************************************************************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -12,11 +12,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -57,20 +60,27 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
-
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim) {
-    uniform_int_distribution<int> uid(0,lim-1);
-    return uid(rang);
-}
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
@@ -83,34 +93,66 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-bool cmp(const pii &p1, const pii &p2) {
-	double r1 = (double)p1.S / (double)p1.F;
-	double r2 = (double)p2.S / (double)p2.F;
-	return r1 > r2;
-}
+// to store the i/p tree
+vvi g;
 
-double fractional_knapsack(vi &wt, vi &val, ll w, int n) {
-	vpii tmp(n);
+// n = #nodes
+int n;
 
-	for(int i = 0; i < n; i++) {
-		tmp[i].F = wt[i];
-		tmp[i].S = val[i];
+// max_dn[i] = maximum path sum (including price[i]) for node 'i' if we consider only the subtree rooted at node 'i'
+//             and all the edges above this subtree are not taken into account
+vll max_dn;
+
+// max_up[i] = maximum path sum (excluding price[i]) for node 'i' if we do not take into account all the edges 
+//             below the subtree rooted at node 'i'
+vll max_up;
+
+void dfs_max_dn(int cur, int par, vi &price) {
+	max_dn[cur] = 0LL;
+	
+	for(auto nbr: g[cur]) {
+		if(nbr == par) continue;
+		dfs_max_dn(nbr, cur, price); 
+		max_dn[cur] = max(max_dn[cur], max_dn[nbr]);
 	}
 	
-	sort(tmp.begin(), tmp.end(), cmp);
+	max_dn[cur] += price[cur];
 	
-	double res = 0.0;
+	return;
+}
+
+void dfs_max_up(int cur, int par, vi &price) {
+	multiset<ll> mset;
+	
+	for(auto nbr: g[cur]) {
+		if(nbr == par) continue;
+		mset.insert(max_dn[nbr]);
+	}
+	
+	for(auto nbr: g[cur]) {
+		if(nbr == par) continue;
+		
+		ll x = max_dn[nbr];
+		mset.erase(mset.find(x));
+		
+		ll mx = mset.empty() ? 0LL : *(--mset.end());
+		max_up[nbr] = max(mx, max_up[cur]) + price[cur];
+		
+		mset.insert(x);
+		
+		dfs_max_up(nbr, cur, price);
+	}
+	
+	return;
+}
+
+ll calc_final_res(vi &price) {
+	ll res = 0LL;
 	
 	for(int i = 0; i < n; i++) {
-		if(w - tmp[i].F >= 0) {
-			res += tmp[i].S;
-			w -= tmp[i].F;
-		}
-		
-		else {
-			res += (tmp[i].S / (double)tmp[i].F) * (double)w;
-            break;
-		}
+		ll max_sum_path = max(max_dn[i], max_up[i] + price[i]);
+		ll min_sum_path = price[i];
+		res = max(res, max_sum_path - min_sum_path);
 	}
 	
 	return res;
@@ -118,20 +160,36 @@ double fractional_knapsack(vi &wt, vi &val, ll w, int n) {
 
 void solve()
 {
- 	int n; ll w; cin >> n >> w;
-
-  	vi wt(n), val(n);
-
-  	for(int i = 0; i < n; i++) cin >> wt[i];
-  	for(int i = 0; i < n; i++) cin >> val[i];
+  	cin >> n;
   	
-  	cout << fractional_knapsack(wt, val, w, n) << "\n"; 
+  	vi price(n);
+  	
+  	g.clear(); g.resize(n);
+  	max_dn.clear(); max_dn.resize(n, 0LL);
+  	max_up.clear(); max_up.resize(n, 0LL);
+  	
+  	for(int i = 0; i < n - 1; i++) {
+  		int x, y; cin >> x >> y;
+  		g[x].pb(y);
+  		g[y].pb(x);
+  	}
+  	
+  	for(int i = 0; i < n; i++) {
+  		cin >> price[i];
+  	}
+  	
+  	dfs_max_dn(0, -1, price);
+  	
+  	dfs_max_up(0, -1, price);
+  	
+  	ll res = calc_final_res(price);
+  	
+  	cout << res << "\n";
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
