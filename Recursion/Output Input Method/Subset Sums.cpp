@@ -1,10 +1,13 @@
 // Prob: https://www.geeksforgeeks.org/print-sums-subsets-given-set/
+
 // Ref: https://www.youtube.com/watch?v=rYkfBRtMJr8&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=52
-/***************************************************************************************************************/
 
-// NOTE: In both the below methods if the result is required in sorted form, then just sort the res[] at the end.
+/*****************************************************************************************************************************************************************/
 
-/***************************************************************************************************************/
+// NOTE: In both the below methods if the result is required in sorted form, then just sort the res[] at the end or sort the input
+//       vector and change the order of recursive function calls.
+
+/*****************************************************************************************************************************************************************/
 
 // METHOD - 1 (Using Power Set generation)
 
@@ -119,7 +122,9 @@ void solve()
   	int n; cin >> n;
   	vi v(n);
   	for(int i = 0; i < n; i++) cin >> v[i];
+
 	sort(v.begin(), v.end());
+
   	vi res = subset_sums(v);
   	
   	for(auto x: res) {

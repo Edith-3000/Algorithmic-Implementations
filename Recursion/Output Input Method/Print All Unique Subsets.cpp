@@ -1,12 +1,12 @@
 // Prob: https://leetcode.com/problems/subsets-ii/
-/***************************************************************************************************************/
+/***************************************************************************************************************************************************************/
 
 // METHOD - 1
 // Ref: https://www.youtube.com/watch?v=lfFqW1DTsqM&list=PL_z_8CaSLPWeT1ffjiImo0sYTcnLzo-wY&index=13
 
 // TC: O((2^n) * ((n * log(n)) + (n * log(2^n))))
 
-// The analogy of why he TC is so could be understood from here: https://codeforces.com/blog/entry/75644
+// The analogy of why the TC is so could be understood from here: https://codeforces.com/blog/entry/75644
 // or from the time complexity discussion section of: https://takeuforward.org/data-structure/subset-ii-print-all-the-unique-subsets/
 
 #include<bits/stdc++.h>
@@ -164,7 +164,7 @@ int main()
     return 0;
 }
 
-/*************************************************************************************************************/
+/**********************************************************************************************************************************************************/
 
 // METHOD - 2
 // Ref: https://www.youtube.com/watch?v=RIn3gOkbhQE&list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma&index=54
