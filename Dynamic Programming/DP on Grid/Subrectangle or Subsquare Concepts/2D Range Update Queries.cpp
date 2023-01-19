@@ -1,8 +1,8 @@
-// Prob: https://leetcode.com/problems/combination-sum/
+// Prob: https://leetcode.com/problems/increment-submatrices-by-one/description/
 
-// Ref: https://takeuforward.org/data-structure/combination-sum-1/
+// Ref: https://www.youtube.com/watch?v=AyYAcAL2cmI&ab_channel=codingMohan
 
-/**************************************************************************************************************************************************************/
+/*****************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -93,46 +93,58 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-void helper(vi &op, vi &ip, int idx, int n, int sum, int k, vvi &res) {
-	// base case(s)
-	if(sum == k) {
-		res.pb(op);
-		return;
-	}
+void matrix_range_add_queries(vvi &v, vvi &queries) {
+	int n = sz(v), m = sz(v[0]);
 	
-	if(idx >= n) return;
-	
-	if(sum + ip[idx] <= k) {
-		sum += ip[idx];
-		op.pb(ip[idx]);
-		helper(op, ip, idx, n, sum, k, res);
-		op.ppb();
-		sum -= ip[idx];
-	}
-	
-	helper(op, ip, idx + 1, n, sum, k, res);
-}
-
-vvi combination_sum(vi &v, int k) {
-	int n = sz(v);
-	vi op;
-	vvi res;
+	for(int i = 0; i < sz(queries); i++) {
+		int r1 = queries[i][0], c1 = queries[i][1];
+		int r2 = queries[i][2], c2 = queries[i][3];
+		int delta = queries[i][4];
 		
-	helper(op, v, 0, n, 0, k, res);
+		v[r1][c1] += delta;
+		
+		if((r2 + 1) < n) v[r2 + 1][c1] -= delta;
+		if((c2 + 1) < m) v[r1][c2 + 1] -= delta;
+		if((r2 + 1 < n) and (c2 + 1 < m)) v[r2 + 1][c2 + 1] += delta;
+	}
 	
-	return res;
+	// prefix sum of all the rows
+	for(int i = 0; i < n; i++) {
+		for(int j = 1; j < m; j++) {
+			v[i][j] += v[i][j - 1];
+		}
+	}
+	
+	// prefix sum of all the columns
+	for(int j = 0; j < m; j++) {
+		for(int i = 1; i < n; i++) {
+			v[i][j] += v[i - 1][j];
+		}
+	}
 }
 
 void solve()
 {
-  	int n, target; cin >> n >> target;
-  	vi v(n);
-  	for(int i = 0; i < n; i++) cin >> v[i];
+  	int n, m; cin >> n >> m;
   	
-  	vvi res = combination_sum(v, target);
+  	vvi v(n, vi(m));
   	
-  	for(auto vec: res) {
-  		for(auto x: vec) cout << x << " ";
+  	for(int i = 0; i < n; i++) {
+  		for(int j = 0; j < m; j++) cin >> v[i][j];
+  	}
+  	
+  	int k; cin >> k;
+  	
+  	vvi queries(k, vi(5));
+  	
+  	for(int i = 0; i < k; i++) {
+  		for(int j = 0; j < 5; j++) cin >> queries[i][j];
+  	}
+  	
+  	matrix_range_add_queries(v, queries);
+  	
+  	for(int i = 0; i < n; i++) {
+  		for(int j = 0; j < m; j++) cout << v[i][j] << " ";
   		cout << "\n";
   	}
 }
@@ -160,6 +172,3 @@ int main()
 
     return 0;
 }
-
-// NOTE: Had the elements in v[] were not distinct, then this algorithm would have given repeated 
-//       combinations. You can check this for v[] = [2, 3, 5, 2] for target = 8.
