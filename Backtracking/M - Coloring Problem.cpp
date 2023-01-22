@@ -1,6 +1,9 @@
 // Problem: https://practice.geeksforgeeks.org/problems/m-coloring-problem-1587115620/1#
+//          https://www.geeksforgeeks.org/m-coloring-problem/
+
 // Ref: https://takeuforward.org/data-structure/m-coloring-problem/
-/****************************************************************************************************/
+
+/****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -171,3 +174,4 @@ int main()
 
 // Time Complexity: O(m^n).
 // Auxiliary Space: O(n).
+// Refer: https://www.geeksforgeeks.org/m-coloring-problem/

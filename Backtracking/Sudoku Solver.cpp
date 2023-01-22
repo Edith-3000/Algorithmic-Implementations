@@ -1,12 +1,12 @@
 // Imp. links: https://leetcode.com/problems/sudoku-solver/
 //             https://takeuforward.org/data-structure/sudoku-solver/
 
-/**************************************************************************************************************/ 
+/**************************************************************************************************************************************************************/ 
 
-// Given a (n x n) sudoku, where n is a perfect square, writer all possible solutions to the sudoku.
+// Given an (n x n) sudoku, where n is a perfect square, writer all possible solutions to the sudoku.
 // Very much similar to "N-Queens Problem.cpp"
 
-/**************************************************************************************************************/
+/**************************************************************************************************************************************************************/
 
 // METHOD - 1
 
@@ -26,7 +26,7 @@ bool is_valid(int i, int j, vector<vector<int>> &board, int n, int num) {
 	
 	for(int k = sx; k < (sx + sub_size); k++) {
 		for(int l = sy; l < (sy + sub_size); l++) {
-			if(board[k][l] == num){
+			if(board[k][l] == num) {
 				return false;
 			}
 		}

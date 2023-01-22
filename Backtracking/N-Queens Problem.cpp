@@ -6,7 +6,7 @@
                       attack other queens (use 'Q' for queen and '.' for empty position).
 */
 
-/******************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // METHOD - 1
 
@@ -225,6 +225,8 @@ int main()
 //        https://www.youtube.com/watch?v=EYjmtxbRnns
 // In the description of the video: https://www.youtube.com/watch?v=wGbuCyNpxIg
 
+// https://gist.github.com/Edith-3000/fcff6223d07c69c41a56162891628130
+
 /* Optimizations: The exponential time complexity of above backtracking algorithm can be improved by using 
    Branch and Bound. 
    In backtracking solution we backtrack when we hit a dead end but in branch and bound, after building a 
@@ -253,7 +255,7 @@ _ Q _ _
 
 */
 
-/****************************************************************************************************/
+/*********************************************************************************************************************************************************************/
 
 // METHOD - 2 
 // In this method there is just slight optimization of the is_valid() fn. (which runs in O(n) time).

@@ -1,6 +1,8 @@
 // Problem: https://practice.geeksforgeeks.org/problems/rat-in-a-maze-problem/1#
+
 // Ref: https://takeuforward.org/data-structure/rat-in-a-maze/
-/******************************************************************************************************/
+
+/**************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -165,5 +167,5 @@ int main()
 }
 
 // Time Complexity: O(4^(n * m)) (Not sure if this is correct).
-// Space Complexity for recursion overhead: O(n + m), since at a time there could be at most O(n + m) function
+// Space Complexity for recursion overhead: O(n * m), since at a time there could be at most O(n * m) function
 //                                          calls in the recursive call stack. (Not sure if this is correct).

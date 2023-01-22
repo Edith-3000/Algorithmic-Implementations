@@ -1,10 +1,12 @@
 // Prob: https://leetcode.com/problems/longest-duplicate-substring/description/
 
+// Reference for few calculations taken from: https://cp-algorithms.com/string/string-hashing.html#applications-of-hashing
+
 /*********************************************************************************************************************************************************************/
 
 // METHOD - 1
 
-// NOTE: THIS METHOD IS GETTING "TLE" AT LEETCODE
+// NOTE: THIS METHOD WILL GIVE "TLE" IF THE TESTCASES ARE GODD.
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -191,7 +193,7 @@ int main()
 
 // METHOD - 2
 
-// NOTE: THIS METHOD IS GETTING "WA" AT LEETCODE
+// NOTE: BELOW ALGORITHM IS NOT GETTING AC ON LEETCODE
 
 #include<bits/stdc++.h>
 using namespace std;
