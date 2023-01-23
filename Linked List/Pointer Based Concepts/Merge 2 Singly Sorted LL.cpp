@@ -1,6 +1,9 @@
 // Problem: https://www.interviewbit.com/problems/merge-two-sorted-lists/
+//          https://leetcode.com/problems/merge-two-sorted-lists/
+
 // Ref: https://www.youtube.com/watch?v=ArNPEyGylAM&list=PL7JyMDSI2BfbQZQIFfD7Hep2e6kzUZd7L&index=4
-/*******************************************************************************************************/
+
+/*******************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -89,6 +92,7 @@ ListNode* merge_2_sorted_lists(ListNode *t1, ListNode *t2) {
 	if(t2 == NULL) return t1;
 	
 	ListNode *head;
+	
 	if(t1->val <= t2->val) {
 		head = t1;
 		t1 = t1->next;

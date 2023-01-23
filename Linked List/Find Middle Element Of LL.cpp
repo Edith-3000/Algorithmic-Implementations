@@ -84,6 +84,8 @@ class LinkedList {
 };
 
 ListNode* find_mid(ListNode *head) {
+	if(head == NULL) return head;
+
 	ListNode *fast = head;
 	ListNode *slow = head;
 	
@@ -133,7 +135,7 @@ int main()
     return 0;
 }
 
-/*****************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // THIS ALGORITHM WILL RETURN THE SECOND MIDDLE NODE, IF THERE ARE TWO MIDDLE NODES (i.e. IF THERE ARE
 // EVEN NUMBER OF NODES). 
@@ -221,6 +223,8 @@ class LinkedList {
 };
 
 ListNode* find_mid(ListNode *head) {
+	if(head == NULL) return head;
+	
 	ListNode *fast = head;
 	ListNode *slow = head;
 	
