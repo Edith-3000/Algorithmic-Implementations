@@ -1,6 +1,8 @@
 // Prob: https://leetcode.com/problems/delete-node-in-a-linked-list/
+
 // Ref: https://takeuforward.org/data-structure/delete-given-node-in-a-linked-list-o1-approach/
-/************************************************************************************************************/
+
+/******************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

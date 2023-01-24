@@ -1,6 +1,8 @@
 // Problem: https://leetcode.com/problems/add-two-numbers/
+
 // Ref: https://www.youtube.com/watch?v=fThpzrA0vGc&list=PL7JyMDSI2BfbQZQIFfD7Hep2e6kzUZd7L&index=11
-/****************************************************************************************************/
+
+/************************************************************************************************************************************************************/
 
 // Method 1 (Using Auxuliary Space)
 
@@ -184,10 +186,11 @@ int main()
 
 // Time Complexity: O(m + n), where m and n are number of nodes in first and second lists respectively. 
 //                  The lists needs to be traversed only once.
+
 // Space Complexity: O(m + n). 
 // 					A temporary linked list is needed to store the output number.
 
-/******************************************************************************************************/
+/************************************************************************************************************************************************************/
 
 // Method 2 (Using less space than Method 1)
 
@@ -385,7 +388,7 @@ int main()
     return 0;
 }
 
-/********************************************************************************************************/
+/************************************************************************************************************************************************************/
 
 // METHOD - 3 
 // Same as METHOD - 1, just slightly different implementation.
@@ -578,3 +581,10 @@ int main()
 
     return 0;
 }
+
+/************************************************************************************************************************************************************/
+
+// METHOD - 4
+// Same as METHOD - 1, just slightly different implementation.
+
+// https://pastebin.com/GY7nDi0V
