@@ -4,18 +4,21 @@
 //      https://www.youtube.com/watch?v=ziteu2FpYsA
 //      https://cp-algorithms.com/string/prefix-function.html
 //      https://towardsdatascience.com/pattern-search-with-the-knuth-morris-pratt-kmp-algorithm-8562407dba5b
-/*************************************************************************************************************/
+
+/*****************************************************************************************************************************************************************/
 
 /*
-  # The most important difference between KMP & Rabin-Karp is how reliable they are in finding a match. 
+   # The most important difference between KMP & Rabin-Karp is how reliable they are in finding a match. 
 
-  # KMP guarantees 100% reliability. You cannot guarantee 100% with Rabin Karp because of a chance of collision 
-    during hash table lookup. 
+   # KMP guarantees 100% reliability. You cannot guarantee 100% with Rabin Karp because of a chance of collision 
+     during hash table lookup. 
     
-  # But with good hash generation algorithms that do exist today, it is possible that Rabin Karp can yield very 
-    close to 100% reliability in finding a match. And both have complexity of O(n + m). Also Rabin Karp is easier 
-    to implement than KMP it works based on a rolling hash whereas KMP works based on a failure function.
+   # But with good hash generation algorithms that do exist today, it is possible that Rabin Karp can yield very 
+     close to 100% reliability in finding a match. And both have complexity of O(n + m). Also Rabin Karp is easier 
+     to implement than KMP it works based on a rolling hash whereas KMP works based on a failure function.
 */
+
+/*****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -204,7 +207,7 @@ int main()
 // Time complexity: O(n + m)
 // Space complexity: O(m)
 
-/***************************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // Following is a very simple & short implementation of the above method by making use of prefix function
 // only on the concatenated string i.e. on pattern + "$" + text
