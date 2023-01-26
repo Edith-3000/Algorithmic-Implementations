@@ -1,5 +1,6 @@
 // Problem: https://leetcode.com/problems/valid-anagram/
-/******************************************************************************************************/
+
+/**************************************************************************************************************************************************************/
 
 // METHOD 1 (Using 2 hash data structures)
 
@@ -50,6 +51,7 @@ bool valid_anagrams(string &text, string &pattern) {
 	}
 	
 	bool ok = 1;
+
 	for(int i = 0; i < 26; i++) {
 		ok &= (v1[i] == v2[i]);
 	}
@@ -139,6 +141,7 @@ bool valid_anagrams(string &text, string &pattern) {
   }
   
   bool ok = 1;
+  
   for(int i = 0; i < 26; i++) {
     ok &= (v[i] == 0);
   }

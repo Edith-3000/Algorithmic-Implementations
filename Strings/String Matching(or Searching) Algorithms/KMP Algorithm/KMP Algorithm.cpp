@@ -16,6 +16,13 @@
    # But with good hash generation algorithms that do exist today, it is possible that Rabin Karp can yield very 
      close to 100% reliability in finding a match. And both have complexity of O(n + m). Also Rabin Karp is easier 
      to implement than KMP it works based on a rolling hash whereas KMP works based on a failure function.
+
+
+   # The KMP matching algorithm uses degenerating property (pattern having the same sub-patterns appearing more than once in the pattern)
+     of the pattern and improves the worst-case complexity to O(n). 
+
+   # The basic idea behind KMP’s algorithm is: whenever we detect a mismatch (after some matches), we already know some of the characters
+     in the text of the next window. We take advantage of this information to avoid matching the characters that we know will anyway match. 
 */
 
 /*****************************************************************************************************************************************************************/
