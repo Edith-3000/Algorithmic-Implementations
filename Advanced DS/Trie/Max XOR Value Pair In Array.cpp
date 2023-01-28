@@ -1,13 +1,18 @@
 // Prob: https://www.geeksforgeeks.org/maximum-xor-of-two-numbers-in-an-array/
 //       https://leetcode.com/problems/maximum-xor-of-two-numbers-in-an-array/
-/*************************************************************************************************************/
+
+// Ref: https://takeuforward.org/data-structure/maximum-xor-of-two-numbers-in-an-array/
+
+/*********************************************************************************************************************************************************************/
 
 /* UNDERLYING CONCEPT:
    # Naive Approach: A Simple Solution is to generate all pairs of the given array and compute XOR of the 
                      pairs. Finally, return maximum XOR value. This solution takes O(n^2) time.
   
-   # An efficient approach can be used by the help of Trie.
+   # An efficient approach can be designed by the help of Trie.
 */
+
+/*********************************************************************************************************************************************************************/
 
 // IMPLEMENTATION USING struct & class (TEMPLATED IMPLEMENTATION)
 
@@ -219,7 +224,7 @@ int main()
 
 // Time complexity: O(64 x n) = O(n)
 
-/**************************************************************************************************************/
+/*********************************************************************************************************************************************************************/
 
 // IMPLEMENTATION w/o USING class
 

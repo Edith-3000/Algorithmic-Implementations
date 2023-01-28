@@ -1,7 +1,9 @@
 // Prob: https://takeuforward.org/data-structure/implement-trie-ii/
 //       https://www.codingninjas.com/codestudio/problems/implement-trie_1387095?topList=striver-sde-sheet-problems&utm_source=striver&utm_medium=website
+
 // Ref: https://www.youtube.com/watch?v=K5pcpkEMCN0&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&index=3&ab_channel=takeUforward
-/**********************************************************************************************************************************************************/
+
+/****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -99,7 +101,8 @@ struct trie_node {
 	vector<trie_node*> nxt;
 		
 	// end = indicates whether a string ended at the trie node above this trie node or not
-	// freq = indicating the #strings ending on the tire node above this trie node
+	// freq = indicating the #strings ending on the trie node above this trie node
+	// cnt_pref = indicates the #strings inserted so far that have a prefix ending on the trie node above this trie node
 	bool end;
 	int freq, cnt_pref;
 	

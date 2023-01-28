@@ -1,6 +1,8 @@
 // Prob: https://leetcode.com/problems/maximum-xor-with-an-element-from-array/
+
 // Ref: https://www.youtube.com/watch?v=Q8LhG9Pi5KM&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&index=7&ab_channel=takeUforward
-/****************************************************************************************************************************/
+
+/*****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

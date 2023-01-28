@@ -1,7 +1,8 @@
 // Ref: https://www.geeksforgeeks.org/trie-insert-and-search/
 //      https://www.geeksforgeeks.org/trie-delete/
 //      https://www.youtube.com/watch?v=dBGUmUQhjaM&list=PLgUwDviBIf0pcIDCZnxhv0LkHf5KzG9zp&ab_channel=takeUforward
-/******************************************************************************************************************/
+
+/********************************************************************************************************************************************************************/
 
 // IMPLEMENTATION USING struct (TEMPLATED IMPLEMENTATION)
 
@@ -107,7 +108,7 @@ struct trie_node {
 	vector<trie_node*> nxt;
 		
 	// end = indicates whether a string ended at the trie node above this trie node or not
-	// freq = indicating the #strings ending on the tire node above this trie node
+	// freq = indicating the #strings ending on the trie node above this trie node
 	bool end;
 	int freq;
 	
@@ -280,7 +281,7 @@ int main()
     return 0;
 }
 
-/*******************************************************************************************************/
+/********************************************************************************************************************************************************************/
 
 // IMPLEMENTATION w/o USING struct
 
@@ -516,9 +517,9 @@ int main()
     return 0;
 }
 
-/********************************************************************************************************/
+/********************************************************************************************************************************************************************/
 
 // Implementation can also be achieved using std::map --->
 // Ref: https://pastebin.com/qeCYr4KJ
 
-/*******************************************************************************************************/
+/********************************************************************************************************************************************************************/
