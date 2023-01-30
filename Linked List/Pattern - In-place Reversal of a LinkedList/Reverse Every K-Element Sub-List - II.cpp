@@ -2,8 +2,12 @@
 //       of the modified list. k is a positive integer and is less than or equal to the length of the 
 //       linked list. If, in the end, you are left with a sub-list with less than ‘k’ elements, DON'T 
 //       reverse it 
+
 // Link: https://leetcode.com/problems/reverse-nodes-in-k-group/
-/**********************************************************************************************************/
+
+/******************************************************************************************************************************************************************/
+
+// ITERATIVE APPROACH
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -183,3 +187,8 @@ int main()
 
     return 0;
 }
+
+/******************************************************************************************************************************************************************/
+
+// RECURSIVE APPROACH
+// https://leetcode.com/problems/reverse-nodes-in-k-group/solutions/3118913/using-recursion/

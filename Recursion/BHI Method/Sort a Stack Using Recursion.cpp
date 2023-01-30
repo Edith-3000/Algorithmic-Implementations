@@ -1,7 +1,8 @@
 // Ref: https://www.youtube.com/watch?v=MOGBRkkOhkY
-// Exactly similar to "Sort An Array Using Recursion.txt"
 
-/*****************************************************************************************************/
+// Exactly similar to "Recursion/BHI Method/Sort An Array Using Recursion.txt"
+
+/*************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -50,6 +51,7 @@ void solve()
   	sort_stack(s);
   	
   	cout << "Content of stack after sorting:-->\n";
+
   	while(!s.empty()) {
   		cout << s.top() << " ";
   		s.pop();

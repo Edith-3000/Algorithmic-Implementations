@@ -1,9 +1,13 @@
 // Problem: https://leetcode.com/problems/intersection-of-two-linked-lists/
+
 // Ref: https://www.youtube.com/watch?v=u4FWXfgS8jw&list=PLgUwDviBIf0r47RKH7fdWN54AbWFgGuii&index=7
-/*******************************************************************************************************/
+
+/******************************************************************************************************************************************************************/
 
 // NOTE: Brute forces techniques have been discussed in the reference video, here the most optimal 
 //       approach is written.
+
+/******************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

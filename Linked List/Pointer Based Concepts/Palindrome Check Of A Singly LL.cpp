@@ -1,5 +1,9 @@
+// Prob: https://leetcode.com/problems/palindrome-linked-list/description/
+
 // Ref: https://www.youtube.com/watch?v=J0dLiObC_0E&list=PL7JyMDSI2BfbQZQIFfD7Hep2e6kzUZd7L&index=1
-/****************************************************************************************************/
+//      https://takeuforward.org/data-structure/check-if-given-linked-list-is-plaindrome/
+
+/*********************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -84,6 +88,8 @@ class LinkedList {
 };
 
 ListNode* find_mid(ListNode *head) {
+	if(head == NULL) return NULL;
+
 	ListNode *fast = head;
 	ListNode *slow = head;
 	
@@ -111,6 +117,8 @@ ListNode* reverse(ListNode *head) {
 }
 
 bool is_palindrome(ListNode *head) {
+	if((head == NULL) or (head->next == NULL)) return 1;
+
 	ListNode *middle = find_mid(head);
 	ListNode *tmp = middle->next;
 	middle->next = NULL;
