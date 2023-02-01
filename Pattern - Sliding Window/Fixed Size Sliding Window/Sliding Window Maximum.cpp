@@ -1,6 +1,10 @@
 // Problem: https://www.interviewbit.com/problems/sliding-window-maximum/
+//          https://leetcode.com/problems/sliding-window-maximum/
+
 // Ref: https://www.youtube.com/watch?v=xFJXtB5vSmM
-/*****************************************************************************************************/
+//      https://takeuforward.org/data-structure/sliding-window-maximum/
+
+/********************************************************************************************************************************************************************/
 
 // METHOD - 1 [O(n x log(n)) Approach]
 
@@ -173,7 +177,7 @@ int main()
     return 0;
 }
 
-/****************************************************************************************************/
+/********************************************************************************************************************************************************************/
 
 // METHOD - 2 [O(n) approach]
 
@@ -289,7 +293,7 @@ int main()
 // Auxiliary Space: O(k). 
 // Elements stored in the dequeue take O(k) space.
 
-/*******************************************************************************************************/
+/********************************************************************************************************************************************************************/
 
 // NOT ANOTHER METHOD BUT BELOW ALGORITHM IS TO RETURN THE 0-BASED INDICES OF THE CORRESPONDING MAXIMUM
 // ELEMENTS IN ALL SUBARRAYS OF SIZE 'k'

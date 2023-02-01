@@ -1,6 +1,9 @@
 // Ref: https://www.geeksforgeeks.org/find-the-smallest-window-in-a-string-containing-all-characters-of-another-string/
+
 // Ques. based on this concept: https://codeforces.com/problemset/problem/701/C
-/**********************************************************************************************************************/
+//                              https://leetcode.com/problems/minimum-window-substring/description/
+
+/*****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

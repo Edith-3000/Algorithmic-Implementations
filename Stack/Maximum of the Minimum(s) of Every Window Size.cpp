@@ -1,7 +1,9 @@
 // Prob: https://www.hackerrank.com/challenges/min-max-riddle/problem
+
 // Ref: https://www.geeksforgeeks.org/find-the-maximum-of-minimums-for-every-window-size-in-a-given-array/
 //      https://www.youtube.com/watch?v=CK8PIAF-m2E
-/*************************************************************************************************************/
+
+/*****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
