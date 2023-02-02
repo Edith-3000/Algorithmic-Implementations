@@ -1,99 +1,50 @@
-/* Prob.: Suppose you are at a party with n people (labeled from 0 to n - 1) and among them, there may 
-          exist one celebrity. 
-          The definition of a celebrity is that all the other (n - 1) people know him/her but he/she 
-          does not know any of them.
-          Now you want to find out who the celebrity is or verify that there is not one. 
-          The only thing you are allowed to do is to ask questions like: "Hi, A. Do you know B?" to get 
-          information whether A knows B. 
-          You need to find out the celebrity (or verify there is not one) by asking as few questions 
-          as possible (in the asymptotic sense).
-          
-          You are given a 2 D matrix, v[][] of size (n x n), v[i][j] = 0 if i doesn't know j and 
-          v[i][j] = 1, if i knows j.
-          
-          # Note: There will be exactly one celebrity if he/she is in the party. 
-                  Return the celebrity's label if there is a celebrity in the party. 
-                  If there is no celebrity, return -1. 
+/* Link: https://www.interviewbit.com/problems/largest-rectangle-in-histogram/
+         https://leetcode.com/problems/largest-rectangle-in-histogram/
 
-   Question link(s): https://leetcode.com/problems/find-the-celebrity/
-                     https://www.geeksforgeeks.org/the-celebrity-problem/
+   PROBLEM STATEMENT: Find the largest rectangular area possible in a given histogram where the largest 
+                      rectangle can be made of a number of contiguous bars. For simplicity, assume that all 
+                      bars have same width and the width is 1 unit.
+                      For example, consider the following histogram with 7 bars of heights 
+                      {6, 2, 5, 4, 5, 1, 6}. The largest possible rectangle possible is 12.
 */
 
 /****************************************************************************************************************************************************************/
 
-/* UNDERLYING CONCEPT ------->
+// METHOD - 1 (BRUTE FORCE APPROACH: O(n^2))
 
-   # So basically, celebrity is the person who is: • known by everyone
-  												   • knows nobody.
-*/  
+/* One by one consider all bars as starting points and calculate area of all rectangles starting with every
+   bar. Finally return maximum of all possible areas.
+*/
 
 /****************************************************************************************************************************************************************/
 
-// METHOD - 1
-// REf: # Ref: https://www.youtube.com/watch?v=CiiXBvrX-5A
+// METHOD - 2 O(n)
+// The solution is based on such a simple observation that the height of an optimum rectangle will be equal 
+// to that of at least one of the histograms. Then find the max area you can get assuming height equal to 
+// that of a particular histogram. Iterate over all to find maximum result.
 
 #include<bits/stdc++.h>
 using namespace std;
 
 #define ll long long
-#define ld long double
 #define ull unsigned long long
 #define pb push_back
-#define ppb pop_back
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
-#define sz(x) ((int)(x).size())
-
+#define deb(x) cout << #x << "=" << x << endl
+#define deb2(x, y) cout << #x << "=" << x << ", " << #y << "=" << y << endl
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
-typedef vector<int> vi;
+typedef vector<int>	vi;
 typedef vector<ll> vll;
 typedef vector<ull> vull;
-typedef vector<bool> vb;
-typedef vector<char> vc;
-typedef vector<string> vs;
-typedef vector<pii> vpii;
-typedef vector<pll> vpll;
+typedef vector<pii>	vpii;
+typedef vector<pll>	vpll;
 typedef vector<vi> vvi;
-typedef vector<vll> vvll;
+typedef vector<vll>	vvll;
 typedef vector<vull> vvull;
-typedef vector<vb> vvb;
-typedef vector<vc> vvc;
-typedef vector<vs> vvs;
-
-/************************************************** DEBUGGER *******************************************************************************************************/
-
-#ifndef ONLINE_JUDGE
-#define debug(x) cerr << #x <<" "; _print(x); cerr << endl;
-#else
-#define debug(x)
-#endif
-
-void _print(ll t) { cerr << t; }
-void _print(int t) { cerr << t; }
-void _print(string t) { cerr << t; }
-void _print(char t) { cerr << t; }
-void _print(ld t) { cerr << t; }
-void _print(double t) { cerr << t; }
-void _print(ull t) { cerr << t; }
-
-template <class T, class V> void _print(pair <T, V> p);
-template <class T> void _print(vector <T> v);
-template <class T> void _print(vector <vector<T>> v);
-template <class T> void _print(set <T> v);
-template <class T, class V> void _print(map <T, V> v);
-template <class T> void _print(multiset <T> v);
-template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
-template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
-template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
-
-/*******************************************************************************************************************************************************************/
-
 mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
 int rng(int lim) {
     uniform_int_distribution<int> uid(0,lim-1);
@@ -103,59 +54,91 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
-ll mod_exp(ll a, ll b) { a %= mod; if(a == 0) return 0LL; ll res = 1LL; 
-                         while(b > 0) { if(b & 1) res = (res * a) % mod; a = (a * a) % mod; b >>= 1; } return res; }
-                         
-ll mod_inv(ll a) { return mod_exp(a, mod - 2); } // works only for prime value of "mod"
-ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
+// Function which return the 0-based indices of the NSL elements 
+// for every array element
+vector<int> nsl_indices(vector<int> &v) {
+    int n = (int)v.size();
+	if(n <= 0) return v;
 
-/******************************************************************************************************************************/
+	// to store the final result
+	vector<int> res(n);
 
-int find_celebrity(vvi &v) {
-	int n = sz(v);
-	if(n == 0) return -1;
-	
-	stack<int> st;
-	
-	// pushing all the persons in the stack
-	for(int i = 0; i < n; i++) st.push(i);
+	stack<pair<int, int>> st; 
+	int pseudo_idx = -1;
 
-	while(sz(st) >= 2) {
-		// taking out 2 persons at a time
-		int i = st.top(); st.pop();
-		int j = st.top(); st.pop();
+    for(int i = 0; i < n; i++) {
+	    if(st.empty()) res[i] = pseudo_idx;
+		else if(st.top().F < v[i]) res[i] = st.top().S;
 
-		// if i knows j, then it implies i can't be a celebrity
-		// therefore pushed back j
-		if(v[i][j]) st.push(j);
+		else {
+		    while(!st.empty() && st.top().F >= v[i]) st.pop();
 
-		// if i does not knows j, then it implies j can't be a celebrity
-		// therefore pushed back i
-		else st.push(i);
+		    if(st.empty()) res[i] = pseudo_idx;
+		    else res[i] = st.top().S;
+		}
+
+	    st.push({v[i], i});
+    }
+
+    // return the final res vector
+	return res;
+}
+
+// Function which return the 0-based indices of the NSR elements 
+// for every array element
+vector<int> nsr_indices(vector<int> &v) {
+	int n = (int)v.size();
+	if(n <= 0) return v;
+
+	// to store the final result
+	vector<int> res(n);
+
+	stack<pair<int, int>> st; 
+	int pseudo_idx = n;
+
+	for(int i = n - 1; i >= 0; i--) {
+	    if(st.empty()) res[i] = pseudo_idx;
+		else if(st.top().F < v[i]) res[i] = st.top().S;
+
+		else {
+			while(!st.empty() && st.top().F >= v[i]) st.pop();
+
+			if(st.empty()) res[i] = pseudo_idx;
+			else res[i] = st.top().S;
+		}
+
+		st.push({v[i], i});
 	}
 
-    // stack top can be the potential celebrity but not guaranteed
-	int candidate = st.top();
+	// return the final res vector
+	return res;
+}
+
+int max_rect_in_hist(vi &v) {
+	int n = (int)v.size();
+	if(n == 0) return 0;
+	
+	vi nsl = nsl_indices(v);
+	vi nsr = nsr_indices(v);
+	
+	vi area(n);
 
 	for(int i = 0; i < n; i++) {
-		if(i != candidate) {
-			if(v[i][candidate] == 0 or v[candidate][i] == 1) return -1;
-		}
+		area[i] = (nsr[i] - nsl[i] - 1) * v[i];
 	}
+	
+	int res = *max_element(area.begin(), area.end());
 
-	return candidate;
+	return res;
 }
 
 void solve()
 {
   	int n; cin >> n;
-  	vvi v(n, vi(n, 0));
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
   	
-  	for(int i = 0; i < n; i++) {
-  		for(int j = 0; j < n; j++) cin >> v[i][j];
-  	}
-  	
-  	cout << find_celebrity(v) << "\n";
+  	cout << max_rect_in_hist(v) << "\n";
 }
 
 int main()
@@ -167,29 +150,29 @@ int main()
     //     freopen("input.txt", "r", stdin);
     //     freopen("output.txt", "w", stdout);
     // #endif
-    
-    // #ifndef ONLINE_JUDGE
-    //      freopen("error.txt", "w", stderr);
-    // #endif
-    
+
     int t = 1;
     // int test = 1;
     // cin >> t;
     while(t--) {
-        // cout << "Case #" << test++ << ": ";
-        solve();
+     	// cout << "Case #" << test++ << ": ";
+    	solve();
     }
 
     return 0;
 }
 
 // Time Complexity: O(n)
-// Space Complexity: O(n), where 'n' are the total #people in the party.
+// Space Complexity: O(n), where n is v.size()
 
 /****************************************************************************************************************************************************************/
 
-// METHOD - 2
-// Ref: https://www.youtube.com/watch?v=LZJBZEnoYLQ&ab_channel=KevinNaughtonJr.
+// METHOD - 3
+// A single pass approach can be viewed at :--->
+// https://takeuforward.org/data-structure/area-of-largest-rectangle-in-histogram/
+
+// Although the below algorithm can be made as a single pass.
+// https://www.geeksforgeeks.org/largest-rectangular-area-in-a-histogram-using-stack/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -280,35 +263,54 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-int find_celebrity(vvi &v) {
-    int n = sz(v);
-    if(n == 0) return -1;
-    
-    int candidate = 0;
-    
-    for(int i = 1; i < n; i++) {
-        if(v[candidate][i] == 1) candidate = i;
-    }
+int max_rect_in_hist(vi &v) {
+	int n = (int)v.size();
+	if(n == 0) return 0;
+	
+	int res = 0;
+	
+	stack<int> stk;
+	int i = 0;
+	
+	while(i < n) {
+		if((stk.empty()) or (v[i] >= v[stk.top()])) {
+			stk.push(i);
+			i += 1;
+		}
+		
+		else {
+			int idx = stk.top();
+			stk.pop();
+			
+			int L = stk.empty() ? -1 : stk.top();
+			int R = i;
+			
+			int area = v[idx] * (R - L - 1);
+			res = max(res, area); 
+		}
+	}
+	
+	while(!stk.empty()) {
+		int idx = stk.top();
+		stk.pop();
+		
+		int L = stk.empty() ? -1 : stk.top();
+		int R = i;
+		
+		int area = v[idx] * (R - L - 1);
+		res = max(res, area); 
+	}
 
-    for(int i = 0; i < n; i++) {
-        if(i != candidate) {
-            if(v[i][candidate] == 0 or v[candidate][i] == 1) return -1;
-        }
-    }
-
-    return candidate;
+	return res;
 }
 
 void solve()
 {
-    int n; cin >> n;
-    vvi v(n, vi(n, 0));
-    
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < n; j++) cin >> v[i][j];
-    }
-    
-    cout << find_celebrity(v) << "\n";
+  	int n; cin >> n;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	cout << max_rect_in_hist(v) << "\n";
 }
 
 int main()
@@ -335,5 +337,5 @@ int main()
     return 0;
 }
 
-// Time Complexity: O(n), where 'n' are the total #people in the party.
-// Space Complexity: O(1)
+// Time Complexity: O(n)
+// Space Complexity: O(n), where n is v.size()

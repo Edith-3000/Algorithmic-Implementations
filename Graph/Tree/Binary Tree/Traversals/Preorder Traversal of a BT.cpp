@@ -1,8 +1,10 @@
 // Problem: https://www.interviewbit.com/problems/preorder-traversal/
+//          https://leetcode.com/problems/binary-tree-preorder-traversal/
 
 // Ref: https://www.geeksforgeeks.org/morris-traversal-for-preorder/
 //      https://www.youtube.com/watch?v=BxwRZ1BSfvo&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=20
-/****************************************************************************************************/
+
+/******************************************************************************************************************************************************************/
 
 // METHOD 1 (Using Recursion)
 
@@ -96,9 +98,11 @@ int main()
 
 // TC: O(n)
 
-/*******************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // METHOD 2 (Using std::stack)
+
+// LEGACY CONTENT: https://gist.github.com/Edith-3000/c58d5ca21c674478b1ac969c26358463
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -146,14 +150,20 @@ vi preorder(TreeNode *root) {
 	if(root == NULL) return res;
 	
 	stack<TreeNode*> stk;
-	stk.push(root);
 	
-	while(!stk.empty()) {
-		TreeNode *tmp = stk.top();
-		stk.pop();
-		res.pb(tmp->val);
-		if(tmp->right) stk.push(tmp->right);
-		if(tmp->left) stk.push(tmp->left);
+	while(true) {
+		if(root != NULL) {
+			res.pb(root->val);
+			stk.push(root);
+			root = root->left;
+		}
+		
+		else {
+			if(stk.empty()) break;
+			root = stk.top();
+			stk.pop();
+			root = root->right;
+		}
 	}
 	
 	return res;
@@ -202,7 +212,7 @@ int main()
 // SC: O(n), as the space required is proportional to the height of the tree, which
 //     can be equal to the total number of nodes in the tree in worst-case for skewed trees.
 
-/*************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // METHOD 3 (Using MORRIS TRAVERSAL)
 // Preorder traversal without recursion and without stack

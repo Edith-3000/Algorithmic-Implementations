@@ -1,6 +1,9 @@
 // Problem: https://www.interviewbit.com/problems/inorder-traversal/
+//          https://leetcode.com/problems/binary-tree-inorder-traversal/
+
 // Ref: https://takeuforward.org/data-structure/inorder-traversal-of-binary-tree/
-/*******************************************************************************************************/
+
+/*******************************************************************************************************************************************************************/
 
 // METHOD 1 (Using Recursion)
 
@@ -94,7 +97,7 @@ int main()
 
 // TC: O(n)
 
-/*******************************************************************************************************/
+/*******************************************************************************************************************************************************************/
 
 // METHOD 2 (Using std::stack)
 // Ref: https://www.youtube.com/watch?v=rbINW7Dvwv0&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=5
@@ -208,7 +211,7 @@ int main()
 // SC: O(n), as the space required is proportional to the height of the tree, which
 //     can be equal to the total number of nodes in the tree in worst-case for skewed trees.
 
-/*************************************************************************************************/
+/*******************************************************************************************************************************************************************/
 
 // METHOD 3 (Using MORRIS TRAVERSAL)
 // Inorder traversal without recursion and without stack
