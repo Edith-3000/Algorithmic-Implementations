@@ -1,4 +1,5 @@
 // Problem: https://www.interviewbit.com/problems/postorder-traversal/
+//          https://leetcode.com/problems/binary-tree-postorder-traversal/
 
 // Ref: https://www.youtube.com/watch?v=ymIjzhVvNFg&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=19
 //      https://www.techiedelight.com/postorder-tree-traversal-iterative-recursive/
@@ -97,9 +98,12 @@ int main()
 
 // TC: O(n)
 
-/*******************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // METHOD 2 (Using std::stack)
+
+// LEGACY CONTENT: https://gist.github.com/Edith-3000/83b538cc561bf7318adb35f811987546
+
 // Remember: POSTORDER TRAVERSAL IS SAME AS LEVEL ORDER TRAVERSAL WITH std::stack
 
 // Logic behind this method :--->
@@ -152,19 +156,26 @@ class TreeNode {
 vi postorder(TreeNode *root) {
 	vi res;
 	if(root == NULL) return res;
-		
-	stack<TreeNode*> stk;
-	stk.push(root);
 	
-	while(!stk.empty()) {
-		TreeNode *tmp = stk.top();
-		stk.pop();
-		res.pb(tmp->val);
-		if(tmp->left) stk.push(tmp->left);
-		if(tmp->right) stk.push(tmp->right);
+	stack<TreeNode*> stk;
+	
+	while(true) {
+		if(root != NULL) {
+			res.pb(root->val);
+			stk.push(root);
+			root = root->right;
+		}
+		
+		else {
+			if(stk.empty()) break;
+			root = stk.top();
+			stk.pop();
+			root = root->left;
+		}
 	}
 	
 	reverse(res.begin(), res.end());
+	
 	return res;
 }
 
@@ -211,7 +222,7 @@ int main()
 // SC: O(n), as the space required is proportional to the height of the tree, which
 //     can be equal to the total number of nodes in the tree in worst-case for skewed trees.
 
-/****************************************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // METHOD 3 (Also uses std::stack)
 // Ref: https://www.youtube.com/watch?v=xLQKdq0Ffjg&ab_channel=TusharRoy-CodingMadeSimple
@@ -395,13 +406,13 @@ int main()
     return 0;
 }
 
-/****************************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // METHOD - 4
 // An approach with the help of 2 stacks can be found here :--->
 // https://takeuforward.org/data-structure/post-order-traversal-of-binary-tree/
 
-/****************************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // METHOD 5 (Using MORRIS TRAVERSAL)
 // Postorder traversal without recursion and without stack
@@ -413,8 +424,8 @@ int main()
 // But you do traversal in this way - (root -> right -> left) and in the last just reverse the result
 // obtained i.e. reverse_of(root -> right -> left) = (left -> right -> root). 
 
-// For more info on this see the comment by "Shwetank Singh" in the comment box of the video :--->
-// https://www.youtube.com/watch?v=80Zug6D1_r4&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=39
+// For more info on this see the comment by "Shwetank Singh" in the highlighted comment box of the video :--->
+// https://www.youtube.com/watch?v=80Zug6D1_r4&lc=UgzBxlrUR1D4Srf_4e54AaABAg&ab_channel=takeUforward
 
 #include<bits/stdc++.h>
 using namespace std;
