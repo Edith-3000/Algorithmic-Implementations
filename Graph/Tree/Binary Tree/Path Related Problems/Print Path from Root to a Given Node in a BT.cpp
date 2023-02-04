@@ -1,10 +1,12 @@
 // Problem: https://www.geeksforgeeks.org/print-path-root-given-node-binary-tree/
+
 // Ref: https://takeuforward.org/data-structure/print-root-to-node-path-in-a-binary-tree/
-/****************************************************************************************************/
+
+/****************************************************************************************************************************************************************/
 
 // LEGACY CONTENT: https://pastebin.com/UgqP9wQd
 
-/****************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -116,6 +118,7 @@ bool path_exists(TreeNode* root, int k, vi &res) {
 	   path_exists(root->right, k, res)) return 1;
 	   
 	res.ppb();
+
 	return 0;
 }
 

@@ -1,6 +1,7 @@
 // Ref: https://www.educative.io/edpresso/how-to-use-a-vertical-order-traversal-of-a-binary-tree
 //      https://takeuforward.org/data-structure/vertical-order-traversal-of-binary-tree/
-/*********************************************************************************************************/
+
+/*****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -114,7 +115,7 @@ int main()
 //       given in the link --->
 //       https://www.educative.io/edpresso/how-to-use-a-vertical-order-traversal-of-a-binary-tree
 
-/*******************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // A very slight modification of the problem --->
 // https://leetcode.com/problems/vertical-order-traversal-of-a-binary-tree/

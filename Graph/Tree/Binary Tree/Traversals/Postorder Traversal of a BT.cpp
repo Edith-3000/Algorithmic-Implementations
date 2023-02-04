@@ -414,7 +414,7 @@ int main()
 
 /******************************************************************************************************************************************************************/
 
-// METHOD 5 (Using MORRIS TRAVERSAL)
+// METHOD - 5 (Using MORRIS TRAVERSAL)
 // Postorder traversal without recursion and without stack
 // Morris Traversal uses the concept of Threaded Binary Tree.
 
@@ -484,7 +484,7 @@ vi postorder(TreeNode *root) {
 			TreeNode *tmp = root->right;
 			while(tmp->left and tmp->left != root) tmp = tmp->left;
 			
-			// If the left child of inorder predecessor already points to 
+			// If the left child of inorder successor already points to 
             // this node 
 			if(tmp->left == root) {
 				tmp->left = NULL;
@@ -554,3 +554,13 @@ int main()
 // of extra edges (as input tree) are created and removed.
 
 // Space Complexity: O(1)
+
+/******************************************************************************************************************************************************************/
+
+// METHOD - 6 (DIFFERENT APPROACH FOR MORRIS TRAVERSAL)
+
+/* # https://stackoverflow.com/questions/36384599/can-we-use-morris-traversal-for-postorder
+   # https://www.cnblogs.com/AnnieKim/archive/2013/06/15/morristraversal.html
+   # https://gist.github.com/Edith-3000/55d2f3d8df028585360cf91d7ad0decb
+   # https://www.codespeedy.com/morris-postorder-tree-traversal-in-cpp/
+*/

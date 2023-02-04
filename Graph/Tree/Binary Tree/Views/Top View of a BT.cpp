@@ -1,6 +1,9 @@
 // Ref: https://www.youtube.com/watch?v=EBTku_aIPXk
 //      https://takeuforward.org/data-structure/top-view-of-a-binary-tree/
-/*****************************************************************************************************/
+
+/*************************************************************************************************************************************************************/
+
+// ITERATIVE IMPLEMENTATION
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -119,3 +122,9 @@ int main()
 // SC: O(n)
 
 // NOTE: Time complexity can be made linear by using std::unordered_map instead of a std::map
+
+/*************************************************************************************************************************************************************/
+
+// RECURSIVE IMPLEMENTATION
+
+// Ref: https://gist.github.com/Edith-3000/a4ebbb1d37055c00e392d64431792ebf

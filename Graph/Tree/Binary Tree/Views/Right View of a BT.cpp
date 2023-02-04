@@ -1,5 +1,6 @@
 // Ref: https://www.techiedelight.com/print-right-view-binary-tree/
-/******************************************************************************************************/
+
+/*************************************************************************************************************************************************************/
 
 // ITERATIVE IMPLEMENTATION
 
@@ -67,7 +68,7 @@ vi right_view(TreeNode *root) {
 			if(cur->left) q.push(cur->left);
 			if(cur->right) q.push(cur->right);
 			
-			 // if this is the last node of the current level, push it into result
+			// if this is the last node of the current level, push it into result
 			if(sz == 0) res.pb(cur->val);
 		}
 	}
@@ -116,7 +117,7 @@ int main()
 // TC: O(n)
 // SC: O(n)
 
-/**********************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // RECURSIVE IMPLEMENTATION
 // https://takeuforward.org/data-structure/right-left-view-of-binary-tree/

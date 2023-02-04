@@ -1,6 +1,8 @@
 // Prob: https://leetcode.com/problems/maximum-width-of-binary-tree/
+
 // Ref: https://takeuforward.org/data-structure/maximum-width-of-a-binary-tree/
-/*********************************************************************************************************/
+
+/*************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
