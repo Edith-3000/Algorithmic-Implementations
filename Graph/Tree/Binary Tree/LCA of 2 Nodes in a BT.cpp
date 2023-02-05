@@ -1,17 +1,20 @@
 // Problem: https://www.interviewbit.com/problems/least-common-ancestor/
+//          https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/
 
 // Ref: https://www.youtube.com/watch?v=T6Jr-Q6bvSU&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=39
 //      https://www.educative.io/edpresso/how-to-find-the-lowest-common-ancestor-in-binary-tree
 //      https://www.youtube.com/watch?v=_-QHfMDde90&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=29&ab_channel=takeUforward
-/****************************************************************************************************************************/
+
+/*******************************************************************************************************************************************************************/
 
 // METHOD - 1
 
-/* # Find root to node path for both the nodes whose LCA is to be found out.
+/* 
+   # Find root to node path for both the nodes whose LCA is to be found out.
    # Compare both the paths obtained from start and the last matching node wile be LCA, if it exists. 
 */
 
-/****************************************************************************************************************************/
+/*******************************************************************************************************************************************************************/
 
 // METHOD - 2
 
@@ -69,9 +72,16 @@ TreeNode* LCA_helper(TreeNode* root, int x, int y) {
 	TreeNode* lft = LCA_helper(root->left, x, y);
 	TreeNode* rgt = LCA_helper(root->right, x, y);
 	
+	// if one node is present in the left subtree and other in the right subtree of the root, then root is the LCA
 	if(lft and rgt) return root;
+
+	// if root node has nodes x and y exclusively in its left subtree
 	else if(lft) return lft;
+	
+	// if root node has nodes x and y exclusively in its right subtree
 	else if(rgt) return rgt;
+	
+	// LCA not found in the subtree rooted at root
 	else return NULL; 
 }
 
@@ -123,3 +133,15 @@ int main()
 
     return 0;
 }
+
+/*******************************************************************************************************************************************************************/
+
+// METHOD - 3 
+
+/* # In case there are several queries to find LCA of 2 nodes and the height of the BT is of the O(log₂(n)), then the method in the below
+     link might be useful.
+   
+   # https://gist.github.com/Edith-3000/1183d742fa9036e40d36d9718c88ac59
+
+   # Ref: https://youtu.be/T6Jr-Q6bvSU?list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&t=877
+*/

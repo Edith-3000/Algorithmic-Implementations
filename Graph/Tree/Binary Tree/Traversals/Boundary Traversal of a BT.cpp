@@ -1,6 +1,8 @@
 // Prob: https://practice.geeksforgeeks.org/problems/boundary-traversal-of-binary-tree/1#
+
 // Ref: https://www.youtube.com/watch?v=bzF9Ia1XISQ&list=PLDdcY4olLQk1-yJxgljSQ4ykbI2Bw1CqS&index=13
-/*****************************************************************************************************/
+
+/************************************************************************************************************************************************************/
 
 // METHOD - 1
 
@@ -92,7 +94,7 @@ vi boundary_traversal(TreeNode *root) {
 	if(root == NULL) return vi();
 	
 	vi res;
-	res.pb(root->val);
+	if(root->left or root->right) res.pb(root->val);
 	
 	// left boundary function
 	vi Lf;
@@ -153,7 +155,7 @@ int main()
     return 0;
 }
 
-/*********************************************************************************************************/
+/************************************************************************************************************************************************************/
 
 // METHOD - 2
 // https://takeuforward.org/data-structure/boundary-traversal-of-a-binary-tree/
