@@ -1,7 +1,9 @@
 // Prob: https://leetcode.com/problems/binary-tree-maximum-path-sum/
+
 // Ref: https://www.youtube.com/watch?v=Osz-Vwer6rw
 //      https://takeuforward.org/data-structure/maximum-sum-path-in-binary-tree/
-/***********************************************************************************************************/
+
+/****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -170,7 +172,7 @@ int main()
 }
 
 /* # The final answer is stored in res variable, which is passed by reference in every fⁿ call.
-     In the main() fⁿ res is initialised as res= LLONG_MIN;
+     In the main() fⁿ res is initialised as res = LLONG_MIN;
 
    # Time Complexity: O(n), since we must visit each node, where n are the #nodes in binary tree.
    # Auxiliary Space Complexity: O(1)
@@ -180,6 +182,8 @@ int main()
                                                   h maye be O(n), if skewed tree.
 */
 
-/*********************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // LEGACY CONTENT: https://pastebin.com/pkN95NVt
+
+/****************************************************************************************************************************************************************/

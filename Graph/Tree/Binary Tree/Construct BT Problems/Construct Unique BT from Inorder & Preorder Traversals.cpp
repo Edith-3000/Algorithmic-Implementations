@@ -1,13 +1,14 @@
 // Problem: https://www.interviewbit.com/problems/construct-binary-tree-from-inorder-and-preorder/
+//          https://leetcode.com/problems/construct-binary-tree-from-preorder-and-inorder-traversal/
 
 // Ref: https://www.youtube.com/watch?v=wv4XfOcIQWg&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=28
 //      https://takeuforward.org/data-structure/construct-a-binary-tree-from-inorder-and-preorder-traversal/
 
-/*************************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // NOTE: Both the below methods assume that duplicates do not exist in the tree.
 
-/*************************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // METHOD - 1 O(N^2) 
 
@@ -128,10 +129,11 @@ int main()
 
 // TC: (O^2)
 
-/****************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // METHOD - 2 O(N)
-// Only change b/t Method 1 and Method 2 is that in this Method 2 std::unordered_map has been used
+
+// Only change b/w Method 1 and Method 2 is that in this Method 2 std::unordered_map has been used
 // for searching the indices of roots in inorder vector.
 
 #include<bits/stdc++.h>
