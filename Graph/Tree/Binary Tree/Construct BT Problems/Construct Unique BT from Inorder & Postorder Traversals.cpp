@@ -1,13 +1,14 @@
 // Problem: https://www.interviewbit.com/problems/binary-tree-from-inorder-and-postorder/
+//          https://leetcode.com/problems/construct-binary-tree-from-inorder-and-postorder-traversal/
 
 // Ref: https://www.youtube.com/watch?v=7siC3XcaMbs&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=30
 //      https://www.youtube.com/watch?v=LgLRTaEMRVc
 
-/*******************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // NOTE: Both the below methods assume that duplicates do not exist in the tree.
 
-/*******************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // METHOD - 1 O(N^2) 
 
@@ -128,7 +129,7 @@ int main()
 
 // TC: (O^2)
 
-/****************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // METHOD - 2 O(N)
 // Only change b/t Method 1 and Method 2 is that in this Method 2 std::unordered_map has been used

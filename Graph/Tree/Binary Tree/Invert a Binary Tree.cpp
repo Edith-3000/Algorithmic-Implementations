@@ -1,5 +1,7 @@
 // Problem: https://www.interviewbit.com/problems/invert-the-binary-tree/
-/*****************************************************************************************************/
+//          https://leetcode.com/problems/invert-binary-tree/
+
+/*****************************************************************************************************************************************************************/
 
 // METHOD 1 (Using Recursion)
 
@@ -87,7 +89,7 @@ int main()
     return 0;
 }
 
-/******************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // METHOD 2 (Using Level Order Traversal i.e. by std::queue)
 
@@ -133,6 +135,8 @@ class TreeNode {
 };
 
 TreeNode* invert(TreeNode *root) {
+	if(root == NULL) return root;
+
 	queue<TreeNode*> q;
 	q.push(root);
 	
@@ -186,3 +190,6 @@ int main()
 
     return 0;
 }
+
+// The method can also be implemented in this manner ===>
+// https://gist.github.com/Edith-3000/a141ea1c0ae6cc8456d319a11a001a26
