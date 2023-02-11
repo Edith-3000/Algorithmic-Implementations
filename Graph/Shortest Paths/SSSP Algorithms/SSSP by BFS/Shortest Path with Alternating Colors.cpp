@@ -1,17 +1,8 @@
-// Prob: https://practice.geeksforgeeks.org/problems/predecessor-and-successor/1#
+// Prob: https://leetcode.com/problems/shortest-path-with-alternating-colors/description/
 
-// Ref: https://www.youtube.com/watch?v=lQIXz5NJYLs&list=PLDdcY4olLQk0NJOWhs4PB3DWpjnuUESbk&index=4
-//      https://www.youtube.com/watch?v=SXKAD2svfmI&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=51&ab_channel=takeUforward
+// Ref: https://www.youtube.com/watch?v=95RzMmDl4m4&ab_channel=DeepCodes
 
-/**************************************************************************************************************************************************************/
-
-/* # This code returns the inorder predecessor & successor even if the key is not present in the BST, 
-     according to its relative position.
-
-   # This code handles all the cases, it's not always true that the inorder predecessor is the rightmost 
-     node in the left subtree and same the case for successor.
-     For more insight on this point refer the Youtube video of the channel "CodeLibrary - by Yogesh & Shailesh"
-*/
+/********************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -21,11 +12,14 @@ using namespace std;
 #define ull unsigned long long
 #define pb push_back
 #define ppb pop_back
+#define pf push_front
+#define ppf pop_front
 #define mp make_pair
 #define F first
 #define S second
 #define PI 3.1415926535897932384626
 #define sz(x) ((int)(x).size())
+#define vset(v, n, val) v.clear(); v.resize(n, val)
 
 typedef pair<int, int> pii;
 typedef pair<ll, ll> pll;
@@ -66,20 +60,27 @@ template <class T> void _print(vector <vector<T>> v);
 template <class T> void _print(set <T> v);
 template <class T, class V> void _print(map <T, V> v);
 template <class T> void _print(multiset <T> v);
+template <class T, class V> void _print(multimap <T, V> v);
+template <class T> void _print(queue <T> v);
+template <class T> void _print(priority_queue <T> v);
+template <class T> void _print(stack <T> s);
+
+// modify it's definition below as per need such as it can be used for STL containers with custom args passed
+template <class T> void _print(T v); 
+
 template <class T, class V> void _print(pair <T, V> p) { cerr << "{"; _print(p.F); cerr << ","; _print(p.S); cerr << "}"; }
 template <class T> void _print(vector <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T> void _print(vector <vector<T>> v) { cerr << "==>" << endl; for (vector<T> vec : v) { for(T i : vec) {_print(i); cerr << " "; } cerr << endl; } }
 template <class T> void _print(set <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
-template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
 template <class T, class V> void _print(map <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(multiset <T> v) { cerr << "[ "; for (T i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T, class V> void _print(multimap <T, V> v) { cerr << "[ "; for (auto i : v) {_print(i); cerr << " "; } cerr << "]"; }
+template <class T> void _print(queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.front()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(priority_queue <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(stack <T> v) { cerr << "[ "; while(!v.empty()) {_print(v.top()); v.pop(); cerr << " "; } cerr << "]"; }
+template <class T> void _print(T v) {  }
 
 /*******************************************************************************************************************************************************************/
-
-mt19937_64 rang(chrono::high_resolution_clock::now().time_since_epoch().count());
-int rng(int lim) {
-    uniform_int_distribution<int> uid(0,lim-1);
-    return uid(rang);
-}
 
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
@@ -92,77 +93,78 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-class TreeNode {
-	public:
-		int val;
-		TreeNode *left;
-		TreeNode *right;
-		TreeNode(): val(0), left(NULL), right(NULL) {}
-		TreeNode(int data): val(data), left(NULL), right(NULL) {}
-		TreeNode(int data, TreeNode *left, TreeNode *right): val(data), left(left), right(right) {}
-};
-
-TreeNode* inpre(TreeNode *root) {
-	while(root->right) root = root->right;
-	return root;
-}
-
-TreeNode* insuc(TreeNode *root) {
-	while(root->left) root = root->left;
-	return root;
-}
-
-void find_pre_suc(TreeNode *root, TreeNode* &pre, TreeNode* &suc, int key) {
-	// base case
-	if(root == NULL) return;
+vi shortest_alternating_path_lengths(int n, vvi &red_edges, vvi &blue_edges) {
+	vector<vpii> g(n);
 	
-	if(root->val == key) {
-		if(root->left) pre = inpre(root->left);
-		if(root->right) suc = insuc(root->right);
-		return;
+	// 0 ==> denotes a red edge
+	for(int i = 0; i < sz(red_edges); i++) {
+		int x = red_edges[i][0], y = red_edges[i][1];
+		g[x].pb({y, 0});
 	}
 	
-	if(key > root->val) {
-		pre = root;
-		find_pre_suc(root->right, pre, suc, key);
+	// 1 ==> denotes a blue edge
+	for(int i = 0; i < sz(blue_edges); i++) {
+		int x = blue_edges[i][0], y = blue_edges[i][1];
+		g[x].pb({y, 1});
 	}
 	
-	else {
-		suc = root;
-		find_pre_suc(root->left, pre, suc, key);
+	vi res(n, -1);
+	res[0] = 0;
+	
+	// a queue element stores {node_id, it's shortest path length, color of edge via which it was visited}
+	queue<vi> q;
+	q.push({0, 0, -1});
+	
+	// visited[i][0] = to check if node i has been visited via a red edge
+	// visited[i][1] = to check if node i has been visited via a blue edge
+	vvb visited(n, vb(2, 0));	
+	visited[0][0] = visited[0][1] = 1;
+	
+	while(!q.empty()) {
+		int cur = q.front()[0], length = q.front()[1], color = q.front()[2];
+		q.pop();
+		
+		for(auto [nbr, edg_color]: g[cur]) {
+			if(!visited[nbr][edg_color] and edg_color != color) {
+				visited[nbr][edg_color] = 1;
+				q.push({nbr, length + 1, edg_color});
+				
+				if(res[nbr] == -1) res[nbr] = length + 1;
+			}
+		}
 	}
+	
+	return res;
 }
 
 void solve()
 {
-  	TreeNode* root = new TreeNode(4);
-	root->left = new TreeNode(2);
-	root->right = new TreeNode(6);
-	root->left->left = new TreeNode(1);
-	root->left->right = new TreeNode(3);
-	root->right->left = new TreeNode(5);
-	root->right->right = new TreeNode(7);
-	
-	// #queries
-	int q; cin >> q;
-	
-	while(q--) {
-		int key; cin >> key;
-		TreeNode *pre = NULL, *suc = NULL;
-		find_pre_suc(root, pre, suc, key);
-		
-		if(pre) cout << pre->val << " ";
-		else cout << -1 << " ";
-		
-		if(suc) cout << suc->val << "\n";
-		else cout << -1 << "\n";
-	}
+  	int n, m, o; cin >> n >> m >> o;
+  	
+  	vvi red_edges(m, vi(2));
+  	
+  	for(int i = 0; i < m; i++) {
+  		cin >> red_edges[i][0] >> red_edges[i][1];
+  	}
+  	
+  	vvi blue_edges(o, vi(2));
+  	
+  	for(int i = 0; i < o; i++) {
+  		cin >> blue_edges[i][0] >> blue_edges[i][1];
+  	}
+  	
+  	vi res = shortest_alternating_path_lengths(n, red_edges, blue_edges);
+  	
+  	for(int i = 0; i < n; i++) {
+  		cout << res[i] << " ";
+  	}
+  	
+  	cout << "\n";
 }
 
 int main()
 {
     ios_base::sync_with_stdio(false), cin.tie(nullptr), cout.tie(nullptr);
-    srand(chrono::high_resolution_clock::now().time_since_epoch().count());
 
     // #ifndef ONLINE_JUDGE
     //     freopen("input.txt", "r", stdin);
@@ -183,5 +185,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity: O(Height of BST)

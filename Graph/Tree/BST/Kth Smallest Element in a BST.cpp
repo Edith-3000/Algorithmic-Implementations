@@ -1,6 +1,11 @@
 // Problem: https://www.interviewbit.com/problems/kth-smallest-element-in-tree/
+//          https://leetcode.com/problems/kth-smallest-element-in-a-bst/
+
 // Ref: https://www.youtube.com/watch?v=5R9_qgIV98s&list=PL7JyMDSI2BfZugpAjdWc8ES_mYMz2F9Qo&index=3
-/***************************************************************************************************/
+//      https://takeuforward.org/data-structure/kth-largest-smallest-element-in-binary-search-tree/
+//      https://leetcode.com/problems/kth-smallest-element-in-a-bst/solutions/284145/official-solution/
+
+/***************************************************************************************************************************************************************/
 
 // METHOD - 1 (O(Height * n))
 
@@ -135,9 +140,9 @@ int main()
 // TC: (O(Height * n)), in the worst case when Height is O(n), it can be O(n^2).
 //     where Height = height of the BST.
 
-/*******************************************************************************************************/
+/***************************************************************************************************************************************************************/
 
-// METHOD - 2 O(n)
+// METHOD - 2 O(H + k)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -275,7 +280,7 @@ int main()
     return 0;
 }
 
-/************************************************************************************************************/
+/***************************************************************************************************************************************************************/
 
 // METHOD - 3 O(Height of BST)
 // Ref: https://youtu.be/KqMm81Y7j9M?t=447

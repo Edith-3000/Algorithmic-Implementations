@@ -1,12 +1,14 @@
 // Ref: https://www.techiedelight.com/determine-given-binary-tree-is-a-bst-or-not/
+
 //      https://www.youtube.com/watch?v=Zh38jz-y7P0&list=PLDdcY4olLQk0NJOWhs4PB3DWpjnuUESbk&index=6
-/***************************************************************************************************************************/
+
+/******************************************************************************************************************************************************************/
 
 /* CAUTION: The algorithm mentioned in the below link will give wrong results.
             https://pastebin.com/6ksT16du
 */
 
-/****************************************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // METHOD - 1
 // Ref: https://www.youtube.com/watch?v=f-sj7I5oXEI&list=PLgUwDviBIf0q8Hkd7bK2Bpryj2xVJk8Vk&index=48&ab_channel=takeUforward
@@ -112,12 +114,11 @@ class TreeNode {
 
 // We are considering that BSTs can not contain duplicate Nodes.
 bool check_bst(TreeNode *root, ll L, ll R) {
-	if(root == NULL) return 1;
+    if(root == NULL) return 1;
+    if((root->val < L) or (root->val > R)) return 0;
 
-	if((root->val <= L) or (root->val >= R)) return 0;
-	
-	return check_bst(root->left, L, root->val) and
-	       check_bst(root->right, root->val, R);
+    return check_bst(root->left, L, (ll)root->val - 1) and
+           check_bst(root->right, (ll)root->val + 1, R);
 }
 
 void solve()
@@ -158,12 +159,14 @@ int main()
     return 0;
 }
 
-/********************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // METHOD - 2
 // Ref: https://www.youtube.com/watch?v=klXjnz8zn2E&ab_channel=Pepcoding
 
 // LEGACY CONTENT: https://pastebin.com/msXmcctS
+
+// MAIN CONCEPT: THE INORDER TRAVERSAL OF A VALID BST IS ALWAYS SORTED.
 
 #include<bits/stdc++.h>
 using namespace std;
