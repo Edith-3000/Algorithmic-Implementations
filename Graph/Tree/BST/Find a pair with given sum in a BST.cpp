@@ -175,7 +175,7 @@ int main()
 
 /***************************************************************************************************************************************************************/
 
-// METHOD - 1 (Implementation by making Class)
+// METHOD - 2 (Implementation by making Class)
 // Implementation is done by creating a Class "BstIterator" similar to "BST Iterator.cpp".
 
 #include<bits/stdc++.h>
