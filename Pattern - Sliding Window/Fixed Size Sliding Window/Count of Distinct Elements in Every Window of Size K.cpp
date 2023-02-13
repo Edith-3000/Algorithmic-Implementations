@@ -1,20 +1,7 @@
-// Prob: https://leetcode.com/problems/flood-fill/
-//       https://www.techiedelight.com/flood-fill-algorithm/
+// Prob: https://www.geeksforgeeks.org/count-distinct-elements-in-every-window-of-size-k/
+//       https://www.interviewbit.com/problems/distinct-numbers-in-window/
 
-// Ref: https://www.youtube.com/watch?v=C-2_uSRli8o&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=9&ab_channel=takeUforward
-
-/*******************************************************************************************************************************************************************/
-
-/* # Flood Fill Algorithm is a simple variant of BFS or DFS that can be used to label(colour) the various 
-     connected components present in a graph.
-
-   # It is generally performed on implicit graphs(2D matrices).
-
-   # Starting from a particular cell we call DFS on the neighbouring cells to colour them.
-     Neighbours can be '4' (up, down, left, right) or '8' if we include diagonals also.
-*/
-
-/*******************************************************************************************************************************************************************/
+/********************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -105,63 +92,49 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-vi dx = {-1, 0, 1, 0};
-vi dy = {0, 1, 0, -1};
-
-bool is_valid(int x, int y, int n, int m) {
-    return (x >= 0) and (x < n) and (y >= 0) and (y < m);
-}
-
-void dfs(int row, int col, char old, char replacement, int n, int m, vvc &v) {
-    v[row][col] = replacement;
-    
-    for(int d = 0; d < 4; d++) {
-        int nx = row + dx[d], ny = col + dy[d];
-        if(is_valid(nx, ny, n, m) and (v[nx][ny] == old)) {
-            dfs(nx, ny, old, replacement, n, m, v);
-        }
-    }
-}
-
-void flood_fill_algorithm(vvc &v, int sr, int sc, char replacement) {
-    int n = sz(v);
-    if(n == 0) return;
-    
-    int m = sz(v[0]);
-    
-    if(v[sr][sc] == replacement) return;
-    
-    char old = v[sr][sc];
-    
-    dfs(sr, sc, old, replacement, n, m, v);
-}
-
-void print_grid(vvc &v) {
-    for(int i = 0; i < sz(v); i++) {
-        for(int j = 0; j < sz(v[i]); j++) {
-            cout << v[i][j];
-        }
-        
-        cout << "\n";
-    }
+// Function to return the count of distinct elements in every window of size k of v[]
+vi cnt_distinct_in_every_window(vi &v, int k) {
+	int n = sz(v);
+	if((n == 0) or (k > n)) return vi();
+	
+	// to store the result
+	vi res;
+	
+	map<int, int> cnt;
+	
+	int i = 0, j = 0;
+	
+	while(j < n) {
+		cnt[v[j]] += 1;
+		
+		if((j - i + 1) < k) j += 1;
+		
+		else {
+			res.pb(sz(cnt));
+			cnt[v[i]] -= 1;
+			if(cnt[v[i]] == 0) cnt.erase(v[i]);
+			
+			i += 1;
+			j += 1;
+		}
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    int n, m; cin >> n >> m;
-    vvc v(n, vc(m));
-    
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) cin >> v[i][j];
-    }
-    
-    int sr, sc; cin >> sr >> sc;
-    
-    char replacement; cin >> replacement;
-
-    flood_fill_algorithm(v, sr, sc, replacement);
-
-    print_grid(v);
+  	int n, k; cin >> n >> k;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	vi res = cnt_distinct_in_every_window(v, k);
+  	
+  	for(auto x: res) {
+  		cout << x << " ";
+  	}
+  	
+  	cout << "\n";
 }
 
 int main()
@@ -179,7 +152,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    // cin >> t;
+    cin >> t;
     while(t--) {
         // cout << "Case #" << test++ << ": ";
         solve();
@@ -187,50 +160,3 @@ int main()
 
     return 0;
 }
-
-/*Sample I/P:
-  
-15 30
-..............................
-...............#####..........
-...............#...#..........
-.......#########...#######....
-......###......######....###..
-.....##....................##.
-....##......................##
-.....##....................##.
-......##..................##..
-.......##................##...
-........##..............##....
-.........###...........###....
-...........####......####.....
-.............##########.......
-.........A..P..P..L..E........
-8 20
-K
-
-SAMPLE O/P:
-..............................
-...............#####..........
-...............#...#..........
-.......#########...#######....
-......###KKKKKK######KKKK###..
-.....##KKKKKKKKKKKKKKKKKKKK##.
-....##KKKKKKKKKKKKKKKKKKKKKK##
-.....##KKKKKKKKKKKKKKKKKKKK##.
-......##KKKKKKKKKKKKKKKKKK##..
-.......##KKKKKKKKKKKKKKKK##...
-........##KKKKKKKKKKKKKK##....
-.........###KKKKKKKKKKK###....
-...........####KKKKKK####.....
-.............##########.......
-.........A..P..P..L..E........
-
-*/
-
-// TC: O(n x m)
-// SC: O(n x m)
-
-/*******************************************************************************************************************************************************************/
-
-// FOR IMPLEMENTATION USING "BFS" REFER: https://www.geeksforgeeks.org/flood-fill-algorithm-implement-fill-paint/

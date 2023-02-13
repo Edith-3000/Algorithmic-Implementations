@@ -1,20 +1,12 @@
-// Prob: https://leetcode.com/problems/flood-fill/
-//       https://www.techiedelight.com/flood-fill-algorithm/
-
-// Ref: https://www.youtube.com/watch?v=C-2_uSRli8o&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=9&ab_channel=takeUforward
-
-/*******************************************************************************************************************************************************************/
-
-/* # Flood Fill Algorithm is a simple variant of BFS or DFS that can be used to label(colour) the various 
-     connected components present in a graph.
-
-   # It is generally performed on implicit graphs(2D matrices).
-
-   # Starting from a particular cell we call DFS on the neighbouring cells to colour them.
-     Neighbours can be '4' (up, down, left, right) or '8' if we include diagonals also.
+/* # NOTE: Although this problem should come under "Pattern - Hash Table or Hash Map, Map & Hashing" but since it's following the pattern used to solve
+           problems involving variable size sliding window, it's being kept here.
 */
 
-/*******************************************************************************************************************************************************************/
+/**************************************************************************************************************************************************************/
+
+// Prob: https://www.codingninjas.com/codestudio/problems/subarrays-with-at-most-k-distinct-values_1473804?leftPanelTab=0
+
+/**************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -105,63 +97,58 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-vi dx = {-1, 0, 1, 0};
-vi dy = {0, 1, 0, -1};
-
-bool is_valid(int x, int y, int n, int m) {
-    return (x >= 0) and (x < n) and (y >= 0) and (y < m);
-}
-
-void dfs(int row, int col, char old, char replacement, int n, int m, vvc &v) {
-    v[row][col] = replacement;
-    
-    for(int d = 0; d < 4; d++) {
-        int nx = row + dx[d], ny = col + dy[d];
-        if(is_valid(nx, ny, n, m) and (v[nx][ny] == old)) {
-            dfs(nx, ny, old, replacement, n, m, v);
-        }
-    }
-}
-
-void flood_fill_algorithm(vvc &v, int sr, int sc, char replacement) {
-    int n = sz(v);
-    if(n == 0) return;
-    
-    int m = sz(v[0]);
-    
-    if(v[sr][sc] == replacement) return;
-    
-    char old = v[sr][sc];
-    
-    dfs(sr, sc, old, replacement, n, m, v);
-}
-
-void print_grid(vvc &v) {
-    for(int i = 0; i < sz(v); i++) {
-        for(int j = 0; j < sz(v[i]); j++) {
-            cout << v[i][j];
-        }
-        
-        cout << "\n";
-    }
+// Function to return the count of subarrays in v[] with at most 'k' distinct elements
+ll cnt_subarrays_with_at_most_k_distinct_elements(vi &v, int k) {
+	int n = sz(v);
+	
+	// base case(s)
+	if(n == 0) return 0;
+	
+	// w/o taking into consideration a subarray of length = 0
+	if(k == 0) return 0;
+	
+	// to store the result
+	ll res = 0LL;
+	
+	// to store the frequency of each element in the current window from [i, j]
+	map<int, int> cnt;
+	
+	int i = 0, j = 0;
+	
+	while(j < n) {
+		cnt[v[j]] += 1;
+		
+		if(sz(cnt) <= k) {
+			res += (j - i + 1);
+			j += 1;
+		}
+		
+		else {
+			while(sz(cnt) > k) {
+				cnt[v[i]] -= 1;
+				if(cnt[v[i]] == 0) cnt.erase(v[i]);
+				i += 1;
+			}
+			
+			// removing this will give wrong result
+			res += (j - i + 1);
+			
+			j += 1;
+		}
+	}
+	
+	return res;
 }
 
 void solve()
 {
-    int n, m; cin >> n >> m;
-    vvc v(n, vc(m));
-    
-    for(int i = 0; i < n; i++) {
-        for(int j = 0; j < m; j++) cin >> v[i][j];
-    }
-    
-    int sr, sc; cin >> sr >> sc;
-    
-    char replacement; cin >> replacement;
-
-    flood_fill_algorithm(v, sr, sc, replacement);
-
-    print_grid(v);
+  	int n, k; cin >> n >> k;
+  	vi v(n);
+  	for(int i = 0; i < n; i++) cin >> v[i];
+  	
+  	ll res = cnt_subarrays_with_at_most_k_distinct_elements(v, k);
+  	
+  	cout << res << "\n";
 }
 
 int main()
@@ -187,50 +174,3 @@ int main()
 
     return 0;
 }
-
-/*Sample I/P:
-  
-15 30
-..............................
-...............#####..........
-...............#...#..........
-.......#########...#######....
-......###......######....###..
-.....##....................##.
-....##......................##
-.....##....................##.
-......##..................##..
-.......##................##...
-........##..............##....
-.........###...........###....
-...........####......####.....
-.............##########.......
-.........A..P..P..L..E........
-8 20
-K
-
-SAMPLE O/P:
-..............................
-...............#####..........
-...............#...#..........
-.......#########...#######....
-......###KKKKKK######KKKK###..
-.....##KKKKKKKKKKKKKKKKKKKK##.
-....##KKKKKKKKKKKKKKKKKKKKKK##
-.....##KKKKKKKKKKKKKKKKKKKK##.
-......##KKKKKKKKKKKKKKKKKK##..
-.......##KKKKKKKKKKKKKKKK##...
-........##KKKKKKKKKKKKKK##....
-.........###KKKKKKKKKKK###....
-...........####KKKKKK####.....
-.............##########.......
-.........A..P..P..L..E........
-
-*/
-
-// TC: O(n x m)
-// SC: O(n x m)
-
-/*******************************************************************************************************************************************************************/
-
-// FOR IMPLEMENTATION USING "BFS" REFER: https://www.geeksforgeeks.org/flood-fill-algorithm-implement-fill-paint/
