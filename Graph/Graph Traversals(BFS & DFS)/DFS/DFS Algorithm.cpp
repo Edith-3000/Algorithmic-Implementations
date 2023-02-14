@@ -1,3 +1,8 @@
+// Ref: https://cp-algorithms.com/graph/depth-first-search.html
+//      https://brilliant.org/wiki/depth-first-search-dfs/
+
+/******************************************************************************************************************************************************************/
+
 /* # DFS is a recursive graph traversal technique (although it can be implemented iteratively as well).
 
    # DFS utilizes the “go deep, head first” philosophy in its implementation.
@@ -34,11 +39,11 @@
      Rule 3 − Repeat Rule 1 and Rule 2 until the stack is empty.
 */
 
-/*************************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // LEGACY CONTENT: https://pastebin.com/2kuhBdS7
 
-/*************************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // RECURSIVE IMPLEMENTATION OF DFS 
 
@@ -208,7 +213,7 @@ int main()
     return 0;
 }
 
-/***************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // ITERATIVE IMPLEMENTATION OF DFS 
 
@@ -323,6 +328,8 @@ void dfs_helper(int src, vi &res) {
        
         // stack may contain same vertex twice. So we need to
         // print the popped item only if it is not visited.
+        // If facing difficulty in understanding this, take the sample i/p example and
+        // run this code w/o the if() condition, you'll get it.
         if(!vis[cur]) {
             vis[cur] = 1;  // mark it visited
             res.pb(cur); // push cur in the result
@@ -400,7 +407,23 @@ int main()
     return 0;
 }
 
-/*******************************************************************************************************/
+/*
+
+Sample i/p :--->
+
+4 4
+0 1
+1 2
+2 0
+1 3
+
+Sample o/p :--->
+
+0 2 1 3 
+
+*/
+
+/******************************************************************************************************************************************************************/
 
 /* # HANDLING DISCONNECTED GRAPH
    • The above code handles disconnected graph as well.
