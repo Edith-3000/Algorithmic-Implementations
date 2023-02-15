@@ -353,9 +353,7 @@ int main()
 
 /********************************************************************************************************************************************************************/
 
-// METHOD - 2 [O(m x log₂(m))]
-
-// NOTE: THIS SOLUTION IS NOT GETTING AN AC ON LEETCODE
+// METHOD - 3 [O(m x log₂(m))]
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -488,13 +486,14 @@ int minimum_score(string &s, string &t) {
 	// to store the result
 	int res = m;
 	
-	for(int l = 0; l < m; l++) {
-		int lf = -1;
-		if(l > 0) lf = fwd[l - 1];
+	for(int l = 0; l < m; l++) {	
+		if((l > 0) and (fwd[l - 1] == n)) break;
 		
-		auto it = upper_bound(bck.begin(), bck.end(), lf);
+		int valid_after = -1;
+		if(l > 0) valid_after = fwd[l - 1];
 		
-		if(it == bck.end()) continue;
+		auto it = upper_bound(bck.begin(), bck.end(), valid_after);
+		
 		int r = it - bck.begin();
 		
 		res = min(res, r - l);
