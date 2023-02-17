@@ -1,3 +1,8 @@
+// Ref: https://cp-algorithms.com/graph/breadth-first-search.html
+//      https://brilliant.org/wiki/breadth-first-search-bfs/
+
+/*****************************************************************************************************************************************************************/
+
 /* # BFS is an iterative graph traversal technique.
 
    # It follows the “go wide, bird’s eye-view” philosophy.
@@ -34,11 +39,11 @@
      Rule 3 − Repeat Rule 1 and Rule 2 until the queue is empty.
 */
 
-/*************************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // LEGACY CONTENT: https://pastebin.com/baRLV8dt
 
-/*************************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -224,7 +229,7 @@ int main()
 /* 
 
 # Analysis of breadth-first search ---->
-  * How long does breadth-first search take for a graph with vertex set V and edge set E? 
+  * How long does breadth-first search takes for a graph with vertex set V and edge set E? 
     The answer is O(|V|+|E|) time. 
   * Let's see what O(|V|+|E|), time means - 
   * For a graph there can be 2 possible cases.
@@ -256,7 +261,7 @@ int main()
     BFS takes O(bᵈ) time and memory, 
     where b is the "branching factor" of the graph (the average out-degree).
 
---------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------
 
 #  SIDE NOTEs ----->
    
@@ -272,4 +277,5 @@ int main()
    its height, a parent to which it is suspended and several children which hang from this node.
 #  In a free tree there's no designated root vertex.
    A free tree can be converted into a rooted one by choosing any of its vertices to be the root.
+
 */

@@ -467,6 +467,7 @@ the maze. If a given path doesn’t work, we backtrack and take an alternative p
 and try that path. Below is an animation of a DFS approach to solving this maze.
 
 # Very nice pictorial representation given - https://brilliant.org/wiki/depth-first-search-dfs/
+
 */
 
 /* Difference b/w DFS and BACKTRACKING ---->

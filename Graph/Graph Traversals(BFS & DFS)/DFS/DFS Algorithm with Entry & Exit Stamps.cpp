@@ -1,5 +1,10 @@
 // Ref: https://cp-algorithms.com/graph/depth-first-search.html
-/**********************************************************************************************************/
+
+/********************************************************************************************************************************************************************/
+
+// LEGACY CONTENT: https://gist.github.com/Edith-3000/5f49c125697032239ef21c07ca398971
+
+/********************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -81,45 +86,57 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
+// stores the input graph
 vvi g;
-vi tin, tout, color;
-int timer;
+
+// tin[i] = entry time of vertex 'i' while dfs traversal
+// tout[i] = exit time of vertex 'i' while dfs traversal
+vi tin, tout;
+
+// we will color all vertices with the color 0, if we haven't visited them, 
+// with the color 1 if we visited them, and with the color 2, if we already exited the vertex.
+vi color;
+
+// timer is used to store the running time while traversal, 
+// in last after dfs traversal completion, timer will be = (2 * n).
+int dfs_timer;
+
+// n = #nodes, m = #edges in i/p graph
 int n, m;
 
 void dfs_helper(int cur) {
-	color[cur] = 1;
-	tin[cur] = timer++;
-	
-	for(auto x: g[cur]) {
-		if(color[x] == 0) dfs_helper(x);
-	}
-	
-	tout[cur] = timer++;
-	color[cur] = 2;
+    color[cur] = 1;
+    tin[cur] = dfs_timer++;
+    
+    for(auto x: g[cur]) {
+        if(color[x] == 0) dfs_helper(x);
+    }
+    
+    tout[cur] = dfs_timer++;
+    color[cur] = 2;
 } 
 
-// tin and tout stores the entry & exit time of each vertex in the DFS Tree, and
-// we will color all vertices with the color 0, if we haven't visited them, with 
-// the color 1 if we visited them, and with the color 2, if we already exited the vertex,
-// timer is used to store the running time, in last after dfs traversal timer will be = (2 * n + 1).
 void dfs() {
-	tin.clear(); tin.resize(n + 1, 0);
-	tout.clear(); tout.resize(n + 1, 0);
-	color.clear(); color.resize(n + 1, 0);
-	timer = 1;
-	
-	for(int i = 1; i <= n; i++) {
-		if(color[i] == 0) dfs_helper(i);
-	}
+    // initialisations
+    tin.clear(); tin.resize(n, 0);
+    tout.clear(); tout.resize(n, 0);
+    
+    color.clear(); color.resize(n, 0);
+    
+    dfs_timer = 0;
+    
+    for(int i = 0; i < n; i++) {
+        if(color[i] == 0) dfs_helper(i);
+    }
 }
 
 void solve()
 {
-  	cin >> n >> m;
+    cin >> n >> m;
     
-    vset(g, n + 1, vi(0));
+    vset(g, n, vi(0));
     
-    // 1-based vertices
+    // 0-based vertices
     for(int i = 0; i < m; i++) {
         int x, y; cin >> x >> y;
         g[x].pb(y);
@@ -128,10 +145,10 @@ void solve()
         
     dfs();
     
-    cout << timer << "\n";
+    cout << dfs_timer << "\n";
     
-    for(int i = 1; i <= n; i++) {
-    	cout << i << "-> (" << tin[i] << ", " << tout[i] << ")\n";
+    for(int i = 0; i < n; i++) {
+        cout << i << "-> (" << tin[i] << ", " << tout[i] << ")\n";
     }
 }
 
