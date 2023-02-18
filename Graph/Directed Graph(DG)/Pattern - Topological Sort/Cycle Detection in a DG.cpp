@@ -1,8 +1,16 @@
 // Ref: https://www.geeksforgeeks.org/detect-cycle-in-a-graph/
-/**********************************************************************************************************************/
+
+/*******************************************************************************************************************************************************************/
 
 // METHOD - 1 (USING DFS)
+// https://www.youtube.com/watch?v=9twcmtQj4DU&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=20&ab_channel=takeUforward
 // https://www.youtube.com/watch?v=uzVUw90ZFIg&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=12&ab_channel=takeUforward
+
+/* # The reason why the method used in "Graph/Undirected Graph(UG)/Cycle Detection in an UG.cpp" can't be used here is very well
+     explained in the below video link.
+
+   # https://www.youtube.com/watch?v=9twcmtQj4DU&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=20&ab_channel=takeUforward
+*/
 
 /* USEFUL TIPs ⟶
    # 𝑨𝒏 𝑼𝒏𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝑮𝒓𝒂𝒑𝒉(𝑼𝑮) 𝒄𝒐𝒏𝒕𝒂𝒊𝒏𝒔 𝒂 𝒄𝒚𝒄𝒍𝒆 𝒊𝒇 𝒕𝒉𝒆𝒓𝒆 𝒊𝒔 𝑴𝑶𝑹𝑬 𝑻𝑯𝑨𝑵 1 𝒘𝒂𝒚 𝒕𝒐 𝒗𝒊𝒔𝒊𝒕 𝒂 𝒏𝒐𝒅𝒆/𝒗𝒆𝒓𝒕𝒆𝒙, 
@@ -217,9 +225,12 @@ int main()
     return 0;
 }
 
-/*****************************************************************************************************/
+// NOTE: Instead of using 2 separate vectors "vis" and "stk_flag", the algorithm can also be implemented using a single vector.
+
+/****************************************************************************************************************************************************************/
 
 // METHOD - 2 (USING BFS, by making use of Kahn's algorithm)
+// Ref: https://www.youtube.com/watch?v=iTBaI90lpDQ&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=24&ab_channel=takeUforward
 
 /* UNDERLYING CONCEPT ------>
 

@@ -1,22 +1,26 @@
-/*UNDERLYING CONCEPT ------>
+// Ref: https://www.youtube.com/watch?v=5lZ0iJMrUMk&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=24&ab_channel=takeUforward
 
-  # The basic idea behind the topological sort is to provide a partial ordering among the vertices of the
-    graph such that if there is an edge from U to V then U ≤ V i.e., U comes before V in the ordering. 
-    Here are a few fundamental concepts related to topological sort:
+/***************************************************************************************************************************************************************/
 
-	* Source: Any node that has no incoming edge and has only outgoing edges is called a source.
-	* Sink: Any node that has only incoming edges and no outgoing edge is called a sink.
+/* UNDERLYING CONCEPT ------>
 
-  # So, we can say that a topological ordering starts with one of the sources and ends at one of the sinks.
-
-  # 𝑨 𝒕𝒐𝒑𝒐𝒍𝒐𝒈𝒊𝒄𝒂𝒍 𝒐𝒓𝒅𝒆𝒓𝒊𝒏𝒈 𝒊𝒔 𝒑𝒐𝒔𝒔𝒊𝒃𝒍𝒆 𝒐𝒏𝒍𝒚 𝒘𝒉𝒆𝒏 𝒕𝒉𝒆 𝒈𝒓𝒂𝒑𝒉 𝒉𝒂𝒔 𝒏𝒐 𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝒄𝒚𝒄𝒍𝒆𝒔, 𝒊.𝒆. 𝒊𝒇 𝒕𝒉𝒆 𝒈𝒓𝒂𝒑𝒉 𝒊𝒔 
-    𝒂 𝑫𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝑨𝒄𝒚𝒄𝒍𝒊𝒄 𝑮𝒓𝒂𝒑𝒉 (𝑫𝑨𝑮). 
-    
-    If the graph has a cycle, some vertices will have cyclic dependencies which makes it impossible to find 
-    a linear ordering among vertices.
+   # The basic idea behind the topological sort is to provide a partial ordering among the vertices of the
+     graph such that if there is an edge from U to V then U ≤ V i.e., U comes before V in the ordering. 
+     Here are a few fundamental concepts related to topological sort:
+ 
+ 	* Source: Any node that has no incoming edge and has only outgoing edges is called a source.
+ 	* Sink: Any node that has only incoming edges and no outgoing edge is called a sink.
+ 
+   # So, we can say that a topological ordering starts with one of the sources and ends at one of the sinks.
+ 
+   # 𝑨 𝒕𝒐𝒑𝒐𝒍𝒐𝒈𝒊𝒄𝒂𝒍 𝒐𝒓𝒅𝒆𝒓𝒊𝒏𝒈 𝒊𝒔 𝒑𝒐𝒔𝒔𝒊𝒃𝒍𝒆 𝒐𝒏𝒍𝒚 𝒘𝒉𝒆𝒏 𝒕𝒉𝒆 𝒈𝒓𝒂𝒑𝒉 𝒉𝒂𝒔 𝒏𝒐 𝒅𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝒄𝒚𝒄𝒍𝒆𝒔, 𝒊.𝒆. 𝒊𝒇 𝒕𝒉𝒆 𝒈𝒓𝒂𝒑𝒉 𝒊𝒔 
+     𝒂 𝑫𝒊𝒓𝒆𝒄𝒕𝒆𝒅 𝑨𝒄𝒚𝒄𝒍𝒊𝒄 𝑮𝒓𝒂𝒑𝒉 (𝑫𝑨𝑮). 
+     
+     If the graph has a cycle, some vertices will have cyclic dependencies which makes it impossible to find 
+     a linear ordering among vertices.
 */
 
-/************************************************************************************************************/
+/***************************************************************************************************************************************************************/
 
 // METHOD - 1.1 (USING DFS)
 
@@ -246,7 +250,7 @@ int main()
     return 0;
 }
 
-/******************************************************************************************************/
+/***************************************************************************************************************************************************************/
 
 // METHOD - 1.2 (USING DFS)
 
@@ -441,39 +445,42 @@ int main()
     return 0;
 }
 
-/*****************************************************************************************************/
+/***************************************************************************************************************************************************************/
 
 // METHOD - 2 (USING BFS)
 
 // Based on "Kahn’s algorithm"
-// Ref: https://www.youtube.com/watch?v=rZv_jHZva34&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=14
 
-/*# ALGORITHM ==============>
-  # To find the topological sort of a graph we can traverse the graph in a Breadth First Search (BFS) way. 
-    We will start with all the sources, and in a stepwise fashion, save all sources to a sorted list. 
-    We will then remove all sources and their edges from the graph. After the removal of the edges, 
-    we will have new sources, so we will repeat the above process until all vertices are visited.
+// Ref: https://www.youtube.com/watch?v=73sneFXuTEg&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=23&ab_channel=takeUforward 
+//      https://www.youtube.com/watch?v=rZv_jHZva34&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=14
 
-  # Algorithmic steps --------->
-    a. 𝑰𝒏𝒊𝒕𝒊𝒂𝒍𝒊𝒛𝒂𝒕𝒊𝒐𝒏
-       1. We will store the graph in Adjacency Lists, which means each parent vertex will have a list 
-          containing all of its children.
-       2. To find the sources, we will keep a vector or hash map to count the in-degrees i.e., count 
-          of incoming edges of each vertex. Any vertex with '0' in-degree will be a source.
-    
-    b. 𝑩𝒖𝒊𝒍𝒅 𝒕𝒉𝒆 𝒈𝒓𝒂𝒑𝒉 𝒂𝒏𝒅 𝒇𝒊𝒏𝒅 𝒊𝒏-𝒅𝒆𝒈𝒓𝒆𝒆𝒔 𝒐𝒇 𝒂𝒍𝒍 𝒗𝒆𝒓𝒕𝒊𝒄𝒆𝒔
-       We will build the graph from the input and populate the in-degrees vector or hash map.
+/* # ALGORITHM ==============>
 
-    c. 𝑭𝒊𝒏𝒅 𝒂𝒍𝒍 𝒔𝒐𝒖𝒓𝒄𝒆𝒔
-       All vertices with ‘0’ in-degrees will be our sources and we will store them in a Queue.
+   # To find the topological sort of a graph we can traverse the graph in a Breadth First Search (BFS) way. 
+     We will start with all the sources, and in a stepwise fashion, save all sources to a sorted list. 
+     We will then remove all sources and their edges from the graph. After the removal of the edges, 
+     we will have new sources, so we will repeat the above process until all vertices are visited.
 
-    d. 𝑺𝒐𝒓𝒕
-       For each source, do the following things:
-       1. Add it to the sorted list.
-       2. Get all of its children from the graph.
-       3. Decrement the in-degree of each child by 1.
-       4. If a child’s in-degree becomes ‘0’, add it to the sources Queue.
-       5. Repeat step 1, until the source Queue is empty.
+    # Algorithmic steps --------->
+     a. 𝑰𝒏𝒊𝒕𝒊𝒂𝒍𝒊𝒛𝒂𝒕𝒊𝒐𝒏
+        1. We will store the graph in Adjacency Lists, which means each parent vertex will have a list 
+           containing all of its children.
+        2. To find the sources, we will keep a vector or hash map to count the in-degrees i.e., count 
+           of incoming edges of each vertex. Any vertex with '0' in-degree will be a source.
+     
+     b. 𝑩𝒖𝒊𝒍𝒅 𝒕𝒉𝒆 𝒈𝒓𝒂𝒑𝒉 𝒂𝒏𝒅 𝒇𝒊𝒏𝒅 𝒊𝒏-𝒅𝒆𝒈𝒓𝒆𝒆𝒔 𝒐𝒇 𝒂𝒍𝒍 𝒗𝒆𝒓𝒕𝒊𝒄𝒆𝒔
+        We will build the graph from the input and populate the in-degrees vector or hash map.
+
+     c. 𝑭𝒊𝒏𝒅 𝒂𝒍𝒍 𝒔𝒐𝒖𝒓𝒄𝒆𝒔
+        All vertices with ‘0’ in-degrees will be our sources and we will store them in a Queue.
+
+     d. 𝑺𝒐𝒓𝒕
+        For each source, do the following things:
+        1. Add it to the sorted list.
+        2. Get all of its children from the graph.
+        3. Decrement the in-degree of each child by 1.
+        4. If a child’s in-degree becomes ‘0’, add it to the sources Queue.
+        5. Repeat step 1, until the source Queue is empty.
 */
 
 #include<bits/stdc++.h>
