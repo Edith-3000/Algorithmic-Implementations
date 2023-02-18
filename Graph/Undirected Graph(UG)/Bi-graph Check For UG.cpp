@@ -1,3 +1,7 @@
+// Prob: https://leetcode.com/problems/is-graph-bipartite/
+
+/************************************************************************************************************************************************************/
+
 /* # A bipartite graph also called a bi-graph, is a set of graph vertices, i.e, points where multiple 
      lines meet, decomposed into two 𝒅𝒊𝒔𝒋𝒐𝒊𝒏𝒕 sets, meaning they have no element in common, such that no 
      two graph vertices within the same set are 𝒂𝒅𝒋𝒂𝒄𝒆𝒏𝒕.
@@ -18,7 +22,7 @@
    # Some common examples of a bipartite graph include star graphs, grid graphs and gear graphs.
 
    # Applications of bipartite graphs ⟶
-     • Bipartite graph can be used in the medical field in the detection of lung cancer, throat cancer etc.
+     • Bipartite graph can be used in the medical field in the detection of lung cancer, throat cancer, etc.
      • Used in search advertising and e-commerce for similarity ranking.
      • Predict movie preferences of a person.
      • Stable marriage and other matching problems.
@@ -28,8 +32,11 @@
    # So in conclusion, if a graph contains odd length cycle, then it is not bi-partite, else it is.
 */
 
+/************************************************************************************************************************************************************/
+
 // METHOD - 1 (USING DFS)
-// Refer: https://www.youtube.com/watch?v=uC884ske2uQ&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=11&ab_channel=takeUforward
+// Refer: https://www.youtube.com/watch?v=-vu34sct1g8&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=18&ab_channel=takeUforward
+//        https://takeuforward.org/graph/bipartite-graph-dfs-implementation/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -202,10 +209,12 @@ int main()
 
 // Time Complexity ≡ DFS traversal
 
-/*******************************************************************************************************/
+/************************************************************************************************************************************************************/
 
 // METHOD - 2 (USING BFS)
-// Refer: https://www.youtube.com/watch?v=nbgaEu-pvkU&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=11
+
+// Refer: https://www.youtube.com/watch?v=uC884ske2uQ&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=11&ab_channel=takeUforward
+//        https://www.youtube.com/watch?v=nbgaEu-pvkU&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=11
 
 #include<bits/stdc++.h>
 using namespace std;

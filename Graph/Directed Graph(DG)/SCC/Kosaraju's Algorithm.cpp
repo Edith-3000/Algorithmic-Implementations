@@ -1,6 +1,8 @@
 // Ref: https://cp-algorithms.com/graph/strongly-connected-components.html
+//      https://takeuforward.org/graph/strongly-connected-components-kosarajus-algorithm-g-54/
 //      https://www.youtube.com/watch?v=V8qIqJxCioo&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=27&ab_channel=takeUforward
-/*****************************************************************************************************************************/
+
+/******************************************************************************************************************************************************************/
 
 /* # The term 𝑺𝑻𝑹𝑶𝑵𝑮𝑳𝒀 is always used in reference with 𝑫𝑰𝑹𝑬𝑪𝑻𝑬𝑫 𝑮𝑹𝑷𝑨𝑯(𝑫𝑮).
 
@@ -17,11 +19,11 @@
    # In a DAG (Directed Acyclic Graph) ===> #SCC (Strongly Connected Components) = #vertices in the DAG.
 */
 
-/*****************************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // LEGACY CONTENT: https://pastebin.com/rY1fX5ya
 
-/*****************************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // Kosaraju's is an easy-to-implement algorithm based on two series of depth first search, and working 
 // for O(|V| + |E|) time.

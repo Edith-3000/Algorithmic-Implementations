@@ -1,6 +1,8 @@
-// Prob: https://leetcode.com/problems/number-of-islands/
+// Prob: https://leetcode.com/problems/number-of-distinct-islands/
+//       https://practice.geeksforgeeks.org/problems/number-of-distinct-islands/1
 
-// Ref: https://www.youtube.com/watch?v=muncqlKJrH0&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=8&ab_channel=takeUforward
+// Ref: https://takeuforward.org/data-structure/number-of-distinct-islands/
+//      https://www.geeksforgeeks.org/find-the-number-of-distinct-islands-in-a-2d-matrix/
 
 /******************************************************************************************************************************************************************/
 
@@ -100,18 +102,19 @@ bool is_valid(int x, int y, int n, int m) {
 	return (x >= 0) and (x < n) and (y >= 0) and (y < m);
 }
 
-void dfs(int row, int col, int n, int m, vvb &vis, vvi &v) {
+void dfs(int row, int col, int n, int m, vvb &vis, vvi &v, int base_row, int base_col, vpii &island) {
 	vis[row][col] = 1;
+	island.pb({row - base_row, col - base_col});
 	
 	for(int d = 0; d < 4; d++) {
 		int nx = row + dx[d], ny = col + dy[d];
 		if(is_valid(nx, ny, n, m) and (v[nx][ny] == 1) and !vis[nx][ny]) {
-			dfs(nx, ny, n, m, vis, v);
+			dfs(nx, ny, n, m, vis, v, base_row, base_col, island);
 		}
 	}
 }
 
-int count_islands(vvi &v) {
+int count_distinct_islands(vvi &v) {
 	int n = sz(v);
 	if(n == 0) return 0;
 	
@@ -119,18 +122,23 @@ int count_islands(vvi &v) {
 	
 	vvb vis(n, vb(m, 0));
 	
+	// it stores all the distinct islands
+	set<vpii> st;
+	
 	int res = 0;
 	
 	for(int i = 0; i < n; i++) {
 		for(int j = 0; j < m; j++) {
 			if((v[i][j] == 1) and !vis[i][j]) {
-				res += 1;
-				dfs(i, j, n, m, vis, v);
+				// stores the current island
+				vpii island;
+				dfs(i, j, n, m, vis, v, i, j, island);
+				st.insert(island);
 			}
 		}
 	}
 	
-	return res;
+	return sz(st);
 }
 
 void solve()
@@ -142,7 +150,7 @@ void solve()
 		for(int j = 0; j < m; j++) cin >> v[i][j];
 	}
 	
-	cout << count_islands(v) << "\n";
+	cout << count_distinct_islands(v) << "\n";
 }
 
 int main()
