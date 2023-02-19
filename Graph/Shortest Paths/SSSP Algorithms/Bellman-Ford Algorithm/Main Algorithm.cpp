@@ -1,5 +1,6 @@
 /* # Reference: https://brilliant.org/wiki/bellman-ford-algorithm/
 			    https://cp-algorithms.com/graph/bellman_ford.html
+                https://www.youtube.com/watch?v=0vVofAhAYjc&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=42&ab_channel=takeUforward
 
      Intuition: https://www.youtube.com/watch?v=75yC1vbS8S8&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=29
    
@@ -12,7 +13,7 @@
    # Like Dijkstra's shortest path algorithm, the Bellman-Ford algorithm is also guaranteed to find the 
      shortest path in a graph. 
    # Though it is slower than Dijkstra's algorithm (Time Complexity: O(V + (E x log(V))), Bellman-Ford 
-     (Time Complexity: O(V x E) is capable of handling graphs that contain negative edge weights, so it is 
+     (Time Complexity: O(V x E)) is capable of handling graphs that contain negative edge weights, so it is 
      more versatile. 
 
    # It is worth noting that if there exists a negative cycle in the graph, then there is no shortest path. 
@@ -20,7 +21,7 @@
      path (even though the path length is increasing). 
      Because of this, Bellman-Ford can also detect negative cycles which is a useful feature.
 
-   # AN UG CAN BE CONVERTED IN A DG, AND SO IF A UG CONTAINS A -VE WEIGHT EDGE, THEN BASICALLY WE CAN SAY THAT
+   # AN UG CAN BE CONVERTED IN A DG, AND SO IF AN UG CONTAINS A -VE WEIGHT EDGE, THEN BASICALLY WE CAN SAY THAT
      IT'S A -VE WEIGHT CYCLE AND HENCE NO SHORTEST PATH EXISTS.
 
    # Simple algorithm ---->
@@ -48,6 +49,8 @@
    # Bellman-Ford algorithm resolves negative cycle SSSP (Single Source Shortest Path) in (2 x (|V| - 1) x |E|) 
      operations, when negative cycles are present in graph.
 */
+
+/*************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
