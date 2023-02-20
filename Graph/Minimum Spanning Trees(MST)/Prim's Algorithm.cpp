@@ -1,3 +1,7 @@
+// Ref: https://www.youtube.com/watch?v=mJcZjjKzeqk&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=45&ab_channel=takeUforward
+
+/**************************************************************************************************************************************************************/
+
 /* # UNDERLYING CONCEPTS ===>
 
    # Like Kruskal's algorithm, Prim's algorithm is also a Greedy algorithm.
@@ -32,7 +36,7 @@
      4. Repeat step 3 until MST Set doesn't contain all the vertices or V set is empty.
 */
 
-/*****************************************************************************************************************/
+/**************************************************************************************************************************************************************/
 
 // METHOD - 1 O(n^2)
 // Ref: https://www.geeksforgeeks.org/prims-minimum-spanning-tree-mst-greedy-algo-5/
@@ -122,6 +126,9 @@ vector<vpii> g;
 
 // n = #vertices, m = #edges in input graph
 int n, m;
+
+// NOTE: the below algorithm assumes that the input graph is undirected connected,
+//       since MST doesn't exist for a disconnected graph
 
 // function to print and return the weight of MST
 ll prims_algo() {
@@ -225,7 +232,7 @@ int main()
     return 0;
 }
 
-/*****************************************************************************************************/
+/**************************************************************************************************************************************************************/
 
 // METHOD - 2 
 // Ref: https://www.geeksforgeeks.org/prims-mst-for-adjacency-list-representation-greedy-algo-6/
@@ -319,6 +326,9 @@ vector<vpii> g;
 // n = #vertices, m = #edges in input graph
 int n, m;
 
+// NOTE: the below algorithm assumes that the input graph is undirected connected,
+//       since MST doesn't exist for a disconnected graph
+
 // function to print and return the weight of MST
 ll prims_algo() {
     // vector to store constructed MST 
@@ -348,7 +358,10 @@ ll prims_algo() {
         int u = q.top().S;
         q.pop();
         
-        // add the picked vertex to the MST set 
+        // if picked vertex is alread in MST set, then continue
+        if(mst[u] == 1) continue;
+
+        // else add the picked vertex to the MST set 
         mst[u] = 1; 
         
         // update key value and parent index of the adjacent vertices of the picked vertex, by 
@@ -365,6 +378,7 @@ ll prims_algo() {
     
     // in case you need the actual MST
     vvi MST; // {u, v, wt}
+
     for(int i = 1; i < n; i++) {
         vi edg(3);
         edg[0] = parent[i], edg[1] = i, edg[2] = key[i];
@@ -386,7 +400,6 @@ void solve()
     for(int i = 0; i < m; i++) {
         int x, y, wt; 
         cin >> x >> y >> wt;
-        x -= 1, y -= 1;
         g[x].pb({y, wt});
         g[y].pb({x, wt});
     }
@@ -418,6 +431,16 @@ int main()
 
     return 0;
 }
+
+/* # NOTE: # In case you wanted to calculate the MST weight on the go while exploring the priority_queue, the implementation given in the link below
+             would give WA (since in that implementation the edge weight is blindly added. There might be a possibility that a node is occurring more
+             than once in the priority queue and it was already a part of MST).
+
+             https://gist.github.com/Edith-3000/291e836732df19cdefe0f79d7417c478
+
+           # Previously the while() loop of the algorithm was like this --->
+             https://gist.github.com/Edith-3000/8055f30225dd747c9b76e55b922246df 
+*/
 
 // Time Complexity: O(|E| x log|E|) which in turn = O(|E| x log|V|), same as Kruskal's algorithm.
 // However, Prim's algorithm can be improved using Fibonacci Heaps to O(|E| + log|V|).

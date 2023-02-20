@@ -1,3 +1,6 @@
+// Ref: https://www.youtube.com/watch?v=DMnDM_sxVig&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=48&ab_channel=takeUforward
+//      https://www.youtube.com/watch?v=1KRmCzBl_mQ&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=25&ab_channel=takeUforward
+
 /* # UNDERLYING CONCEPTS ===>
 
    # Kruskal's algorithm to find the minimum cost spanning tree uses the greedy approach. 
@@ -18,6 +21,8 @@
      3. Repeatedly add the first (n-1) edges which have the least weightage, iff it does not form a cycle
         i.e. add the least cost edge one by one whose vertices are present in 2 different connected components.
 */
+
+/********************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -140,6 +145,9 @@ struct dsu {
 bool cmp(const vi &v1, const vi &v2) {
     return v1[2] < v2[2];
 }
+
+// NOTE: the below algorithm assumes that the input graph is undirected connected,
+//       since MST doesn't exist for a disconnected graph
 
 // function to print and return the weight of MST
 ll kruskals_algo() {
