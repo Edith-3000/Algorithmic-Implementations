@@ -13,6 +13,8 @@
             cost of multiplying these matrices is  minimum.
 */
 
+/******************************************************************************************************************************************************************/
+
 /* # The cost (i.e. #multiplications) of multiplying 2 matrices of order (a × b) & (b × c)
      is equal to (a * b * c).
 
@@ -24,6 +26,8 @@
        (∵ last matrix A₍ₙ₋₁₎ is of order v[v.size()-2] × v[v.size()-1] ≡ v[j-1] × v[j]), 
        where n is v.size()
 */
+
+/******************************************************************************************************************************************************************/
 
 // RECURSIVE IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=kMK148J9qEE&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=33
@@ -166,7 +170,7 @@ int main()
 
 // Time complexity of the above naive recursive approach is exponential.
 
-/********************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // MEMOIZED IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=9uUVFNOT3_Y&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=34
@@ -324,7 +328,7 @@ int main()
 // Time complexity: O(n^3)
 // Space complexity: O(n^2)
 
-/********************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // TABULATION IMPLEMENTATION (Real DP ;))
 // Ref: https://www.youtube.com/watch?v=pEYwLmGJcvs&list=PL-Jc9J83PIiEZvXCn-c5UIBvfT8dA-8EG&index=30
@@ -480,7 +484,7 @@ int main()
 // Time complexity: O(n^3)
 // Space complexity: O(n^2)
 
-/********************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // TABULATION IMPLEMENTATION (Real DP ;))
 // Slightly different variation from the above one, but the above with "Gap Method" is more easy.

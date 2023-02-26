@@ -1,5 +1,6 @@
 // Problem: https://www.geeksforgeeks.org/0-1-knapsack-problem-dp-10/
-/********************************************************************************************************/
+
+/*****************************************************************************************************************************************************************/
 
 // RECURSIVE IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=kvyShbFVaY8&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=3
@@ -127,7 +128,7 @@ int main()
 // Time complexity: O(2^n)
 // Space complexity: O(1), except recursive call stack overhead
 
-/********************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // MEMOIZED IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=fJbIuhs24zQ&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=4
@@ -266,7 +267,7 @@ int main()
 // Time complexity: O(n x w)
 // Space complexity: O(n x w)
 
-/********************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // TABULATION IMPLEMENTATION (Real DP ;))
 // Ref: https://www.youtube.com/watch?v=ntCGbPMeqgg&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=5
@@ -406,7 +407,7 @@ int main()
 // Time complexity: O(n x w)
 // Space complexity: O(n x w)
 
-/*************************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // SPACE OPTIMIZED MEMOIZED IMPLEMENTATION
 // Ref: https://takeuforward.org/data-structure/0-1-knapsack-dp-19/
@@ -559,7 +560,7 @@ int main()
 // Time complexity: O(n x w)
 // Space complexity: O(w)
 
-/*********************************************************************************************************/
+/*****************************************************************************************************************************************************************/
 
 // MORE SPACE OPTIMIZED MEMOIZED IMPLEMENTATION
 // Ref: https://takeuforward.org/data-structure/0-1-knapsack-dp-19/

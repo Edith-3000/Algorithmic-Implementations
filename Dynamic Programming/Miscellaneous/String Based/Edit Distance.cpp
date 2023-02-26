@@ -1,13 +1,17 @@
 // Problem: https://cses.fi/problemset/task/1639
+//          https://leetcode.com/problems/edit-distance/description/
+
 // Ref: https://www.geeksforgeeks.org/edit-distance-dp-5/
-/*****************************************************************************************************/
+//      https://takeuforward.org/data-structure/edit-distance-dp-33/
+
+/******************************************************************************************************************************************************************/
 
 // The Levenshtein distance (edit distance) between two words is the minimum number of single-character 
 // edits (i.e., insertions, deletions, or substitutions) required and change one word into the other. 
 // Each of these operations has a unit cost.
 // There are many practical applications of edit distance algorithm also.
 
-/*****************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // RECURSIVE APPROACH
 
@@ -148,7 +152,7 @@ int main()
 // Time complexity: O(3^n) in worst case, the worst case happens when none of characters 
 //                  of two strings match. 
 
-/******************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // MEMOIZED IMPLEMENTATION
 
@@ -297,7 +301,7 @@ int main()
 // Time complexity: O(n x m)
 // Space complexity: O(n x m)
 
-/****************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // TABULATION IMPLEMENTATION
 
@@ -442,7 +446,7 @@ int main()
 // Time complexity: O(n x m)
 // Space complexity: O(n x m)
 
-/*****************************************************************************************************/
+/******************************************************************************************************************************************************************/
 
 // SPACE OPTIMIZED TABULATION IMPLEMENTATION
 
@@ -531,10 +535,11 @@ int edit_distance(string &s1, string &s2, int n, int m) {
 	for(int j = 0; j <= m; j++) prev_row[j] = j;
 	
 	for(int i = 1; i <= n; i++) {
+		curr_row[0] = i;
+
 		for(int j = 1; j <= m; j++) {
-			prev_row[0] = i - 1;
-			curr_row[0] = prev_row[0];
 			if(s1[i-1] == s2[j-1]) curr_row[j] = prev_row[j-1];
+			
 			else {
 				int add = 1 +  curr_row[j-1];
 				int remove = 1 + prev_row[j];
@@ -546,7 +551,7 @@ int edit_distance(string &s1, string &s2, int n, int m) {
 		prev_row = curr_row;
 	}
 	
-	return curr_row[m];
+	return prev_row[m];
 }
 
 void solve()

@@ -1,14 +1,3 @@
-// Prob: https://leetcode.com/problems/maximum-product-subarray/
-
-// Ref: https://www.techiedelight.com/find-maximum-product-subarray-given-array/
-//      https://www.youtube.com/watch?v=tHNsZHXnYd4&ab_channel=CodeLibrary-byYogesh%26Shailesh
-
-/********************************************************************************************************************************************************************/
-
-// LEGACY CONTENT: https://pastebin.com/asqmkXDS
-
-/********************************************************************************************************************************************************************/
-
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -98,49 +87,22 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
-// NOTE: the below function cannot be implemented in the following manner (will give WA) :--->
-//       for eg. [-2, 3, -4]
-//       https://pastebin.com/Cvf7jAQr
-
-// Function to return the maximum product of a subarray of a given array
-ll max_prod_subarr(vll &v) {
-	int n = sz(v);
-	if(n == 0) return 0;
-	
-	// to store the final result
-	ll res = v[0];
-	
-	// max_ending_here = maximum product ending at the current index. 
-    // min_ending_here = minimum product ending at the current index.
-	ll max_ending_here = v[0];
-	ll min_ending_here = v[0];
-	
-	for(int i = 1; i < n; i++) {
-		// swap max_ending_here & min_ending_here if required
-		if(v[i] < 0) {
-			swap(max_ending_here, min_ending_here);
-		}
-		
-		// update the maximum product ending at the current index
-		max_ending_here = max(v[i], v[i] * max_ending_here);
-		
-		// update the minimum product ending at the current index
-		min_ending_here = min(v[i], v[i] * min_ending_here);
-		
-		// update final result
-		res = max(res, max_ending_here);
-	}
-	
-	return res;
+// Function to find largest power of 2 > n
+ll largest_power_of_2_strictly_greater_than_n(ll n) {
+    ll x = 0;
+    
+    while((1LL << x) <= n) {
+        x += 1;
+    }
+    
+    return (1LL << x);
 }
 
 void solve()
 {
-  	int n; cin >> n;
-  	vll v(n);
-  	for(int i = 0; i < n; i++) cin >> v[i];
-  	
-  	cout << max_prod_subarr(v) << "\n";
+    ll n; cin >> n;
+    
+    cout << largest_power_of_2_strictly_greater_than_n(n) << "\n";
 }
 
 int main()
@@ -166,6 +128,3 @@ int main()
 
     return 0;
 }
-
-// Time complexity: O(n)
-// Space complexity: O(1)
