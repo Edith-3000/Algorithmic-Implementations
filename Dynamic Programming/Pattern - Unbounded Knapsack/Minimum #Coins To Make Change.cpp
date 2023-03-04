@@ -7,10 +7,13 @@
             number of coins to make the change?
 */
 
-/*****************************************************************************************************************************/
+/********************************************************************************************************************************************************************/
 
 // METHOD - 1 (RECURSIVE)
 // Ref: https://www.geeksforgeeks.org/find-minimum-number-of-coins-that-make-a-change/
+
+// ALTERNATE RECURSIVE APPROACH ===>
+// https://gist.github.com/Edith-3000/0afb3566e5e7975407a5e0ecb1cacfbf#file-minimum-coins-to-make-change-alternate-recurrence-and-top-down-approaches-cpp-L1
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -139,9 +142,15 @@ int main()
     return 0;
 }
 
-/******************************************************************************************************/
+/********************************************************************************************************************************************************************/
 
 // METHOD - 2
+// TOP DOWN APPROACH ===>
+// https://gist.github.com/Edith-3000/0afb3566e5e7975407a5e0ecb1cacfbf#file-minimum-coins-to-make-change-alternate-recurrence-and-top-down-approaches-cpp-L32
+
+/********************************************************************************************************************************************************************/
+
+// METHOD - 3
 
 // LEGACY CONTENT: https://pastebin.com/vX1rbnKL
 
@@ -318,9 +327,9 @@ int main()
     return 0;
 }
 
-/******************************************************************************************************/
+/********************************************************************************************************************************************************************/
 
-// METHOD - 3 (Space optimization of METHOD - 2)
+// METHOD - 4 (Space optimization of METHOD - 3)
 
 #include<bits/stdc++.h>
 using namespace std;

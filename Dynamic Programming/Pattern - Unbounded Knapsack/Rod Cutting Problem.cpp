@@ -12,6 +12,8 @@
    Ref: https://www.youtube.com/watch?v=SZqAQLjDsag&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=14
 */
 
+/****************************************************************************************************************************************************************/
+
 // METHOD - 1 (RECURSIVE)
 
 #include<bits/stdc++.h>
@@ -142,7 +144,7 @@ int main()
 
 // Time & Space Complexity: https://youtu.be/mO8XpGoJwuo?list=PLgUwDviBIf0qUlt5H_kiKYaNSqJ81PMMY&t=757
 
-/*********************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // METHOD - 2
 // Above problem is very much similar to unbounded knapsack problem.
@@ -281,7 +283,7 @@ int main()
     return 0;
 }
 
-/*****************************************************************************************************/
+/****************************************************************************************************************************************************************/
 
 // METHOD - 3 (Space Optimization of the above approach)
 
@@ -364,6 +366,8 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 vi dp;
 
+// This function can also be implemented in this manner ===>
+// https://gist.github.com/Edith-3000/4d6371bc2f9238d56c2597978cfbd87d
 int cut_rod(vi &prices,int len) {
 	// initialisation of dp matrix
 	for(int i = 0; i <= len; i++) dp[i] = INT_MIN;
@@ -385,8 +389,10 @@ void solve()
   	int len; cin >> len;
   	vi prices(len);
   	for(int i = 0; i < len; i++) cin >> prices[i];
-  	
+  
+    dp.clear();	
   	dp.resize(len + 1);
+
   	cout << cut_rod(prices, len) << "\n";
 }
 

@@ -8,7 +8,7 @@
             Critical/Threshold floor -> The highest floor from which if the egg is dropped
                                         it won't break.
 
-Note: # One trial is –> dropping an egg once from the particular floor.
+Note: # One trial is ===> dropping an egg once from the particular floor.
       # If egg does not break after dropping, will be used again.
       # If egg breaks when dropped from some floor then it will break if dropped from any 
         higher floor.
@@ -16,22 +16,26 @@ Note: # One trial is –> dropping an egg once from the particular floor.
         from any lower floor.
 */
 
+/*****************************************************************************************************************************************************************/
+
 /* Few Important points regarding this algorithm ⇒
-  ● Egg dropping refers to a class of problems in which it is important to find the correct 
-    response without exceeding a (low) number of certain failure states. 
+   ● Egg dropping refers to a class of problems in which it is important to find the correct 
+     response without exceeding a (low) number of certain failure states. 
 
-  ● In a toy example, there is a tower of n floors, and an egg dropper with k ideal eggs. The 
-    physical  properties of the ideal egg is such that it will not shatter if it is dropped from 
-    floor n* or below and will get completely damaged  if it is dropped from floor (n* + 1)
-    or above.
+   ● In a toy example, there is a tower of n floors, and an egg dropper with k ideal eggs. The 
+     physical  properties of the ideal egg is such that it will not shatter if it is dropped from 
+     floor n* or below and will get completely damaged  if it is dropped from floor (n* + 1)
+     or above.
 
-  ● The problem is to find a strategy such that the egg dropper can determine the floor 
-    n*(critical or threshold floor) in as few egg drops as possible. 
+   ● The problem is to find a strategy such that the egg dropper can determine the floor 
+     n*(critical or threshold floor) in as few egg drops as possible. 
 
-  ● This problem has many applications in the real world such as avoiding a call out to the 
-    slow HDD, or attempting to minimize cache misses, or running a large number of expensive 
-    queries on a database.
+   ● This problem has many applications in the real world such as avoiding a call out to the 
+     slow HDD, or attempting to minimize cache misses, or running a large number of expensive 
+     queries on a database.
 */
+
+/*****************************************************************************************************************************************************************/
 
 /* ● So basically: For the 𝙬𝙤𝙧𝙨𝙩 𝙘𝙖𝙨𝙚, using the 𝙗𝙚𝙨𝙩 𝙩𝙚𝙘𝙝𝙣𝙞𝙦𝙪𝙚 we have to 𝙢𝙞𝙣𝙞𝙢𝙞𝙨𝙚 𝙩𝙝𝙚 𝙩𝙤𝙩𝙖𝙡 
                    #𝙖𝙩𝙩𝙚𝙢𝙥𝙩𝙨 to find the 𝙘𝙧𝙞𝙩𝙞𝙘𝙖𝙡/𝙩𝙝𝙧𝙚𝙨𝙝𝙤𝙡𝙙 𝙛𝙡𝙤𝙤𝙧.
@@ -43,7 +47,7 @@ Note: # One trial is –> dropping an egg once from the particular floor.
      the minimum value in the 𝙬𝙤𝙧𝙨𝙩 𝙘𝙖𝙨𝙚 is going to be part of the solution.
 
    ● Meaning of a 𝙬𝙤𝙧𝙨𝙩-𝙘𝙖𝙨𝙚 𝙨𝙘𝙚𝙣𝙖𝙧𝙞𝙤: 𝙬𝙤𝙧𝙨𝙩-𝙘𝙖𝙨𝙚 𝙨𝙘𝙚𝙣𝙖𝙧𝙞𝙤 gives the user the 𝙨𝙪𝙧𝙚𝙩𝙮 of the 
-     threshold floor. For example- If we have ‘1’ egg and ‘k’ floors, we will start dropping 
+     threshold floor. For example - If we have ‘1’ egg and ‘k’ floors, we will start dropping 
      the egg from the first floor till the egg breaks suppose on the ‘kth’ floor so the number 
      of tries to give us 𝙨𝙪𝙧𝙚𝙩𝙮 is ‘k’.
 
@@ -67,6 +71,8 @@ Note: # One trial is –> dropping an egg once from the particular floor.
      Now, The final answer is min(1st, 2nd, 3rd….., kth floor)
      So answer here(for f = 2) is ‘2’.
 */
+
+/*****************************************************************************************************************************************************************/
 
 // RECURSIVE IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=S49zeUjeUL0&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=42

@@ -38,7 +38,7 @@ set<node, cmp> st;
 /* NOTES: 
    # cmp is passed without brackets "()"
    # Sometimes you may get a warning while writing in this manner, to remove the warning use 'const' keyword after arguement list, for eg. ===>
-
+     https://github.com/Edith-3000/Algorithmic-Implementations/blob/f2415a437beb3e458dcd02646a2ed1c13bbbb380/Graph/Shortest%20Paths/SSSP%20Algorithms/Dijkstra's%20Algorithm/Dijkstra%20on%20Grid/Min%20Cost%20Path%20(MCP)%20(All%204%20Directions).cpp#L106
 */
 
 /*****************************************************************************************************************************************************************/
@@ -80,7 +80,7 @@ set<node, cmp> st;
 /* NOTES: 
    # cmp is passed without brackets "()"
    # Sometimes you may get a warning while writing in this manner, to remove the warning use 'const' keyword after arguement list, for eg. ===>
-
+     https://gist.github.com/Edith-3000/04f4ece8d5036bfcc457c9294bea2eda#file-min-cost-path-all-4-directions-cmp-struct-cpp-L3
 */
 
 /*****************************************************************************************************************************************************************/

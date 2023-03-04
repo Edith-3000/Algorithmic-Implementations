@@ -136,7 +136,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) {
         // cout << "Case #" << test++ << ": ";
         solve();
@@ -289,7 +289,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) {
         // cout << "Case #" << test++ << ": ";
         solve();
@@ -449,7 +449,7 @@ int main()
     
     int t = 1;
     // int test = 1;
-    cin >> t;
+    // cin >> t;
     while(t--) {
         // cout << "Case #" << test++ << ": ";
         solve();
