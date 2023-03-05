@@ -226,7 +226,7 @@ int main()
 // Auxiliary Space :O(1) ∵ There was no use of any data structure for storing values.
 //                         Although recursion uses stack internally.
 
-/*******************************************************************************************************/
+/*******************************************************************************************************************************************************************/
 
 // MEMOIZED IMPLEMENTATION
 // https://www.youtube.com/watch?v=gr2NtY-2QUY&list=PL_z_8CaSLPWekqhdCPmFohncHwz8TY2Go&index=43
@@ -391,7 +391,7 @@ int main()
 // Time Complexity: O(floors^2 x eggs) 
 // Auxiliary Space : O(floors x eggs) 
 
-/*******************************************************************************************************/
+/*******************************************************************************************************************************************************************/
 
 // SLIGHTLY OPTIMIZED MEMOIZED IMPLEMENTATION
 // NOTE: Although the asymptotic complexity of this and above approach is same.
@@ -572,7 +572,7 @@ int main()
 // Time Complexity: O(floors^2 x eggs) 
 // Auxiliary Space : O(floors x eggs) 
 
-/*********************************************************************************************************************************************/
+/*******************************************************************************************************************************************************************/
 
 // TABULATION IMPLEMENTATION
 // Ref: https://www.youtube.com/watch?v=UvksR0hR9nA&list=PL-Jc9J83PIiEZvXCn-c5UIBvfT8dA-8EG&index=43
@@ -735,7 +735,8 @@ int main()
 */
 
 // Ref: https://leetcode.com/problems/super-egg-drop/discuss/792736/CPP-Explained-Recursive-greatermemoization-greateroptimization-greaterDP-oror-Well-Explained-oror-Easy-to-unserstand
-//      https://www.youtube.com/watch?v=dakViFo0CM0&ab_channel=ForAllEpsilon
+//      https://www.youtube.com/watch?v=dakViFo0CM0&ab_channel=ForAllEpsilon (BEAUTIFUL EXPLANATION)
+//      https://www.youtube.com/watch?v=fiW8EvvpmI0&ab_channel=ForAllEpsilon
 
 #include<bits/stdc++.h>
 using namespace std;
