@@ -1,5 +1,4 @@
-/* # There are many ways to construct euler tour (or to flatten a tree), in this algorithm only one of 
-     them is used.
+/* # There are many ways to construct euler tour (or to flatten a tree), in this algorithm only one of them is used.
 
    # The following way & other ways can be found in these videos :--->
      https://www.youtube.com/watch?v=P8NHOmX5XGM
