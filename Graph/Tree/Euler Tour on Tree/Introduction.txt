@@ -16,3 +16,5 @@
   For more info visit: ---> 
   https://www.youtube.com/watch?v=ifws-07jxcE&list=PL-Jc9J83PIiHymm1DHZBkac0_hhFBXryO&index=1
   https://github.com/xirc/cp-algorithm/blob/main/lib/cpalgo/tree/README.md#Euler-Tour
+
+# Think of using Euler Tour whenever you want to perform range queries/updates on a tree.
