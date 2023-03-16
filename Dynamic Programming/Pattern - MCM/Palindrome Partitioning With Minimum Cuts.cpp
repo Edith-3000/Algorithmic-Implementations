@@ -714,7 +714,7 @@ int main()
 // TABULATION IMPLEMENTATION (Real DP ;))
 // OPTIMIZATION OF THE ABOVE APPROACH
 
-// Ref: https://www.youtube.com/watch?v=qmTtAbOTqcg&list=PL-Jc9J83PIiEZvXCn-c5UIBvfT8dA-8EG&index=29
+// Ref: https://youtu.be/qmTtAbOTqcg?list=PL-Jc9J83PIiEZvXCn-c5UIBvfT8dA-8EG&t=1792
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -978,4 +978,4 @@ ll minPalinPartitionsTabu(string s) {
 // Time Complexity: O(n^3)
 // Space Complexity: O(n^2)
 
-/******************************************************************************************************************************/ 
+/*****************************************************************************************************************************************************************/ 
