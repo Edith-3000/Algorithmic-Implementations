@@ -122,7 +122,7 @@ struct seg_tree {
 	}
 	
 	// build t[] function where,
-	// t[ind] is resposnible for storing result corresponding to segment v[tl......tr]
+	// t[ind] is responsible for storing result corresponding to segment v[tl......tr]
 	void build(int tl, int tr, int ind) {
 		// base case
 		if(tl == tr) {
