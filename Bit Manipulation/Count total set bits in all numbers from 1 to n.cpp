@@ -1,7 +1,9 @@
 // Problem: https://www.interviewbit.com/problems/count-total-set-bits/
+
 // Ref: https://www.geeksforgeeks.org/count-total-set-bits-in-all-numbers-from-1-to-n/
 //      https://www.youtube.com/watch?v=g6OxU-hRGtY
-/******************************************************************************************************/
+
+/*********************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;
