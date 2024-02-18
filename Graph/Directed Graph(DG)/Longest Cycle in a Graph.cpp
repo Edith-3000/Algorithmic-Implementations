@@ -104,7 +104,7 @@ vvi g;
 // n = #vertices
 int n;
 
-// to check if node's labe is ACTIVE_NODE or EXPLORED_NODE
+// to check if node's label is ACTIVE_NODE or EXPLORED_NODE
 vi vis;
 
 // to store the depth f node 'i', in the current DFS tree exploration
