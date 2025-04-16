@@ -76,3 +76,39 @@
                      AT MOST ONCE in Hamiltonian Cycle.
 
 # In a Hamiltonian path you may not pass through all edges.
+
+=================================================================================================================
+
+# Some other definitions from some other references -
+
+# Reference(s) - 
+  1. https://youtu.be/CeO0JEX4QAc
+  2. https://github.com/MAZHARMIK/Interview_DS_Algo/blob/master/iPad%20PDF%20Notes/EulerianGraphs-Part-1.pdf
+  3. https://www.youtube.com/watch?v=i8h_O6u3DSc&ab_channel=codestorywithMIK
+  4. https://youtu.be/mw1mGKKR3QQ
+  5. https://github.com/MAZHARMIK/Interview_DS_Algo/blob/master/iPad%20PDF%20Notes/Euler%20in%20Directed%20Graph%20-%20Part-3.pdf
+
+# Eulerian Path - A path of edges that visits ALL the edges in a graph exactly ONCE.
+
+# Not all graphs have Eulerian Paths.
+
+# If a graph has Eulerian Circuit then you can start your path/circuit from any node.
+
+# Eulerian Circuit/Eulerian Cycle - An Eulerian Path which starts and ends on the same node.
+
+# If a graph has all vertices with even degree and is connected, then it has an Eulerian circuit.
+
+# Eulerian Graph - A graph having euler circuit.
+
+# Semi-Eulerian Graph - A graph having euler path but not having euler circuit.
+
+# In a Euler Path which is not a Euler Circuit, the start and end nodes will always have odd degrees and the 
+  intermediate nodes will have even degrees.
+
+# For a directed graph to have a Euler Circuit the INDEGREE = OUTDEGREE for all the nodes and any node
+  an be the start point of the circuit.
+
+# For a directed graph to have a Euler Path (and not having Euler Circuit), following conditions should meet -
+  1. There should be exactly 1 node with OUTDEGREE - INDEGREE = 1;
+  2. There should be exactly 1 node with INDEGREE - OUTDEGREE = 1;
+  3. For all the other nodes OUTDEGREE = INDEGREE.

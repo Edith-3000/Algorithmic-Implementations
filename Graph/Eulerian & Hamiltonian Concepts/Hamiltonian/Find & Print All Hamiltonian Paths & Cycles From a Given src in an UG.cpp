@@ -1,20 +1,12 @@
-// This type of method will be used in "Find & Print All Hamiltonian Paths & Cycles From a Given src in an UG.cpp",
-//  that is why this problem is being put in this folder.
-
-// Refer: https://www.tutorialspoint.com/print-all-paths-from-a-given-source-to-a-destination-in-cplusplus
-//        https://www.geeksforgeeks.org/find-paths-given-source-destination/
-
-// Below approach can be used for Directed as well as Undirected Graphs
-
-/* Algorithm ---> 
-   1. The idea is to do Depth First Traversal of given graph.
-   2. Start the DFS traversal from source.
-   3. Keep storing the visited vertices in an array or HashMap say ‘res[]’.
-   4. If the destination vertex is reached, print contents of res[].
-   5. The important thing is to mark current vertices in the res[] as visited also so that the traversal 
-      doesn’t go in a cycle, as well as mark them unvisited in the returning phase of the DFS(recursion).
-      So as to explore all the available paths.
+/* Problem description --->
+   1. You are given an undirected graph with 'n' vertices & 'm' edges and a src vertex.
+   2. You are required to find and print all hamiltonian paths and cycles starting from src. 
+      The cycles must end with "*" and paths with a "."
 */
+
+// Concept used in the below algorithm is very much similar to the concept which have been used in the file
+// "Hamiltonian/Print all paths from a given source to a destination.cpp" with just a slight change in the case to print
+// the path.
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -45,25 +37,41 @@ int rng(int lim) {
 const int INF = 0x3f3f3f3f;
 const int mod = 1e9+7;
 
-vvi g;
+vvi g; 
 vector<bool> vis;
 vi res;
-int n, m, ind, src, des;
+int n, m, ind, src;
 
-void dfs(int curr = src) {
+void dfs(int curr) {
 	vis[curr] = 1;
 	res[ind] = curr;
 	ind++;
 	
-	if(curr == des) {
-		for(int i = 0; i < ind; i++) cout << res[i] << " ";
-		cout << "\n";
+	if(ind == n) {
+		for(int i = 0; i < n; i++) {
+			if(i == (n - 1)) cout << res[i];
+			else cout << res[i] << " ";
+		}
+		
+		bool is_cycle = false;
+		for(auto x: g[curr]) {
+			if(x == src) {
+				is_cycle = true;
+				break;
+			}
+		}
+		
+		cout << (is_cycle ? "*" : ".") << "\n";
 	}
 	
 	else {
+		vis[curr] = 1;
 		for(auto x: g[curr]) {
-			if(!vis[x]) dfs(x);
-		}
+			if(!vis[x]) {
+				res.pb(x);
+				dfs(x);
+		    }
+	    }
 	}
 	
 	ind--;
@@ -84,9 +92,9 @@ void solve()
   		g[v].pb(u);
   	}
   	
-  	cin >> src >> des;
+  	cin >> src;
   	ind = 0;
-  	dfs();
+  	dfs(src);
 }
 
 int main()
@@ -122,19 +130,15 @@ Sample i/p --->
 4 5
 4 6
 5 6
-0 4
+0
 
 Sample o/p --->
 
-0 1 2 3 4 
-0 1 2 5 4 
-0 1 2 5 6 4 
-0 3 2 5 4 
-0 3 2 5 6 4 
-0 3 4 
+0 1 2 3 4 5 6.
+0 1 2 3 4 6 5.
+0 1 2 5 6 4 3*
+0 3 4 6 5 2 1*
 
 */
 
-// Time Complexity: O(|V| ^ |V|). 
-// The time complexity is polynomial because from each vertex there are V vertices that can be visited from 
-// current vertex.
+// Time complexity ---> 
