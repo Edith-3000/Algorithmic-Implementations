@@ -105,7 +105,7 @@
 # In a Euler Path which is not a Euler Circuit, the start and end nodes will always have odd degrees and the 
   intermediate nodes will have even degrees.
 
-# For a directed graph to have a Euler Circuit the INDEGREE = OUTDEGREE for all the nodes and any node
+# For a directed graph to have a Euler Circuit the INDEGREE = OUTDEGREE for all the nodes and any node can
   an be the start point of the circuit.
 
 # For a directed graph to have a Euler Path (and not having Euler Circuit), following conditions should meet -
