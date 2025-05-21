@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/Advanced DS/Advanced DS.iml" filepath="$PROJECT_DIR$/Advanced DS/Advanced DS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Algorithmic-Implementations.iml" filepath="$PROJECT_DIR$/Algorithmic-Implementations.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Graph/Eulerian &amp; Hamiltonian Concepts/Eulerian &amp; Hamiltonian Concepts.iml" filepath="$PROJECT_DIR$/Graph/Eulerian &amp; Hamiltonian Concepts/Eulerian &amp; Hamiltonian Concepts.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Miscellaneous Problems/Miscellaneous Problems.iml" filepath="$PROJECT_DIR$/Miscellaneous Problems/Miscellaneous Problems.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pattern - Hash Table or Hash Map, Map &amp; Hashing/Pattern - Hash Table or Hash Map, Map &amp; Hashing.iml" filepath="$PROJECT_DIR$/Pattern - Hash Table or Hash Map, Map &amp; Hashing/Pattern - Hash Table or Hash Map, Map &amp; Hashing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Pattern - Sliding Window/Pattern - Sliding Window.iml" filepath="$PROJECT_DIR$/Pattern - Sliding Window/Pattern - Sliding Window.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Advanced DS/Range Query DS/Range Query DS.iml" filepath="$PROJECT_DIR$/Advanced DS/Range Query DS/Range Query DS.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Graph/Shortest Paths/Shortest Paths.iml" filepath="$PROJECT_DIR$/Graph/Shortest Paths/Shortest Paths.iml" />
+    </modules>
+  </component>
+</project>

@@ -1,0 +1,12 @@
+# The diameter of a tree is the number of edges in the longest path in that tree.
+
+# Pre-requisite Theorem: In a connected undirected acyclic graph, the furthest node that can be reached from any arbitrary node must be one end 
+                         of the diameter of the graph.
+
+# Proof: 1. https://stackoverflow.com/a/29219346
+         2. https://gist.github.com/Edith-3000/73c2f14f8a81e6272b53eb9cb3fc9942
+
+# How to find the diameter of a tree - 
+  1. Choose any arbitrary node 'u'.
+  2. Either by DFS/BFS, find the node which is farthest from 'u', let's say 'v' ('v' will be one of the end points of the tree diameter).
+  3. From 'v' again, find the distance of the node which is farthest from it, this distance will be the tree diameter.
