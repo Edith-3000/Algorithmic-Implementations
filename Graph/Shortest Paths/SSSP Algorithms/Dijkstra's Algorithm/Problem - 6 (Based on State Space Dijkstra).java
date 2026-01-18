@@ -8,6 +8,7 @@
 *
 * Given two cities A and B (1 <= A, B <= numberOfCities), determine the minimum cost to travel from city A to city B.
 * If travel between these cities is impossible return -1.
+* 
 **************************************************************************************************************************************************************************
 
 * Example 1:
