@@ -4,7 +4,7 @@
 /****************************************************************************************************************************************************************/
 
 // METHOD - 1 O(n^2)
-// Ref: // Ref: https://www.youtube.com/watch?v=WpYHNHofwjc&ab_channel=Pepcoding
+// Ref: https://www.youtube.com/watch?v=WpYHNHofwjc&ab_channel=Pepcoding
 
 // NOTE: This question can be done easily by making use of the concept used in the problem 
 //       "Strings/Substrings or Subsequence Related Problems/Substring Related Concepts/Count All Palindromic Substrings.cpp"
