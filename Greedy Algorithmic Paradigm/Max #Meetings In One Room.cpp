@@ -1,6 +1,7 @@
 // Problem: https://www.geeksforgeeks.org/find-maximum-meetings-in-one-room/
 
 // Ref: https://takeuforward.org/data-structure/n-meetings-in-one-room/
+//      https://chatgpt.com/share/6975c445-67c4-8001-8610-f7db839a9c05 - [https://chatgpt.com/c/6975c2fe-60bc-8321-ac3e-a7b8adcf7b70]
 
 /*************************************************************************************************************************************************************/
 

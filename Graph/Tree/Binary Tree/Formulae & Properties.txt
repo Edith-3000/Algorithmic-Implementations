@@ -43,3 +43,6 @@
 • NOTE: As binary tree is one kind of tree; it has all properties of tree in graph theory.
 
 #  (Inorder & Preorder) OR (Inorder & Postorder) uniquely identify a binary tree.
+
+# Difference b/w Perfect, Complete and Full binary tree: 
+  https://chatgpt.com/share/697a2b24-9684-8001-b6e6-5272002a74d1 - [https://chatgpt.com/c/6979751e-d6e8-8320-b2de-e0975b5e4367]
