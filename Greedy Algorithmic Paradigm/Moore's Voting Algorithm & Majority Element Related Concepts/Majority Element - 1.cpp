@@ -2,6 +2,7 @@
 //          https://leetcode.com/problems/majority-element/
 
 // Ref: https://www.youtube.com/watch?v=bg6r_fgtpMQ
+//      https://youtu.be/nP_ns3uSh80
 /***********************************************************************************************************************/
 
 #include<bits/stdc++.h>

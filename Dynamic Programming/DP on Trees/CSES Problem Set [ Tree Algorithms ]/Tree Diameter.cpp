@@ -22,6 +22,9 @@
      be x.
    # Run a DFS from node x, and find the maximum distance of this node from any other node, this distance
      will be the diameter of the tree.
+
+   # Why this works:
+	 In a tree, the farthest node from any arbitrary node is always one endpoint of the diameter.
 */
 
 // Problem: Tree Diameter

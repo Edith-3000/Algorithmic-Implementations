@@ -15,7 +15,9 @@
 
 /******************************************************************************************************************************************************************/
 
-/* # The cost (i.e. #multiplications) of multiplying 2 matrices of order (a × b) & (b × c)
+/* # https://chatgpt.com/share/6988299d-62d0-8001-9350-c54c978344a2 - [https://chatgpt.com/c/6988283b-8c08-8320-a13d-98b5ea57fe26]
+
+   # The cost (i.e. #multiplications) of multiplying 2 matrices of order (a × b) & (b × c)
      is equal to (a * b * c).
 
    # If n elements are given in array then there are (n-1) matrices. 😅

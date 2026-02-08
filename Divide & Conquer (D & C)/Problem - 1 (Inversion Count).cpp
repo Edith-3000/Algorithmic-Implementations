@@ -199,5 +199,8 @@ int main()
     return 0;
 }
 
+// NOTE: one small improvement can be done in the merge procedure is to pass the tmp[] vector as reference
+//       so that we don't have to create it again and again in each merge procedure
+
 // Time complexity: O(n x log2(n)) [same as that of Merge Sort Algo]
 // Space complexity: O(n)
