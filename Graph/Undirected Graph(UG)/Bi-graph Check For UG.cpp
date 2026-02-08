@@ -35,7 +35,7 @@
 /************************************************************************************************************************************************************/
 
 // METHOD - 1 (USING DFS)
-// Refer: https://www.youtube.com/watch?v=-vu34sct1g8&list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn&index=18&ab_channel=takeUforward
+// Refer: https://youtu.be/KG5YFfR0j8A?list=PLgUwDviBIf0oE3gA41TKO2H5bHpPd7fzn
 //        https://takeuforward.org/graph/bipartite-graph-dfs-implementation/
 
 #include<bits/stdc++.h>

@@ -31,8 +31,8 @@
    # So to check cycle in a DG we maintain a 𝒔𝒕𝒂𝒄𝒌 𝑨𝑹𝑹𝑨𝒀(it is also a bool array) in addition to 
      the visited array.
 
-     • As we know visited[] array basically keeps a check abput whether a given vertex has already 
-       been visited at some poit of time or not.
+     • As we know visited[] array basically keeps a check about whether a given vertex has already 
+       been visited at some point of time or not.
 
      • But here the extra data structure used which is the stack array (remember it is an array only, 
        only the name stack is used to convey the message that it will work almost similar to stack, 
