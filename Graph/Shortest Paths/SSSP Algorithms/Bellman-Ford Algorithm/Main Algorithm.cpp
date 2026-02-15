@@ -48,6 +48,10 @@
 
    # Bellman-Ford algorithm resolves negative cycle SSSP (Single Source Shortest Path) in (2 x (|V| - 1) x |E|) 
      operations, when negative cycles are present in graph.
+
+   # https://chatgpt.com/share/698df3ca-4560-8001-8445-ff20e06f847c - [https://chatgpt.com/c/698dee70-4be8-8323-98d8-49730c9aefcb]
+
+   # https://chatgpt.com/share/698df45e-768c-8001-b806-2c4f41335341 - [https://chatgpt.com/c/698df3ea-8e00-8324-bc04-4b376379ee05]
 */
 
 /*************************************************************************************************************************************************************/
