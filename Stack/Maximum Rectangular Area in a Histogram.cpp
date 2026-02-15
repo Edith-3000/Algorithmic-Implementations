@@ -170,6 +170,7 @@ int main()
 // METHOD - 3
 // A single pass approach can be viewed at :--->
 // https://takeuforward.org/data-structure/area-of-largest-rectangle-in-histogram/
+// This is an easily understandable approach by Striver - https://leetcode.com/problems/largest-rectangle-in-histogram/submissions/1919675033
 
 // Although the below algorithm can be made as a single pass.
 // https://www.geeksforgeeks.org/largest-rectangular-area-in-a-histogram-using-stack/

@@ -9,6 +9,9 @@
 // Very beautiful explanation of O(n) time complexity of this approach ===>
 // https://stackoverflow.com/a/47203425
 
+// Mathematical proof of the approach ===>
+// https://youtu.be/SyfdOzZttXA
+
 #include<bits/stdc++.h>
 using namespace std;
 

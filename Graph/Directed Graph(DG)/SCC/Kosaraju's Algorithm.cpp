@@ -17,6 +17,8 @@
    # Thus it can be said that if a DG has exactly 1 SCC, then it is a strongly connected graph.
 
    # In a DAG (Directed Acyclic Graph) ===> #SCC (Strongly Connected Components) = #vertices in the DAG.
+
+   # https://chatgpt.com/share/69888d6a-aa84-8001-91a6-a4aa6af768a1 - [https://chatgpt.com/c/698889f6-8114-8322-89bd-242fda0ab81b]
 */
 
 /******************************************************************************************************************************************************************/

@@ -165,7 +165,7 @@ vi max_of_min(vi &v) {
     // fill result array by comparing minimums of all lengths 
     // computed using nsr[] and nsl[]
     for(int i = 0; i < n; i++) {
-    	// length of the window size in which v[i] is the minimum element
+    	// length of the max window size in which v[i] is the minimum element
         int len = nsr[i] - nsl[i] - 1;
         
         // v[i] is the candidate answer for window length = len
