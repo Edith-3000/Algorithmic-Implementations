@@ -109,7 +109,8 @@ int main()
 /***************************************************************************************************/
 
 // Ref: https://www.geeksforgeeks.org/merge-two-sorted-arrays-o1-extra-space/
-// Method 2 (Time complexity: O(n + m) + nlogn + mlogm)
+//      https://youtu.be/n7uwj04E0I4
+// Method 2 (Time complexity: O(min(n, m) + nlogn + mlogm))
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -306,7 +307,7 @@ int main()
 // NOTE1: A solution can also be viewed at: --->
 // https://www.interviewbit.com/problems/merge-two-sorted-lists-ii/
 
-// ALthough it is not O(1) space solution
+// Although it is not O(1) space solution
 
 // NOTE2: For a similar kind of problem at LeetCode: --->
 // https://leetcode.com/problems/merge-sorted-array/

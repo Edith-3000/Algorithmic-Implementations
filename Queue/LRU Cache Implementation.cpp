@@ -440,3 +440,14 @@ int main()
 }
 
 // Time complexity of get() and set() = O(1), approximately.
+
+/**************************************************************************************************************************************************************************************/
+
+/*
+* JAVA implementation of LRU Cache is also available at: https://gist.github.com/Edith-3000/e45d3d3afe64d015f3bb9a74ea409b73
+*
+* Generic code for above Java implementation: https://chatgpt.com/share/699add08-0ffc-8001-9b57-bd01337e38f6 - [https://chatgpt.com/c/699adbbd-c95c-8324-b660-26fe55d0c48a]
+*/ 
+
+
+/**************************************************************************************************************************************************************************************/

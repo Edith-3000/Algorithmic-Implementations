@@ -1,9 +1,10 @@
 // Imp. links: https://leetcode.com/problems/sudoku-solver/
 //             https://takeuforward.org/data-structure/sudoku-solver/
+//             https://youtu.be/FWAIf_EVUKE?list=PLgUwDviBIf0p4ozDR_kJJkONnb1wdx2Ma
 
 /**************************************************************************************************************************************************************/ 
 
-// Given an (n x n) sudoku, where n is a perfect square, writer all possible solutions to the sudoku.
+// Given an (n x n) sudoku, where n is a perfect square, write all possible solutions to the sudoku.
 // Very much similar to "N-Queens Problem.cpp"
 
 /**************************************************************************************************************************************************************/
@@ -365,3 +366,11 @@ Enter the sudoku(blanks cell to be represented by 0) --->
 
 
 */
+
+
+/***************************************************************************************************************/
+
+// METHOD - 2
+// Only the way of implementation has changed, and it is in Java. The logic is the same as that of "METHOD - 1".
+
+// Ref: https://gist.github.com/Edith-3000/4aa3dd638e6e1f664a665647e6b20b88
