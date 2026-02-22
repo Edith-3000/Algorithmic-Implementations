@@ -1,5 +1,8 @@
 // Problem: https://leetcode.com/problems/valid-anagram/
 
+// Folllow up: https://chatgpt.com/share/69995ff0-3978-8001-8c88-ee67269176c3 - [https://chatgpt.com/c/69995c37-c48c-8324-81e3-233dfefa5064]
+//             https://chatgpt.com/share/699960a7-62f0-8001-b88e-2e5f1a23f950 - [https://chatgpt.com/c/69996022-2158-8322-b8e5-23cce35c5b54]
+
 /**************************************************************************************************************************************************************/
 
 // METHOD 1 (Using 2 hash data structures)
