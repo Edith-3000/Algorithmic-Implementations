@@ -301,7 +301,7 @@ void solve()
     vi v(n);
     for(int i = 0; i < n; i++) cin >> v[i];
     
-    cout << kth_largest(v, k);
+    cout << kth_largest(v, n - k + 1);
 }
 
 int main()
@@ -330,5 +330,6 @@ int main()
 
 // TC: Average Case: O(n)
 //     Worst Case: O(n^2)
+//     https://youtu.be/nS9AcCpk4l8?t=553
 
 // SC: O(1), except for the recursive call stack.

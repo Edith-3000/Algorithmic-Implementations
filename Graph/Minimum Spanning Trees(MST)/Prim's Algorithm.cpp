@@ -151,7 +151,7 @@ ll prims_algo() {
     key[0] = 0; 
     parent[0] = -1; 
     
-    // as MST will have (n - 1) edges so run loop for (n- 1) times
+    // as MST will have (n - 1) edges so run loop for (n - 1) times
 	for(int count = 0; count < n - 1; count++) { 
         // pick the minimum key vertex from the set of vertices not yet included in MST yet 
         int mn = INT_MAX, u;
@@ -445,3 +445,15 @@ int main()
 // Time Complexity: O(|E| x log|E|) which in turn = O(|E| x log|V|), same as Kruskal's algorithm.
 // However, Prim's algorithm can be improved using Fibonacci Heaps to O(|E| + log|V|).
 // Reference: https://www.cs.auckland.ac.nz/software/AlgAnim/prim.html#:~:text=The%20time%20complexity%20is%20O,O(E%20%2B%20logV).
+
+
+/**************************************************************************************************************************************************************/
+
+// JAVA CODE
+
+/*
+* https://gist.github.com/Edith-3000/a1dad18eb3a6f3bf71234cdd72b84abd
+* https://chatgpt.com/share/69a9002b-65e8-8001-be60-b0b4c0b12338 - [https://chatgpt.com/c/69a8f930-5234-8322-ad43-46ad30caf245]
+*/
+
+/**************************************************************************************************************************************************************/

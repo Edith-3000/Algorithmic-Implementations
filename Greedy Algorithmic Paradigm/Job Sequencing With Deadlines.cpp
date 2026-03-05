@@ -4,6 +4,8 @@
 
 /*****************************************************************************************************************************************************************/
 
+// METHOD 1
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -179,3 +181,12 @@ int main()
 
 // NOTE: The time complexity of O(n x m) can be reduced by using the concept similar to the one used
 //       in this problem: https://www.spoj.com/problems/CLFLARR/
+
+
+/*****************************************************************************************************************************************************************/
+
+// METHOD 2 (Better than METHOD 1)
+
+// Ref: [Expected Approach] Using Sorting and MinHeap - O(n * log(n)) Time and O(n) Space from https://www.geeksforgeeks.org/dsa/job-sequencing-problem/
+
+/*****************************************************************************************************************************************************************/

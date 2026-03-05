@@ -5,6 +5,8 @@
    PROBLEM: Given a value V, if we want to make change for V cents, and we have infinite 
             supply of each of C = {C1, C2, .. , Cm} valued coins, what is the minimum 
             number of coins to make the change?
+
+   https://chatgpt.com/c/69a2c229-21d8-8320-bc55-c3f976c7c88c - [https://chatgpt.com/c/69a2c229-21d8-8320-bc55-c3f976c7c88c]
 */
 
 /********************************************************************************************************************************************************************/
@@ -261,7 +263,7 @@ ll GCD(ll a, ll b) { return (b == 0) ? a : GCD(b, a % b); }
 
 /******************************************************************************************************************************/
 
- vvi dp;
+vvi dp;
 
 int min_coins(vi &v, int n, int sum) {
     // initialisation of dp matrix
