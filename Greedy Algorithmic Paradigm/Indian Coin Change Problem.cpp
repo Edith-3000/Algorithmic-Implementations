@@ -6,6 +6,7 @@
 	    We need a 100 Rs note, a 20 Rs note and a 1 Rs coin. 
 
    Reference: https://www.geeksforgeeks.org/greedy-algorithm-to-find-minimum-number-of-coins/
+              https://youtu.be/mVg9CfJvayM
 */
 
 #include<bits/stdc++.h>

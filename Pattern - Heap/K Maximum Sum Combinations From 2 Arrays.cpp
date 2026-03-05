@@ -2,6 +2,7 @@
 // Similar problem: https://leetcode.com/problems/find-k-pairs-with-smallest-sums/description/
 
 // Ref: https://www.geeksforgeeks.org/k-maximum-sum-combinations-two-arrays/
+//      https://chatgpt.com/share/69a3cdbc-13ac-8001-bbdb-428eda64fb1c - [https://chatgpt.com/c/69a3cd07-61d0-8324-a830-01a28d3b9f53]
 /***************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
