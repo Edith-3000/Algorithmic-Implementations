@@ -167,3 +167,12 @@ int main()
    # Space complexity:--->
      * The space complexity will be O(n) because, as at any time, we will be storing all the numbers.
 */
+
+
+/********************************************************************************************************************************************************************************************/
+
+// JAVA IMPLEMENTATION + Follow up questions
+
+/*
+* https://chatgpt.com/share/69ad2092-9ff0-8001-9f14-3ead713e5372 - [https://chatgpt.com/c/69ad1db9-adf0-8320-8a0a-3349d85c968e]
+*/
