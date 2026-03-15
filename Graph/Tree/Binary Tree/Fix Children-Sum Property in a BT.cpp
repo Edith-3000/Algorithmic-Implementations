@@ -196,6 +196,11 @@ int main()
 
 // METHOD - 2 O(n)
 
+/*
+* NOTE: Even better implementation of this approach is: 
+* https://www.geeksforgeeks.org/dsa/convert-an-arbitrary-binary-tree-to-a-tree-that-holds-children-sum-property/
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 

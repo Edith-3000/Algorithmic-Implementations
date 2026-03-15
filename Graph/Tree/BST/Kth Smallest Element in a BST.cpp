@@ -280,10 +280,12 @@ int main()
     return 0;
 }
 
-/***************************************************************************************************************************************************************/
+/************************************************************************************************************************************************************************/
 
 // METHOD - 3 O(Height of BST)
 // Ref: https://youtu.be/KqMm81Y7j9M?t=447
+
+// Better implementation of METHOD - 3: https://chatgpt.com/share/69af9153-b4b8-8001-9c51-491c038b69e1 - [https://chatgpt.com/c/69af7cb0-b0f0-8323-95e3-5f991fbf3447]
 
 /* # This method is just an optimization of "METHOD 1", instead of counting nodes present in the left subtree
      of a particular, we modified the TreeNode struct to store the same in a new data member "cnt_nodes".

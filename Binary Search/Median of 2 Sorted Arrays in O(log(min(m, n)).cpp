@@ -111,6 +111,9 @@ double find_median(vi &v1, vi &v2) {
 	
 	// In left half of the the merged array of v1[] and v2[], v1[] can contribute
 	// #elements ranging from [0, n], that's why lo & hi are taken like this.
+	// Also handle the edge cases when k < m or k > n, that's why we take max(0, k - m) and min(n, k) as lo and hi respectively.
+	// Just like we did in "K-th Element of 2 Sorted Arrays" problem, here also we will be doing the same thing but instead of k, we will be taking (n + m + 1) / 2 as the partition point.
+	// This is because we want to find the median of the merged array of v1[] and v2[] and the median will be at (n + m + 1) / 2 position in the merged array.
 	int lo = 0, hi = n;
 		
 	while(lo <= hi) {
