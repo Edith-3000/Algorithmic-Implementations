@@ -4,6 +4,12 @@
 
 // Main idea is to just do some twist and tweaks in the Merge Sort Algorithm.
 
+/*
+* JAVA IMPLEMENTATION OF THE SAME LOGIC WITH CHANGE IN THE WAY WE COUNT THE #CROSS REVERSE PAIRS CAN BE FOUND AT:
+* https://gist.github.com/Edith-3000/7ce972c095fb47a10e73f471bdec3318
+* https://chatgpt.com/share/69ba0583-e284-8001-8967-c9df4055bf0b - [https://chatgpt.com/c/69ba0482-41a0-8322-9196-7823aadfe574]
+*/
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -132,13 +138,13 @@ int find_cross_count(vi &v, int start, int end, int n) {
     while(i <= mid and j <= end) {
         if((ll)v[i] > (2 * (ll)v[j])) j++;
         else {
-            cnt += (j  - 1 - mid);
+            cnt += (j  - 1 - mid); // cnt += (j - (mid + 1));
             i++;
         }
     }
         
     while(i <= mid) {
-        cnt += (j - 1 - mid); 
+        cnt += (j - 1 - mid); // cnt += (j - (mid + 1));
         i++;
     }
         

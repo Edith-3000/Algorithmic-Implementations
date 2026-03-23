@@ -3,7 +3,7 @@
 
 /**************************************************************************************************************************************************************/
 
-// METHOD - 1 (NAIVE APPROAC)
+// METHOD - 1 (NAIVE APPROACH)
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -237,7 +237,7 @@ int main()
 }
 
 // TC: O(n x m), where n = #strings in input vector
-//                     m = length of longest common common prefix
+//                     m = length of longest common prefix
 
 /**************************************************************************************************************************************************************/
 
@@ -324,9 +324,16 @@ int main()
     return 0;
 }
 
-// Time Complexity: O(MAX x n x log n ), where n  = n = #strings in input vector 
+// Time Complexity: O(MAX x n x log n ), where n = #strings in input vector 
 //                                             MAX = length of the longest string 
 // This is because the comparison of two strings would take at most O(MAX) time and for sorting n 
 // strings, we would need O(MAX x n x log n ) time.
+
+/**************************************************************************************************************************************************************/
+
+// METHOD - 3 (USING TRIE)
+// Ref: https://www.geeksforgeeks.org/dsa/longest-common-prefix-using-trie/
+
+// JAVA IMPLEMENTATION: https://gist.github.com/Edith-3000/0106c8ff250fd6a7464e2af55c246fba
 
 /**************************************************************************************************************************************************************/
