@@ -3,6 +3,9 @@
 //      https://cp-algorithms.com/string/prefix-function.html
 //      https://towardsdatascience.com/pattern-search-with-the-knuth-morris-pratt-kmp-algorithm-8562407dba5b
 
+//      https://chatgpt.com/share/69b88f30-a35c-8001-acda-3356229cc5a7 - [https://chatgpt.com/c/69b78069-2fac-8324-96ad-425a6d271e4f]
+//      https://chatgpt.com/share/69b88f4b-a058-8001-844a-92fef8b78665 - [https://chatgpt.com/c/69b819bc-e0cc-8321-8765-eb879b296ffb]
+
 /******************************************************************************************************************************************************************/
 
 #include<bits/stdc++.h>

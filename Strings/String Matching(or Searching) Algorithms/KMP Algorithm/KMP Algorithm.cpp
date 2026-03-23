@@ -5,6 +5,9 @@
 //      https://cp-algorithms.com/string/prefix-function.html
 //      https://towardsdatascience.com/pattern-search-with-the-knuth-morris-pratt-kmp-algorithm-8562407dba5b
 
+//      https://chatgpt.com/share/69b8d697-1410-8001-8bdb-69ecdbf0f59c - [https://chatgpt.com/c/69b8ba89-bf4c-8323-962d-02d36b0c919a]
+//      KMP String Matching Visualizer: https://www.hudsong.dev/tools/kmp
+
 /*****************************************************************************************************************************************************************/
 
 /*
@@ -218,6 +221,8 @@ int main()
 
 // Following is a very simple & short implementation of the above method by making use of prefix function
 // only on the concatenated string i.e. on pattern + "$" + text
+
+// https://chatgpt.com/share/69b8dbac-a044-8001-9f5c-ca2779b68c7c - [https://chatgpt.com/c/69b8daa4-4d24-8324-bf3f-88868d19412c]
 
 #include<bits/stdc++.h>
 using namespace std;

@@ -122,11 +122,13 @@ int main()
 // Time Complexity: O(n): Only one traversal of the array is needed, So time Complexity is O(n).
 // Space Complexity: O(n): Two extra vectors are needed each of size n.
 
-/*****************************************************************************************************/
+/***************************************************************************************************************************************************************************/
 
 // METHOD - 3 (MOST OPTIMAL - O(n) time & O(1) Space)
 // Ref: https://www.youtube.com/watch?v=m18Hntz4go8
 //      https://www.geeksforgeeks.org/trapping-rain-water/ 
+
+// https://chatgpt.com/share/69bd1d27-dec4-8001-9888-3fa573e74a19 - [https://chatgpt.com/c/69bd06b0-3858-8321-88e5-72b29efcd7a1]
 
 #include<bits/stdc++.h>
 using namespace std;

@@ -198,6 +198,7 @@ int main()
 // METHOD - 2
 
 // THIS IS JUST A SIMPLIFIED VERSION OF "METHOD - 2"
+// * https://chatgpt.com/share/69bce1cd-cca8-8001-b4a3-f64d4d73fb87 - [https://chatgpt.com/c/69bcd880-f5d4-8322-ad51-6774843fa4ba]
 
 #include<bits/stdc++.h>
 using namespace std;
@@ -289,7 +290,7 @@ class TreeNode {
 };
 
 struct info {
-    // sum of nodes in the subtree rooted at the current root
+    // sum of nodes in the subtree rooted at the current root, if subtree rooted at current root is a BST, else it will contain 0
     int sum; 
     
     // minimum value in the subtree rooted at the current root, if subtree rooted at current root is a BST, else it will contain INT_MIN
@@ -320,7 +321,7 @@ info largest_bst(TreeNode *root, int &res) {
         return {lf.sum + root->val + rg.sum, min(lf.mn, root->val), max(rg.mx, root->val)};
     }
     
-    else return {INT_MIN, INT_MIN, INT_MAX};
+    else return {0, INT_MIN, INT_MAX};
 }
 
 void solve()
