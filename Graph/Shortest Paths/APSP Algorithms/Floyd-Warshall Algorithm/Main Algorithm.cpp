@@ -136,6 +136,11 @@ void retrieve_paths() {
 				cout << "No shortest path exists\n\n";
 				continue;
 			}
+
+			if (d[i][j] == INF) {
+				cout << "No path exists\n\n";
+				continue;
+			}
 			
 			// if path exist retrieve it
 			int x = i, y = j;
@@ -164,7 +169,7 @@ void floyd_warshall() {
 	// initialisation of d[][] and nxt[][] arrays
 	for(int i = 0; i < n; i++) {
 		for(int j = 0; j < n; j++) {
-			if(i == j) d[i][j] = 0, nxt[i][j] = -1;
+			if(i == j) d[i][j] = 0, nxt[i][j] = i;
 			else {
 				if(g[i][j] == INF) d[i][j] = INF, nxt[i][j] = -1;
 				else d[i][j] = g[i][j], nxt[i][j] = j;
