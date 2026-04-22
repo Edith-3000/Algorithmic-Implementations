@@ -1,5 +1,9 @@
 // Prob: https://leetcode.com/problems/cheapest-flights-within-k-stops/
 // Ref: https://www.youtube.com/watch?v=vWgoPTvQ3Rw&ab_channel=ShiranAfergan
+
+// https://chatgpt.com/share/69e19008-8ea8-8320-bfcd-3ace3a4dd2e1 - [https://chatgpt.com/c/69e0fce6-6fc0-83aa-b9c7-efa7f3073ff3]
+// https://chatgpt.com/share/69e18fea-f9a0-8320-866e-1823eb43a4a8 - [https://chatgpt.com/c/69e18253-d4b8-8323-882f-f296e0139aba]
+
 /*******************************************************************************************************************/
 
 /* NOTE: For more info on the else if() condition in cheapest_flight_within_k_stops() see the "Highlighted comment"

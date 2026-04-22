@@ -3,6 +3,8 @@
    Sieve of eratosthenes is primarily used when there are multiple queries asked to check primality 
    of given nos.
    Multiple of a prime no. cannot be a prime no.
+
+   // https://chatgpt.com/share/69e2dc09-cad4-8322-9276-93405e0a9369 - [https://chatgpt.com/c/69e2d8f3-b840-8321-8675-6d590b27f1b7]
 */
 
 /***************************************************************************************************/
@@ -149,3 +151,4 @@ int main()
 // Time complexity analysis: Preprocessing time - O(n x log₂(log₂n))
 //                           Answers a single query in: O(1)
 //                           Auxiliary space: O(n)
+// https://www.geeksforgeeks.org/dsa/how-is-the-time-complexity-of-sieve-of-eratosthenes-is-nloglogn/
