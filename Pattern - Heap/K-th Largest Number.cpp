@@ -159,6 +159,8 @@ int main()
 // Quick Select is a variation of the quicksort algorithm. It is an optimized way to find the kth smallest/largest 
 // element in an unsorted array.
 
+// https://chatgpt.com/share/69e4bbe8-8288-8322-8a34-ed6e40914a07 - [https://chatgpt.com/c/69e4ba5a-ca78-8320-b6e2-df572f7635f2]
+
 #include<bits/stdc++.h>
 using namespace std;
 

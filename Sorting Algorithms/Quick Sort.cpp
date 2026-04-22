@@ -6,6 +6,8 @@
 /* 
    # IT IS A DIVIDE & CONQUER SORTING ALGORITHM.
    # It's average case TC is O(n x log2(n)), while worst case TC is O(n^2), which can be fixed using Randomized Quick Sort
+
+   # // https://chatgpt.com/share/69e4bbe8-8288-8322-8a34-ed6e40914a07 - [https://chatgpt.com/c/69e4ba5a-ca78-8320-b6e2-df572f7635f2]
 */
 
 #include<bits/stdc++.h>
