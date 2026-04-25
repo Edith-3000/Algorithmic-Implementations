@@ -267,6 +267,8 @@ int main()
     return 0;
 }
 
+// JAVA CODE (for range sum): https://gist.github.com/Edith-3000/ba8f2858a69248745350ea26270bd0f1
+
 /* # Time complexities of functions of struct seg_tree :--->
 
      * build(): O(n), since we fill all (4 x n) vertices of the Segment Tree.
