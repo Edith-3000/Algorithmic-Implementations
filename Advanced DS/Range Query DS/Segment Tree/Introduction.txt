@@ -32,6 +32,8 @@
 # Any operation that is associative in nature can be used with segment tree.
   An associative operation is a calculation that gives the same result regardless of the way the numbers 
   are grouped. Addition and multiplication are both associative, while subtraction and division are not.
+
+  https://chatgpt.com/share/69ec5c06-3db4-8321-bbbf-326571f169b5 - [https://chatgpt.com/c/69ec5b0d-4da4-8324-aae6-274f8104e302]
   
   For details refer the video at time 58:00 --->
   https://unacademy.com/class/segment-tree-basics/G2S8BCUD 

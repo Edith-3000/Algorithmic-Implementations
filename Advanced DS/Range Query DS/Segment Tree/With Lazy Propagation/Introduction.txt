@@ -4,4 +4,6 @@
 # Main idea behind Lazy Propagation is to postpone the updates to the descendents of a node until the 
   descendents themselves need to be accessed.
 
+# https://chatgpt.com/share/69ec8c18-1d60-8323-8cbe-66f7bb15db6d - [https://chatgpt.com/c/69ec7b58-036c-8322-ab08-c39cb9ecb136]
+
 # More info visit: ---> https://rb.gy/tmx95c
