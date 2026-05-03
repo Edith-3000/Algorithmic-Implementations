@@ -1,12 +1,14 @@
 // Ref: https://cp-algorithms.com/graph/01_bfs.html#algorithm
 //      https://www.geeksforgeeks.org/0-1-bfs-shortest-path-binary-graph/
 //      https://codeforces.com/blog/entry/22276
-/*************************************************************************************************************/
+
+//      https://chatgpt.com/share/69f5f4d4-a8f8-8324-b84e-a75a130e82d9 - [https://chatgpt.com/c/69f5f3b5-0934-83a7-8b52-3bc998ce6809]
+/***********************************************************************************************************************************************/
 
 // Prob. which can be solved by this concept :--->
 // https://leetcode.com/problems/minimum-obstacle-removal-to-reach-corner/
 
-/************************************************************************************************************/
+/***********************************************************************************************************************************************/
 
 #include<bits/stdc++.h>
 using namespace std;

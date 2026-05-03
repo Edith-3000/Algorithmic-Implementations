@@ -188,6 +188,8 @@ int main()
 
 // METHOD - 2 [O(n)]
 
+// https://chatgpt.com/share/69f72b68-f23c-8320-9eac-6fee8825f668 - [https://chatgpt.com/c/69f7296e-8b9c-83ab-b815-8c7c57954bd2]
+
 #include<bits/stdc++.h>
 using namespace std;
 
