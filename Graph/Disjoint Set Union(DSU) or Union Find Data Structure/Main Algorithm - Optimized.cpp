@@ -1,6 +1,9 @@
 // Ref: https://cp-algorithms.com/data_structures/disjoint_set_union.html
 //      https://www.youtube.com/watch?v=3gbO7FDYNFQ&list=PLgUwDviBIf0rGEWe64KWas0Nryn7SCRWw&index=23&ab_channel=takeUforward
-/***************************************************************************************************************************/
+
+//      https://chatgpt.com/share/69ed7220-99d0-8321-bc82-e00cd22adbac - [https://chatgpt.com/c/69ecf29e-cadc-8321-a1cc-2dcd0c48af71]
+
+/*************************************************************************************************************************************************************/
 
 /* # Opmimization done :--->
 
